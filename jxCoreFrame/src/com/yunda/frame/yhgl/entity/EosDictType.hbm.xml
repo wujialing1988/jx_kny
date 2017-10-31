@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 字典类型表 -->
+<hibernate-mapping>
+    <class name="com.yunda.frame.yhgl.entity.EosDictType" table="EOS_DICT_TYPE">
+    	<cache usage="nonstrict-read-write"/>
+        <id name="dicttypeid" type="java.lang.String">
+            <column name="DICTTYPEID" length="128" />
+            <!--<generator class="uuid.hex" />-->
+        </id>
+        <property name="dicttypename" type="java.lang.String">
+            <column name="DICTTYPENAME" />
+        </property>
+        <property name="rank" type="java.lang.Long">
+            <column name="RANK" precision="10" scale="0" />
+        </property>
+        <property name="parentid" type="java.lang.String">
+            <column name="PARENTID" />
+        </property>
+        <property name="seqno" type="java.lang.String">
+            <column name="SEQNO" />
+        </property>
+    </class>
+</hibernate-mapping>

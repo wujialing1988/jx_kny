@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+    default-autowire="autodetect">
+	
+	<!-- 系统操作员 -->
+	<bean id="acOperatorManager" class="com.yunda.frame.yhgl.manager.AcOperatorManager"/>
+	<!-- 系统操作员配置 -->
+	<!-- <bean id="acOperconfigManager" class="com.yunda.system.manager.AcOperconfigManager"/>  -->
+	<!-- 角色 -->
+	<bean id="acRoleManager" class="com.yunda.frame.yhgl.manager.AcRoleManager"/>
+	<!-- 操作员对应角色 -->
+	<bean id="acOperatorroleManager" class="com.yunda.frame.yhgl.manager.AcOperatorroleManager"/>
+	<!-- 系统菜单 -->
+	<bean id="acMenuManager" class="com.yunda.frame.yhgl.manager.AcMenuManager"/>
+	
+	<!-- 员工 -->
+	<bean id="omEmployeeManager" class="com.yunda.frame.yhgl.manager.OmEmployeeManager"/>
+	<!-- 机构 -->
+	<bean id="omOrganizationManager" class="com.yunda.frame.yhgl.manager.OmOrganizationManager"/>
+	<!-- 工作组 -->
+	<bean id="omGroupManager" class="com.yunda.frame.yhgl.manager.OmGroupManager"/>
+
+	<!-- 组织对象角色 -->
+	<bean id="omPartyroleManager" class="com.yunda.frame.yhgl.manager.OmPartyroleManager"/>
+	<!-- 人员职务 -->
+	<bean id="omDutyManager" class="com.yunda.frame.yhgl.manager.OmDutyManager"/>
+	<!-- 人员岗位 -->
+	<bean id="omPositionManager" class="com.yunda.frame.yhgl.manager.OmPositionManager"/>
+	<!-- 员工对应机构 -->
+	<bean id="omEmporgManager" class="com.yunda.frame.yhgl.manager.OmEmporgManager"/>
+	<!-- 员工对应的工作组 -->
+	<bean id="omEmpgroupManager" class="com.yunda.frame.yhgl.manager.OmEmpgroupManager"/>
+	
+	<!-- 数据字典 -->
+	<bean id="eosDictEntryManager" class="com.yunda.frame.yhgl.manager.EosDictEntryManager"/>
+	<bean id="eosDictTypeManager" class="com.yunda.frame.yhgl.manager.EosDictTypeManager"/>
+</beans>

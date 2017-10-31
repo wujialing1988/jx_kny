@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="person" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:/org/codehaus/xfire/spring/xfire.xml,
+			/WEB-INF/spring-config/applicationContext.xml
+		</param-value>
+	</context-param>
+	<display-name>person</display-name>
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter>
+		<filter-name>loginPurviewCheck</filter-name>
+		<filter-class>
+			com.yunda.base.filter.LoginPurviewCheckFilter
+		</filter-class>
+		<init-param><!-- 登录前允许访问的url -->
+			<param-name>beforeLoginUrl</param-name>
+			<param-value>
+				/,/index.jsp,/login.jsp,/wait.jsp,/message/message.jsp,/services/*,/login!login.action,/login!reLogin.action,/login!logout.action,/login!toCardLogin.action
+				,/login!terminalLogin.action,/login!terminalLogout.action,/login!enableConnection.action
+				,/disallow.jsp,/getDataBase!GetExtComboxData.action,/getDataBase!GetExtComboDataTree.action,/jsp/system/sys_data_source.jsp
+				,/login!updateDataSource.action,/disallow.jsp
+				,/jsp/common/cplugin/plugin_list.jsp,/cPlugin!toView.action
+				,/jcjx.jsp,/jczl.jsp,/pjwl.jsp,/scdd.jsp,/frame/installfiles/support.jsp
+			</param-value>
+		</init-param>
+		<init-param><!-- 重新登录jsp -->
+			<param-name>reloginJsp</param-name>
+			<param-value>/login.jsp</param-value>
+		</init-param>
+		<init-param><!-- 首页jsp -->
+			<param-name>mainJsp</param-name>
+			<param-value>/login!login.action</param-value>
+		</init-param>
+		<init-param><!-- 超级用户名，AcOperator -->
+			<param-name>sysAdmin</param-name>
+			<param-value>sysadmin</param-value>
+		</init-param>
+		<init-param><!-- 超级用户名 -->
+			<param-name>superName</param-name>
+			<param-value>admin</param-value>
+		</init-param>
+		<init-param><!-- 超级用户密码 -->
+			<param-name>superPassword</param-name>
+			<param-value>123</param-value>
+		</init-param>
+		<init-param><!-- 是否使用流程引擎 -->
+			<param-name>useWorkFlow</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginPurviewCheck</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>loginPurviewCheck</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+
+<!--条码显示 
+	<servlet>
+		<servlet-name>BarcodeServlet</servlet-name>
+		<servlet-class>
+			org.krysalis.barcode4j.servlet.BarcodeServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BarcodeServlet</servlet-name>
+		<url-pattern>/BarcodeServlet</url-pattern>
+	</servlet-mapping>
+-->
+
+	<servlet>
+        <servlet-name>XFireServlet</servlet-name>
+        <servlet-class>
+             org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/servlet/XFireServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>XFireServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>
+			org.apache.struts2.dispatcher.FilterDispatcher
+		</filter-class>
+		<init-param>
+			<param-name>actionPackages</param-name>
+			<param-value>
+				com.yunda.frame.yhgl.action,
+				com.yunda.component.select,
+				com.yunda.common.plugin.action,
+				com.yunda.jcjx.plan.action, 
+				com.yunda.jcjx.system.action,
+				com.yunda.action,
+				com.yunda.flow.scdd.plan.action,
+				com.yunda.flow.sjyy.action,
+				com.yunda.gwzd.action,
+				com.yunda.demo.action
+			</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	<!-- 由wuwei 添加，目的是在系统系统时候加载一些应用的全局参数集合 -->
+	<servlet>
+		<servlet-name>SystemInit</servlet-name>
+		<servlet-class>com.yunda.SystemInit</servlet-class>
+		<init-param>
+			<param-name>log4j</param-name>
+			<param-value>/WEB-INF/classes/log4j.properties</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://acegisecurity.org/authz</taglib-uri>
+			<taglib-location>/WEB-INF/authz.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>http://www.yunda.com/yunda</taglib-uri>
+			<taglib-location>/WEB-INF/yunda.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+</web-app>

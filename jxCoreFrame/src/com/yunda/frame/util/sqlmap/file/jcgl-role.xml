@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 角色 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 根据登录人ID， 获取其对应的角色ID -->
+	<sql id="findRoleIdByOperatorId1">
+	<![CDATA[
+		SELECT roleid FROM ac_role WHERE roleid IN (
+			SELECT roleid FROM ac_operatorrole WHERE operatorid = ?
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据登录人ID， 获取其所属机构对应的角色ID -->
+	<sql id="findRoleIdByOperatorId2">
+	<![CDATA[
+		SELECT roleid FROM ac_role WHERE roleid IN (
+			SELECT roleid FROM Om_Partyrole WHERE partytype = 'organization' AND partyid IN (
+				SELECT orgid FROM om_emporg WHERE empid = (
+					select empid FROM om_employee WHERE operatorid = ?
+				)
+			)
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据登录人ID， 获取其所属工作组对应的角色ID -->
+	<sql id="findRoleIdByOperatorId3">
+	<![CDATA[
+		SELECT roleid FROM ac_role WHERE roleid in (
+			SELECT roleid FROM om_Partyrole WHERE partytype = 'workgroup' AND partyid in (
+				SELECT groupid FROM om_group WHERE groupid in (
+					SELECT groupid FROM om_empgroup WHERE empid = (SELECT empid FROM om_employee WHERE operatorid = ?
+					)
+				)
+			)
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据登录人ID， 获取其所属岗位对应的角色ID -->
+	<sql id="findRoleIdByOperatorId4">
+	<![CDATA[
+		SELECT roleid FROM ac_role WHERE roleid in (
+			SELECT roleid FROM om_Partyrole WHERE partytype = 'position' AND partyid in (
+				SELECT positionid FROM om_position WHERE positionid in (
+					SELECT positionid FROM OM_EMPPOSITION WHERE empid = (
+						SELECT empid FROM om_employee WHERE operatorid = ?
+					)
+				)
+			)
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据登录人ID， 获取其所属职务对应的角色ID -->
+	<sql id="findRoleIdByOperatorId5">
+	<![CDATA[
+		SELECT roleid from ac_role WHERE roleid in (
+			SELECT roleid FROM om_Partyrole WHERE partytype = 'duty' AND partyid in (
+				SELECT dutyid FROM om_duty WHERE dutyid in (
+					SELECT dutyid FROM om_position WHERE positionid in (
+						SELECT positionid FROM om_empposition where empid = (
+							SELECT empid FROM om_employee WHERE operatorid = ?
+						)
+					)
+				)
+			)
+		)
+	]]>
+	</sql>
+	
+	
+		<!-- 根据登录人ID， 获取其对应的角色名称 -->
+	<sql id="findRoleNameByOperatorId1">
+	<![CDATA[
+		SELECT rolename FROM ac_role WHERE roleid IN (
+			SELECT roleid FROM ac_operatorrole WHERE operatorid = ?
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据登录人ID， 获取其所属机构对应的角色名称 -->
+	<sql id="findRoleNameByOperatorId2">
+	<![CDATA[
+		SELECT rolename FROM ac_role WHERE roleid IN (
+			SELECT roleid FROM Om_Partyrole WHERE partytype = 'organization' AND partyid IN (
+				SELECT orgid FROM om_emporg WHERE empid = (
+					select empid FROM om_employee WHERE operatorid = ?
+				)
+			)
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据登录人ID， 获取其所属工作组对应的角色名称 -->
+	<sql id="findRoleNameByOperatorId3">
+	<![CDATA[
+		SELECT rolename FROM ac_role WHERE roleid in (
+			SELECT roleid FROM om_Partyrole WHERE partytype = 'workgroup' AND partyid in (
+				SELECT groupid FROM om_group WHERE groupid in (
+					SELECT groupid FROM om_empgroup WHERE empid = (SELECT empid FROM om_employee WHERE operatorid = ?
+					)
+				)
+			)
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据登录人ID， 获取其所属岗位对应的角色名称 -->
+	<sql id="findRoleNameByOperatorId4">
+	<![CDATA[
+		SELECT rolename FROM ac_role WHERE roleid in (
+			SELECT roleid FROM om_Partyrole WHERE partytype = 'position' AND partyid in (
+				SELECT positionid FROM om_position WHERE positionid in (
+					SELECT positionid FROM OM_EMPPOSITION WHERE empid = (
+						SELECT empid FROM om_employee WHERE operatorid = ?
+					)
+				)
+			)
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据登录人ID， 获取其所属职务对应的角色名称 -->
+	<sql id="findRoleNameByOperatorId5">
+	<![CDATA[
+		SELECT rolename from ac_role WHERE roleid in (
+			SELECT roleid FROM om_Partyrole WHERE partytype = 'duty' AND partyid in (
+				SELECT dutyid FROM om_duty WHERE dutyid in (
+					SELECT dutyid FROM om_position WHERE positionid in (
+						SELECT positionid FROM om_empposition where empid = (
+							SELECT empid FROM om_employee WHERE operatorid = ?
+						)
+					)
+				)
+			)
+		)
+	]]>
+	</sql>
+	
+	
+</SqlMap>	

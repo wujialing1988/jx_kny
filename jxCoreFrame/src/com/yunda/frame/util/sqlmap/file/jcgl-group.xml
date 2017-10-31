@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 工作组 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 查询根层工作组实体集合 -->
+	<sql id="findRoot">
+	<![CDATA[
+		from OmGroup where parentgroupid is null
+	]]>
+	</sql>
+
+	<!-- 根据自定义参数查询工作组实体 -->
+	<sql id="findByField">
+	<![CDATA[
+		from OmGroup where ? = '?' and groupstatus = 'running'
+	]]>
+	</sql>
+	
+	<!-- 根据自定义参数模糊查询工作组实体 -->
+	<sql id="findByResField">
+	<![CDATA[
+		from OmGroup where ? like '?' and groupstatus = 'running'
+	]]>
+	</sql>
+	
+	<!-- 根据逗号分隔的id字符串,查询匹配的工作组 -->
+	<sql id="findByIds">
+	<![CDATA[
+		from OmGroup where groupid in (?) and groupstatus = 'running'
+	]]>
+	</sql>
+	
+	<!-- 根据岗位ID查询其所属工作组信息 -->
+	<sql id="findByPosId">
+	<![CDATA[
+		from OmGroup where groupid = (select id.groupid from OmGroupposi where id.positionid = ?) and groupstatus = 'running'
+	]]>
+	</sql>
+	
+	<!-- 根据工作组ID查询其它同级工作组信息 -->
+	<sql id="findOtherById">
+	<![CDATA[
+		from OmGroup where parentgroupid = (
+		     select parentgroupid from OmGroup
+		     where groupid = ?
+		) and groupid != ? and groupstatus = 'running'
+	]]>
+	</sql>
+	
+	<!-- 根据工作组ID查询其上级工作组信息 -->
+	<sql id="findUpById">
+	<![CDATA[
+		from OmGroup where groupid = (
+		     select parentgroupid from OmGroup
+		     where groupid = ?
+		) and groupstatus = 'running'
+	]]>
+	</sql>
+	
+	<!-- 递归查询入参工作组id下属所有子工作组 -->
+	<sql id="findAllChilds">
+	<![CDATA[
+		select
+			SUBCOUNT as "subcount",
+			ISLEAF	as "isleaf",
+			UPDATOR	as "updator",
+			LASTUPDATE	as "lastupdate",
+			CREATETIME	as "createtime",
+			MANAGER	as "manager",
+			GROUPSTATUS	as "groupstatus",
+			ENDDATE	as "enddate",
+			STARTDATE	as "startdate",
+			GROUPSEQ	as "groupseq",
+			GROUPTYPE	as "grouptype",
+			GROUPDESC	as "groupdesc",
+			GROUPNAME	as "groupname",
+			GROUPLEVEL	as "grouplevel",
+			PARENTGROUPID	as "parentgroupid",
+			ORGID	as "orgid",
+			GROUPID	as "groupid"
+		from OM_GROUP where groupstatus = 'running' and ?
+		start with groupid = ?
+		connect by prior groupid = parentgroupid
+	]]>
+	</sql>
+	
+	<!-- findByEmpId -->
+	<sql id="findByEmpId">
+	<![CDATA[
+		select a from OmGroup a, OmEmpgroup b
+		where a.groupid = b.id.groupid and b.id.empid = ?
+	]]>
+	</sql>
+</SqlMap>		

@@ -1,0 +1,569 @@
+.body_index{
+	padding:0px;
+	margin:0px;
+	background-color: #F7F9FB;
+	height: 100%;
+}
+	.showText{
+		font-family: Arial, 'Times New Roman' !important;
+	}
+	.mainContext{
+		margin:15px;
+	}
+		.linkText{
+			color: #3186C8;
+			font-weight: normal;
+		}
+
+		.splitDiv{
+			width: 100%;
+			height: 1px;
+			background-color: #ffffff;
+			overflow: hidden;
+			border-top: 1px solid #CBDCF2;
+		}
+		
+		.greetingAndLinkDiv{
+			width: 100%;
+		}
+			.greetingAndLinkTitleDiv{
+				width: 100%;
+				height: 40px;
+				background: url('../images/mainpage/title_back.gif') 0px 0px repeat-x;
+				border: 1px solid #99BBE8;
+				overflow: hidden;
+			}
+			.greetingAndLinkTitleDiv a:HOVER {
+				color:green;
+				font-weight: bold;
+			}
+			.greetingAndLinkTitleDiv a:VISITED {
+				color: blue;
+			}
+				.greetingAndLinkTitleIco{
+					background: url('../images/mainpage/greeting_and_link_ico.gif') 0px 0px no-repeat;
+					flow: left;
+					height: 40px;
+					width: 30px;
+					margin-left: 5px;
+					margin-right: 8px;
+					float: left;
+				}
+				.greetingAndLinkTitleText{
+					height: 40px;
+					font-size: 13px;
+					line-height: 40px;
+					color: #3A5A82;
+					float: left;
+				}
+					.greetingAndLinkTitleLink{
+						background: url('../../resources/images/toolbar/message.png') 0px 0px no-repeat;
+						padding-left: 17px;
+						line-height:40px;
+						padding-top:0px;
+					}
+					
+				.greetingAndLinkTitleTime{
+					background: url('../images/mainpage/greeting_and_link_time_ico.gif') 0px 12px no-repeat;
+					height: 40px;
+					font-size: 12px;
+					line-height: 40px;
+					color: #3A5A82;
+					float: right;
+					width: 200px;
+					padding-left: 17px;
+				}
+				.softwareDownloadLink {
+					background: url('../../resources/images/toolbar/download.png') 0px 0px no-repeat;
+					padding-left: 17px;
+					line-height:40px;
+					padding-top:0px;
+				}
+				.localTimeInput{
+					background: url('../images/mainpage/local_time_input_back.gif') 0px 0px no-repeat;
+					border: 0px;
+					margin-top: 10px;
+					width: 175px;
+					height: 17px;
+					color: #7c7b7b;
+					overflow: hidden;
+				}
+			.greetingAndLinkMainDiv{
+				width: 100%;
+				overflow: hidden;
+				font-size: 12px;
+				color: #3A5A82;
+			}
+				
+				
+			.linkDiv{
+				width: 100%;
+				overflow: hidden;
+			}
+				.linkListDiv{
+					width: 100%;
+					overflow: hidden;
+					margin-top:10px;
+				}
+					.linkBtn001{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_001.gif') 0px 0px no-repeat;
+					}
+					.linkBtn001_mov{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_001_mov.gif') 0px 0px no-repeat;
+					}
+					.linkBtn002{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_002.gif') 0px 0px no-repeat;
+					}
+					.linkBtn002_mov{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_002_mov.gif') 0px 0px no-repeat;
+					}
+					.linkBtn003{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_003.gif') 0px 0px no-repeat;
+					}
+					.linkBtn003_mov{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_003_mov.gif') 0px 0px no-repeat;
+					}
+					.linkBtn004{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_004.gif') 0px 0px no-repeat;
+					}
+					.linkBtn004_mov{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_004_mov.gif') 0px 0px no-repeat;
+					}
+					.linkBtnAdd{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_add.gif') 0px 0px no-repeat;
+					}
+					.linkBtnAdd_mov{
+						width: 113px;
+						height: 79px;
+						float: left;
+						cursor: hand;
+						background: url('../images/mainpage/link_btn_add_mov.gif') 0px 0px no-repeat;
+					}
+				.linkListL2Div{
+					width: 100%;
+					overflow: hidden;
+				}
+					.linkBtnPointBarDiv{
+						width: 100%;
+						overflow: hidden;
+						height: 12px;
+						background: url('../images/mainpage/link_btn_point_back.gif') 0px 0px repeat-x;
+					}
+						.linkBtnPointDiv0{
+							width: 113px;
+							height: 12px;
+							background: url('../images/mainpage/link_btn_point.gif') 0px 0px repeat;							
+						}
+						.linkBtnPointDiv1{
+							width: 113px;
+							height: 12px;
+							margin-left: 113px;
+							background: url('../images/mainpage/link_btn_point.gif') 0px 0px repeat;
+						}
+						.linkBtnPointDiv2{
+							width: 113px;
+							height: 12px;
+							margin-left: 226px;
+							background: url('../images/mainpage/link_btn_point.gif') 0px 0px repeat;
+						}
+						.linkBtnPointDiv3{
+							width: 113px;
+							height: 12px;
+							margin-left: 339px;
+							background: url('../images/mainpage/link_btn_point.gif') 0px 0px repeat;
+						}
+						.linkBtnPointDiv4{
+							width: 113px;
+							height: 12px;
+							margin-left: 452px;
+							background: url('../images/mainpage/link_btn_point.gif') 0px 0px repeat;
+						}
+						.linkBtnPointDiv5{
+							width: 113px;
+							height: 12px;
+							margin-left: 565px;
+							background: url('../images/mainpage/link_btn_point.gif') 0px 0px repeat;
+						}
+						.linkBtnPointDiv6{
+							width: 113px;
+							height: 12px;
+							margin-left: 678px;
+							background: url('../images/mainpage/link_btn_point.gif') 0px 0px repeat;
+						}
+					.linkBtnL2BarDiv{
+						width: 100%;
+						background: url('../images/mainpage/link_btn_list_2_back.gif') repeat;
+						border-bottom: 1px solid #99BBE8;
+					}
+						.linkBtnL2Div{
+							margin��3px;
+							height: 30px;
+							width: 120px;
+							float: left;
+							padding-left: 23px;
+							background: url('../images/mainpage/link_btn_point_list_2_ico.gif') 10px 0px no-repeat;
+						}
+						.linkBtnL2Div_nothing{
+							margin��3px;
+							width:95%;
+							height: 30px;
+							float: left;
+							background: url('../images/mainpage/greeting_and_link_msg_ico.gif') 20px -1px no-repeat;
+						}
+						.linkBtnL2Div_cfgLink{
+							width:100%;
+							height: 30px;
+							float: left;
+							background: url('../images/mainpage/cfg_link_ico.gif') 13px -1px no-repeat;
+						}
+							.linkBtnL2Div_cfgLinkList{
+								width:100%;
+								height: 32px;
+								float: left;
+							}
+								.cfgBtn01{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg01.gif');
+									cursor: hand;
+								}
+								.cfgBtn01_has{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg01_has.gif');
+									cursor: hand;
+								}
+								.cfgBtn01_mov{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg01_mov.gif');
+									cursor: hand;
+								}
+								.cfgBtn01_has_mov{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg01_has_mov.gif');
+									cursor: hand;
+								}
+
+								.cfgBtn02{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg02.gif');
+									cursor: hand;
+								}
+								.cfgBtn02_has{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg02_has.gif');
+									cursor: hand;
+								}
+								.cfgBtn02_mov{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg02_mov.gif');
+									cursor: hand;
+								}
+								.cfgBtn02_has_mov{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg02_has_mov.gif');
+									cursor: hand;
+								}
+
+								.cfgBtn03{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg03.gif');
+									cursor: hand;
+								}
+								.cfgBtn03_has{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg03_has.gif');
+									cursor: hand;
+								}
+								.cfgBtn03_mov{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg03_mov.gif');
+									cursor: hand;
+								}
+								.cfgBtn03_has_mov{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg03_has_mov.gif');
+									cursor: hand;
+								}
+
+								.cfgBtn04{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg04.gif');
+									cursor: hand;
+								}
+								.cfgBtn04_has{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg04_has.gif');
+									cursor: hand;
+								}
+								.cfgBtn04_mov{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg04_mov.gif');
+									cursor: hand;
+								}
+								.cfgBtn04_has_mov{
+									width: 106px;
+									height: 27px;
+									float: left;
+									background: url('../images/mainpage/cfgLink/cfg04_has_mov.gif');
+									cursor: hand;
+								}
+
+
+
+		.tipAndHelpDiv{
+			width: 100%;
+		}
+			.tipAndHelpTitleDiv{
+				height: 40px;
+				margin-top: 15px;
+				background: url('../images/mainpage/title_back.gif') 0px 0px repeat-x;
+				border: 1px solid #99BBE8;
+				overflow: hidden;
+
+			}
+				.tipAndHelpTitleIco{
+					background: url('../images/mainpage/tip_and_help_ico.gif') 0px 0px no-repeat;
+					flow: left;
+					height: 40px;
+					width: 32px;
+					margin-left: 5px;
+					margin-right: 8px;
+					float: left;
+				}
+				.tipAndHelpTitleText{
+					height: 40px;
+					font-size: 13px;
+					line-height: 40px;
+					color: #3A5A82;
+					float: left;
+				}
+				
+				
+				.tipAndHelpTitleHelpCenter{
+					background: url('../images/mainpage/tip_and_help_help_center_ico.gif') 0px 12px no-repeat;
+					height: 40px;
+					font-size: 12px;
+					line-height: 40px;
+					color: #3A5A82;
+					float: right;
+					width: 100px;
+					padding-left: 19px;
+					
+				}
+				
+				
+				
+			.tipDiv{
+				float: left;
+				width: 100%;
+				height: 26px;
+				background: url('../images/mainpage/tip_and_help_msg_back.gif') 0px 0px repeat-x;
+				border: 1px solid #F0B639;
+				overflow: hidden;
+				margin-top: 10px;
+				font-size: 12px;
+				color: #CF732F;
+				line-height: 26px;
+			}
+				.tipText{
+					float: left;
+					margin-left: 10px;
+				}
+				.tipLink{
+					float: left;
+					margin-left: 10px;
+				}
+					.tipLink_mdfPassword{
+						padding-left: 14px;
+						background: url('../images/mainpage/tip_and_help_mdf_password_ico.gif') 0px -2px no-repeat;
+						cursor: hand;
+						color: #3186c8;
+					}
+				.tipLinkCloseBtn{
+					float: right;
+					height: 26px;
+					width: 26px;
+					background: url('../images/mainpage/tip_and_help_msg_close_btn.gif') 0px -2px no-repeat;
+					cursor: hand;
+				}
+				.tipLinkCloseBtn_mov{
+					float: right;
+					height: 26px;
+					width: 26px;
+					background: url('../images/mainpage/tip_and_help_msg_close_btn_mov.gif') 0px -2px no-repeat;
+					cursor: hand;
+				}
+			.helpDiv{
+				float: left;
+				width: 100%;
+				color: #3A5A82;
+				font-size: 12px;
+				margin-bottom: 7px;
+			}
+				.helpTitle{
+					float: left;
+					width: 100%;
+					height: 36px;
+					padding-left: 18px;
+					background: url('../images/mainpage/tip_and_help_msg_ico.gif') 0px -7px no-repeat;
+					overflow: hidden;
+					line-height: 36px;
+					font-size: 12px;
+					color: #3A5A82;
+					margin-top: 5px;
+				}
+				.helpList{
+					float: left;
+					width: 100%;
+					overflow: hidden;
+				}
+					.helpItem{
+						width: 100%;
+						height: 35px;
+						font-size: 12px;
+						color: #3A5A82;
+						border-bottom: 1px dashed #ABABAB;
+						cursor: hand;
+					}
+					.helpItem_mov{
+						width: 100%;
+						height: 35px;
+						font-size: 12px;
+						color: #D55108;
+						border-bottom: 1px dashed #CF732F;
+						cursor: hand;
+					}
+
+						.helpItemIco{
+							float: left;
+							width: 18px;
+							height: 35px;
+							background: url('../images/mainpage/tip_and_help_item_text_ico.gif') 3px 2px no-repeat;
+						}
+						.helpItemText{
+							float: left;
+							width: 70%;
+							height: 22px;
+							line-height: 22px;
+							margin-top: 8px;
+						}
+						.helpItemLink{
+							float: right;
+							text-align: right;
+							width: 10%;
+							height: 22px;
+							line-height: 22px;
+							margin-top: 8px;
+						}
+			.helpCenterDiv{
+				float: left;
+				width: 100%;
+				color: #3A5A82;
+				margin-top: 7px;
+			}
+				.helpCenterTitle{
+					float: left;
+					width: 100%;
+					height: 36px;
+					padding-left: 20px;
+					background: url('../images/mainpage/helpCenterTitleIco.gif') 0px -7px no-repeat;
+					overflow: hidden;
+					line-height: 36px;
+					font-size: 12px;
+					color: #3A5A82;
+				}
+					.helpCenterLinkGotoHelpCenter{
+						float: left;
+						height: 25px;
+						width: 100px;
+						padding-left: 25px;
+						font-size: 12px;
+						color: #3A5A82;
+						line-height: 25px;
+						background: url('../images/mainpage/helpCenterLinkGotoHelpCenter.gif') 0px -2px no-repeat;
+					}
+					.helpCenterLinkDownloadSysplugin{
+						float: left;
+						height: 25px;
+						width: 100px;
+						padding-left: 25px;
+						font-size: 12px;
+						color: #3A5A82;
+						line-height: 25px;
+						background: url('../images/mainpage/helpCenterLinkDownloadSysplugin.gif') 0px -2px no-repeat;
+					}
+					.helpCenterLinkLeaveMsg{
+						float: left;
+						height: 25px;
+						width: 100px;
+						padding-left: 25px;
+						font-size: 12px;
+						color: #3A5A82;
+						line-height: 25px;
+						background: url('../images/mainpage/helpCenterLinkLeaveMsg.gif') 0px -2px no-repeat;
+					}

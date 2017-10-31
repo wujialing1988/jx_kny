@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<sql id="queryPageList">
+		SELECT d.idx,
+		 	d.equipment_idx,
+		  	d.seq_no,
+		   	d.route_idx,
+		   	d.elc_inspect_emp,
+		   	d.elc_inspect_empid,
+		   	d.mac_inspect_emp,
+		   	d.mac_inspect_empid,
+			i.class_code,
+			i.class_name,
+			i.equipment_code,
+			i.equipment_name,
+			i.buy_date,
+			i.fixed_asset_no,
+			i.fixed_asset_value,
+			i.model,
+			i.specification,
+			i.mechanical_coefficient,
+			i.electric_coefficient,
+			i.make_date,
+			i.make_factory,
+			i.use_place,
+			i.manage_class
+		FROM
+			e_inspect_route_details d, e_equipment_primary_info i
+ 		WHERE 
+ 			<!-- Modified by hetao on 2016-08-16 取消设备来源“新购”、“调入”的查询条件限制 -->
+ 			<!-- i.idx = d.equipment_idx AND i.record_status = 0 AND i.dynamic IN (1, 3) AND d.record_status = 0 -->
+ 			i.idx = d.equipment_idx AND i.record_status = 0 AND d.record_status = 0
+	</sql>
+</SqlMap>

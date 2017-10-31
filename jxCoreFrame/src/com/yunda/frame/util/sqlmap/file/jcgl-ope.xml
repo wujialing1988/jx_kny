@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 操作员 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 查询多个操作员信息 -->
+	<sql id="findByIds">
+	<![CDATA[
+		from AcOperator where operatorid in (?)
+	]]>
+	</sql>
+	
+	<!-- 根据UserId查询操作员信息 -->
+	<sql id="findByUserId">
+	<![CDATA[
+		from AcOperator where userid = ?
+	]]>
+	</sql>
+	
+	<!-- 根据人员卡号查询操作员信息 -->
+	<sql id="findByCardNo">
+	<![CDATA[
+		from AcOperator where operatorid in (
+			select operatorid from OmEmployee where cardNum = ?
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据参数动态查询 -->
+	<sql id="findByField">
+	<![CDATA[
+		from AcOperator where ? = '?'
+	]]>
+	</sql>
+</SqlMap>	

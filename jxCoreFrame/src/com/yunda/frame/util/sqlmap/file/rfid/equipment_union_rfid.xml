@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 分页查询，查询进行RFID绑定的设备列表 -->
+	<sql id="queryPageList">
+		SELECT
+			IDX,
+			EQUIPMENT_CODE,
+			EQUIPMENT_NAME,
+			CLASS_CODE,
+			CLASS_NAME,
+			SPECIFICATION,
+			MODEL,
+			USE_PLACE,
+			R.RFID_CODE
+		FROM
+			E_EQUIPMENT_PRIMARY_INFO I
+		LEFT JOIN E_EQUIPMENT_UNION_RFID R ON RFID_CODE = EQUIPMENT_CODE
+		WHERE
+			RECORD_STATUS = 0
+		AND DYNAMIC IN (1, 3)
+		AND FIXED_ASSET_VALUE >= '5000'
+	</sql>
+</SqlMap>

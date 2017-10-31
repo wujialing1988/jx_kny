@@ -1,0 +1,123 @@
+.body_index{
+	padding:0px;
+	margin:0px;
+	background-color: #ffffff;
+	height: 100%;
+}
+
+.tdlTitleDiv{
+	width:50%;
+	height:46px; 
+	font-size:12px; 
+	color:#3a5a82; 
+	/*background:url('../images/mainpage/light_ico.gif') 10px 0px no-repeat;*/
+	padding-left:31px;
+	line-height:46px;
+}
+
+.tdlTitleRefreshDiv{
+	width:50%;
+	height:46px; 
+	font-size:12px; 
+	color:#3a5a82; 
+	background:url('../images/mainpage/refresh.gif') 10px 15px no-repeat;
+	padding-left:31px;
+	line-height:46px;
+}
+
+.tdlContextTab{
+	width:100%;
+	font-size:12px;
+}
+	.tdlItemDiv{
+		float: left;
+		width:46%;
+		height:26px;
+		border-bottom:1px dashed #ABABAB;
+		background:url('../images/mainpage/list_ico.gif') 11px 3px no-repeat;
+		padding-left:30px;
+		line-height:26px; 
+		overflow: hidden;
+		margin-bottom: 5px;
+	}
+		.tdlItemTypeDiv{
+			float: left;
+		}
+			.tdlItemTypeLeftDiv{
+				float: left; 
+				width:4px;
+				height:26px;
+				background:url('../images/mainpage/tdl_type_left.gif') 0px 3px no-repeat; 
+				overflow: hidden;
+			}
+			.tdlItemTypeCenterDiv{
+				float: left; 
+				height:26px;
+				background:url('../images/mainpage/tdl_type_center.gif') 0px 3px repeat-x; 
+				overflow:hidden;
+				padding-left:4px;
+				padding-right:4px;
+				line-height:26px;
+				color:#868686;
+			}
+			.tdlItemTypeRightDiv{
+				float: left; 
+				width:4px;
+				height:26px;
+				background:url('../images/mainpage/tdl_type_right.gif') 0px 3px no-repeat; 
+				overflow: hidden;
+			}
+		.tdlItemJobDiv{
+			float: left;
+			margin-left: 10px;
+			line-height:26px;
+			height:26px;
+			overflow: hidden;
+			color:#3a5a82;
+			width:200px;
+			white-space:nowrap;
+			text-overflow:ellipsis;
+		}
+		
+		.tdlItemNumDiv{
+			float: left;
+			height: 14px;
+			overflow: hidden;
+			margin-top: 6px;
+		}
+			.tdlItemNumLeftDiv{
+				float: left; 
+				width:5px;
+				height:14px;
+				background:url('../images/mainpage/num_icon_back_left.gif') 0px 0px no-repeat; 
+				overflow: hidden;
+				margin-left: 5px;
+			}
+			
+			.tdlItemNumTextDiv{
+				float: left; 
+				height:14px; 
+				background:url('../images/mainpage/num_icon_back_center.gif') 0px 0px repeat-x; 
+				overflow:hidden;
+				padding-left: 0px; 
+				padding-right: 0px;
+				padding-top:1px;
+				line-height: 14px; 
+				color:#ffffff; 
+				text-align:center;
+				font-family:'΢���ź�';
+				font-size: 12px;
+			}
+			
+			.tdlItemNumRightDiv{
+				float: left; 
+				width:5px;
+				height:14px;
+				background:url('../images/mainpage/num_icon_back_right.gif') 0px 0px no-repeat; 
+				overflow: hidden;
+			}
+		
+.ExternalLink_div{
+	float: left; 
+	font-size:12px; 
+}		

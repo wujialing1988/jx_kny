@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 分页查询-作业人员待处理的设备检修任务单 -->
+	<sql id="query_page_list">
+		SELECT
+			T.*,
+			<!-- 子查询使用小写字母，避免在代码中替换FROM关键字时，不能正常定位 -->
+  			(select count(*) from e_repair_work_order where scope_case_idx = t.idx and order_status = 1) as wcl_count,
+  			(select count(*) from e_repair_work_order where scope_case_idx = t.idx and order_status = 3) as ycl_count
+		FROM
+			 E_REPAIR_SCOPE_CASE T, E_REPAIR_TASK_LIST_TEAM M
+		WHERE
+			T.RECORD_STATUS = 0
+			AND T.TASK_LIST_IDX = M.TASK_LIST_IDX 
+			AND T.REPAIR_TYPE = M.REPAIR_TYPE
+	</sql>
+</SqlMap>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	default-autowire="autodetect">
+
+	<!-- <import resource="applicationContext-manager-train.xml" />  -->
+	<!-- <import resource="applicationContext-manager-plan.xml" />  -->
+	<import resource="applicationContext-manager-system.xml" />
+	<!-- <import resource="applicationContext-manager-quartz.xml" /> -->
+	<import resource="applicationContext-manager.xml" />
+	<!-- <import resource="applicationContext-security.xml" /> -->
+
+	<!-- start 数据源 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:dataSource.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		destroy-method="close">
+		<property name="driverClassName"
+			value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<!-- end 数据源 -->
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="startUp" propagation="REQUIRED" />
+			<tx:method name="giveUp" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="serviceOperation"
+			expression="execution(* com.yunda..*Manager.*(..))" />
+		<aop:advisor pointcut-ref="serviceOperation"
+			advice-ref="txAdvice" />
+	</aop:config>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<!-- Hibernate映射文件 -->
+		<property name="mappingLocations">
+			<list>
+				<value>
+					classpath:com/yunda/frame/yhgl/entity/*.hbm.xml
+				</value>
+				<!-- <value>classpath:com/yunda/system/entity/*.hbm.xml</value>  -->
+				<value>
+					classpath:com/yunda/jcjx/*/entity/*.hbm.xml
+				</value>
+			</list>
+		</property>
+		<!-- Hibernate配置属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					${hibernate.dialect}
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+				<!--<prop key="hibernate.cache.use_second_level_cache">true</prop>
+					<prop key="hibernate.cache.use_query_cache">false</prop> -->
+			</props>
+		</property>
+		<property name="useTransactionAwareDataSource" value="true"></property>
+	</bean>
+
+	<!-- start ibatis -->
+	<bean id="sqlMapTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="/WEB-INF/ibatis-config/sql-map-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="useTransactionAwareDataSource" value="true"></property>
+	</bean>
+	<!-- end ibatis -->
+
+	<bean id="baseManager" abstract="true"
+		class="com.yunda.base.BaseManager" />
+		
+	<bean id="oracleLobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler" />
+
+	<bean id="systemInit" class="com.yunda.SystemInit"></bean>
+</beans>

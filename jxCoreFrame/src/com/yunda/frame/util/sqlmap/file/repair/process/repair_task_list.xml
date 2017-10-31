@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 分页查询-作业人员待处理的设备检修任务单 -->
+	<sql id="query_page_list">
+		SELECT
+			L.*,
+			I.EQUIPMENT_CODE,
+			I.EQUIPMENT_NAME,
+			I.SPECIFICATION,
+			I.MODEL,
+			I.USE_PLACE,
+			I.ELECTRIC_COEFFICIENT,
+			I.MECHANICAL_COEFFICIENT, 
+			I.USE_PERSON,
+			I.ORG_NAME,
+			I.ORG_ID,
+			<!-- 子查询使用小写字母，避免在代码中替换FROM关键字时，不能正常定位 -->
+			(select count(*) from e_repair_scope_case c where c.record_status = 0 and c.task_list_idx = l.idx and c.state = '未处理') AS WCL_COUNT,
+			(select count(*) from e_repair_scope_case c where c.record_status = 0 and c.task_list_idx = l.idx and c.state = '已处理') AS YCL_COUNT,
+			(select ORG_NAME from e_repair_task_list_team where task_list_idx = l.idx and repair_type = '1') as REPAIR_TEAM_MAC,
+			(select ORG_NAME from e_repair_task_list_team where task_list_idx = l.idx and repair_type = '2') as REPAIR_TEAM_ELC,
+			(select count(*) from jxpz_attachment_manage a where a.record_status = 0 and a.file_type in ('png', 'jpg', 'bmp') and a.attachment_key_idx in (select idx from e_repair_work_order where record_status = 0 and scope_case_idx in (select idx from e_repair_scope_case where record_status = 0 and task_list_idx = l.idx))) AS IMAGE_COUNT
+		FROM
+			E_REPAIR_TASK_LIST L,
+			E_EQUIPMENT_PRIMARY_INFO I,
+			E_SBJX_REPAIR_PLAN_MONTH M
+		WHERE
+			L.EQUIPMENT_IDX = I.IDX
+		AND M.IDX = L.PLAN_MONTH_IDX
+		AND L.RECORD_STATUS = 0
+		AND I.RECORD_STATUS = 0
+	</sql>
+</SqlMap>

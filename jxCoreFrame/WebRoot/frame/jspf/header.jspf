@@ -1,0 +1,130 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@page import="com.yunda.base.context.SystemContext"%>
+<%@page import="com.yunda.frame.common.JXConfig"%>
+<%@page import="com.yunda.frame.common.hibernate.Condition"%>
+<%@page import="com.yunda.frame.common.Constants" %>
+<%
+//应用程序根目录
+String ctx = request.getContextPath();
+//客户端禁用缓存
+response.addHeader("Cache-Control", "no-cache");
+response.addHeader("Pragma", "No-cache");
+response.addDateHeader("Expires", 0);
+
+String browserLang = request.getLocale().toString().toLowerCase();
+// 未处理状态颜色（黄色）
+String WCL_COLOR_CODE = "#ffdc35";
+// 已延期状态颜色（红色）
+String YYQ_COLOR_CODE = "#ff0000";
+// 已处理状态颜色（绿色）
+String YCL_COLOR_CODE = "#00ff00";
+
+%>
+<script language="javascript">
+var Constants = {
+	WclColor : '<%= WCL_COLOR_CODE %>',		// 未处理状态颜色
+	YyqColor : '<%= YYQ_COLOR_CODE %>',		// 已延期状态颜色
+	YclColor : '<%= YCL_COLOR_CODE %>'		// 已处理状态颜色
+};
+var ctx = "<%=ctx%>";
+var uid = '<%=SystemContext.getAcOperator().getOperatorid() %>';<%-- Operator id --%>
+var empid ='${ sessionScope.emp.empid}';
+var uname = '<%=SystemContext.getAcOperator().getOperatorname() %>';<%-- Operator name --%>
+<%-- var teamOrgId = '${sessionScope.tream}';班组ID --%>
+var teamOrgId = '${sessionScope.org.orgid}'; <%-- 当前登录人员部门ID --%>
+var teamOrgName = '${sessionScope.org.orgname}';
+var Condition = {};
+/** 以下是查询条件常量，一一对应com.yunda.frame.common.hibernate.Condition的所有常量 */
+Condition.EQ = <%=Condition.EQ%>;
+Condition.ALL_EQ = <%=Condition.ALL_EQ%>;
+Condition.GT = <%=Condition.GT%>;
+Condition.GE = <%=Condition.GE%>;
+Condition.LT = <%=Condition.LT%>;
+Condition.LE = <%=Condition.LE%>;
+Condition.BETWEEN = <%=Condition.BETWEEN%>;
+Condition.LIKE = <%=Condition.LIKE%>;
+Condition.IN = <%=Condition.IN%>;
+Condition.EQ_PROPERTY = <%=Condition.EQ_PROPERTY%>;
+Condition.GT_PROPERTY = <%=Condition.GT_PROPERTY%>;
+Condition.GE_PROPERTY = <%=Condition.GE_PROPERTY%>;
+Condition.LT_PROPERTY = <%=Condition.LT_PROPERTY%>;
+Condition.LE_PROPERTY = <%=Condition.LE_PROPERTY%>;
+Condition.NOT = <%=Condition.NOT%>;
+Condition.PK_EQ = <%=Condition.PK_EQ%>;
+Condition.ILIKE = <%=Condition.ILIKE%>;
+Condition.IS_EMPTY = <%=Condition.IS_EMPTY%>;
+Condition.IS_NOT_EMPTY = <%=Condition.IS_NOT_EMPTY%>;	
+Condition.IS_NOT_NULL = <%=Condition.IS_NOT_NULL%>;
+Condition.IS_NULL = <%=Condition.IS_NULL%>;
+Condition.NE = <%=Condition.NE%>;
+Condition.NE_PROPERTY = <%=Condition.NE_PROPERTY%>;
+Condition.SIZE_EQ = <%=Condition.SIZE_EQ%>;
+Condition.SIZE_GE = <%=Condition.SIZE_GE%>;
+Condition.SIZE_GT = <%=Condition.SIZE_GT%>;
+Condition.SIZE_LE = <%=Condition.SIZE_LE%>;
+Condition.SIZE_LT = <%=Condition.SIZE_LT%>;
+Condition.SIZE_NE = <%=Condition.SIZE_NE%>;	
+Condition.SQL = <%=Condition.SQL%>;
+Condition.SQL_PARAM = <%=Condition.SQL_PARAM%>;
+Condition.SQL_PARAMS = <%=Condition.SQL_PARAMS%>;
+Condition.AND = <%=Condition.AND%>;
+Condition.OR = <%=Condition.OR%>;
+Condition.CONJUNCTION = <%=Condition.CONJUNCTION%>;
+Condition.DISJUNCTION = <%=Condition.DISJUNCTION%>;
+Condition.LLIKE = <%=Condition.LLIKE%>;
+//获取报表文件根路径的方法，报表上下文路径
+function getReportPath(){
+	return '<%=JXConfig.getInstance().getReportContext()%>';
+}
+
+var orgRootName = '<%=JXConfig.getInstance().getOrgRootName()%>';//单位树根节点显示用
+var orgTopRootName = '<%=JXConfig.getInstance().getOrgTopRootName()%>';//配属局树根节点显示用
+
+var browserLang = '<%=browserLang %>' ;
+
+</script>
+<link href="<%=ctx%>/frame/resources/css/iconExt.jsp" rel="stylesheet" type="text/css">
+<link href="<%=ctx%>/frame/resources/ext-3.4.0/resources/css/ext-all.css" rel="stylesheet" type="text/css">
+<!-- 设备系统通用样式 -->
+<link href="<%=ctx%>/jsp/sb/base/css/common.css" rel="stylesheet" type="text/css">
+<style>
+<%-- 修改工具栏checkbox,radio对齐方式 --%>
+.x-toolbar-cell .x-form-checkbox, .x-toolbar-cell .x-form-radio{
+	vertical-align: 3px;
+}
+.ext-ie .x-toolbar-cell .x-form-cb-label{
+	vertical-align: top;
+	top: 4px;
+}
+.editCell{
+		background-color: rgb(190, 228, 244);
+	}
+.unEditCell {
+		background-color: rgb(199, 237, 204);
+}
+<%-- 修改网页链接<a>访问后、鼠标移上时的字体样式 --%>
+a:VISITED { color:blue; }
+a:HOVER { color:green; font-weight:bold; }
+<%-- 工单处理状态颜色 --%>
+.wcl-color {
+	color: <%= WCL_COLOR_CODE %>
+}
+.yyq-color {
+	color: <%= YYQ_COLOR_CODE %>
+}
+.ycl-color {
+	color: <%= YCL_COLOR_CODE %>
+}
+</style>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ext-base-debug.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ext-all-debug.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-<%=browserLang %>.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/i18n-lang-<%=browserLang %>.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/MyExt.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/js/MyJson.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-yunda.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/js/JX-Common.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/My97DatePicker/4.8/WdatePicker.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/My97DatePicker/Ext-My97-DateField.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Grid.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/js/Report.js"></script>

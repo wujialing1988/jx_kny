@@ -1,0 +1,245 @@
+body {
+	margin: 0;
+	padding-bottom: 20px;
+	padding-top: 52px;
+	background: url('../images/login/main_back.gif') 0px 0px repeat-x;
+}
+
+#header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 52px;
+	background: url("../images/login/header_back.gif") 0px 0px repeat-x;
+}
+
+.headerLeft {
+	float: left;
+	width:50%;
+	height:52px;
+	background:url('../images/login/header_left2.gif') 0px 0px no-repeat;
+}
+
+.headerText {
+	margin-top:2px;
+	padding-left:70px;
+	line-height:52px;
+	font-size:28px;
+	//font-family:Microsoft YaHei; 
+	//font-family:KaiTi;
+	font-family:DFKai-SB;
+	font-weight:900;
+	color: #fff;
+}
+
+.headerRight {
+	float: right;
+	margin-right: 10px;
+	color: #fff;
+}
+
+.headerBtnCutting {
+	float: left;
+	width: 11px;
+	height: 52px;
+	background: url("../images/login/hander_right_cutting.gif") 0px 0px
+		repeat;
+}
+
+.headerSupportBtn {
+	float: left;
+	width: 43px;
+	height: 52px;
+	cursor: hand;
+	background: url("../images/login/header_support_btn.gif") 0px 0px repeat;
+}
+
+.headerSupportBtn_mov {
+	float: left;
+	width: 43px;
+	height: 52px;
+	cursor: hand;
+	background: url("../images/login/header_support_btn_mov.gif") 0px 0px
+		repeat;
+}
+
+.headerAboutBtn {
+	float: left;
+	width: 43px;
+	height: 52px;
+	background: url("../images/login/header_about_btn.gif") 0px 0px repeat;
+	cursor: hand;
+}
+
+.headerAboutBtn_mov {
+	float: left;
+	width: 43px;
+	height: 52px;
+	background: url("../images/login/header_about_btn_mov.gif") 0px 0px
+		repeat;
+	cursor: hand;
+}
+
+#content {
+	position: absolute;
+	width: 100%;
+	top: 257px;
+}
+
+.loginDiv {
+	background: url('../images/login/main_login_back.jpg') 0px 0px repeat-x;
+	width: 439px;
+	height: 326px;
+	overflow: hidden;
+	padding: 0px;
+}
+
+.icoDiv {
+	float: left;
+	width: 144px;
+	height: 156px;
+	padding: 0px;
+	margin-top: 56px;
+	margin-left: 15px;
+	margin-right: 20px;
+}
+
+.fromDiv {
+	float: right;
+	width: 260px;
+	height: 130px;
+	margin-top: 71px;
+	overflow: hidden;
+}
+
+.msgDiv {
+	float: left;
+	width: 220px;
+	margin-left: 10px;
+	height: 27px;
+	overflow: hidden;
+}
+
+.msgIco {
+	float: left;
+	width: 20px;
+	height: 26px;
+	background: url('../images/login/main_login_light_ico.gif') 0px 0px
+		repeat-x;
+}
+
+.msgText {
+	float: left;
+	height: 24px;
+	padding-top: 3px;
+	margin-left: 10px;
+	font-size: 12px;
+	//color: #797f84;
+	color: red;
+}
+
+.loginInputDiv {
+	float: left;
+	width: 180px;
+	height: 28px;
+	margin-left: 5px;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	margin-left: 70px;
+	text-align: left;
+}
+
+.textInput {
+	width: 150px;
+	height: 18px;
+	float: left;
+	color: #000;
+	border: 1px solid #999;
+	background-color: #fff;
+}
+
+.textInput_ov {
+	width: 150px;
+	height: 18px;
+	float: left;
+	color: #454545;
+	border: 1px solid #BC6F00;
+	background-color: #FFFBCC;
+}
+
+.ckInput {
+	width: 89px;
+	height: 19px;
+	float: left;
+	color: #000;
+	margin-right: 10px;
+	border: 1px solid #999;
+	background-color: #fff;
+}
+
+.ckInput_ov {
+	width: 89px;
+	height: 19px;
+	float: left;
+	color: #454545;
+	margin-right: 10px;
+	border: 1px solid #BC6F00;
+	background-color: #FFFBCC;
+}
+
+.loginBtnDiv {
+	width: 100%;
+	margin-left: 18px;
+	margin-top: 8px;
+}
+
+.subBtn {
+	background: url('../images/login/btn_login.gif') 0px 0px repeat-x;
+	height: 25px;
+	width: 89px;
+	float: left;
+	cursor: hand;
+	margin-right: 24px;
+}
+
+.subBtn_mov {
+	background: url('../images/login/btn_login_mov.gif') 0px 0px repeat-x;
+	height: 25px;
+	width: 89px;
+	float: left;
+	cursor: hand;
+	margin-right: 24px;
+}
+
+.resetBtn {
+	background: url('../images/login/btn_reset.gif') 0px 0px repeat-x;
+	height: 25px;
+	width: 89px;
+	float: left;
+	cursor: hand;
+}
+
+.resetBtn_mov {
+	background: url('../images/login/btn_reset_mov.gif') 0px 0px repeat-x;
+	height: 25px;
+	width: 89px;
+	float: left;
+	cursor: hand;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 12px;
+	font-family: Arial, 'Times New Roman' !important;
+	color: #9bacc5;
+	height: 35px;
+}
+
+html>body #footer {
+	position: fixed;
+}

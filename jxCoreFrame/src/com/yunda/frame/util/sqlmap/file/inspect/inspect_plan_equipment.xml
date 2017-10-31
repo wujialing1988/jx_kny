@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- web端设备巡检分页查询 -->
+	<sql id="queryPageList">
+		select * from (
+			select t.*,
+				mac.inspect_emp as "mac_inspect_emp",
+				mac.inspect_empid as "mac_inspect_empid",
+				mac.entrust_inspect_emp as "entrust_mac_inspect_emp",
+				mac.entrust_inspect_empid as "entrust_mac_inspect_empid",
+				elc.inspect_emp as "elc_inspect_emp",
+				elc.inspect_empid as "elc_inspect_empid",
+				elc.entrust_inspect_emp as "entrust_elc_inspect_emp",
+				elc.entrust_inspect_empid as "entrust_elc_inspect_empid" 
+			from (
+					select t.idx,
+				   	t.plan_idx,
+				 	t.equipment_idx,
+				 	p.plan_start_date,
+				 	p.plan_end_date,
+				 	t.real_begin_time,
+				 	t.real_end_time,
+				  	t.seq_no,
+					t.check_result,
+					t.check_result_desc,
+					t.use_worker,
+					t.use_worker_id,
+					i.class_code,
+					i.class_name,
+					i.equipment_code,
+					i.equipment_name,
+					i.buy_date,
+					i.fixed_asset_no,
+					i.fixed_asset_value,
+					i.model,
+					i.specification,
+					i.mechanical_coefficient,
+					i.electric_coefficient,
+					i.make_date,
+					i.make_factory,
+					i.use_place,
+					i.manage_class,
+					(select count(*) from e_inspect_record where record_status = 0 and plan_equipment_idx = t.idx and check_result is null) as wcl_count,
+					(select count(*) from e_inspect_record where record_status = 0 and plan_equipment_idx = t.idx and check_result is not null) as ycl_count,
+					(select count(*) from jxpz_attachment_manage a where a.record_status = 0 and a.file_type in ('png', 'jpg', 'bmp') and (a.attachment_key_idx = t.idx or a.attachment_key_idx in (select idx from e_inspect_record where record_status = 0 and plan_equipment_idx = t.idx))) as image_count
+				from
+					e_inspect_plan_equipment t, e_equipment_primary_info i, e_inspect_plan p
+		 		where 
+		 			i.idx = t.equipment_idx and t.plan_idx = p.idx and i.record_status = 0 and t.record_status = 0 and p.record_status = 0) t 
+			left join
+	      		(select e.plan_equipment_idx, e.inspect_emp, e.inspect_empid, e.entrust_inspect_emp, e.entrust_inspect_empid from e_inspect_plan_equipment_emp e where e.record_status = 0 and e.repair_type = 1) mac 
+			on t.idx = mac.plan_equipment_idx
+			left join
+	     		 (select e.plan_equipment_idx, e.inspect_emp, e.inspect_empid, e.entrust_inspect_emp, e.entrust_inspect_empid from e_inspect_plan_equipment_emp e where e.record_status = 0 and e.repair_type = 2) elc 
+			on t.idx = elc.plan_equipment_idx
+		) t where 0 = 0
+	</sql>
+	
+	<!-- pda端设备巡检分页查询 -->
+	<sql id="queryPageList2">
+		SELECT
+			a.idx,
+			a.plan_idx,
+			a.equipment_idx,
+			a.seq_no,
+			t.check_result,
+			a.check_result_desc,
+			a.use_worker,
+			a.use_worker_id,
+			a.real_begin_time,
+			a.real_end_time,
+			i.class_code,
+			i.class_name,
+			i.equipment_code,
+			i.equipment_name,
+			i.buy_date,
+			i.fixed_asset_no,
+			i.fixed_asset_value,
+			i.model,
+			i.specification,
+			i.mechanical_coefficient,
+			i.electric_coefficient,
+			i.make_date,
+			i.make_factory,
+			i.use_place,
+			t.wcl_count,
+			t.ycl_count
+		FROM
+			(
+				SELECT DISTINCT
+					t.PLAN_EQUIPMENT_IDX,
+					t.check_result,
+					t.wcl_count,
+					t.ycl_count
+				FROM
+					(
+						SELECT
+							t.*, (
+								SELECT
+									count(*)
+								FROM
+									e_inspect_plan_equipment_emp a,
+									e_inspect_record b
+								WHERE
+									a.record_status = 0
+								AND b.record_status = 0
+								AND a.plan_equipment_idx = b.plan_equipment_idx
+								AND a.repair_type = b.repair_type
+								AND a.plan_equipment_idx = t.plan_equipment_idx
+								AND b.check_result IS NULL
+				                <!-- 【?】是当前系统操作人员id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getEmpid() -->
+								AND (','||a.inspect_empid||',' LIKE ',%?%,' OR (','|| a.entrust_inspect_empid||',') LIKE ',%?%,')
+							) AS wcl_count,
+							(
+								SELECT
+									count(*)
+								FROM
+									e_inspect_plan_equipment_emp a,
+									e_inspect_record b
+								WHERE
+									a.record_status = 0
+								AND b.record_status = 0
+								AND a.plan_equipment_idx = b.plan_equipment_idx
+								AND a.repair_type = b.repair_type
+								AND a.plan_equipment_idx = t.plan_equipment_idx
+								AND b.check_result IS NOT NULL
+				                <!-- 【?】是当前系统操作人员id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getEmpid() -->
+								AND (','||a.inspect_empid||',' LIKE ',%?%,' OR (','|| a.entrust_inspect_empid||',') LIKE ',%?%,')
+							) AS ycl_count
+						FROM
+							E_INSPECT_PLAN_EQUIPMENT_EMP t
+						WHERE
+							t.RECORD_STATUS = 0
+			                <!-- 【?】是当前系统操作人员id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getEmpid() -->
+							AND (','||t.inspect_empid||',' LIKE ',%?%,' OR (','||t.entrust_inspect_empid||',') LIKE ',%?%,')
+					) t
+			) t,
+			e_inspect_plan_equipment a,
+			e_equipment_primary_info i
+		WHERE
+			a.RECORD_STATUS = 0
+		AND a.IDX = t.PLAN_EQUIPMENT_IDX
+		AND a.EQUIPMENT_IDX = i.IDX
+	</sql>
+	
+	<!-- pda端设备巡检分页查询，如果操作人员是工长身份，则可以查询其所在班组所有巡检任务 -->
+	<sql id="queryPageList2GZ">
+		SELECT
+			a.idx,
+			a.plan_idx,
+			a.equipment_idx,
+			a.seq_no,
+			t.check_result,
+			a.check_result_desc,
+			a.use_worker,
+			a.use_worker_id,
+			a.real_begin_time,
+			a.real_end_time,
+			i.class_code,
+			i.class_name,
+			i.equipment_code,
+			i.equipment_name,
+			i.buy_date,
+			i.fixed_asset_no,
+			i.fixed_asset_value,
+			i.model,
+			i.specification,
+			i.mechanical_coefficient,
+			i.electric_coefficient,
+			i.make_date,
+			i.make_factory,
+			i.use_place,
+			t.wcl_count,
+			t.ycl_count
+		FROM
+			(
+				SELECT DISTINCT
+					t.PLAN_EQUIPMENT_IDX,
+					t.check_result,
+					t.wcl_count,
+					t.ycl_count
+				FROM
+					(
+						SELECT
+							t.*, (
+								SELECT
+									count(*)
+								FROM
+									e_inspect_plan_equipment_emp a,
+									e_inspect_record b
+								WHERE
+									a.record_status = 0
+								AND b.record_status = 0
+								AND a.plan_equipment_idx = b.plan_equipment_idx
+								AND a.repair_type = b.repair_type
+								AND a.plan_equipment_idx = t.plan_equipment_idx
+								AND b.check_result IS NULL
+				                <!-- 【?】是当前系统操作人员所在班组id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getOrgid() -->
+								AND (','||a.inspect_orgid||',' LIKE ',%?%,' OR (','||a.entrust_inspect_orgid||',') LIKE ',%?%,')
+							) AS wcl_count,
+							(
+								SELECT
+									count(*)
+								FROM
+									e_inspect_plan_equipment_emp a,
+									e_inspect_record b
+								WHERE
+									a.record_status = 0
+								AND b.record_status = 0
+								AND a.plan_equipment_idx = b.plan_equipment_idx
+								AND a.repair_type = b.repair_type
+								AND a.plan_equipment_idx = t.plan_equipment_idx
+								AND b.check_result IS NOT NULL
+				                <!-- 【?】是当前系统操作人员所在班组id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getOrgid() -->
+								AND (','||a.inspect_orgid||',' LIKE ',%?%,' OR (','||a.entrust_inspect_orgid||',') LIKE ',%?%,')
+							) AS ycl_count
+						FROM
+							E_INSPECT_PLAN_EQUIPMENT_EMP t
+						WHERE
+							t.RECORD_STATUS = 0
+			                <!-- 【?】是当前系统操作人员所在班组id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getOrgid() -->
+							AND (','||t.inspect_orgid||',' LIKE ',%?%,' OR (','||t.entrust_inspect_orgid||',') LIKE ',%?%,')
+					) t
+			) t,
+			e_inspect_plan_equipment a,
+			e_equipment_primary_info i
+		WHERE
+			a.RECORD_STATUS = 0
+		AND a.IDX = t.PLAN_EQUIPMENT_IDX
+		AND a.EQUIPMENT_IDX = i.IDX
+	</sql>
+	
+	<!-- 设备巡检日志分页查询 -->
+	<sql id="queryPageList3">
+		SELECT
+			A.IDX,
+			A.EQUIPMENT_IDX,
+			B.ROUTE_NAME,
+			B.PLAN_START_DATE,
+			B.PLAN_END_DATE,
+			A.REAL_BEGIN_TIME,			<!-- 实际开工时间 -->
+			A.REAL_END_TIME,			<!-- 实际完工时间 -->
+			A.USE_WORKER,
+			A.USE_WORKER_ID,
+			A.CHECK_RESULT,
+			A.CHECK_RESULT_DESC,
+			<!-- 实际机械巡检人 -->
+		  	(select WMSYS.WM_CONCAT(distinct t.inspect_worker) from e_inspect_record t where t.record_status = 0 and t.plan_equipment_idx = a.idx and repair_type = 1) AS MAC_INSPECT_EMP,
+			<!-- 实际电气巡检人 -->
+		  	(select WMSYS.WM_CONCAT(distinct t.inspect_worker) from e_inspect_record t where t.record_status = 0 and t.plan_equipment_idx = a.idx and repair_type = 2) AS ELC_INSPECT_EMP,
+			<!-- 未处理巡检项目 -->
+			(select count(*) from e_inspect_record where record_status = 0 and plan_equipment_idx = a.idx and check_result is null) AS WCL_COUNT,
+			<!-- 已处理巡检项目 -->
+			(select count(*) from e_inspect_record where record_status = 0 and plan_equipment_idx = a.idx and check_result is not null) AS YCL_COUNT
+		FROM
+			E_INSPECT_PLAN_EQUIPMENT A,
+			E_INSPECT_PLAN B
+		WHERE
+			A.RECORD_STATUS = 0
+		AND B.RECORD_STATUS = 0
+		AND A.PLAN_IDX = B.IDX
+	</sql>
+</SqlMap>

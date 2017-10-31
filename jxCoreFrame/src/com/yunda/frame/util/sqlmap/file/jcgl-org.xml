@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 组织机构 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 查询所有状态为running的组织机构 -->
+	<sql id="findRunningOrg">
+	<![CDATA[
+		from OmOrganization where status = 'running' 
+	]]>
+	</sql>
+	
+	<!-- 自定义字段查询  -->
+	<sql id="findByField">
+	<![CDATA[
+		from OmOrganization where ? = '?' and status = 'running'
+	]]>
+	</sql>
+
+	<!-- 查询组织机构跟信息 -->
+	<sql id="findOrgRoot">
+	<![CDATA[
+		from OmOrganization where parentorgid is null and status = 'running' order by sortno
+	]]>
+	</sql>
+	
+	<!-- 查询多个组织机构信息 -->
+	<sql id="findByIds">
+	<![CDATA[
+		from OmOrganization where orgid in (?) and status = 'running'
+	]]>
+	</sql>
+
+	<!-- 根据orgcode模糊查询组织机构信息 -->
+	<sql id="findByCode">
+	<![CDATA[
+		from OmOrganization where orgcode like ? and status = 'running'
+	]]>
+	</sql>
+	
+	<!-- 查询人员所属的组织机构 -->
+	<sql id="findByEmpId">
+	<![CDATA[
+		from OmOrganization where orgid = (
+			select id.orgid from OmEmporg where id.empid = (
+				select empid from OmEmployee where empid = ?
+			)
+		) and status = 'running'
+	]]>
+	</sql>
+	
+	<!-- 获得用户可管理的组织机构列表 -->
+	<sql id="findOrgByUserManagerToPage">
+	<![CDATA[
+		from OmOrganization where orgid in (
+				select orgidlist from OmEmployee where empid = ?
+		) and status = 'running'
+	]]>
+	</sql>
+	
+	<!-- 获得操作员所属的组织机构 -->
+	<sql id="findByOperator">
+	<![CDATA[
+		select o from OmOrganization o , OmEmployee e, OmEmporg eo 
+		where o.orgid = eo.id.orgid and eo.id.empid = e.empid 
+		and e.operatorid = ?
+	]]>
+	</sql>
+	
+	<!-- 查询指定机构下属于某个级别的子机构 -->
+	<sql id="findByDegree">
+	<![CDATA[
+		from OmOrganization where orgseq like ?
+		and orgseq <> ?
+		and status = 'running'
+		and orgdegree = ? 
+	]]>
+	</sql>
+	
+	<!-- 查询指定机构下属所有子机构 -->
+	<sql id="findTreeByLevel">
+	<![CDATA[
+		with org as (
+			select 
+			ORGID as "orgid", ORGCODE as "orgcode", ORGNAME as "orgname", ORGLEVEL as "orglevel",
+			ORGDEGREE as "orgdegree", PARENTORGID as "parentorgid", ORGSEQ as "orgseq",
+			ORGTYPE as "orgtype",	ORGADDR as "orgaddr", ZIPCODE as "zipcode", MANAPOSITION as "manaposition",
+			MANAGERID as "managerid", ORGMANAGER as "orgmanager", LINKMAN as "linkman",
+			LINKTEL as "linktel",	EMAIL as "email", WEBURL as "weburl", STARTDATE as "startdate",
+			ENDDATE as "enddate",STATUS as "status", AREA as "area", CREATETIME as "createtime",
+			LASTUPDATE as "lastupdate", UPDATOR as "updator", SORTNO as "sortno", ISLEAF as "isleaf",
+			SUBCOUNT as "subcount", REMARK as "remark"
+			from om_organization
+			where status = 'running' #orglevel
+		)
+		select org.* from org
+		where 1=1 #level #currentOrg
+		start with "orgid" = #orgId
+		connect by prior "orgid" = "parentorgid"
+		order siblings by "sortno" 
+	]]>
+	</sql>
+	
+	<!-- 查询指定机构下属所有子机构(支持分页) -->
+	<sql id="findAllChilds">
+	<![CDATA[
+		with org as (select ORGID as "orgid", ORGCODE as "orgcode", ORGNAME as "orgname", ORGLEVEL as "orglevel",
+		ORGDEGREE as "orgdegree", PARENTORGID as "parentorgid", ORGSEQ as "orgseq",
+		ORGTYPE as "orgtype",	ORGADDR as "orgaddr", ZIPCODE as "zipcode", MANAPOSITION as "manaposition",
+		MANAGERID as "managerid", ORGMANAGER as "orgmanager", LINKMAN as "linkman",
+		LINKTEL as "linktel",	EMAIL as "email", WEBURL as "weburl", STARTDATE as "startdate",
+		ENDDATE as "enddate",STATUS as "status", AREA as "area", CREATETIME as "createtime",
+		LASTUPDATE as "lastupdate", UPDATOR as "updator", SORTNO as "sortno", ISLEAF as "isleaf",
+		SUBCOUNT as "subcount", REMARK as "remark"
+		from om_organization
+		where status = 'running'
+		) select * from org where 1=1 ? start with "orgid" = ?
+		connect by prior "orgid" = "parentorgid" order siblings by "sortno" 
+	]]>
+	</sql>
+	
+	<!-- 查询指定机构的上级机构(包含当前参数机构) -->
+	<sql id="findUpperByDegree">
+	<![CDATA[
+		select 
+			ORGID as "orgid", ORGCODE as "orgcode", ORGNAME as "orgname", ORGLEVEL as "orglevel",
+			ORGDEGREE as "orgdegree", PARENTORGID as "parentorgid", ORGSEQ as "orgseq",
+			ORGTYPE as "orgtype",	ORGADDR as "orgaddr", ZIPCODE as "zipcode", MANAPOSITION as "manaposition",
+			MANAGERID as "managerid", ORGMANAGER as "orgmanager", LINKMAN as "linkman",
+			LINKTEL as "linktel",	EMAIL as "email", WEBURL as "weburl", STARTDATE as "startdate",
+			ENDDATE as "enddate",STATUS as "status", AREA as "area", CREATETIME as "createtime",
+			LASTUPDATE as "lastupdate", UPDATOR as "updator", SORTNO as "sortno", ISLEAF as "isleaf",
+			SUBCOUNT as "subcount", REMARK as "remark" 
+		from om_organization
+		where 1=1 ?
+		start with orgid = ? 
+		connect by prior parentorgid = orgid
+	]]>
+	</sql>
+	
+	<!-- 查询组织机构的名称序列 -->
+	<sql id="findListForOrgNameSeqByOrgId">
+	<![CDATA[
+		select 
+			ORGID as "orgid", ORGCODE as "orgcode", ORGNAME as "orgname", ORGLEVEL as "orglevel",
+			ORGDEGREE as "orgdegree", PARENTORGID as "parentorgid", ORGSEQ as "orgseq",
+			ORGTYPE as "orgtype",	ORGADDR as "orgaddr", ZIPCODE as "zipcode", MANAPOSITION as "manaposition",
+			MANAGERID as "managerid", ORGMANAGER as "orgmanager", LINKMAN as "linkman",
+			LINKTEL as "linktel",	EMAIL as "email", WEBURL as "weburl", STARTDATE as "startdate",
+			ENDDATE as "enddate",STATUS as "status", AREA as "area", CREATETIME as "createtime",
+			LASTUPDATE as "lastupdate", UPDATOR as "updator", SORTNO as "sortno", ISLEAF as "isleaf",
+			SUBCOUNT as "subcount", REMARK as "remark" 
+		from om_organization
+		start with orgid = ? 
+		connect by  orgid = prior parentorgid 
+		order by orglevel desc
+	]]>
+	</sql>
+	
+	<!-- ImmediatelyOrgManager.findSomeLevelOrgTree -->
+	<sql id="findSomeLevelOrgTree1">
+	<![CDATA[
+		select orgid as "orgid",
+			   orgname as "orgname",
+			   orgdegree as "orgdegree",
+			   orgseq as "orgseq",
+				(select count(1) from om_organization where parentorgid = t.orgid and status = 'running' ) "equalsDegreeCount",
+			   orgcode as "orgcode"
+		from om_organization t where parentorgid = ? and status = 'running' order by sortno
+	]]>
+	</sql>
+	
+	<!--  -->
+	<sql id="findSomeLevelOrgTree2">
+	<![CDATA[
+		select 
+			   orgid as "orgid",
+			   orgname as "orgname",
+			   orgdegree as "orgdegree",
+			   orgseq as "orgseq",
+		(select count(1) from om_organization where status = 'running' and orgdegree = '?' start with orgid = t.orgid connect by prior orgid = parentorgid) "equalsDegreeCount",
+        		orgcode as "orgcode"
+        from om_organization t where parentorgid = ? and status = 'running' order by sortno
+	]]>
+	</sql>
+	
+	<!-- 根据岗位ID获取其所属的组织机构 -->
+	<sql id="findByPositionid">
+	<![CDATA[
+		select a from OmOrganization a, OmPosition b where a.orgid = b.orgid and b.positionid = ? and a.status = 'running'
+	]]>
+	</sql>
+</SqlMap>	

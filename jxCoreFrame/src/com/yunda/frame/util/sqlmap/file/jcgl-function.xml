@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 角色 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 根据登录人ID， 获取其对应的角色ID -->
+	<sql id="findByOperatorIdAndAppCode">
+	<![CDATA[
+		select a 
+		from AcFunction a, AcRolefunc b, AcApplication c, AcFuncgroup d
+		where a.funccode = b.id.funccode and a.funcgroupid = d.funcgroupid and c.appid = d.appid
+		and b.id.roleid in (?) and c.appcode = '?'
+	]]>
+	</sql>	
+	<!-- 获取指定系统应用下对应功能名称的应用功能 -->
+	<sql id="findByFuncnameAndAppcode">
+	<![CDATA[
+		select a 
+		from AcFunction a, AcApplication c, AcFuncgroup d
+		where a.funcgroupid = d.funcgroupid and c.appid = d.appid
+		and a.funcname = '?' and c.appcode = '?'
+	]]>
+	</sql>
+	
+		<!-- 获取指定系统应用下对应功能名称的应用功能 -->
+	<sql id="findRolesByNameAndAppId">
+	<![CDATA[
+		select ar.roleid from ac_rolefunc rf
+		inner join ac_role ar on rf.roleid = ar.roleid
+		inner join ac_application ap on ap.appid = rf.appid
+		inner join ac_funcgroup g on g.appid = ap.appid
+		inner join ac_function f on f.funccode = rf.funccode and f.funcgroupid = g.funcgroupid
+		where f.funcname = '?' and ap.appcode = '?' 
+	]]>
+	</sql>
+	
+</SqlMap>	

@@ -1,0 +1,99 @@
+<SqlMap>
+	<!-- 统计设备在一段时间内发生故障的次数 -->
+	<sql id="queryPageStatistics">
+		SELECT
+			T.EQUIPMENT_IDX,
+			T.EQUIPMENT_CODE,
+			T.EQUIPMENT_NAME,
+			T.MODEL,
+			T.SPECIFICATION,
+			T.MAKE_FACTORY,
+			COUNT(*) AS FAULT_COUNT
+		FROM
+			(
+				SELECT
+					T.EQUIPMENT_IDX,
+					I.EQUIPMENT_CODE,
+					I.EQUIPMENT_NAME,
+					I.MODEL,
+					I.SPECIFICATION,
+					I.MAKE_FACTORY
+				FROM
+					E_FAULT_ORDER T,
+					E_EQUIPMENT_PRIMARY_INFO I
+				WHERE
+					T.RECORD_STATUS = 0
+				AND T.EQUIPMENT_IDX = I.IDX
+				AND T.FAULT_OCCUR_TIME &gt; to_date('1988-02-10', 'yyyy-mm-dd')
+				AND T.FAULT_OCCUR_TIME &lt; to_date('2099-01-01', 'yyyy-mm-dd')
+			) T
+		GROUP BY
+			T.EQUIPMENT_IDX,
+			T.EQUIPMENT_CODE,
+			T.EQUIPMENT_NAME,
+			T.MODEL,
+			T.SPECIFICATION,
+			T.MAKE_FACTORY
+		ORDER BY
+			FAULT_COUNT DESC
+	</sql>
+	<!-- 按月度统计设备故障发生次数信息 -->
+	<sql id="queryPageStatisticsByMonth">
+		SELECT
+			b.month,
+			a.count
+		FROM
+			(
+				SELECT
+					to_CHAR(
+						t.FAULT_OCCUR_TIME,
+						'yyyy"年"mm"月"'
+					) MONTH,
+					COUNT(*) AS count
+				FROM
+					e_fault_order t WHERE t.record_status = 0
+				GROUP BY
+					to_char(
+						t.FAULT_OCCUR_TIME,
+						'yyyy"年"mm"月"'
+					)
+			) a
+		RIGHT JOIN (
+			SELECT
+				'2016年01月' month from dual
+			UNION ALL
+				SELECT
+					'2016年02月' month from dual
+				UNION ALL
+					SELECT
+						'2016年03月' month from dual
+					UNION ALL
+						SELECT
+							'2016年04月' month from dual
+						UNION ALL
+							SELECT
+								'2016年05月' month from dual
+							UNION ALL
+								SELECT
+									'2016年06月' month from dual
+								UNION ALL
+									SELECT
+										'2016年07月' month from dual
+									UNION ALL
+										SELECT
+											'2016年08月' month from dual
+										UNION ALL
+											SELECT
+												'2016年09月' month from dual
+											UNION ALL
+												SELECT
+													'2016年10月' month from dual
+												UNION ALL
+													SELECT
+														'2016年11月' month from dual
+													UNION ALL
+														SELECT
+															'2016年12月' month from dual
+		) b ON a.month = b.month ORDER BY b.month
+	</sql>
+</SqlMap>

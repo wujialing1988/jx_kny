@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 组织机构 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 查询多个人员信息 -->
+	<sql id="findByIds">
+	<![CDATA[
+		from OmEmployee where empid in (?)
+	]]>
+	</sql>
+
+	<!-- 根据动态参数条件查询用户信息 -->
+	<sql id="findEmpByField">
+	<![CDATA[
+		from OmEmployee where ? = '?'
+	]]>
+	</sql>
+	
+	<!-- 查询直接归属于指定组织机构或班组的人员 -->
+	<sql id="findListByOrgIdForTargetOrg">
+	<![CDATA[
+		from OmEmployee where empid in (
+			select id.empid from OmEmporg where id.orgid = ?
+		) order by empname asc
+	]]>
+	</sql>
+	
+	<!-- 查询直接归属于一组机构或班组的人员 -->
+	<sql id="findListByOrgIdForTargetOrgs">
+	<![CDATA[
+		from OmEmployee where empid in (
+			select id.empid from OmEmporg where id.orgid in (?)
+		) order by empname asc
+	]]>
+	</sql>	
+	
+	<!-- 查询隶属于某个机构但并不属于该组织下任何岗位的人员信息（机构人员树采用） -->
+	<sql id="findNoPositionByOrgId">
+	<![CDATA[
+		select 
+			emp.*
+		from om_employee emp where emp.empid in (
+			select empid from Om_EmpOrg where orgId = ?
+			minus
+			select oe.empid from Om_Empposition oe, Om_Position op 
+            where  oe.positionid = op.positionid and op.orgid = ?
+		)
+	]]>
+	</sql>
+	
+	<!-- 查询隶属于某个工作组但并不属于该工作组下任何岗位的人员信息（工作组树采用） -->
+	<sql id="findNoPositionByGroupId">
+	<![CDATA[
+		select 
+			emp.*
+		from om_employee emp where emp.empid in (
+			select empid from OM_EMPGROUP where groupid = ?
+			minus
+			select oe.empid from OM_EMPPOSITION oe, Om_Position op 
+            where  oe.positionid = op.positionid and op.orgid = ?
+		)
+	]]>
+	</sql>
+	
+	<!-- 查询隶属于某个机构但并不属于该组织下任何岗位的人员信息（机构人员列表采用） -->
+	<sql id="findNoPositionByOrgId2">
+	<![CDATA[
+		select 
+		emp.empid as "empid", emp.empcode as "empcode", emp.operatorid as "operatorid",
+		emp.userid as "userid", emp.empname as "empname", emp.realname as "realname",
+		emp.gender as "gender", emp.birthdate as "birthdate", to_number(emp.position) as "position",
+		emp.empstatus as "empstatus", emp.cardtype as "cardtype", emp.cardno as "cardno",
+		emp.indate as "indate", emp.outdate as "outdate", emp.otel as "otel", 
+		emp.oaddress as "oaddress", emp.ozipcode as "ozipcode", emp.oemail as "oemail",
+		emp.faxno as "faxno", emp.mobileno as "mobileno", emp.msn as "msn", 
+		emp.htel as "htel", emp.haddress as "haddress", emp.hzipcode as "hzipcode",
+		emp.pemail as "pemail", emp.party as "party", emp.degree as "degree",
+		emp.major as "major", emp.specialty as "specialty", emp.workexp as "workexp",
+		emp.regdate as "regdate", emp.createtime as "createtime", emp.lastmodytime as "lastmodytime",
+		emp.orgidlist as "orgidlist", emp.orgid as "orgid", emp.remark as "remark",
+		emp.CARD_NUM as "cardNum", emp.payId as "payId"
+		from om_employee emp where emp.empid in (
+			select empid from Om_EmpOrg where orgId = ?
+			minus
+			select oe.empid from Om_Empposition oe, Om_Position op 
+            where  oe.positionid = op.positionid and op.orgid = ?
+		)
+	]]>
+	</sql>
+	
+	<!-- 查询隶属于某个机构以及该机构下任何岗位的人员信息（机构人员列表采用） -->
+	<sql id="findNoPositionByOrgId3">
+	<![CDATA[
+		select 
+		emp.empid as "empid", emp.empcode as "empcode", emp.operatorid as "operatorid",
+		emp.userid as "userid", emp.empname as "empname", emp.realname as "realname",
+		emp.gender as "gender", emp.birthdate as "birthdate", to_number(emp.position) as "position",
+		emp.empstatus as "empstatus", emp.cardtype as "cardtype", emp.cardno as "cardno",
+		emp.indate as "indate", emp.outdate as "outdate", emp.otel as "otel", 
+		emp.oaddress as "oaddress", emp.ozipcode as "ozipcode", emp.oemail as "oemail",
+		emp.faxno as "faxno", emp.mobileno as "mobileno", emp.msn as "msn", 
+		emp.htel as "htel", emp.haddress as "haddress", emp.hzipcode as "hzipcode",
+		emp.pemail as "pemail", emp.party as "party", emp.degree as "degree",
+		emp.major as "major", emp.specialty as "specialty", emp.workexp as "workexp",
+		emp.regdate as "regdate", emp.createtime as "createtime", emp.lastmodytime as "lastmodytime",
+		emp.orgidlist as "orgidlist", emp.orgid as "orgid", emp.remark as "remark",
+		emp.CARD_NUM as "cardNum", emp.payId as "payId"
+		from om_employee emp where emp.empid in (
+			select empid from Om_EmpOrg where orgId = ?
+		)
+	]]>
+	</sql>
+	
+	<!-- 查询隶属于某个岗位但并不属于该岗位下任何子岗位的人员信息（机构人员列表采用） -->
+	<sql id="findNoPositionByPosId">
+	<![CDATA[
+		select 
+		emp.empid as "empid", emp.empcode as "empcode", emp.operatorid as "operatorid",
+		emp.userid as "userid", emp.empname as "empname", emp.realname as "realname",
+		emp.gender as "gender", emp.birthdate as "birthdate", to_number(emp.position) as "position",
+		emp.empstatus as "empstatus", emp.cardtype as "cardtype", emp.cardno as "cardno",
+		emp.indate as "indate", emp.outdate as "outdate", emp.otel as "otel", 
+		emp.oaddress as "oaddress", emp.ozipcode as "ozipcode", emp.oemail as "oemail",
+		emp.faxno as "faxno", emp.mobileno as "mobileno", emp.msn as "msn", 
+		emp.htel as "htel", emp.haddress as "haddress", emp.hzipcode as "hzipcode",
+		emp.pemail as "pemail", emp.party as "party", emp.degree as "degree",
+		emp.major as "major", emp.specialty as "specialty", emp.workexp as "workexp",
+		emp.regdate as "regdate", emp.createtime as "createtime", emp.lastmodytime as "lastmodytime",
+		emp.orgidlist as "orgidlist", emp.orgid as "orgid", emp.remark as "remark",
+		emp.CARD_NUM as "cardNum", emp.payId as "payId"
+		from om_employee emp where emp.empid in (select oep.empid from Om_Empposition oep where oep.positionid = ?)
+	]]>
+	</sql>
+	
+	<!-- 查询隶属于某个岗位下的人员（机构人员树采用） -->
+	<sql id="findByPosition">
+	<![CDATA[
+		from OmEmployee where empid in (
+			select id.empid from OmEmpposition where id.positionid = ?
+		)
+	]]>
+	</sql>
+	
+	<!-- 查询直接归属于指定组织机构或班组的人员,并与人员姓名匹配 -->
+	<sql id="findListByOrgIdForTargetOrg2">
+	<![CDATA[
+		from OmEmployee where empid in (
+			select id.empid from OmEmporg where id.orgid = ?
+		) and empname like '?'
+	]]>
+	</sql>
+	
+	<!-- 查询直接归属本组织机构或班组的人员,以及归属本组织机构或班组的子机构的人员 -->
+	<sql id="findListByOrgIdForMultilevelOrg">
+	<![CDATA[
+		from OmEmployee where empid in (
+			select id.empid from OmEmporg where id.orgid in (
+				select orgid from OmOrganization where orgseq like '?%' and status = 'running'
+			)
+		)
+	]]>
+	</sql>
+	
+	<!-- 查询直接归属本组织机构或班组的人员,以及归属本组织机构或班组的子机构的人员 -->
+	<sql id="findListByOrgId">
+	<![CDATA[
+		from OmEmployee where empid in (
+			select id.empid from OmEmporg where id.orgid in (
+				select orgid from OmOrganization where orgseq like '?%' and status = 'running'
+			)
+		)
+	]]>
+	</sql>
+	
+	<!-- 根据操作员Id,获取人员信息 select new OmEmployee(emp.empid,emp.empcode,emp.empname,emp.gender,emp.empstatus,eo.id.orgid,emp.userid,emp.cardno)-->
+	<sql id="findEmpByOperator">
+	<![CDATA[
+	   select new OmEmployee(
+		    emp.empid, emp.empcode, emp.operatorid, emp.userid, emp.empname, emp.realname, 
+			emp.gender, emp.birthdate, emp.position, emp.empstatus, emp.cardtype, emp.cardno, 
+			emp.indate, emp.outdate, emp.otel, emp.oaddress, emp.ozipcode, emp.oemail, emp.faxno, 
+			emp.mobileno, emp.msn, emp.htel, emp.haddress, emp.hzipcode, emp.pemail, emp.party, 
+			emp.degree, emp.major, emp.specialty, emp.workexp, emp.regdate, emp.createtime, 
+			emp.lastmodytime, emp.orgidlist, eo.id.orgid, emp.remark, emp.cardNum
+		)
+	    from OmEmployee emp , OmEmporg eo
+	    where 1=1 and emp.empid = eo.id.empid and emp.operatorid = ?
+	]]>
+	</sql>
+	
+	<sql id="findEmpAndOrgPath">
+	<![CDATA[
+		select 
+		emp.empid as "empid", emp.empcode as "empcode", emp.operatorid as "operatorid",
+		emp.userid as "userid", emp.empname as "empname", emp.realname as "realname",
+		emp.gender as "gender", emp.birthdate as "birthdate", emp.position as "position",
+		emp.empstatus as "empstatus", emp.cardtype as "cardtype", emp.cardno as "cardno",
+		emp.indate as "indate", emp.outdate as "outdate", emp.otel as "otel", 
+		emp.oaddress as "oaddress", emp.ozipcode as "ozipcode", emp.oemail as "oemail",
+		emp.faxno as "faxno", emp.mobileno as "mobileno", emp.msn as "msn", 
+		emp.htel as "htel", emp.haddress as "haddress", emp.hzipcode as "hzipcode",
+		emp.pemail as "pemail", emp.party as "party", emp.degree as "degree",
+		emp.major as "major", emp.specialty as "specialty", emp.workexp as "workexp",
+		emp.regdate as "regdate", emp.createtime as "createtime", emp.lastmodytime as "lastmodytime",
+		emp.orgidlist as "orgidlist", emp.orgid as "orgid", emp.remark as "remark",
+		emp.CARD_NUM as "cardNum", emp.payId as "payId",
+		(
+		  select sys_connect_by_path(orgname,'/') from 
+		  om_organization
+		  where orgdegree = '?'
+		  start with orgid = eo.orgid
+		  connect by prior parentorgid=orgid
+		) as "orgnamepath"
+		from (
+		     select * from om_employee where 1=1 ?
+		) emp
+		left join om_emporg eo on emp.empid = eo.empid
+		left join om_organization org on eo.orgid = org.orgid
+	]]>
+	</sql>
+	
+	<sql id="findEmployee360">
+	<![CDATA[
+		SELECT 
+		EMP.empid as "empid",EMP.empcode as "empcode",EMP.operatorid as "operatorid",EMP.userid as "userid",EMP.empname as "empname",
+		EMP.realname as "realname",EMP.gender as "gender",EMP.birthdate as "birthdate",to_number(EMP.position) as "position",EMP.empstatus as "empstatus",
+		EMP.cardtype as "cardtype",EMP.cardno as "cardno",EMP.indate as "indate",EMP.outdate as "outdate",EMP.otel as "otel",
+		EMP.oaddress as "oaddress",EMP.ozipcode as "ozipcode",EMP.oemail as "oemail",EMP.faxno as "faxno",EMP.mobileno as "mobileno",
+		EMP.msn as "msn",EMP.htel as "htel",EMP.haddress as "haddress",EMP.hzipcode as "hzipcode",EMP.pemail as "pemail",EMP.party as "party",
+		EMP.degree as "degree",EMP.major as "major",EMP.specialty as "specialty",EMP.workexp as "workexp",EMP.regdate as "regdate",
+		EMP.createtime as "createtime",EMP.lastmodytime as "lastmodytime",EMP.orgidlist as "orgidlist",EMP.orgid as "orgid",EMP.remark as "remark",
+		EMP.card_num as "cardNum",EMP.payId as "payId",
+		ORG.orgname as "orgname",
+		(SELECT TO_CHAR(WMSYS.WM_CONCAT(POSINAME)) FROM OM_EMPPOSITION NEP LEFT JOIN OM_POSITION NPOSI ON NEP.POSITIONID = NPOSI.POSITIONID WHERE NEP.EMPID = EMP.EMPID AND (NEP.ISMAIN = 'y')) as "posiname",
+		(SELECT TO_CHAR(WMSYS.WM_CONCAT(NDUTY.DUTYNAME)) FROM OM_EMPPOSITION NEP LEFT JOIN OM_POSITION NPOSI ON NEP.POSITIONID = NPOSI.POSITIONID LEFT JOIN OM_DUTY NDUTY ON NPOSI.DUTYID = NDUTY.DUTYID WHERE NEP.EMPID = EMP.EMPID AND (NEP.ISMAIN = 'y')) as "dutyname",    
+		(
+		  SELECT TO_CHAR(WMSYS.WM_CONCAT(GROUPNAME)) FROM OM_EMPGROUP EG 
+		  LEFT JOIN OM_GROUP GOP ON EG.GROUPID = GOP.GROUPID
+		  WHERE EG.EMPID = EMP.EMPID
+		) as "groupname",
+		(
+		  SELECT TO_CHAR(WMSYS.WM_CONCAT(POSINAME)) FROM OM_EMPPOSITION NEP
+		  LEFT JOIN OM_POSITION NPOSI ON NEP.POSITIONID = NPOSI.POSITIONID
+		  WHERE NEP.EMPID = EMP.EMPID AND (NEP.ISMAIN = 'n' or NEP.ISMAIN IS NULL)
+		) as "nposiname",
+		(
+		  SELECT TO_CHAR(WMSYS.WM_CONCAT(NDUTY.DUTYNAME)) FROM OM_EMPPOSITION NEP
+		  LEFT JOIN OM_POSITION NPOSI ON NEP.POSITIONID = NPOSI.POSITIONID
+		  LEFT JOIN OM_DUTY NDUTY ON NPOSI.DUTYID = NDUTY.DUTYID
+		  WHERE NEP.EMPID = EMP.EMPID AND (NEP.ISMAIN = 'n' or NEP.ISMAIN IS NULL)
+		) as "ndutyname"
+		FROM OM_EMPLOYEE EMP LEFT JOIN OM_EMPORG EO ON EMP.EMPID = EO.EMPID
+		                     LEFT JOIN OM_ORGANIZATION ORG ON EO.ORGID = ORG.ORGID
+       WHERE 1=1
+	]]>
+	</sql>
+</SqlMap>	

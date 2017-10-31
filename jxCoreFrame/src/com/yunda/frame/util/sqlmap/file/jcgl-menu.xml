@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 菜单管理 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+
+	<!-- 查询顶层模块菜单 -->
+	<sql id="findRoot">
+	<![CDATA[
+		from AcMenu where parentsid is null order by displayorder
+	]]>
+	</sql>
+	
+	<!-- 根据参数查询某类层级的菜单 -->
+	<sql id="findBranchOrLeaf">
+	<![CDATA[
+		from AcMenu where parentsid is not null and upper(isleaf) = upper(?)
+	]]>
+	</sql>
+	
+	<!-- 查询多个菜单信息 -->
+	<sql id="findByIds">
+	<![CDATA[
+		from AcMenu where menuid in (?)
+	]]>
+	</sql>
+	
+	<!-- 自定义字段查询  -->
+	<sql id="findByField">
+	<![CDATA[
+		from AcMenu where ? = '?' order by displayorder
+	]]>
+	</sql>
+	
+	<!-- 根据menuname模糊查询菜单信息 -->
+	<sql id="findByName">
+	<![CDATA[
+		from AcMenu where menuname like ? 
+	]]>
+	</sql>
+	
+	<!-- 递归查询入参菜单id下属所有子菜单 -->
+	<sql id="findAllChilds">
+	<![CDATA[
+		select menuid as "menuid", menuname as "menuname", menulabel as "menulabel", menucode as "menucode",
+		isleaf as "isleaf", menuaction as "menuaction", parameter as "parameter", uientry as "uientry",
+		menulevel as "menulevel", rootid as "rootid", parentsid as "parentsid", displayorder as "displayorder",
+		imagepath as "imagepath", expandpath as "expandpath", menuseq as "menuseq", openmode as "openmode",
+		subcount as "subcount", appid as "appid", funccode as "funccode" 
+		from Ac_Menu 
+		where menuid <> '?'
+		start with menuid = '?'
+		connect by prior menuid = parentsid
+		order siblings by displayorder
+	]]>
+	</sql>
+</SqlMap>	

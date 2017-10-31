@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- pda端设备巡检分页查询 -->
+	<sql id="queryPageList">
+		select
+			t.*, (
+				select
+					count(*)
+				from (
+					select
+		                distinct a.idx, a.plan_idx, b.plan_equipment_idx
+		            from
+		                e_inspect_plan_equipment a,
+		                e_inspect_plan_equipment_emp b     
+		            where
+						a.record_status = 0     
+		                and b.record_status = 0     
+		                and b.check_result = '未巡检'     
+		                and a.idx = b.plan_equipment_idx
+		                <!-- 【?】是当前系统操作人员id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getEmpid() -->
+						and (',' || b.inspect_empid || ',' like '%,?,%' or (','||b.entrust_inspect_empid||',') like '%,?,%')
+				) t1 where t1.plan_idx = t.idx
+			) as wxj_count, (
+				select
+					count(*)
+				from (
+					select
+		                distinct a.idx, a.plan_idx, b.plan_equipment_idx
+		            from
+		                e_inspect_plan_equipment a,
+		                e_inspect_plan_equipment_emp b     
+		            where
+						a.record_status = 0     
+		                and b.record_status = 0     
+		                and b.check_result = '已巡检'     
+		                and a.idx = b.plan_equipment_idx
+		                <!-- 【?】是当前系统操作人员id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getEmpid() -->
+						and (','|| b.inspect_empid||',' like '%,?,%' or (','|| b.entrust_inspect_empid||',') like '%,?,%')
+				) t2 where t2.plan_idx = t.idx
+			) as yxj_count
+		from
+			e_inspect_plan t
+	</sql>
+	
+	<!-- pda端设备巡检分页查询，如果操作人员是工长身份，则可以查询其所在班组所有巡检任务 -->
+	<sql id="queryPageListGZ">
+		select
+			t.*, (
+				select
+					count(*)
+				from (
+					select
+		                distinct a.idx, a.plan_idx, b.plan_equipment_idx
+		            from
+		                e_inspect_plan_equipment a,
+		                e_inspect_plan_equipment_emp b     
+		            where
+						a.record_status = 0     
+		                and b.record_status = 0     
+		                and b.check_result = '未巡检'     
+		                and a.idx = b.plan_equipment_idx
+		                <!-- 【?】是当前系统操作人员所在班组id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getOrgid() -->
+						and (','||b.inspect_orgid||',' like '%,?,%' or (','||b.entrust_inspect_orgid||',') like '%,?,%')
+				) t1 where t1.plan_idx = t.idx
+			) as wxj_count, (
+				select
+					count(*)
+				from (
+					select
+		                distinct a.idx, a.plan_idx, b.plan_equipment_idx
+		            from
+		                e_inspect_plan_equipment a,
+		                e_inspect_plan_equipment_emp b     
+		            where
+						a.record_status = 0     
+		                and b.record_status = 0     
+		                and b.check_result = '已巡检'     
+		                and a.idx = b.plan_equipment_idx
+		                <!-- 【?】是当前系统操作人员所在班组id的占位字符，在代码里必须替换为 systemcontext.getuserdata().getOrgid() -->
+						and (','||b.inspect_orgid||',' like '%,?,%' or (','||b.entrust_inspect_orgid||',') like '%,?,%')
+				) t2 where t2.plan_idx = t.idx
+			) as yxj_count
+		from
+			e_inspect_plan t
+	</sql>
+	
+	<!-- pda端设备巡检计划分页查询，用于使用人确认 -->
+	<sql id = "queryPageList2User">
+		SELECT
+			*
+		FROM
+			(
+				select
+					t.*, (
+						select
+							count(*)
+						from
+							e_inspect_plan_equipment e
+						where
+							e.plan_idx = t.idx
+						and e.check_result = '已巡检'
+						and e.record_status = 0
+						and e.use_worker_id is null
+					) yxj_count,
+					(
+						select
+							count(*)
+						from
+							e_inspect_plan_equipment e
+						where
+							e.plan_idx = t.idx
+						and e.check_result = '未巡检'
+						and e.record_status = 0
+					) wxj_count
+				from
+					e_inspect_plan t
+				where
+					t.record_status = 0
+			) T
+		WHERE
+			T.YXJ_COUNT > 0 
+	</sql>
+</SqlMap>

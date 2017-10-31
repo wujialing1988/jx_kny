@@ -1,0 +1,10 @@
+<%@ page import="com.yunda.frame.common.JXConfig"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<script language="javascript">
+Ext.namespace('Attachment');                       												//命名空间
+Attachment.uploadMaxSize = <%=JXConfig.getInstance().getUploadMaxSize()%>;						//设置上传文件体积上限，单位MB
+Attachment.uploadFileType = '<%=JXConfig.getInstance().getUploadFileType()%>';                 	//设置允许上传的文件类型
+Attachment.uploadFileDescription = '<%=JXConfig.getInstance().getUploadFileDescription()%>';   	//设置允许上传文件类型的描述
+</script>
+<script language="javascript" src="<%=request.getContextPath() %>/frame/resources/SWFUpload/swfupload.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/frame/resources/SWFUpload/Attachment.js"></script>

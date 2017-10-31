@@ -1,0 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<script language="javascript" src="<%=request.getContextPath() %>/frame/resources/ext-3.4.0/ux/TreeFilter/PinyinFilter.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/frame/resources/ext-3.4.0/ux/TreeFilter/TreeFilter.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/frame/resources/ext-3.4.0/ux/TreeFilter/MutilTreeFilter.js"></script>

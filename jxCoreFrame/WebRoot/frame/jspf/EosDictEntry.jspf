@@ -1,0 +1,8 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@page import="com.yunda.frame.yhgl.manager.EosDictEntrySelectManager" %>
+<script language="javascript">
+//获取业务数据字段所有记录
+var EosDictEntry_jsonData = '<%= EosDictEntrySelectManager.getAllRecordJSON()%>';
+var EosDictEntry_storeData = Ext.util.JSON.decode(EosDictEntry_jsonData);
+</script>
+<script language="javascript" src="<%=request.getContextPath()%>/frame/resources/js/component/EosDictEntry.js"></script>

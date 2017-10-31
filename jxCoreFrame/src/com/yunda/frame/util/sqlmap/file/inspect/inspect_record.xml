@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<sql id="queryPageList">
+		SELECT
+			T.*, B.INSPECT_EMP,
+			B.INSPECT_EMPID,
+			B.ENTRUST_INSPECT_EMP,
+			B.ENTRUST_INSPECT_EMPID,
+			B.CHECK_RESULT AS EMP_CHECK_RESULT,
+			B.CHECK_RESULT_DESC,
+			(select count(*) from jxpz_attachment_manage a where a.attachment_key_idx = t.idx and a.record_status = 0 and a.file_type in ('png', 'jpg', 'bmp')) AS IMAGE_COUNT
+		FROM
+			E_INSPECT_RECORD T,
+			E_INSPECT_PLAN_EQUIPMENT_EMP B
+		WHERE
+			T.RECORD_STATUS = 0
+		AND B.RECORD_STATUS = 0
+		AND T.PLAN_EQUIPMENT_IDX = B.PLAN_EQUIPMENT_IDX
+		AND T.REPAIR_TYPE = B.REPAIR_TYPE
+	</sql>
+</SqlMap>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 职务 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 自定义字段查询 -->
+	<sql id="findByField">
+	<![CDATA[
+		from OmPosition where ? = '?'
+	]]>
+	</sql>
+	
+	<!-- 根据操作员ID获取其所属的岗位 -->
+	<sql id="findByOperatorid">
+	<![CDATA[
+		select a from OmPosition a, OmEmpposition b, OmEmployee c
+		where a.positionid = b.id.positionid  and b.id.empid = c.empid and c.operatorid = ?
+	]]>
+	</sql>
+	
+	<!-- 根据机构ID获取其直属的岗位（不包含子岗位） -->
+	<sql id="findPertainToOrg">
+	<![CDATA[
+		from OmPosition where orgid = ? and manaposi is null
+	]]>
+	</sql>
+	
+	<!-- 根据工作组ID获取其直属的岗位（不包含子岗位） -->
+	<sql id="findPertainToWorkGroup">
+	<![CDATA[
+		from OmPosition where positionid in (select id.positionid from OmGroupposi where groupid = ?)
+	]]>
+	</sql>
+	
+	<!-- 根据工作组ID获取其下属的岗位（包含子工作组下的岗位及岗位下的子岗位） -->
+	<sql id="findAllPertainToWorkGroup">
+	<![CDATA[
+		select * from Om_Position start with positionid in (
+  			select positionid from Om_Groupposi where groupid in (
+    			SELECT groupid FROM om_group start with groupid = ? connect by prior groupid = parentgroupid
+  			)  
+		) connect by prior positionid = manaposi  
+	]]>
+	</sql>
+	
+	<!-- 根据操作员ID获取其所属的主岗位 -->
+	<sql id="findByEmpidMain">
+	<![CDATA[
+		select a from OmPosition a, OmEmpposition b
+		where a.positionid = b.id.positionid  and b.id.empid = ? and b.ismain = 'y'
+	]]>
+	</sql>
+	
+	<!-- 根据操作员ID获取其所属的次要岗位 -->
+	<sql id="findByEmpid">
+	<![CDATA[
+		select a from OmPosition a, OmEmpposition b
+		where a.positionid = b.id.positionid  and b.id.empid = ? and (b.ismain = 'n' or b.ismain is null)
+	]]>
+	</sql>
+</SqlMap>	

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="struts2" extends="struts-default">
+	   
+	    <interceptors>
+	    	<interceptor name="ExceptionInterceptor" class="com.yunda.common.ExceptionInterceptor"/>
+      			
+      		<interceptor-stack name="yunDaStack">
+    			<interceptor-ref name="alias"/>
+			
+			    <interceptor-ref name="servlet-config"/>
+			
+			    <interceptor-ref name="prepare"/>
+			
+			    <interceptor-ref name="i18n"/>
+			
+			    <interceptor-ref name="chain"/>
+			
+			    <interceptor-ref name="debugging"/>
+			
+			    <interceptor-ref name="profiling"/>
+			
+			    <interceptor-ref name="scoped-model-driven"/>
+			
+			    <interceptor-ref name="model-driven"/>
+			
+			    <interceptor-ref name="fileUpload">
+					<param name="allowedTypes">image/bmp,image/png,image/gif,image/pjpeg,image/jpeg,image/jpg,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/x-zip-compressed,application/octet-stream,text/xml,text/plain,application/pdf</param>
+			    </interceptor-ref>
+			
+			    <interceptor-ref name="checkbox"/>
+			
+			    <interceptor-ref name="static-params"/>
+			
+			    <interceptor-ref name="params">
+			
+			      <param name="excludeParams">dojo\..*</param>
+			
+			    </interceptor-ref>
+			
+			    <interceptor-ref name="conversionError"/>
+			    
+    			<interceptor-ref name="ExceptionInterceptor"/>
+      		</interceptor-stack>      		
+      		
+    	</interceptors>
+    	<default-interceptor-ref name="yunDaStack"/>    	
+		
+		<global-results>  
+		 	<result name="jsppage">${target}</result>			
+			<result name="invalid.token">/region_audit_list.jsp</result>
+			<result name="globerror">/error.jsp</result>
+		 	<result name="disallow">/disallow.jsp</result>	
+		</global-results> 
+		
+		<!-- 照片查看页面跳转 -->
+		<action name="attachment" class="com.yunda.frame.baseapp.upload.action.AttachmentAction" method="images">
+			<result>/jsp/sb/base/jsp/images.jsp</result>
+		</action>		
+    </package>
+    
+    <constant name="struts.configuration.classpath.defaultParentPackage" value="struts2" /> 
+    <constant name="struts.multipart.maxSize" value="114857600" /> 
+    <constant name="struts.custom.i18n.resources" value="i18n"></constant>
+</struts>

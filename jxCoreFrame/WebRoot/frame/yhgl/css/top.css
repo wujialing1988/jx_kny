@@ -1,0 +1,132 @@
+.body{
+	padding: 0px;
+	margin: 0px;
+}
+
+	.sysTitle{
+		background: url(../images/hander/header_back2.gif) 0px 0px repeat-x;
+		height:60px;
+		width: 100%;
+		padding: 0px;
+	}
+		.sysTitleText{
+			background: url(../images/hander/header_back3.gif) 0px 0px no-repeat;
+			float:left;
+			height:60px;
+			width��40%;
+			padding-left:80px;
+			line-height:60px;
+			font-size:28px;
+			font-family:DFKai-SB;
+			font-weight:900;
+			color: #fff;
+		}
+		
+		.sysTitleBar{
+			background: url(../images/hander/but_bar/but_bar_back.gif) 0px 0px repeat-x;
+			float:right;
+			height: 35px;
+			overflow: hidden;
+		}
+		
+			.sysTitleBarLeft{
+				background: url(../images/hander/but_bar/but_bar_left.gif) 0px 0px no-repeat;
+				width: 25px;
+				height: 35px;
+				float: left;
+			}
+
+			.sysTitleBarRight{
+				background: url(../images/hander/but_bar/but_bar_right.gif) 0px 0px no-repeat;
+				width: 25px;
+				height: 35px;
+				float: left;
+			}
+			
+			.sysTitleBarSplit{
+				background: url(../images/hander/but_bar/but_bar_split.gif) 0px 0px no-repeat;
+				width: 1px;
+				height: 35px;
+				float: left;
+				margin-left: 4px;
+				margin-right: 4px;
+			}
+			
+			.sysTitleBarEditPassword{
+				background: url(../images/hander/but_bar/but_bar_but_edit_password.gif) 0px 0px no-repeat;
+				width: 89px;
+				height: 35px;
+				cursor: hand;
+				float: left;
+			}
+			.sysTitleBarEditPassword_mov{
+				background: url(../images/hander/but_bar/but_bar_but_edit_password_mov.gif) 0px 0px no-repeat;
+				width: 89px;
+				height: 35px;
+				cursor: hand;
+				float: left;
+			}
+			
+			
+			.sysTitleBarLoginOut{
+				background: url(../images/hander/but_bar/but_bar_but_login_out.gif) 0px 0px no-repeat;
+				width: 89px;
+				height: 35px;
+				cursor: hand;
+				float: left;
+			}
+			.sysTitleBarLoginOut_mov{
+				background: url(../images/hander/but_bar/but_bar_but_login_out_mov.gif) 0px 0px no-repeat;
+				width: 89px;
+				height: 35px;
+				cursor: hand;
+				float: left;
+			}
+			
+			.acPersonalDeskLayout{
+				background: url(../images/hander/but_bar/ac_personal_desk_layout.png) 0px 0px no-repeat;
+				width: 89px;
+				height: 35px;
+				cursor: hand;
+				float: left;
+			}
+			.acPersonalDeskLayout_mov{
+				background: url(../images/hander/but_bar/ac_personal_desk_layout_mov.png) 0px 0px no-repeat;
+				width: 89px;
+				height: 35px;
+				cursor: hand;
+				float: left;
+			}
+			
+			.sysTitleBarHiddenHeader{
+				background: url(../images/hander/but_bar/but_bar_but_hidden_header.gif) 0px 0px no-repeat;
+				width: 89px;
+				height: 35px;
+				cursor: hand;
+				float: left;
+			}
+			.sysTitleBarHiddenHeader_mov{
+				background: url(../images/hander/but_bar/but_bar_but_hidden_header_mov.gif) 0px 0px no-repeat;
+				width: 89px;
+				height: 35px;
+				cursor: hand;
+				float: left;
+			}
+			
+		.sysTitleUserInfo{
+			float:right;
+			height: 14px;
+			width: auto;
+			background: url(../images/hander/sta_bar/user_ico.gif) 0px 0px no-repeat;
+			padding-left: 20px;
+			font-size: 12px;
+			color: #fff;
+			margin-right: 10px;
+			line-height: 14px;
+			margin-bottom: 3px;
+		}
+	
+	.showText{
+		font-family: Arial, 'Times New Roman' !important;
+	}
+	

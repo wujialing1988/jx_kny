@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 业务字典 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 
+		业务字典分类 
+	-->
+	
+	<!-- 自定义字段查询 -->
+	<sql id="findByField">
+	<![CDATA[
+		from EosDictType where ? = '?'
+	]]>
+	</sql>
+	
+	<!-- 检查业务字典类型代码和类型名称是否存在重复项 -->
+	<sql id="checkUpdate">
+	<![CDATA[
+		from EosDictType where dicttypeid = ? or dicttypename = ?
+	]]>
+	</sql>
+	
+	<!-- 查询多个业务字典类型信息 -->
+	<sql id="findByIds">
+	<![CDATA[
+		from EosDictType where dicttypeid in (?)
+	]]>
+	</sql>
+	
+	<!-- 
+		业务字典项 
+	-->
+	
+	<!-- 检查业务字典项代码和类型名称是否存在重复项 -->
+	<sql id="getEntity">
+	<![CDATA[
+		from EosDictEntry where id.dictid = ? and id.dicttypeid = ? 
+	]]>
+	</sql>
+	
+	<!-- 查询下级菜单 -->
+	<sql id="findTreeChildNodes">
+	<![CDATA[
+		select dicttypeid as "dicttypeid", dictid as "dictid", dictname as "dictname", status as "status",
+		       sortno as "sortno", rank as "rank", parentid as "parentid", seqno as "seqno",
+			   filter1 as "filter1", filter2 as "filter2" 
+		from EOS_DICT_ENTRY 
+			start with dictid = '?' and dicttypeid = '?' 
+			connect by prior dictid = parentid
+	]]>
+	</sql>
+	
+	<!-- 自定义字段查询业务字典项 -->
+	<sql id="findByField2">
+	<![CDATA[
+		from EosDictEntry where ? = '?' and STATUS = 1 order by SORTNO asc
+	]]>
+	</sql>
+	
+	<!-- 根据车型和修程获得默认承修部门 -->
+	<sql id="getdept">
+	<![CDATA[
+		from EosDictEntry where dictid = ? and filter2 = ? and id.dicttypeid = 'JCJX_DEFDPT'
+	]]>
+	</sql>
+	
+</SqlMap>	

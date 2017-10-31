@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 职务 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 自定义字段查询 -->
+	<sql id="findByField">
+	<![CDATA[
+		from OmDuty where ? = '?'
+	]]>
+	</sql>
+	
+	<!-- 查询多个岗位信息 -->
+	<sql id="findByIds">
+	<![CDATA[
+		from OmDuty where dutyid in (?)
+	]]>
+	</sql>
+	
+	<!-- 根据人员ID获取其职务 -->
+	<sql id="findByEmpId">
+	<![CDATA[
+		select duty from OmEmployee emp,OmEmpposition ep,OmPosition pos, OmDuty duty
+		where emp.empid = ep.id.empid and ep.id.positionid = pos.positionid and pos.dutyid = duty.dutyid
+		and emp.empid = ?
+	]]>
+	</sql>
+	
+	<!-- 根据操作员ID获取其职务 -->
+	<sql id="findByOperator">
+	<![CDATA[
+		select duty from OmDuty duty,OmPosition pos, OmEmpposition ep,OmEmployee emp
+		where duty.dutyid = pos.dutyid and pos.positionid = ep.id.positionid and ep.id.empid = emp.empid
+		and emp.operatorid = ?
+	]]>
+	</sql>
+	
+	<!-- 根据职务ID获取其上级职务 -->
+	<sql id="findUpperByDegree">
+	<![CDATA[
+		select dutyid as "dutyid", parentduty as "parentduty", dutycode as "dutycode", dutyname as "dutyname",
+		dutylevel as "dutylevel", dutyseq as "dutyseq", dutytype as "dutytype", isleaf as "isleaf",
+		subcount as "subcount", remark as "remark"
+		from om_duty
+		where dutyid <> ?
+		start with dutyid = ?
+		connect by prior parentduty = dutyid
+	]]>
+	</sql>
+	
+	<!-- 递归查询入参职务dutyId下属所有子职务 -->
+	<sql id="findAllChilds">
+	<![CDATA[
+		select dutyid as "dutyid", parentduty as "parentduty", dutycode as "dutycode", dutyname as "dutyname",
+		dutylevel as "dutylevel", dutyseq as "dutyseq", dutytype as "dutytype", isleaf as "isleaf",
+		subcount as "subcount", remark as "remark" 
+		from om_duty
+		where dutyid <> ?
+		start with dutyid = ?
+		connect by prior dutyid = parentduty
+	]]>
+	</sql>
+</SqlMap>	

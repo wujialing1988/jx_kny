@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<sql id="queryPageList">
+		SELECT
+			T.*,
+			(select count(*) from jxpz_attachment_manage a where a.attachment_key_idx = t.idx and a.record_status = 0 and a.file_type in ('png', 'jpg', 'bmp')) AS IMAGE_COUNT
+		FROM
+			E_REPAIR_WORK_ORDER T
+		WHERE
+			T.RECORD_STATUS = 0
+	</sql>
+</SqlMap>
