@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 查询需要结束异步流程的数据 -->
+	<sql id="findNeedDeleteFlowJob">
+	     select jt.processinstid from (select * from jxgc_process_task where Token='流程名称' and current_state='RUNNING') jt ,(select * from scdd_train_warehouse where warehouse_status = 30 ) tw
+         where jt.rdp_idx=tw.rdpidx
+	</sql>
+</SqlMap>

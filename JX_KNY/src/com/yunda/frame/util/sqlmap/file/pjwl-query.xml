@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 配件物流子系统 配件查询 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 获取配置的 可用配件查询-可用率预警阀值 -->
+	<sql id="getThreshold">
+		<![CDATA[
+	select dictid from EOS_DICT_ENTRY where DICTTYPEID='PJWZ_UsablePartsSelect_Threshold'			    
+		]]>
+	</sql>
+	<!-- 根据配件规格型号+序列号来判断 配件入库明细表中是否已存在相同的记录 排除更新记录的idx -->
+	<sql id="repeatInWarhDetail">
+		<![CDATA[
+	select count(*) from PartsWarehousingDetail 
+	where recordStatus=0 and specificationModel='${specificationModel}' and nameplateNo='${nameplateNo}' ${idx}
+		]]>
+	</sql>
+	<!-- 查询委外配件目录 -->
+	<sql id="findOutsourcingList_select1">
+		select l.idx as "idx",
+			l.parts_type_idx as "partsTypeIDX",
+		 	l.made_factory_id as "madeFactoryID",
+		 	f.factory_name as "factoryName",
+		 	t.parts_name as "partsName",
+		 	t.specification_model as "specificationModel"
+	</sql>
+	<sql id="findOutsourcingList_from1">
+		 from
+                pjwz_parts_outsourcing_list l
+                left join pjwz_parts_outsourcing_factory f on f.id = l.made_factory_id and f.record_status = 0
+                left join pjwz_parts_type t on t.idx = l.parts_type_idx and t.record_status = 0
+            where 1=1 and l.record_status = 0
+	</sql>
+	<!-- 查询自修配件目录 -->
+	<sql id="findRepairList_select">
+		select l.idx as "idx",
+			l.parts_type_idx as "partsTypeIDX",
+			l.repair_orgid as "repairOrgID",
+			l.ishgys as "ishgys",
+			o.orgname as "orgName",
+			t.parts_name as "partsName",
+			t.specification_model as "specificationModel",
+			o.orgseq as "orgseq"
+	</sql>
+	<sql id="findRepairList_from">
+ 			 from
+                pjwz_parts_repair_list l
+                left join om_organization o on o.orgid = l.repair_orgid 
+                left join pjwz_parts_type t on t.idx = l.parts_type_idx and t.record_status = 0
+            where 1=1 and l.record_status = 0
+	</sql> 
+	<!--配件退库查询出符合条件的配件信息  --> 
+	<sql id ="findYsxList_select">
+	 select p.idx,
+       p.parts_no "partsNo",
+       m.is_new_parts as "isNewParts",
+       p.aboard_traintype_idx,
+       p.aboard_traintype,
+       p.aboard_trainno,
+       p.aboard_repair_class_idx,
+       p.aboard_repair_class,
+       p.aboard_repair_time_idx,
+       p.aboard_repair_time,
+       p.parts_status as "partsStatus",
+       p.specification_model as "specificationModel",
+       p.parts_name as "partsName",
+       p.manage_dept_id as "manageDeptId",
+       p.manage_dept_orgseq as "manageDeptOrgseq",
+       p.manage_dept as "manageDept",
+       p.ABOARD_Place as "aboardPlace",
+       p.ABOARD_DATE as "aboardDate",
+       t.wh_idx,
+       t.wh_name,
+       t.get_date,
+       t.get_org_id,
+       t.get_org,
+       p.PARTS_TYPE_IDX as "partsTypeIDX",
+       p.EXTENDNOJSON as "extendNoJson"
+      
+	</sql>
+	<!--配件退库查询出符合条件的配件信息  --> 
+	<sql id="findYsxList_from">
+     from PJWZ_PARTS_ABOARD_EX_WH        t ,
+       PJWZ_PARTS_ABOARD_EX_WH_Detail m,
+       PJWZ_PARTS_ACCOUNT             p
+       where 1=1 and t.idx = m.parts_aboard_ex_wh_idx
+       and m.parts_account_idx = p.idx 
+	</sql>
+	
+	<!-- 联合查询大部件与配件相关信息 -->
+	<sql id="findPartsUnloadRegisterAll">
+		<![CDATA[
+          select rownum as row_num,t.* From (
+  select nvl(t.jcpjbm,l.parts_idx) as jcpjbm,
+         l.parts_name as jcpjmc,
+         nvl(l.parts_name,t.parts_name) as parts_name,
+         nvl(t.unload_place,l.wzmc) as unload_place, 
+         t.parts_no,
+         t.idx,
+         nvl(t.rdp_idx,l.work_plan_idx) as rdp_idx ,
+         t.parts_account_idx,
+         nvl(t.specification_model,(select ppt.specification_model from PJWZ_Parts_Type ppt where ppt.record_status = 0 and ppt.status = 1 and ppt.jcpjbm = l.parts_idx and rownum = 1)) as specification_model, 
+         t.identification_code,
+         nvl(t.is_in_range,'是') as is_in_range,
+         t.unload_reason,
+         t.runing_km,
+         nvl(t.parts_type_idx,(select ppt.idx from PJWZ_Parts_Type ppt where ppt.record_status = 0 and ppt.status = 1 and ppt.jcpjbm = l.parts_idx and rownum = 1)) as parts_type_idx,
+         l.seq_no,
+         t.parts_status_name,
+         t.parts_status
+         from jxgc_off_parts_list l 
+  left join 
+  (
+  select pt.jcpjbm,t.unload_place,t.idx,t.parts_name,t.parts_no,t.rdp_idx,t.parts_account_idx,t.specification_model,t.identification_code,t.is_in_range
+  ,t.unload_reason,t.runing_km,t.parts_type_idx,pa.parts_status_name,pa.parts_status
+  from PJWZ_PARTS_UNLOAD_REGISTER t 
+  left join PJWZ_Parts_Type pt on t.parts_type_idx = pt.idx
+  left join PJWZ_PARTS_ACCOUNT pa on pa.idx = t.parts_account_idx
+  where t.is_in_range = '是' and t.record_status = 0
+  ) t on (t.Rdp_Idx = l.work_plan_idx AND 
+                        l.wzmc is not null 
+                        and t.jcpjbm = l.parts_idx 
+                        and t.Unload_Place = l.wzmc
+                    ) 
+                    or ( t.Rdp_Idx = l.work_plan_idx AND
+                        l.wzmc is null 
+                        and t.Unload_Place is null 
+                        and t.jcpjbm = l.parts_idx
+                      ) 
+  union all 
+   select '' as jcpjbm ,
+         '' as jcpjmc, 
+         t.parts_name , 
+         t.unload_place,
+         t.parts_no,
+         t.idx,
+         t.rdp_idx,
+         t.parts_account_idx,
+         t.specification_model,
+         t.identification_code,
+         t.is_in_range,
+         t.unload_reason ,
+         t.runing_km,
+         t.parts_type_idx,
+         null as seq_no,
+         pa.parts_status_name,
+         pa.parts_status
+  from PJWZ_PARTS_UNLOAD_REGISTER t 
+  left join PJWZ_PARTS_ACCOUNT pa on pa.idx = t.parts_account_idx
+  where t.is_in_range = '否' and t.record_status = 0
+  ) t where t.rdp_idx = '#RDP_IDX#'
+			   
+		]]>
+	</sql>
+	
+		<!-- 联合查询大部件与配件上车登记信息 -->
+	<sql id="findPartsAboardRegisterAll">
+		<![CDATA[
+        select  rownum as row_num,b.* From ( select   a.*, pfr.idx,
+              pfr.parts_type_idx,
+            pfr.specification_model ,
+           pfr.parts_no  ,
+           pfr.identification_code , 
+           pfr.parts_account_idx ,
+           pfr.aboard_place,
+           pfr.aboard_date 
+  from (
+  select nvl(t.jcpjbm,l.parts_idx) as jcpjbm,
+         l.parts_name as jcpjmc,
+         nvl(l.parts_name,t.parts_name) as parts_name,
+         nvl(t.unload_place,l.wzmc) as unload_place, 
+         t.parts_no as unload_parts_no,
+         t.idx as unload_idx,
+         nvl(t.rdp_idx,l.work_plan_idx) as rdp_idx ,
+         t.parts_account_idx as unload_parts_account_idx,
+         nvl(t.specification_model,(select ppt.specification_model from PJWZ_Parts_Type ppt where ppt.record_status = 0 and ppt.status = 1 and ppt.jcpjbm = l.parts_idx and rownum = 1)) as unload_specification_model, 
+         t.identification_code as unload_identification_code,
+         nvl(t.is_in_range,'是') as is_in_range,
+         nvl(t.parts_type_idx,(select ppt.idx from PJWZ_Parts_Type ppt where ppt.record_status = 0 and ppt.status = 1 and ppt.jcpjbm = l.parts_idx and rownum = 1)) as unload_parts_type_idx,
+         l.seq_no,l.idx as off_idx
+         from jxgc_off_parts_list l 
+  left join 
+  (
+  select pt.jcpjbm,t.unload_place,t.idx,t.parts_name,t.parts_no,t.rdp_idx,t.parts_account_idx,t.specification_model,t.identification_code,t.is_in_range,t.parts_type_idx
+  from PJWZ_PARTS_UNLOAD_REGISTER t 
+  left join PJWZ_Parts_Type pt on t.parts_type_idx = pt.idx
+  where t.is_in_range = '是' and t.record_status = 0 
+  ) t on ((l.wzmc is not null and t.jcpjbm = l.parts_idx and t.Unload_Place = l.wzmc) or (l.wzmc is null and t.Unload_Place is null and t.jcpjbm = l.parts_idx)) and t.Rdp_Idx = l.work_plan_idx 
+
+  ) a left join (select l.idx as off_idx,ft.*   from jxgc_off_parts_list l 
+                      left join (select fr.*,pt.jcpjbm from pjwz_parts_fix_register fr 
+                      left join PJWZ_Parts_Type pt on fr.parts_type_idx = pt.idx where fr.is_in_range = '是' and fr.record_status = 0 )  ft
+                      on (ft.Rdp_Idx = l.work_plan_idx and l.wzmc is not null and ft.jcpjbm = l.parts_idx and ft.aboard_place = l.wzmc) or (ft.Rdp_Idx = l.work_plan_idx and l.wzmc is null and ft.aboard_place is null and ft.jcpjbm = l.parts_idx)  
+ ) pfr on a.off_idx = pfr.off_idx
+       
+   union all 
+ select  '' as jcpjbm ,
+         '' as jcpjmc, 
+         nrr.parts_name , 
+         nrr.unload_place,
+         nrr.parts_no as unload_parts_no,
+         nrr.idx as unload_idx,
+         nrr.rdp_idx,
+         nrr.parts_account_idx as unload_parts_account_idx,
+         nrr.specification_model as unload_specification_model,
+        nrr.identification_code as unload_identification_code,
+         nrr.is_in_range,
+         nrr.parts_type_idx as unload_parts_type_idx,
+         null as seq_no,'' as off_idx,
+         nfr.idx,
+              nfr.parts_type_idx,
+            nfr.specification_model ,
+           nfr.parts_no  ,
+           nfr.identification_code , 
+           nfr.parts_account_idx ,
+           nfr.aboard_place,
+           nfr.aboard_date  from ( select  *
+    from PJWZ_PARTS_UNLOAD_REGISTER t 
+    where t.is_in_range = '否' and t.record_status = 0 ) nrr left join 
+     pjwz_parts_fix_register  nfr  
+              on ((nfr.specification_model = nrr.specification_model
+ 			     and  nfr.aboard_place is null and nrr.unload_place is null 
+ 			      and nfr.record_status=0   
+ 			 and  nfr.rdp_idx = nrr.rdp_idx)
+  			 or ( nfr.specification_model = nrr.specification_model
+ 			      and nfr.aboard_place is not null and nfr.aboard_place = nrr.unload_place ))    where nfr.is_in_range = '否' and nfr.record_status = 0 ) b      		
+  where b.rdp_idx = '#RDP_IDX#' 
+		]]>
+	</sql>
+	
+	<!-- 联合查询配件委外登记 -->
+	<sql id="findPartsoutsourcingOutAll">
+		<![CDATA[
+  select rownum as row_num,t.* From (
+  select t.parts_account_idx,t.parts_type_idx,t.specification_model,t.parts_no,t.parts_name,t.identification_code,t.rdp_idx,'' as outsourcing_reasion,'' as repair_content ,'' as idx,
+  l.made_factory_idx as OUTSOURCING_FACTORY_ID,l.made_factory_name as OUTSOURCING_FACTORY,null as OUTSOURCING_DATE,'' as status,'是' as is_in_range
+  from PJWZ_Parts_Unload_Register t
+  left join PJWZ_Parts_Type pt on t.parts_type_idx = pt.idx
+  left join PJWZ_PARTS_ACCOUNT pa on pa.idx = t.parts_account_idx
+  inner join PJWZ_Parts_Outsourcing_Catalog l on l.jcpjbm = pt.jcpjbm
+  where pa.parts_status = '0101' and t.record_status = 0
+  union 
+  select ot.parts_account_idx,ot.parts_type_idx,ot.specification_model,ot.parts_out_no,ot.parts_name,ot.identification_code,ot.rdp_idx,ot.outsourcing_reasion,ot.repair_content,ot.idx,
+  ot.OUTSOURCING_FACTORY_ID,ot.OUTSOURCING_FACTORY,ot.OUTSOURCING_DATE,ot.status,ot.is_in_range
+  from PJWZ_PARTS_OUTSOURCING ot where ot.record_status = 0
+  ) t where t.rdp_idx = '#RDP_IDX#'  
+		]]>
+	</sql>
+	
+</SqlMap>

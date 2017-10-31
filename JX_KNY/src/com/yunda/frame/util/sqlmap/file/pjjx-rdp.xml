@@ -1,0 +1,882 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 生成配件检修作业节点 -->
+	<sql id='insertPartsRdpNode'>
+		INSERT INTO PJJX_Parts_Rdp_Node (IDX,
+                                       RDP_IDX,
+                                       WP_NODE_IDX,
+                                       PARENT_WP_NODE_IDX,
+                                       WP_NODE_NAME,
+                                       WP_NODE_DESC,
+                                       RATED_PERIOD,
+                                       SEQ_NO,
+                                       IS_LEAF,
+                                       PLAN_STARTTIME,
+                                       PLAN_ENDTIME,
+                                       REAL_STARTTIME,
+                                       REAL_ENDTIME,
+                                       STATUS,
+                                       RECORD_STATUS,
+                                       SITEID,
+                                       CREATOR,
+                                       CREATE_TIME,
+                                       UPDATOR,
+                                       UPDATE_TIME) 
+         SELECT SYS_GUID (),
+                a.idx,
+                C.IDX,
+                C.PARENT_WP_NODE_IDX,
+                C.WP_NODE_NAME,
+                C.WP_NODE_DESC,
+                C.RATED_PERIOD,
+                C.SEQ_NO,
+                C.IS_LEAF,
+                NULL,
+                NULL,
+                NULL,
+                NULL,
+                '状态',
+                0,
+                '站点',
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss') 
+           FROM PJJX_Parts_Rdp a, PJJX_WP b, PJJX_WP_Node c
+          WHERE     A.WP_IDX = B.IDX
+                AND B.IDX = C.WP_IDX
+                AND B.RECORD_STATUS = 0
+                AND C.RECORD_STATUS = 0
+                AND A.IDX = '任务单id'
+	</sql>
+	<!-- 生成节点数据 -->
+	<sql id="insert_parts_rdp_node">
+		insert into PJJX_Parts_Rdp_Node (idx, rdp_idx, wp_node_idx, parent_wp_node_idx, wp_node_name, wp_node_desc, rated_period, seq_no,
+		 is_leaf,nodeLevel, status, Record_Status, siteid, Creator, create_time, updator, update_time, calendar_idx)
+select sys_guid(), ?, idx, parent_wp_node_idx, wp_node_name,wp_node_desc,rated_period,seq_no,
+ is_leaf, level, ?, ?, ?, ?, ?, ?, ?, ? from PJJX_WP_Node WHERE record_status = 0 START WITH PARENT_WP_NODE_IDX = ? and WP_IDX = ?
+connect by prior idx = PARENT_WP_NODE_IDX
+	</sql>
+	<!-- 生成作业节点前后置关系 -->
+	<sql id='insertPartsRdpNodeSeq'>
+		INSERT INTO PJJX_Parts_Rdp_Node_Seq (IDX,
+	                                           RDP_IDX,
+	                                           WP_NODE_IDX,
+	                                           PRE_WP_NODE_IDX,
+	                                           SEQ_CLASS,
+	                                           BEFORE_DELAY_TIME,
+	                                           RECORD_STATUS,
+	                                           SITEID,
+	                                           CREATOR,
+	                                           CREATE_TIME,
+	                                           UPDATOR,
+	                                           UPDATE_TIME) 
+	         SELECT SYS_GUID (),
+	                ?,
+	                D.WP_NODE_IDX,
+	                D.PRE_WP_NODE_IDX,
+	                D.SEQ_CLASS,
+	                D.BEFORE_DELAY_TIME,
+	                0,
+	                ?,
+	                ?,
+	                ?,
+	                ?,
+	                ? 
+	           FROM 
+	                PJJX_WP b,
+	                PJJX_WP_Node c,
+	                PJJX_WP_Node_Seq d
+	          WHERE     
+	                B.IDX = C.WP_IDX
+	                AND C.IDX = D.WP_NODE_IDX
+	                AND B.RECORD_STATUS = 0
+	                AND C.RECORD_STATUS = 0
+	                AND d.RECORD_STATUS = 0
+    </sql>
+    <!-- 生成配件检修工艺 -->
+	<sql id='insertPartsRdpTec'>
+	    INSERT INTO PJJX_Parts_Rdp_Tec (IDX,
+	                                      RDP_IDX,
+	                                      TEC_IDX,
+	                                      TEC_NO,
+	                                      TEC_NAME,
+	                                      TEC_DESC,
+	                                      RECORD_STATUS,
+	                                      SITEID,
+	                                      CREATOR,
+	                                      CREATE_TIME,
+	                                      UPDATOR,
+	                                      UPDATE_TIME) 
+	         SELECT SYS_GUID (),
+	                ?,
+	                d.idx,
+	                D.TEC_NO,
+	                D.TEC_NAME,
+	                D.TEC_DESC,
+	                0,
+	                ?,
+	                ?,
+	                ?,
+	                ?,
+	                ? 
+	           FROM 
+	                PJJX_WP b,
+	                PJJX_WP_Union_Tec c,
+	                PJJX_Tec d
+	          WHERE 
+	                b.idx = C.WP_IDX
+	                AND C.TEC_IDX = D.IDX
+	                AND B.RECORD_STATUS = 0
+	                AND C.RECORD_STATUS = 0
+	                AND D.RECORD_STATUS = 0
+	                AND B.IDX = ?
+	 </sql>
+	 <!-- 生成配件检修工艺工单 -->
+	<sql id='insertPartsRdpTecCard'>
+    INSERT INTO pjjx_parts_rdp_tec_card (idx,
+                                           rdp_idx,
+                                           rdp_node_idx,
+                                           rdp_tec_idx,
+                                           tec_card_idx,
+                                           tec_card_no,
+                                           tec_card_desc,
+                                           seq_no,
+                                           work_empid,
+                                           work_empname,
+                                           work_starttime,
+                                           work_endtime,
+                                           handle_empid,
+                                           handle_empname,
+                                           status,
+                                           record_status,
+                                           siteid,
+                                           creator,
+                                           create_time,
+                                           updator,
+                                           update_time)
+         SELECT SYS_GUID (),
+                a.rdp_idx,
+                d.idx,
+                a.idx,
+                b.idx,
+                b.tec_card_no,
+                b.tec_card_desc,
+                b.seq_no,
+                NULL,
+                NULL,
+                NULL,
+                NULL,
+                NULL,
+                NULL,
+                '状态',
+                0,
+                '站点',
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss') 
+           FROM pjjx_parts_rdp_tec a, pjjx_tec_card b, pjjx_wp_node_union_tec_card c,
+	                                pjjx_parts_rdp_node d
+          WHERE     a.tec_idx = b.tec_idx
+          			and c.wp_node_idx = d.wp_node_idx
+                    and c.tec_card_idx = b.idx
+                    and d.rdp_idx = a.rdp_idx
+                AND a.record_status = 0
+                AND b.record_status = 0
+                AND c.record_status = 0
+                AND d.record_status = 0
+                AND a.rdp_idx = '任务单id'
+    </sql>
+    <!-- 新增 -->
+    <sql id="insert_rdp_mat">
+    INSERT INTO pjjx_parts_rdp_expend_mat (idx,
+                                           rdp_idx,
+                                           RDP_NODE_IDX,
+                                           mat_code,
+                                           mat_desc,
+                                           unit,
+                                           number_rated,
+                                           qty,
+                                           price,
+                                           siteid,
+                                           creator,
+                                           create_time,
+                                           updator,
+                                           update_time)
+         SELECT SYS_GUID (),
+                c.rdp_idx,
+                c.idx,
+                d.mat_code,
+                d.mat_desc,
+                d.unit,
+                t.default_qty,                
+                0,
+                d.price,
+                ?,
+               	?,
+                ?,
+               	?,
+                ? 
+           FROM pjjx_tec_card_mat t, pjjx_parts_rdp_tec_card c, pjwz_mat_type_list d  where c.rdp_idx = ? and
+            c.tec_card_idx = t.tec_card_idx and t.mat_code = d.mat_code and t.record_status = 0 and c.record_status = 0
+    </sql>
+    <sql id='updatePartsRdpTecCard'>
+	    UPDATE pjjx_parts_rdp_tec_card m
+	         SET m.rdp_node_idx =
+	                (SELECT n.idx
+	                   FROM (SELECT b.idx, a.tec_card_idx
+	                           FROM pjjx_wp_node_union_tec_card a,
+	                                pjjx_parts_rdp_node b
+	                          WHERE a.wp_node_idx = b.wp_node_idx
+	                                AND b.rdp_idx = '任务单id' and a.record_status=0 and b.record_status=0) n
+	                  WHERE M.TEC_CARD_IDX = n.TEC_CARD_IDX)
+	       WHERE m.rdp_idx = '任务单id'
+    </sql>
+    <!-- 生成配件检修工序实例 -->
+	<sql id='insertPartsRdpTecWS'>
+    INSERT INTO PJJX_PARTS_RDP_TEC_WS (IDX,
+                                         RDP_IDX,
+                                         RDP_NODE_IDX,
+                                         RDP_TEC_CARD_IDX,
+                                         WS_IDX,
+                                         WS_NO,
+                                         WS_NAME,
+                                         WS_DESC,
+                                         SEQ_NO,
+                                         STATUS,
+                                         WS_PARENT_IDX,
+                                         RECORD_STATUS,
+                                         SITEID,
+                                         CREATOR,
+                                         CREATE_TIME,
+                                         UPDATOR,
+                                         UPDATE_TIME) 
+         SELECT SYS_GUID (),
+                A.RDP_IDX,
+                A.RDP_NODE_IDX,
+                a.idx,
+                b.idx,
+                B.WS_NO,
+                B.WS_NAME,
+                B.WS_DESC,
+                B.SEQ_NO,
+                '状态',
+                B.WS_PARENT_IDX,
+                0,
+                '站点',
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss') 
+           FROM PJJX_Parts_Rdp_Tec_Card a, PJJX_Tec_Card_WS b
+          WHERE     A.TEC_CARD_IDX = B.TEC_CARD_IDX
+                AND A.RECORD_STATUS = 0
+                AND B.RECORD_STATUS = 0
+                AND A.RDP_IDX = '任务单id'
+    </sql>
+    <!-- 生成配件检修记录单实例 -->
+	<sql id='insertPartsRdpRecord'>
+    INSERT INTO PJJX_Parts_Rdp_Record (IDX,
+                                         RDP_IDX,
+                                         RECORD_IDX,
+                                         RECORD_NO,
+                                         RECORD_NAME,
+                                         RECORD_DESC,
+                                         RECORD_STATUS,
+                                         REPORTTMPL_MANAGE_IDX,
+                                         SITEID,
+                                         CREATOR,
+                                         CREATE_TIME,
+                                         UPDATOR,
+                                         UPDATE_TIME) 
+         SELECT x.IDX,
+                x.RDP_IDX,
+                x.RECORD_IDX,
+                x.RECORD_NO,
+                x.RECORD_NAME,
+                x.RECORD_DESC,
+                x.RECORD_STATUS,
+                y.idx,
+                x.SITEID,
+                x.CREATOR,
+                x.CREATE_TIME,
+                x.UPDATOR,
+                x.UPDATE_TIME
+           FROM    (SELECT SYS_GUID () AS idx,
+                           ? AS RDP_IDX,
+                           d.idx AS RECORD_IDX,
+                           D.RECORD_NO,
+                           D.RECORD_NAME,
+                           D.RECORD_DESC,
+                           0 AS RECORD_STATUS,
+                           NULL AS REPORTTMPL_MANAGE_IDX,
+                           ? AS SITEID,
+                           ? AS CREATOR,
+                           ? AS CREATE_TIME,
+                           ? AS UPDATOR,
+                           ? AS UPDATE_TIME
+                      FROM 
+                           PJJX_WP b,
+                           PJJX_WP_Union_Record c,
+                           PJJX_Record d
+                     WHERE   
+                           B.IDX = C.WP_IDX
+                           and B.IDX = ?
+                           AND C.RECORD_IDX = d.idx
+                           AND B.RECORD_STATUS = 0
+                           AND C.RECORD_STATUS = 0
+                           AND D.RECORD_STATUS = 0) x
+                LEFT JOIN
+                   (SELECT *
+                      FROM PJJX_REPORTTMPL_MANAGE
+                     WHERE RECORD_STATUS = 0 AND isCurrentVersion = 'Y') y
+                ON X.RECORD_IDX = y.Qr_IDX
+    </sql>   
+    <!-- 生成配件检修记录卡实例 -->
+	<sql id='insertPartsRdpRecordCard'>
+     INSERT INTO PJJX_Parts_Rdp_Record_Card (IDX,
+                                              RDP_IDX,
+                                              RDP_NODE_IDX,
+                                              RDP_RECORD_IDX,
+                                              RECORD_CARD_IDX,
+                                              RECORD_CARD_NO,
+                                              RECORD_CARD_DESC,
+                                              WORK_EMPID,
+                                              WORK_EMPNAME,
+                                              WORK_STARTTIME,
+                                              WORK_ENDTIME,
+                                              SEQ_NO,
+                                              QC_CONTENT,
+                                              HANDLE_EMPID,
+                                              HANDLE_EMPNAME,
+                                              STATUS,
+                                              IS_BACK,
+                                              BACK_COUNT,
+                                              RECORD_STATUS,
+                                              SITEID,
+                                              CREATOR,
+                                              CREATE_TIME,
+                                              UPDATOR,
+                                              UPDATE_TIME,
+                                              REMARKS)
+         SELECT SYS_GUID (),
+                a.rdp_idx,
+                d.idx,
+                a.idx,
+                b.idx,
+                B.RECORD_CARD_NO,
+                B.RECORD_CARD_DESC,
+                NULL,
+                NULL,
+                NULL,
+                NULL,
+                B.SEQ_NO,
+                B.QC_CONTENT,
+                NULL,
+                NULL,
+                '状态',
+                0,
+                0,
+                0,
+                '站点',
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                NULL
+           FROM PJJX_Parts_Rdp_Record a, PJJX_Record_Card b,  PJJX_WP_Node_Union_Record_Card c,
+	                                pjjx_parts_rdp_node d
+          WHERE     A.RECORD_IDX = B.RECORD_IDX
+          			and c.wp_node_idx = d.wp_node_idx
+                    and d.rdp_idx = a.rdp_idx
+                    and c.record_card_idx = b.idx
+                AND a.record_status = 0
+                AND b.record_status = 0
+                AND c.record_status = 0
+                AND d.record_status = 0
+                AND a.rdp_idx = '任务单id'
+     </sql>
+     <sql id='updatePartsRdpRecordCard'>
+	     UPDATE PJJX_Parts_Rdp_Record_Card m
+	         SET m.rdp_node_idx =
+	                (SELECT n.idx
+	                   FROM (SELECT b.idx, A.RECORD_CARD_IDX
+	                           FROM PJJX_WP_Node_Union_Record_Card a,
+	                                pjjx_parts_rdp_node b
+	                          WHERE a.wp_node_idx = b.wp_node_idx
+	                                AND b.rdp_idx = '任务单id' and a.record_status=0 and b.record_status=0) n
+	                  WHERE M.RECORD_CARD_IDX = n.RECORD_CARD_IDX)
+	       WHERE m.rdp_idx = '任务单id' 
+     </sql>
+     <!-- 生成配件检修检测项实例 -->
+	<sql id='insertPartsRdpRecordRI'>
+     INSERT INTO PJJX_Parts_Rdp_Record_RI (IDX,
+                                            RDP_RECORD_CARD_IDX,
+                                            RECORD_RI_IDX,
+                                            REPAIR_ITEM_NO,
+                                            REPAIR_ITEM_NAME,
+                                            REPAIR_STANDARD,
+                                            REPAIR_RESULT,
+                                            SEQ_NO,
+                                            REMARKS,
+                                            STATUS,
+                                            RECORD_STATUS,
+                                            SITEID,
+                                            CREATOR,
+                                            CREATE_TIME,
+                                            UPDATOR,
+                                            UPDATE_TIME,
+                                            CHECKED_TOOLS) 
+         SELECT SYS_GUID (),
+                a.idx,
+                b.idx,
+                B.REPAIR_ITEM_NO,
+                B.REPAIR_ITEM_NAME,
+                B.REPAIR_STANDARD,
+                B.Default_Result,
+                B.SEQ_NO,
+                NULL,
+                '状态',
+                0,
+                '站点',
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                B.CHECKED_TOOLS
+           FROM PJJX_Parts_Rdp_Record_Card A, PJJX_Record_RI b
+          WHERE     A.RECORD_CARD_IDX = B.RECORD_CARD_IDX
+                AND A.RDP_IDX = '任务单id' 
+                AND A.RECORD_STATUS = 0
+                AND B.RECORD_STATUS = 0
+    </sql>
+    <!-- 生成配件检测项 -->
+	<sql id='insertPartsRdpRecordDI'>
+    INSERT INTO PJJX_PARTS_RDP_RECORD_DI (IDX,
+                                            RDP_RECORD_RI_IDX,
+                                            RECORD_DI_IDX,
+                                            DATA_ITEM_NO,
+                                            DATA_ITEM_NAME,
+                                            IS_BLANK,
+                                            SEQ_NO,
+                                            DATA_ITEM_RESULT,
+                                            RECORD_STATUS,
+                                            SITEID,
+                                            CREATOR,
+                                            CREATE_TIME,
+                                            UPDATOR,
+                                            UPDATE_TIME,
+                                            minResult,
+                                            maxResult,
+                                            CHECK_ID,
+                                            CHECKED_TOOLS) 
+         SELECT SYS_GUID (),
+                a.idx,
+                b.idx,
+                B.DATA_ITEM_NO,
+                B.DATA_ITEM_NAME,
+                B.IS_BLANK,
+                B.SEQ_NO,
+                NULL,
+                0,
+                '站点',
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                B.minResult,
+                B.maxResult,
+                B.CHECK_ID,
+                B.CHECKED_TOOLS 
+           FROM PJJX_Parts_Rdp_Record_RI A,
+                PJJX_Record_DI B,
+                PJJX_Parts_Rdp_Record_Card C
+          WHERE     A.RDP_RECORD_CARD_IDX = C.IDX
+                AND A.RECORD_RI_IDX = B.RI_IDX
+                AND C.RDP_IDX = '任务单id' 
+                AND a.record_status = 0
+                AND b.record_status = 0
+                AND c.record_status = 0
+    </sql>
+    <!-- 生成质量检查结果 -->
+	<sql id='insertPartsRdpQR'>
+	    INSERT INTO PJJX_Parts_Rdp_QR (IDX,
+	                                     REL_IDX,
+	                                     RDP_RECORD_CARD_IDX,
+	                                     QC_ITEM_IDX,
+	                                     QC_ITEM_NO,
+	                                     QC_ITEM_NAME,
+	                                     CHECK_WAY,
+	                                     IS_ASSIGN,
+	                                     SEQ_NO,
+	                                     QR_EMPID,
+	                                     QR_EMPNAME,
+	                                     QR_RESULT,
+	                                     QR_TIME,
+	                                     STATUS,
+	                                     RECORD_STATUS,
+	                                     SITEID,
+	                                     CREATOR,
+	                                     CREATE_TIME,
+	                                     UPDATOR,
+	                                     UPDATE_TIME) 
+	         SELECT SYS_GUID (),
+	                a.idx,
+	                a.idx,
+	                c.idx,
+	                B.QC_ITEM_NO,
+	                B.QC_ITEM_NAME,
+	                C.CHECK_WAY,
+	                C.IS_ASSIGN,
+	                B.SEQ_NO,
+	                NULL,
+	                NULL,
+	                NULL,
+	                NULL,
+	                '状态',
+	                0,
+	                '站点',
+	                '创建人',
+	                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+	                '创建人',
+	                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss') 
+	           FROM PJJX_Parts_Rdp_Record_Card A,
+	                PJJX_Record_Card_QC b,
+	                PJJX_QC_Item c
+	          WHERE     A.RECORD_CARD_IDX = B.RECORD_CARD_IDX
+	                AND B.QC_ITEM_NO = C.QC_ITEM_NO
+	                AND A.RDP_IDX = '任务单id' 
+	                AND A.RECORD_STATUS = 0 
+	                AND B.RECORD_STATUS = 0 
+	                AND C.RECORD_STATUS = 0
+    </sql>
+    
+    
+    <!-- 生成机务设备工单 -->
+	<sql id='insertPartsRdpEquipCard'>
+	    INSERT INTO PJJX_Parts_Rdp_Equip_Card (IDX,
+                                       RDP_IDX,
+                                       SPECIFICATION_MODEL,
+                                       PARTS_NAME,
+                                       PARTS_NO,
+                                       Equip_Card_IDX,
+                                       Equip_Card_No,
+                                       Equip_Card_Desc,
+                                       Device_Type_Code,
+                                       Device_Type_Name,
+                                       Device_Info_Code,
+                                       Seq_No,
+                                       Work_EmpID,
+                                       WORK_EMPNAME,
+                                       WORK_STARTTIME,
+                                       WORK_ENDTIME,
+                                       Data_GenTime,
+                                       Work_Result,
+                                       Remarks,
+                                       STATUS,
+                                       RECORD_STATUS,
+                                       SITEID,
+                                       CREATOR,
+                                       CREATE_TIME,
+                                       UPDATOR,
+                                       UPDATE_TIME) 
+         SELECT SYS_GUID (),
+                a.idx,
+                a.SPECIFICATION_MODEL,
+                a.PARTS_NAME,
+                a.PARTS_NO,
+                d.IDX,
+                d.equip_card_no,
+                d.equip_card_desc,
+                d.Device_Type_Code,
+                d.Device_Type_Name,
+                null,
+                null,
+                null,
+                null,
+                NULL,
+                NULL,
+                null,
+                null,
+                null,
+                '状态',
+                0,
+                '站点',
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss') 
+           FROM PJJX_Parts_Rdp a, PJJX_WP b,PJJX_WP_Node_Union_Equip_Card c,PJJX_Equip_Card d
+          WHERE     A.WP_IDX = B.IDX
+                    AND c.wp_idx=b.idx
+                    and c.equip_card_idx=d.idx
+                AND B.RECORD_STATUS = 0
+                and c.record_status=0
+                and d.record_status=0
+                AND A.IDX = '任务单id'
+    </sql>
+    <!-- 生成机务设备检测数据项 -->
+	<sql id='insertPartsRdpEquipDI'>
+	    INSERT INTO PJJX_Parts_Rdp_Equip_DI (IDX,
+                                       Rdp_Equip_Card_IDX,
+                                       Equip_Data_Item_IDX,
+                                       Data_Item_No,
+                                       Data_Item_Name,
+                                       Data_Item_Desc,
+                                       Unit,
+                                       Item_Value,
+                                       Seq_No,
+                                       RECORD_STATUS,
+                                       SITEID,
+                                       CREATOR,
+                                       CREATE_TIME,
+                                       UPDATOR,
+                                       UPDATE_TIME) 
+         SELECT SYS_GUID (),
+                a.idx,
+                b.IDX,
+                b.data_item_no,
+                b.data_item_name,
+                b.data_item_desc,
+                b.unit,
+                b.default_value,
+                b.seq_no,
+                0,
+                '站点',
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+                '创建人',
+                to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss') 
+           FROM PJJX_Parts_Rdp_Equip_Card a ,PJJX_Equip_DI b 
+          WHERE     a.equip_card_idx=b.equip_card_idx
+                AND a.RECORD_STATUS = 0
+                and b.record_status=0
+                AND A.Rdp_Idx = '任务单id'
+    </sql>
+    <!-- 生成节点和工位对应关系 -->
+	<sql id='insertRdpNodeStation'>
+		INSERT INTO pjjx_parts_rdp_node_station
+		            (IDX,
+		             RDP_NODE_IDX,
+		             WORK_STATION_IDX,
+		             WORK_STATION_CODE,
+		             WORK_STATION_NAME,
+		             REPAIR_LINE_IDX,
+		             REPAIR_LINE_NAME,
+		             RECORD_STATUS,
+		             SITEID,
+		             CREATOR,
+		             CREATE_TIME,
+		             UPDATOR,
+		             UPDATE_TIME
+		            )
+     		SELECT SYS_GUID(),
+		            T.IDX,
+		            A.WORK_STATION_IDX,
+		            B.WORK_STATION_CODE,
+		            B.WORK_STATION_NAME,
+		            B.REPAIR_LINE_IDX,
+		            B.REPAIR_LINE_NAME,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?
+       		  FROM pjjx_wp_node_station_def A
+  		INNER JOIN (SELECT T.IDX,T.WP_NODE_IDX FROM PJJX_PARTS_RDP_NODE T WHERE T.RECORD_STATUS = 0 AND T.RDP_IDX = ?) T
+         		ON T.WP_NODE_IDX = A.NODE_IDX
+  		 LEFT JOIN PJJX_PARTS_WORK_STATION B
+		        ON A.WORK_STATION_IDX = B.IDX 
+		     WHERE A.RECORD_STATUS = 0
+		       AND B.RECORD_STATUS = 0
+    </sql>
+    <!-- 生成不拆卸配件记录 -->
+	<sql id='insertInseparablParts'>
+		INSERT INTO PJWZ_Parts_Inseparabl_Record
+		            ( IDX,
+		              RDP_IDX,
+		              PARENT_PARTS_ACCOUNT_IDX,
+		              PARTS_TYPE_IDX,
+		              SPECIFICATION_MODEL,
+		              PARTS_NAME,
+		              UNLOAD_PLACE,
+		              RECORD_CARD_IDX)
+		       SELECT SYS_GUID(),
+		              D.RDP_IDX,
+		              E.PARTS_ACCOUNT_IDX,
+		              A.PARTS_TYPE_IDX,
+		              B.SPECIFICATION_MODEL,
+		              B.PARTS_NAME,
+		              A.PLACE,
+		              D.IDX
+		         FROM PJJX_PARTS_LIST A, PJWZ_PARTS_TYPE B, PJJX_RECORD_CARD C, PJJX_PARTS_RDP_RECORD_CARD D, PJJX_PARTS_RDP E
+		        WHERE A.PARTS_TYPE_IDX = B.IDX
+		          AND A.RELATION_IDX = C.IDX
+		          AND C.IDX = D.RECORD_CARD_IDX
+		          AND E.IDX = D.RDP_IDX
+		          AND B.RECORD_STATUS = 0
+		          AND C.RECORD_STATUS = 0
+		          AND D.RECORD_STATUS = 0
+		          AND E.RECORD_STATUS = 0
+		          AND E.IDX = '任务单id'
+		          AND A.TYPE = '不拆卸'
+	</sql>
+	<!-- 生成拆卸配件记录 -->
+	<sql id='insertDismantleParts'>
+		INSERT INTO PJWZ_Parts_Dismantle_Register
+		            ( IDX,
+		              RDP_IDX,
+		              PARENT_PARTS_ACCOUNT_IDX,
+		              PARTS_TYPE_IDX,
+		              SPECIFICATION_MODEL,
+		              PARTS_NAME,
+		              UNLOAD_TRAINTYPE,
+		              UNLOAD_TRAINTYPE_IDX,
+		              UNLOAD_TRAINNO,
+		              UNLOAD_REPAIR_CLASS_IDX,
+		              UNLOAD_REPAIR_CLASS,
+		              UNLOAD_REPAIR_TIME_IDX,
+		              UNLOAD_REPAIR_TIME,
+		              UNLOAD_PLACE,
+		              IS_IN_RANGE,
+		              STATUS,
+		              RECORD_STATUS,
+		              SITEID,
+		              CREATOR,
+		              CREATE_TIME,
+		              UPDATOR,
+		              UPDATE_TIME,
+		              RECORD_CARD_IDX)
+		       SELECT SYS_GUID(),
+		              D.RDP_IDX,
+		              E.PARTS_ACCOUNT_IDX,
+		              A.PARTS_TYPE_IDX,
+		              B.SPECIFICATION_MODEL,
+		              B.PARTS_NAME,
+		              E.UNLOAD_TRAINTYPE,
+		              E.UNLOAD_TRAINTYPE_IDX,
+		              E.UNLOAD_TRAINNO,
+		              E.UNLOAD_REPAIR_CLASS_IDX,
+		              E.UNLOAD_REPAIR_CLASS,
+		              E.UNLOAD_REPAIR_TIME_IDX,
+		              E.UNLOAD_REPAIR_TIME,
+		              A.PLACE,
+		              '是',
+		              '状态',
+		              0,
+		              '站点',
+		              '创建人',
+		              to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+		              '创建人',
+		              to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+		              D.IDX
+		         FROM PJJX_PARTS_LIST A, PJWZ_PARTS_TYPE B, PJJX_RECORD_CARD C, PJJX_PARTS_RDP_RECORD_CARD D, PJJX_PARTS_RDP E, PJWZ_PARTS_ACCOUNT F
+		        WHERE A.PARTS_TYPE_IDX = B.IDX
+		          AND A.RELATION_IDX = C.IDX
+		          AND C.IDX = D.RECORD_CARD_IDX
+		          AND E.IDX = D.RDP_IDX
+		          AND E.PARTS_ACCOUNT_IDX = F.IDX
+		          AND B.RECORD_STATUS = 0
+		          AND C.RECORD_STATUS = 0
+		          AND D.RECORD_STATUS = 0
+		          AND E.RECORD_STATUS = 0
+		          AND F.RECORD_STATUS = 0
+		          AND E.IDX = '任务单id'
+		          AND A.TYPE = '拆卸'
+	</sql>
+	<!-- 生成安装配件记录 -->
+	<sql id='insertInstallParts'>
+		INSERT INTO PJWZ_Parts_Install_Register
+		            ( IDX,
+		              RECORD_CARD_IDX,
+		              RDP_IDX,
+		              PARENT_PARTS_ACCOUNT_IDX,
+		              IS_IN_RANGE,
+		              PARTS_TYPE_IDX,
+		              SPECIFICATION_MODEL,
+		              PARTS_NAME,
+		              ABOARD_PLACE,
+		              STATUS,
+		              RECORD_STATUS,
+		              SITEID,
+		              CREATOR,
+		              CREATE_TIME,
+		              UPDATOR,
+		              UPDATE_TIME)
+		       SELECT SYS_GUID(),
+		              D.IDX,              
+		              D.RDP_IDX,
+		              E.PARTS_ACCOUNT_IDX,
+		              '是',
+		              A.PARTS_TYPE_IDX,
+		              B.SPECIFICATION_MODEL,
+		              B.PARTS_NAME,
+		              A.PLACE,              
+		              '状态',
+		              0,
+		              '站点',
+		              '创建人',
+		              to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+		              '创建人',
+		              to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss')
+		         FROM PJJX_PARTS_LIST A, PJWZ_PARTS_TYPE B, PJJX_RECORD_CARD C, PJJX_PARTS_RDP_RECORD_CARD D, PJJX_PARTS_RDP E, PJWZ_PARTS_ACCOUNT F
+		        WHERE A.PARTS_TYPE_IDX = B.IDX
+		          AND A.RELATION_IDX = C.IDX
+		          AND C.IDX = D.RECORD_CARD_IDX
+		          AND E.IDX = D.RDP_IDX
+		          AND E.PARTS_ACCOUNT_IDX = F.IDX
+		          AND B.RECORD_STATUS = 0
+		          AND C.RECORD_STATUS = 0
+		          AND D.RECORD_STATUS = 0
+		          AND E.RECORD_STATUS = 0
+		          AND F.RECORD_STATUS = 0
+		          AND E.IDX = '任务单id'
+		          AND A.TYPE = '安装'
+	</sql>
+	
+	 <!-- 生成节点和物料对应关系 -->
+	<sql id='insertRdpNodeMat'>
+		INSERT INTO pjjx_parts_rdp_node_mat
+		            (IDX,
+		            WP_MAT_IDX,
+		            RDP_IDX,
+		             RDP_NODE_IDX,
+		             WP_NODE_IDX,
+		             WP_NODE_NAME,
+		             WP_IDX,
+		             MAT_CODE,
+		             MAT_DESC,
+		             UNIT,
+		             DEFAULT_QTY,
+		             RECORD_STATUS,
+		             SITEID,
+		             CREATOR,
+		             CREATE_TIME,
+		             UPDATOR,
+		             UPDATE_TIME
+		            )
+     		SELECT SYS_GUID(),
+     		        A.IDX,
+		            T.RDP_IDX,
+		            T.IDX,
+		            A.WP_NODE_IDX,
+		            A.WP_NODE_NAME,
+		            A.WP_IDX,
+		             A.MAT_CODE,
+		            A. MAT_DESC,
+		            A. UNIT,
+		            A. DEFAULT_QTY,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?,
+		            ?
+       		  FROM PJJX_WP_Mat A
+  		INNER JOIN (SELECT T.IDX,  T.RDP_IDX, T.WP_NODE_IDX FROM PJJX_PARTS_RDP_NODE T WHERE T.RECORD_STATUS = 0 AND T.RDP_IDX = ?) T
+         		ON T.WP_NODE_IDX = A.WP_NODE_IDX 
+		     WHERE A.RECORD_STATUS = 0
+    </sql>
+</SqlMap>

@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 机车检修流程节点查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 对前置节点进行组合查询 -->
+	<sql id="findUnionNode">
+		<![CDATA[
+			SELECT *
+			  FROM (SELECT IDX,
+			               PROCESS_IDX,
+			               PARENT_IDX,
+			               NODE_NAME,
+		                   NODE_CODE,
+			               NODE_DESC,
+			               Rated_WorkMinutes,
+			               SEQ_NO,
+			               IS_LEAF,
+			               TO_CHAR(WM_CONCAT(Pre_Node_IDX)) AS Pre_Node_IDX,
+			               TO_CHAR(WM_CONCAT(PRE_NODE_NAME)) AS PRE_NODE_NAME,
+			               TO_CHAR(WM_CONCAT(PRE_NODE_SEQ_NO)) AS PRE_NODE_SEQ_NO
+			          FROM (SELECT A.IDX,
+			                       A.PROCESS_IDX,
+			                       A.PARENT_IDX,
+			                       A.NODE_NAME,
+			                       A.NODE_CODE,
+			                       A.NODE_DESC,
+			                       A.Rated_WorkMinutes,
+			                       A.SEQ_NO,
+			                       A.IS_LEAF,
+			                       B.Pre_Node_IDX,
+			                       B.NODE_NAME AS PRE_NODE_NAME,
+                             B.SEQ_NO AS PRE_NODE_SEQ_NO
+			                  FROM (SELECT A.IDX,
+			                               A.PROCESS_IDX,
+			                               A.PARENT_IDX,
+			                               A.NODE_NAME,
+			                               A.NODE_CODE,        
+			                               A.NODE_DESC,
+			                               A.Rated_WorkMinutes,
+			                               A.SEQ_NO,
+			                               A.IS_LEAF
+			                          FROM JXGC_Job_Process_Node_Def A
+			                         WHERE A.RECORD_STATUS = 0) A
+			                  LEFT JOIN (SELECT A.Node_IDX,
+			                                   A.Pre_Node_IDX,
+			                                   B.NODE_NAME,
+                                         B.Seq_No
+			                              FROM JXGC_Job_Process_Node_Rel_Def A, JXGC_Job_Process_Node_Def B
+			                             WHERE A.RECORD_STATUS = 0
+			                               AND B.RECORD_STATUS = 0
+			                               AND A.Pre_Node_IDX = B.IDX) B ON A.IDX =
+			                                                                   B.Node_IDX)
+			         GROUP BY IDX,
+			                  PROCESS_IDX,
+			                  PARENT_IDX,
+			                  NODE_NAME,
+			                  NODE_CODE,
+			                  NODE_DESC,
+			                  Rated_WorkMinutes,
+			                  SEQ_NO,
+			                  IS_LEAF)
+			 WHERE 0 = 0
+		]]>
+	</sql>
+	<!-- 获取同一机车检修作业计划第一级节点列表 -->
+	<sql id="getFirstChildNodeListByWorkPlan">
+	<![CDATA[
+		 from JobProcessNode
+		 where recordStatus = 0 and parentIDX is null
+		 and workPlanIDX = '#workPlanIDX#'
+		 order by planBeginTime,planEndTime asc
+	]]>
+	</sql>
+	<!-- 获取下级第一层节点列表 -->
+	<sql id="getFirstChildNodeList">
+	<![CDATA[
+		 from JobProcessNode
+		 where recordStatus = 0 and #replaceStr#
+		 and idx in 
+		 (select nodeIDX from JobProcessNodeRel where preNodeIDX is null and recordStatus = 0)
+	]]>
+	</sql>
+	<!-- 获取前置节点 -->
+	<sql id="getPrevNodeList">
+	<![CDATA[
+		 from JobProcessNode
+		 where recordStatus = 0 and idx in
+		 (select preNodeIDX from JobProcessNodeRel 
+		 where nodeIDX = '#nodeIDX#' and recordStatus = 0)
+		 and (parentIDX = 
+		 (select parentIDX from JobProcessNode where recordStatus = 0 and idx = '#nodeIDX#')
+		 or parentIDX is null)
+	]]>
+	</sql>
+	<!-- 同一父节点下的后续节点列表  -->
+	<sql id="getNextNodeList">
+	<![CDATA[
+		 from JobProcessNode
+		 where recordStatus = 0 and idx in
+		 (select nodeIDX from JobProcessNodeRel 
+		 where preNodeIDX = '#nodeIDX#' and recordStatus = 0)
+		 and (parentIDX = 
+		 (select parentIDX from JobProcessNode where recordStatus = 0 and idx = '#nodeIDX#')
+		  or parentIDX is null)
+	]]>
+	</sql>
+	<!-- 获取机车检修作业计划下第一层且无前置节点列表 -->
+	<sql id="getFirstNodeListByWorkPlan">
+	<![CDATA[
+		 from JobProcessNode
+		 where recordStatus = 0 and parentIDX is null
+		 and idx in 
+		 (select nodeIDX from JobProcessNodeRel where preNodeIDX is null and recordStatus = 0)
+		 and workPlanIDX = '#workPlanIDX#'
+	]]>
+	</sql>
+	<!-- 获取父节点  -->
+	<sql id="getParentNode">
+	<![CDATA[
+		 from JobProcessNode
+		 where recordStatus = 0 and idx =		 
+		 (select parentIDX from JobProcessNode where recordStatus = 0 and idx = '#nodeCaseIDX#')
+	]]>
+	</sql>
+	<!-- 获取同一父节点下的节点实例的最大完成时间 -->
+	<sql id="getMaxChildNodeEndTime">
+	<![CDATA[
+		 SELECT TO_CHAR(MAX(PLAN_END_TIME),'yyyy-MM-dd HH24:mi:ss') FROM JXGC_JOB_PROCESS_NODE
+		 WHERE PARENT_IDX = '#parentIdx#' AND RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 获取同一父节点下的节点实例的最小开始时间 -->
+	<sql id="getMinChildNodeBeginTime">
+	<![CDATA[
+		 SELECT TO_CHAR(MIN(PLAN_BEGIN_TIME),'yyyy-MM-dd HH24:mi:ss') FROM JXGC_JOB_PROCESS_NODE
+		 WHERE PARENT_IDX = '#parentIdx#' AND RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 批量更新流程节点的工位 -->
+	<sql id="updateBatchNodeForWorkStation">
+	<![CDATA[
+		 UPDATE JXGC_JOB_PROCESS_NODE 
+		    SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		        WORK_STATION_IDX = '#workStationIDX#',
+		        WORK_STATION_NAME = '#workStationName#'
+		  WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	
+	<!-- 批量更新流程节点的作业班组 -->
+	<sql id="updateBatchNodeForWorkTeam">
+	<![CDATA[
+		 UPDATE JXGC_JOB_PROCESS_NODE 
+		    SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		        WORK_STATION_BELONG_TEAM = '#teamId#',
+		        WORK_STATION_BELONG_TEAM_NAME = '#teamName#'
+		  WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	<!-- 得到同一机车检修作业计划下的节点的最小开工时间和最大完工时间 -->
+	<sql id="getMinBeginAndMaxEndTimeByNode">
+	<![CDATA[
+		 SELECT TO_CHAR(MIN(PLAN_BEGIN_TIME), 'yyyy-MM-dd HH24:mi:ss'),  
+		 		TO_CHAR(MAX(PLAN_END_TIME), 'yyyy-MM-dd HH24:mi:ss') 
+		   FROM JXGC_JOB_PROCESS_NODE  
+		  WHERE WORK_PLAN_IDX = '#workPlanIDX#'
+		    AND RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 得到同一机车检修作业计划下的节点的实际最小时间和实际最大时间 -->
+	<sql id="getMinBeginAndMaxEndRealTimeByNode">
+	<![CDATA[
+		 SELECT TO_CHAR(MIN(REAL_BEGIN_TIME), 'yyyy-MM-dd HH24:mi:ss'),  
+		 		TO_CHAR(MAX(REAL_END_TIME), 'yyyy-MM-dd HH24:mi:ss') 
+		   FROM JXGC_JOB_PROCESS_NODE  
+		  WHERE WORK_PLAN_IDX = '#workPlanIDX#'
+		    AND RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 得到同一作业流程下同一级节点列表 -->
+	<sql id="getSameProcessAndSameLevelList">
+	<![CDATA[
+		  from JobProcessNodeDef
+		 where recordStatus = 0
+		   and processIDX = '#processIDX#'
+		   and parentIDX = '#parentIDX#'
+	]]>
+	</sql>
+	<!-- 获取节点计划开始时间派工位信息 -->
+	<sql id="getNodeAndWorkStation">
+		SELECT TO_CHAR(T.PLAN_BEGIN_TIME,'yyyy-MM-dd HH24:mi:ss'), 
+			   T.WORK_STATION_IDX, 
+			   T.WORK_STATION_NAME,
+		 	   T.WORK_STATION_BELONG_TEAM, 
+		 	   T.WORK_STATION_BELONG_TEAM_NAME, 
+		 	   T.PROCESS_IDX, 
+		 	   TO_CHAR(T.PLAN_END_TIME,'yyyy-MM-dd HH24:mi:ss')
+		 FROM  JXGC_JOB_PROCESS_NODE T
+		WHERE  T.RECORD_STATUS = 0 AND T.PLAN_BEGIN_TIME IS NOT NULL AND T.IDX = '节点主键'
+	</sql>	
+	<!-- 获取父节点的前置节点 -->
+	<sql id="getParentPrevNodeList">
+	<![CDATA[
+		 from JobProcessNode
+		 where recordStatus = 0 and idx in
+		 (select preNodeIDX from JobProcessNodeRel 
+		 where nodeIDX = (select parentIDX from JobProcessNode where recordStatus = 0 and idx = '#nodeCaseIDX#')
+		 and recordStatus = 0)
+	]]>
+	</sql>
+	<!-- 获取下级中的最后子节点列表 -->
+	<sql id="getLastChildNodeList">
+	<![CDATA[
+		 SELECT A.* FROM 
+		(SELECT * 
+		FROM JXGC_JOB_PROCESS_NODE
+		START WITH IDX = '#parentIDX#'
+		CONNECT BY PRIOR IDX = PARENT_IDX) A
+		WHERE A.IDX NOT IN (
+		SELECT PRE_NODE_IDX FROM JXGC_JOB_PROCESS_NODE_REL 
+		WHERE RECORD_STATUS = 0 AND PRE_NODE_IDX IS NOT NULL)
+		AND A.IDX != '#parentIDX#'
+		AND A.IS_LEAF = 1
+	]]>
+	</sql>
+	<!-- 获取本节点在内的所有下级节点列表 -->
+	<sql id="getAllChildNodeList">
+	<![CDATA[
+			SELECT * 
+		      FROM JXGC_JOB_PROCESS_NODE 
+	         WHERE RECORD_STATUS = 0
+		START WITH IDX = '#nodeIDX#'
+		CONNECT BY PRIOR IDX = PARENT_IDX
+		      
+	]]>
+	</sql>
+	
+	<!-- 获取除本节点之外的所有下级节点列表 -->
+	<sql id="getAllChildNodeExceptThisList">
+	<![CDATA[
+			SELECT * 
+		      FROM JXGC_JOB_PROCESS_NODE 
+	         WHERE RECORD_STATUS = 0
+	           AND IDX != '#nodeIDX#'
+		START WITH IDX = '#nodeIDX#'
+		CONNECT BY PRIOR IDX = PARENT_IDX
+		      
+	]]>
+	</sql>
+	
+	<!-- 获取除本节点之外的所有下级子节点列表 -->
+	<sql id="getAllChildLeafNodeExceptThisList">
+	<![CDATA[
+			SELECT * 
+		      FROM JXGC_JOB_PROCESS_NODE 
+	         WHERE RECORD_STATUS = 0
+	           AND IDX != '#nodeIDX#'
+	           AND IS_LEAF = 1
+		START WITH IDX = '#nodeIDX#'
+		CONNECT BY PRIOR IDX = PARENT_IDX
+		      
+	]]>
+	</sql>
+	
+	<!-- 获取本节点在内的所有第一层下级节点列表 -->
+	<sql id="getAllFirstChildNodeList">
+	<![CDATA[
+			SELECT * 
+		      FROM JXGC_JOB_PROCESS_NODE 
+	         WHERE RECORD_STATUS = 0
+	           AND IDX IN
+	           (SELECT NODE_IDX FROM JXGC_JOB_PROCESS_NODE_REL WHERE PRE_NODE_IDX IS NULL AND RECORD_STATUS = 0)
+		START WITH IDX = '#nodeIDX#'
+		CONNECT BY PRIOR IDX = PARENT_IDX
+		      
+	]]>
+	</sql>
+	<!-- 获取本节点在内的所有父级节点列表 -->
+	<sql id="getAllParentNodeList">
+	<![CDATA[
+			SELECT * 
+		      FROM JXGC_JOB_PROCESS_NODE 
+	         WHERE RECORD_STATUS = 0
+		START WITH IDX = '#nodeIDX#'
+		CONNECT BY PRIOR PARENT_IDX = IDX
+		      
+	]]>
+	</sql>		
+	<!-- 删除流程节点-逻辑删除节点 -->
+	<sql id="logicDeleteNode">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE
+			   SET RECORD_STATUS = 1,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE IDX IN #IDXS# AND RECORD_STATUS = 0 
+	]]>
+	</sql>
+	<!-- 删除流程节点-逻辑删除节点前置关系 -->
+	<sql id="logicDeleteNodeRel">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE_REL
+			   SET RECORD_STATUS = 1,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE NODE_IDX IN #IDXS# AND RECORD_STATUS = 0 
+	]]>
+	</sql>
+	<!-- 删除流程节点-逻辑删除节点前置关系 -->
+	<sql id="logicDeleteNodeRel1">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE_REL
+			   SET RECORD_STATUS = 1,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE IDX IN #IDXS#  AND RECORD_STATUS = 0
+	]]>
+	</sql>	
+	<!-- 删除流程节点-更新节点前置关系的prenodeidx为空 -->
+	<sql id="updateNodeRel1">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE_REL
+			   SET PRE_NODE_IDX = '',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE IDX IN #IDXS#  AND RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 删除流程节点-逻辑删除作业工单 -->
+	<sql id="logicDeleteWorkCard">
+	<![CDATA[
+			UPDATE JXGC_WORK_CARD
+			   SET RECORD_STATUS = 1,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE NODE_CASE_IDX IN #IDXS#  AND RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 删除流程节点-逻辑删除质量检查 -->
+	<sql id="logicDeleteQC">
+	<![CDATA[
+			UPDATE JXGC_QC_RESULT
+			   SET RECORD_STATUS = 1,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE WORK_CARD_IDX IN
+			(SELECT IDX FROM JXGC_WORK_CARD WHERE NODE_CASE_IDX IN #IDXS#)
+		       AND RECORD_STATUS = 0 
+	]]>
+	</sql>	
+	<!-- 删除流程节点-逻辑删除作业任务 -->
+	<sql id="logicDeleteWorkTask">
+	<![CDATA[
+			UPDATE JXGC_WORK_TASK
+			   SET RECORD_STATUS = 1,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE WORK_CARD_IDX IN
+			(SELECT IDX FROM JXGC_WORK_CARD WHERE NODE_CASE_IDX IN #IDXS#)
+     		   AND RECORD_STATUS = 0 
+	]]>
+	</sql>	
+	<!-- 删除流程节点-逻辑删除作业人员 -->
+	<sql id="logicDeleteWorker">
+	<![CDATA[
+			UPDATE JXGC_WORKER
+			   SET RECORD_STATUS = 1,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE WORK_CARD_IDX IN
+			(SELECT IDX FROM JXGC_WORK_CARD WHERE NODE_CASE_IDX IN #IDXS#)
+			   AND RECORD_STATUS = 0 
+	]]>
+	</sql>	
+	<!-- 删除流程节点-逻辑删除检测项 -->
+	<sql id="logicDeleteDetect">
+	<![CDATA[
+			UPDATE JXGC_DETECT_RESULT 
+			   SET RECORD_STATUS = 1,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			WHERE WORK_TASK_IDX IN
+			(SELECT IDX FROM JXGC_WORK_TASK WHERE WORK_CARD_IDX IN
+			(SELECT IDX FROM JXGC_WORK_CARD WHERE NODE_CASE_IDX IN #IDXS#))
+			  AND RECORD_STATUS = 0 
+	]]>
+	</sql>	
+	<!-- 启动节点-更新流程节点信息 -->
+	<sql id="updateNodeStatusForStart">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE
+			   SET STATUS = '#status#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       REAL_BEGIN_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE IDX IN #IDXS# AND RECORD_STATUS = 0 AND STATUS != '#status#'
+	]]>
+	</sql>
+	<!-- 完成节点-更新流程节点信息 -->
+	<sql id="updateNodeStatusForEnd">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE
+			   SET STATUS = '#status#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       REAL_END_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       REAL_BEGIN_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE IDX IN #IDXS# AND RECORD_STATUS = 0 AND STATUS IN ('NOTSTARTED','RUNNING')
+	]]>
+	</sql>
+	<!-- 启动节点-更新作业工单信息 -->
+	<sql id="startWorkCardByNode">
+	<![CDATA[
+			UPDATE JXGC_WORK_CARD
+			   SET STATUS = '#status#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       REAL_BEGIN_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE NODE_CASE_IDX IN #IDXS# AND RECORD_STATUS = 0 AND STATUS != '#status#'
+	]]>
+	</sql>
+	<!-- 终止作业计划-更新流程节点状态 -->
+	<sql id="updateNodeStatusByPlan">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE
+			   SET STATUS = '#status#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE WORK_PLAN_IDX = '#workPlanIDX#' AND RECORD_STATUS = 0 
+	]]>
+	</sql>
+	<!-- 终止作业计划-更新作业工单状态 -->
+	<sql id="updateWorkCardStatusByPlan">
+	<![CDATA[
+			UPDATE JXGC_WORK_CARD
+			   SET STATUS = '#status#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE RDP_IDX = '#workPlanIDX#' AND RECORD_STATUS = 0 
+	]]>
+	</sql>
+	<!-- 终止作业计划-更新作业任务状态 -->
+	<sql id="updateWorkTaskStatusByPlan">
+	<![CDATA[
+			UPDATE JXGC_WORK_TASK
+			   SET STATUS = '#status#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE WORK_CARD_IDX IN
+			(SELECT IDX FROM JXGC_WORK_CARD WHERE RDP_IDX = '#workPlanIDX#' AND RECORD_STATUS = 0)
+			   AND RECORD_STATUS = 0 
+	]]>
+	</sql>
+	<!-- 得到前置节点sql列表 -->
+	<sql id="getPreNodeListBySQL">
+	<![CDATA[
+			SELECT A.*, B.DELAY_TIME AS delayTime
+			  FROM 
+			  JXGC_JOB_PROCESS_NODE A,
+			  (SELECT * FROM JXGC_JOB_PROCESS_NODE_REL 
+					 WHERE NODE_IDX = '#nodeIDX#' AND RECORD_STATUS = 0) B
+			WHERE A.IDX = B.PRE_NODE_IDX
+			  AND A.RECORD_STATUS = 0
+			  AND (A.PARENT_IDX = 
+					 (SELECT PARENT_IDX FROM JXGC_JOB_PROCESS_NODE WHERE RECORD_STATUS = 0 AND IDX = '#nodeIDX#')
+					 OR A.PARENT_IDX IS NULL) 
+	]]>
+	</sql>
+	<!-- 更新流程节点所属父节点 -->
+	<sql id="changeNodeParent">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE
+			   SET PARENT_IDX = '#changeNodeIDX#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE IDX = '#nodeIDX#' AND RECORD_STATUS = 0 
+	]]>
+	</sql>	
+	<!-- 更新节点为父节点及清除其工位和作业班组信息 -->
+	<sql id="changeNodeIsLeaf">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE
+			   SET IS_LEAF = '#IS_LEAF_NO#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator#,
+			       WORK_STATION_BELONG_TEAM_NAME = '',
+			       WORK_STATION_BELONG_TEAM = NULL,
+			       WORK_STATION_IDX = '',
+			       WORK_STATION_NAME = '' 
+			 WHERE IDX = '#nodeIDX#' AND RECORD_STATUS = 0 AND IS_LEAF = '#IS_LEAF_YES#'
+	]]>
+	</sql>	
+	<!-- 完成流程节点 -->
+	<sql id="finishNode">
+	<![CDATA[
+			UPDATE JXGC_JOB_PROCESS_NODE
+			   SET STATUS = '#status#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       REAL_END_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE IDX = '#IDX#' AND RECORD_STATUS = 0 
+	]]>
+	</sql>
+	<!-- 查询本节点及子节点的关联工单 -->
+	<sql id="getWorkCardOfAllChildNode">
+	<![CDATA[
+			SELECT * FROM JXGC_WORK_CARD
+					WHERE NODE_CASE_IDX IN
+					(SELECT IDX 
+					   FROM JXGC_JOB_PROCESS_NODE 
+					  WHERE RECORD_STATUS = 0
+							START WITH IDX = '#nodeIDX#'
+							CONNECT BY PRIOR IDX = PARENT_IDX)
+					  AND RECORD_STATUS = 0 
+	]]>
+	</sql>
+	<!-- 工长派工查询-工艺节点选择控件查找根 -->
+	<sql id='getNodeTreeRoot'>
+		SELECT IDX, 
+			   WORK_PLAN_IDX, 
+			   NODE_IDX, 
+			   NODE_NAME, 
+			   PARENT_IDX, 
+			   (SELECT COUNT(1) FROM JXGC_JOB_PROCESS_NODE WHERE PARENT_IDX = CASE.IDX) 
+		  FROM JXGC_JOB_PROCESS_NODE CASE 
+		 WHERE IDX IN 
+		       (SELECT DISTINCT ROOTS FROM (SELECT  CONNECT_BY_ROOT(IDX) ROOTS,SA.* FROM (
+				SELECT A.* FROM JXGC_JOB_PROCESS_NODE A WHERE A.WORK_PLAN_IDX = '?' AND A.RECORD_STATUS = 0) SA START WITH PARENT_IDX IS NULL 
+				CONNECT BY PRIOR IDX = PARENT_IDX) 
+				WHERE IDX IN (SELECT NODE_CASE_IDX FROM JXGC_WORK_CARD WHERE WORK_STATION_BELONG_TEAM = '?' AND (###) AND RECORD_STATUS = 0)) 
+				ORDER BY Plan_Begin_Time,SEQ_NO 
+	</sql>
+	<!-- 工长派工查询-工艺节点选择控件子节点 -->
+	<sql id='getNodeTreeChilds'>
+		SELECT IDX, 
+			   WORK_PLAN_IDX, 
+			   NODE_IDX, 
+			   NODE_NAME, 
+			   PARENT_IDX,
+			   (SELECT COUNT(1) FROM JXGC_JOB_PROCESS_NODE WHERE PARENT_IDX = CASE.IDX)  
+		  FROM JXGC_JOB_PROCESS_NODE CASE 
+		 WHERE IDX IN 
+		       (SELECT CASE WHEN INSTR(PATH2,'/',1,1) = 0 THEN SUBSTR(PATH2,0,LENGTH(PATH2)) ELSE SUBSTR(PATH2,0,INSTR(PATH2,'/',1,1)-1) END
+				FROM ( SELECT PATH, SUBSTR(PATH,INSTR(PATH,'pid',1,1)+LENGTH('pid')+1,LENGTH(PATH)) PATH2 
+				FROM ( SELECT PATH FROM ( SELECT  SYS_CONNECT_BY_PATH(IDX,'/') PATH,SA.* FROM ( SELECT A.* FROM JXGC_JOB_PROCESS_NODE A 
+				WHERE A.WORK_PLAN_IDX = 'workPlanIDX' AND A.RECORD_STATUS = 0 ) SA START WITH PARENT_IDX IS NULL CONNECT BY PRIOR IDX = PARENT_IDX )
+		 		WHERE IDX IN (SELECT NODE_CASE_IDX FROM JXGC_WORK_CARD WHERE WORK_STATION_BELONG_TEAM = 'tream' AND (###) AND RECORD_STATUS = 0)) 
+		 		WHERE PATH LIKE '%pid%')) 
+		 ORDER BY SEQ_NO
+	</sql>
+	<!-- 作业工单-查询工艺节点用于tree -->
+	<sql id='workFindNode'>
+		select distinct idx,
+			   NODE_NAME, 
+			   IS_LEAF, 
+			   parent_idx 
+		 from  (select t.idx, t.NODE_NAME, t.IS_LEAF, t.parent_idx 
+		 		from JXGC_JOB_PROCESS_NODE t start with idx in 
+				(select distinct t.idx from JXGC_JOB_PROCESS_NODE t, jxgc_work_card c, jxgc_worker w, JXGC_TRAIN_WORK_PLAN r
+			 	  where  w.work_card_idx = c.idx and t.idx = c.node_case_idx and r.idx = t.WORK_PLAN_IDX and r.idx='兑现单'
+			 	    and w.worker_id = '人员ID' and c.status in ('ONGOING', 'OPENED'))
+				    connect by t.idx = prior t.parent_idx) x 
+		where x.parent_idx 父节点
+	</sql>	
+	<!-- 得到此节点的所有未完成的前置节点数量 -->
+	<sql id='getUnCompletePreNodesForNode'>
+		SELECT * 
+		  FROM JXGC_JOB_PROCESS_NODE
+		 WHERE RECORD_STATUS = 0 AND STATUS IN ('NOTSTARTED','RUNNING')
+		   AND IDX IN
+			   (SELECT PRE_NODE_IDX FROM JXGC_JOB_PROCESS_NODE_REL
+				WHERE NODE_IDX = '#nodeIDX#' AND RECORD_STATUS = 0 AND PRE_NODE_IDX IS NOT NULL)
+	</sql>
+	<!-- 得到此作业计划下节点的前置关系列表 -->
+	<sql id='getRelListByWorkPlan'>
+		from JobProcessNodeRel 
+	   where recordStatus = 0
+		 and nodeIDX in (select idx from JobProcessNode where recordStatus = 0 and workPlanIDX = '#workPlanIDX#')
+	</sql>
+	<!-- 得到此流程定义下节点的前置关系定义列表 -->
+	<sql id='getRelDefListByProcess'>
+		from JobProcessNodeRelDef 
+	   where recordStatus = 0
+		 and nodeIDX in (select idx from JobProcessNodeDef where recordStatus = 0 and processIDX = '#processIDX#')
+		 and preNodeIDX in (select idx from JobProcessNodeDef where recordStatus = 0 and processIDX = '#processIDX#')
+	</sql>
+	
+	<!-- 流程节点作业计划联合查询列表 -->
+	<sql id='selectRdpNodeAll'>
+	 select n.idx, n.work_plan_idx, n.status, n.Node_Name, n.WORK_STATION_IDX, n.Work_Station_Name, 
+	 n.Rated_WorkMinutes/60 as Rated_WorkHours,
+		   TO_CHAR(n.Plan_Begin_Time, 'YYYY-MM-DD HH24:MI:SS') as "Plan_Begin_Time",
+		   TO_CHAR(n.Plan_End_Time, 'YYYY-MM-DD HH24:MI:SS') as "Plan_End_Time",
+		   TO_CHAR(n.Real_Begin_Time, 'YYYY-MM-DD HH24:MI:SS') as "Real_Begin_Time",
+		   TO_CHAR(n.Real_End_Time, 'YYYY-MM-DD HH24:MI:SS') as "Real_End_Time",
+			   p.Process_Name,p.TRAIN_TYPE_IDX, p.Train_Type_ShortName, p.Train_No, p.Repair_Class_Name, p.Repair_time_Name, p.Work_Plan_Status,
+		       TO_CHAR( p.Plan_Begin_Time, 'YYYY-MM-DD HH24:MI:SS') as "Rdp_Plan_Begin_Time", 
+		       TO_CHAR( P.Plan_End_Time, 'YYYY-MM-DD HH24:MI:SS') as "Rdp_Plan_End_Time",
+		       p.D_NAME,
+		       p.Delegate_D_Name,
+		       p.t_vehicle_type,
+		       i.CALENDARNAME as "Work_Calendar_Name",
+		       d.DELAY_Type, d.DELAY_REASON,
+		       d.IDX as "Delay_Idx",
+		nvl(t1.dd,0) ||'/'|| nvl(t2.dd,0) as "Card_Count"
+		from JXGC_Job_Process_Node n
+		inner join JXGC_Train_Work_Plan p on n.Work_Plan_IDX = p.idx
+		inner join JCGY_WORK_CALENDAR_INFO i on p.Work_Calendar_IDX = i.idx 
+		left join (select * from ( SELECT T.*,ROW_NUMBER() OVER (PARTITION BY  T.NODE_CASE_IDX ORDER BY T.IDX)RV fROM JXGC_Node_Case_Delay T)  where RV=1) d 
+		on d.NODE_CASE_IDX = n.idx  
+		   left join 
+    (
+       select node_case_idx, count(1) as dd from JXGC_Work_Card  where record_status = 0  and status in('INITIALIZE','OPENED','ONGOING') group by node_case_idx
+     ) t1 on t1.node_case_idx = n.idx
+        left join 
+    (
+       select node_case_idx, count(1) as dd from JXGC_Work_Card  where record_status = 0  group by node_case_idx
+     ) t2 on t2.node_case_idx = n.idx
+		where n.record_status = 0	
+		and n.Is_Leaf = 1 order by n.Plan_Begin_Time,n.Seq_No
+	</sql>
+	<!-- 得到此作业计划下有提票卡控的节点列表 -->
+	<sql id='getConfigTicketNode'>
+		  select  n.idx from JXGC_Job_Process_Node n   where   n.record_status=0 and   
+		  n.node_idx in( select d.node_idx from JXGC_JobNode_Ext_Config_Def  d  where  d.config_name = '#configName#' and d.config_value = '#configValue#')   and n.work_plan_idx = '#workPlanIDX#'
+	</sql>
+	
+</SqlMap>

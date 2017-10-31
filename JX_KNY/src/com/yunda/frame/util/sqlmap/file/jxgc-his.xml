@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 检修过程 质量检查管理 -->
+	<!-- 查询当前工单的质量检查项列表 -->
+	<sql id="findQCResultList">
+		<![CDATA[
+			SELECT 
+				DISTINCT A.CHECK_ITEM_CODE AS "idx", 
+				A.CHECK_ITEM_NAME AS "checkItemName", 
+				A.CHECK_WAY AS "checkWay",
+				A.QC_EMPNAME AS "qcEmpName",
+				A.QC_TIME AS "qcTime",
+				A.REMARKS AS "remarks",
+				A.STATUS AS "status"
+			 FROM 
+				(SELECT CHECK_ITEM_CODE, CHECK_ITEM_NAME, CHECK_WAY, QC_EMPNAME, QC_TIME, REMARKS, STATUS
+			 	 FROM JXGC_QC_RESULT_HIS WHERE RECORD_STATUS = 0 AND WORK_CARD_IDX = '#workCardIDX#') A
+		]]>
+	</sql>
+</SqlMap>

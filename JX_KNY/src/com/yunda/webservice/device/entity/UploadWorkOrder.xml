@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<DetectDatas>
+	<DetectData>
+		<DataType>01</DataType>
+		<Edition>1.0</Edition>
+		<MaterielCode>10000000000001</MaterielCode>
+		<DetectorCode>new003</DetectorCode>
+		<WorkOrderCode>11100312</WorkOrderCode>
+		<Code>Abc123</Code>
+		<WorkOrderDescribe>工单描述内容</WorkOrderDescribe>
+		<DetectorDate>2011-03-11 11:11:11</DetectorDate>
+		<RealBeginTime>2011/03/11 11:11:11</RealBeginTime>
+		<RealEndTime>2011/03/11 11:11:11</RealEndTime>
+		<Result>10000001</Result>
+		<Remark>完全正常</Remark>
+		<Parameters>
+			<Parameter>
+				<Code>1000001</Code>
+				<Name>高度</Name>
+				<Unit>cm</Unit>
+				<Describe>高度</Describe>
+				<Value>20</Value>
+			</Parameter>
+			<Parameter>
+				<Code>1000002</Code>
+				<Name>厚度</Name>
+				<Unit>mm</Unit>
+				<Describe>厚度</Describe>
+				<Value>30</Value>
+			</Parameter>
+		</Parameters>
+	</DetectData>
+	<DetectData> 
+	    <DataType>02</DataType> <!--设备状态监测数据 -->
+	    <Edition>1.0</Edition> <!--表示接口版本号1.0-->
+	    <DetectorCode>00011000000001 </DetectorCode> <!--机务设备编码-->
+	    <DetectorDate> YYYY-MM-DD HH:MI:SS</DetectorDate> <!--上传时间-->
+	    <Parameters> 
+	    <State>1</State> <!--设备自检状态编码，参考设备状态编码字典-->
+	    </Parameters>
+	</DetectData>
+	<DetectData>
+		<DataType>01</DataType>
+		<Edition>2.0</Edition>
+		<MaterielCode>10000000000002</MaterielCode>
+		<DetectorCode>111update</DetectorCode>
+		<WorkerCodes>
+			<WorkerCode>00026000000004</WorkerCode>
+			<WorkerCode>00024000000005</WorkerCode>
+		</WorkerCodes>
+		<WorkOrderCode>22200312</WorkOrderCode>
+		<WorkOrderDescribe>工单描述内容2</WorkOrderDescribe>
+		<DetectorDate>2011/03/11 11:11:11</DetectorDate>
+		<RealBeginTime>2011/03/11 11:11:11</RealBeginTime>
+		<RealEndTime>2011/03/11 11:11:11</RealEndTime>
+		<Result>10000002</Result>
+		<Remark>完全正常</Remark>
+		<Parameters>
+			<Parameter>
+				<Code>1000003</Code>
+				<Name>高度</Name>
+				<Unit>cm</Unit>
+				<Describe>高度</Describe>
+				<Value>20</Value>
+			</Parameter>
+			<Parameter>
+				<Code>1000004</Code>
+				<Name>厚度</Name>
+				<Unit>mm</Unit>
+				<Describe>厚度</Describe>
+				<Value>30</Value>
+			</Parameter>
+		</Parameters>
+	</DetectData>
+</DetectDatas>

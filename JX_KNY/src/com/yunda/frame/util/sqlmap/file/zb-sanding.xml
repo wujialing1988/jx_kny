@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 整备V3.2 上砂任务处理 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+		<!-- 工位终端webservice未完成查询 -->
+	<sql id="querySandingPageList">
+	<![CDATA[
+   select xy.* from(
+	 select 
+	     a.idx, 
+	     b.idx as train_access_account_idx,
+	     b.train_type_idx,
+	     b.train_type_shortname,
+	     b.train_no,
+		 b.train_type_shortname||' '||b.train_no as train_type_no,
+	     b.in_time,
+	     b.siteid,
+	     b.sitename,
+	     a.start_time,
+	     a.end_time,
+	     a.sanding_time,
+		 pkg_zb_others.fn_get_jxpz_num ('ck.jczb.trainonsand.standardSandingTime') as standard_sanding_time,
+	     a.duty_personid,
+	     a.duty_personname,
+	     a.is_overtime,
+	     a.sand_num
+		   from (select t.*
+		              from twt_train_access_account t,zb_zbgl_rdp zzr
+		                 where t.record_status = 0 and t.in_time is not null
+		                   and t.out_time is null and t.idx = zzr.train_access_account_idx and zzr.record_status = 0 ) b
+		   left join zb_zbgl_sanding a on b.idx = a.train_access_account_idx
+		   where a.end_time is null or a.train_access_account_idx is null)xy where 0 = 0
+	]]>
+	</sql>
+		<!-- 工位终端webservice已完成查询 -->
+	<sql id="querySandedPageList">
+	<![CDATA[
+    select xy.* from(
+    	select
+	     a.idx,     
+	     b.idx as train_access_account_idx,
+	     b.train_type_idx,
+	     b.train_type_shortname,
+	     b.train_no,
+		 b.train_type_shortname||' '||b.train_no as train_type_no,
+	     b.in_time,
+	     b.siteid,
+	     b.sitename,
+	     a.start_time,
+	     a.end_time,
+	     a.sanding_time,
+		 pkg_zb_others.fn_get_jxpz_num ('ck.jczb.trainonsand.standardSandingTime') as standard_sanding_time,
+	     a.duty_personid,
+	     a.duty_personname,
+	     a.is_overtime,
+	     a.sand_num
+		   from (select t.*
+		              from twt_train_access_account t,zb_zbgl_rdp zzr
+		                 where t.record_status = 0 and t.in_time is not null
+		                   and t.out_time is null and t.idx = zzr.train_access_account_idx and zzr.record_status = 0 ) b
+		   left join zb_zbgl_sanding a on b.idx = a.train_access_account_idx
+	       where a.end_time is not null)xy where 0 = 0
+	]]>
+	</sql>
+</SqlMap>

@@ -1,0 +1,84 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="com.yunda.frame.order.IOrderManager"%>
+<style type="text/css">
+	.moveUpIcon {background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/move_up.png) !important;}
+	.moveDownIcon{background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/move_down.png) !important;}
+	.moveTopIcon{background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/move_top.png) !important;}
+	.moveBottomIcon{background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/move_bottom.png) !important;}
+</style>
+<script type="text/javascript">
+	var ORDER_TYPE_TOP = '<%= IOrderManager.CONST_INT_ORDER_TYPE_TOP %>'			// 置顶
+	var ORDER_TYPE_BOT = '<%= IOrderManager.CONST_INT_ORDER_TYPE_BOT %>'			// 置底
+	var ORDER_TYPE_PRE = '<%= IOrderManager.CONST_INT_ORDER_TYPE_PRE %>'			// 上移
+	var ORDER_TYPE_NEX = '<%= IOrderManager.CONST_INT_ORDER_TYPE_NEX %>'			// 下移
+</script>
+<%--
+	排序功能开发使用说明：
+	
+	<一> 后端开发说明：
+		1 排序管理器接口类为：IOrderManager<T>，该接口类定义了以下接口方法：
+			1）、public int count(T t);
+			2）、public List<T> findAll(T t);
+			3）、public void updateMoveBottom(String idx) throws Exception;
+			4）、public void updateMoveDown(String idx) throws Exception;
+			5）、public void updateMoveTop(String idx) throws Exception;
+			6）、public void updateMoveUp(String idx) throws Exception;
+			7）、public void updateMoveOrder(String idx, int orderType) throws Exception;
+			8）、public String[] validateMoveOrder(String idx, int orderType) throws Exception;
+			9）、public void updateSort(List<T> entityList) throws BusinessException ,NoSuchFieldException;
+			10）、public List<T> findAllBySN(T t) throws Exception;
+			PS:方法定义说明详见IOrderManager<T>接口类
+			
+		2 AbstractOrderManager<T, S>抽象排序管理器对排序管理器接口进行了简单实现。
+			1）、若是简单单表（即：整个表仅有一个顺序）内的记录排序，目标管理器仅需继承该抽象排序管理器即可；
+			2）、对于复杂单表（即：表类因存在父子关系，其它关联外键等致使表内有多个顺序）内的记录排序，目标管理器继承AbstractOrderManager<T, S>抽象排序管理器后，还需重写以下方法：
+				a.public int count(T t);
+				b.public List<T> findAll(T t);
+				c.public void updateMoveBottom(String idx) throws Exception;
+				d.public void updateMoveDown(String idx) throws Exception;
+				e.public void updateMoveTop(String idx) throws Exception;
+				f.public void updateMoveUp(String idx) throws Exception;
+				g.public List<T> findAllBySN(T t) throws Exception;
+			PS:AbstractOrderManager<T, S>抽象排序管理器默认的[主键变量名为:idx]，默认[排序字段变量名为:seqNo]，如有变更，子类在继承后请根据实际的数据库设计和映射对象进行重写。
+				
+		3 AbstractOrderAction<T, S, M extends AbstractOrderManager<T, S>>抽象排序控制器是后台处理向前端的Ajax请求暴露排序接口的简单实现，对要实现排序功能的目标控制器，仅需继承该抽象排序控制器即可。
+		
+		
+	<二>前端开发说明：
+		1 /frame/jspf/OrderManager.jspf该文件定义了用于排序的基本参数信息，包含排序类型【置顶】【上移】【下移】【置底】以及对应的图标样式。
+		2 在包含排序表格的jsp页面需像以下方式引入该文件
+			<%@include file="/frame/jspf/OrderManager.jspf" %>
+		3 排序表格tbar代码示例：
+			tbar:['->', {
+				text:'置顶', iconCls:'moveTopIcon', handler: function() {
+					WPNode.moveOrder(WPNode.grid, ORDER_TYPE_TOP);
+				}
+			}, {
+				text:'上移', iconCls:'moveUpIcon', handler: function() {
+					WPNode.moveOrder(WPNode.grid, ORDER_TYPE_PRE);
+				}
+			}, {
+				text:'下移', iconCls:'moveDownIcon', handler: function() {
+					WPNode.moveOrder(WPNode.grid, ORDER_TYPE_NEX);
+				}
+			}, {
+				text:'置底', iconCls:'moveBottomIcon', handler: function() {
+					WPNode.moveOrder(WPNode.grid, ORDER_TYPE_BOT);
+				}
+			}]
+		4 排序功能js代码示例：
+			// 手动排序 
+		    WPNode.moveOrder = function(grid, orderType) {
+		    	if(!$yd.isSelectedRecord(grid)) {
+					return;
+				}
+				var idx = $yd.getSelectedIdx(grid)[0];
+				Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), {
+		        	scope: grid,
+		        	url: ctx + '/wPNode!moveOrder.action',
+					params: {idx: idx, orderType: orderType}
+		        }));
+		    }
+		5 如果要实现在已选择记录之前（上方）新增记录，则需在新增时，设置新增记录的排序号字段值为已选择记录的排序号
+--%>
+

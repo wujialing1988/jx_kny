@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 机车整备流程节点查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 得到同一整备范围下同一级节点列表 -->
+	<sql id="getSameZbfwAndSameLevelList">
+	<![CDATA[
+		  from ZbglJobProcessNodeDef
+		 where zbfwIDX = ?
+		   and parentIDX = ?
+		   and recordStatus = 0
+	]]>
+	</sql>
+	<!-- 得到此整备范围下节点的前置关系定义列表 -->
+	<sql id='getRelDefListByZbfw'>
+		from ZbglJobProcessNodeRelDef 
+	   where nodeIDX in (select idx from ZbglJobProcessNodeDef where recordStatus = 0 and zbfwIDX = '#zbfwIDX#')
+		 and preNodeIDX in (select idx from ZbglJobProcessNodeDef where recordStatus = 0 and zbfwIDX = '#zbfwIDX#')
+	</sql>
+	
+	<!-- 获取前置节点 -->
+	<sql id="getPrevNodeList">
+	<![CDATA[
+		 from ZbglRdpNode
+		 where recordStatus = 0 and idx in
+		 (select preNodeIDX from ZbglRdpNodeRel 
+		 where nodeIDX = '#nodeIDX#')
+		 and (parentIDX = 
+		 (select parentIDX from ZbglRdpNode where recordStatus = 0 and idx = '#nodeIDX#')
+		 or parentIDX is null)
+	]]>
+	</sql>
+	
+	<!-- 同一父节点下的后续节点列表  -->
+	<sql id="getNextNodeList">
+	<![CDATA[
+		 from ZbglRdpNode
+		 where recordStatus = 0 and idx in
+		 (select nodeIDX from ZbglRdpNodeRel 
+		 where preNodeIDX = '#nodeIDX#')
+		 and (parentIDX = 
+		 (select parentIDX from ZbglRdpNode where recordStatus = 0 and idx = '#nodeIDX#')
+		  or parentIDX is null)
+	]]>
+	</sql>
+</SqlMap>
+
+	

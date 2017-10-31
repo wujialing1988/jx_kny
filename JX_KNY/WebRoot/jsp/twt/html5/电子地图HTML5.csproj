@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{D4E7C43A-5E3E-4487-BD7A-B2013C44598C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>1.6</TypeScriptToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Css\CanvasCss\CanvasCss.css" />
+    <Content Include="Css\DataGridCss\DataGridCss.css" />
+    <Content Include="Css\IndexCss\WebMain.css" />
+    <Content Include="Css\SideMenuListCss\SideMenuListCss.css" />
+    <Content Include="Css\SideMenu\SideMenu.css" />
+    <Content Include="Dlls\HTML\CanvasControl\CanvasControl.html" />
+    <Content Include="Dlls\HTML\MetroTime\MetroTime.html" />
+    <Content Include="Dlls\HTML\SideMenuList\SideMenuList.html" />
+    <Content Include="Dlls\HTML\TrainColorControl\TrainColorControl.html" />
+    <Content Include="images\alipay_3.png" />
+    <Content Include="images\app_window.png" />
+    <Content Include="images\background.jpg" />
+    <Content Include="images\br_up.png" />
+    <Content Include="images\chart_line.png" />
+    <Content Include="images\download.png" />
+    <Content Include="images\good.png" />
+    <Content Include="images\grad.png" />
+    <Content Include="images\hd-bg.png" />
+    <Content Include="images\JK.png" />
+    <Content Include="images\logo.gif" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\magnifier.png" />
+    <Content Include="images\notepad.png" />
+    <Content Include="images\notepad_2.png" />
+    <Content Include="images\on-off.png" />
+    <Content Include="images\pencil.png" />
+    <Content Include="images\playback_reload.png" />
+    <Content Include="images\save.png" />
+    <Content Include="images\sq_br_up.png" />
+    <Content Include="images\undo.png" />
+    <Content Include="images\user1.png" />
+    <Content Include="images\wrench_plus_2.png" />
+    <Content Include="index.html" />
+    <Content Include="packages.config" />
+    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.4.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\jquery.fullscreen.js" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Dlls\JS\AOP\AOP.ts" />
+    <TypeScriptCompile Include="Dlls\JS\BasicClass\MessageClass.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Canvas\CanvasJS.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Dictionary\Dictionary.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Event\Event.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Fullscreen\FullscreenJS.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Graphics\Insulation.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Graphics\Light.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Graphics\Overhaul.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Graphics\Position.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Graphics\Switches.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Graphics\TextFrame.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Graphics\TrackLine.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Graphics\Train.ts" />
+    <TypeScriptCompile Include="Dlls\JS\LinQ\LINQ.ts" />
+    <TypeScriptCompile Include="Dlls\JS\MainForm\MainForm.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Pollution\Pollution.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Read\Read.ts" />
+    <TypeScriptCompile Include="Dlls\JS\Script\ScriptList.ts" />
+    <TypeScriptCompile Include="Dlls\JS\SVG\SVG.ts" />
+    <TypeScriptCompile Include="Dlls\JS\WebSocket\TcpClient.ts" />
+    <TypeScriptCompile Include="Scripts\jquery.d.ts" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>电子地图HTML5</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>7054</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:7054/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <IncludeIisSettings>false</IncludeIisSettings>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+</Project>

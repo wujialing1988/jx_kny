@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 流水线-工位使用质量技术单查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 配件检修任务处理 检修记录工单分页查询，关联查询了质量检查(互检)人员 -->
+	<sql id="partsRdpRecordCard_findPageList">
+		<![CDATA[
+			SELECT A.*, B.QC_EMPID, B.QC_EMPNAME FROM 
+			(SELECT * FROM PJJX_PARTS_RDP_RECORD_CARD T WHERE T.RECORD_STATUS = 0) A
+			LEFT JOIN
+			(SELECT T.QC_EMPID, T.QC_EMPNAME, T.RDP_RECORD_CARD_IDX FROM PJJX_PARTS_RDP_QC_PARTICIPANT T WHERE T.RECORD_STATUS = 0 AND T.QC_ITEM_NO = 'HJ') B
+			ON
+			A.IDX = B.RDP_RECORD_CARD_IDX
+			WHERE 0 = 0
+		]]>
+	</sql>
+	<!-- 配件检修质量检验 -->
+	<sql id="findPartRdpQCItems">
+		<![CDATA[
+			SELECT T.*, P.UNLOAD_PLACE
+  FROM (SELECT ROWNUM, PARTS_NO, RDP_IDX,
+		  	   PARTS_ACCOUNT_IDX,
+               PARTS_NAME,
+               SPECIFICATION_MODEL,
+               MAT_CODE,
+               REPAIR_ORGID,
+               REPAIR_ORGNAME,
+               REPAIR_ORGSEQ,
+               DUTY_EMPID,
+               DUTY_EMPNAME,
+               QC_ITEM_NO,
+               QC_ITEM_NAME,
+               UNLOAD_TRAINTYPE,
+               UNLOAD_TRAINNO,
+               UNLOAD_REPAIR_CLASS,
+               UNLOAD_REPAIR_TIME,
+               QTY,
+               EXTENDNO,
+               TO_CHAR(PLAN_STARTTIME, 'YYYY-MM-DD HH24:MI') AS PLAN_STARTTIME,
+               TO_CHAR(PLAN_ENDTIME, 'YYYY-MM-DD HH24:MI') AS PLAN_ENDTIME,
+               PARTS_TYPE_IDX,
+               UNLOAD_TRAINTYPE_IDX,
+               UNLOAD_REPAIR_CLASS_IDX,
+               UNLOAD_REPAIR_TIME_IDX,
+               CHECK_WAY,
+               IDENTIFICATION_CODE
+  		FROM (SELECT COUNT(*) AS QTY,
+	                 RDP_IDX,
+	                 QC_ITEM_NO,
+	                 QC_ITEM_NAME,
+	                 QC_EMPID,
+	                 QC_EMPNAME,
+	                 CHECK_WAY
+          		FROM (SELECT A.*, B.CHECK_WAY, B.QC_ITEM_NAME
+                  		FROM PJJX_PARTS_RDP_QC_PARTICIPANT A,
+                       		 PJJX_PARTS_RDP_QR             B,
+                             PJJX_PARTS_RDP_RECORD_CARD    C
+                 	   WHERE A.RECORD_STATUS = 0
+                   		 AND B.RECORD_STATUS = 0
+                   		 AND C.RECORD_STATUS = 0
+	                     AND C.STATUS = '0401'
+	                     AND A.RDP_RECORD_CARD_IDX = C.IDX
+	                     AND A.RDP_RECORD_CARD_IDX = B.RDP_RECORD_CARD_IDX
+	                     AND A.QC_ITEM_NO = B.QC_ITEM_NO
+	                     AND A.QC_EMPID = ?
+	                     AND B.STATUS = '01')
+         			  GROUP BY RDP_IDX, QC_ITEM_NO, QC_EMPID, QC_EMPNAME, QC_ITEM_NAME, CHECK_WAY) PT,
+       PJJX_PARTS_RDP RDP
+ WHERE PT.RDP_IDX = RDP.IDX
+   AND RDP.RECORD_STATUS = 0
+   AND RDP.STATUS IN ('02', '03')) T, PJWZ_PARTS_ACCOUNT P
+ WHERE T.PARTS_ACCOUNT_IDX = P.IDX
+		]]>
+	</sql>
+</SqlMap>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 检修活动  -->
+<SqlMap>	
+	<!-- 查询可以删除的检修活动 -->
+	<sql id="findDeleteActivity">
+		select c.idx, c.repair_activity_idx from jxgc_work_card c where c.repair_activity_idx in ('检修活动主键') and c.status not in ('处理中', '完成')
+	</sql>
+</SqlMap>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 机车检修流程节点历史查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 获取本节点在内的所有第一层下级节点列表 -->
+	<sql id="getAllFirstChildNodeList">
+	<![CDATA[
+			SELECT * 
+		      FROM JXGC_JOB_PROCESS_NODE_HIS 
+	         WHERE RECORD_STATUS = 0
+	           AND IDX IN
+	           (SELECT NODE_IDX FROM JXGC_JOB_PROCESS_NODE_REL_HIS WHERE PRE_NODE_IDX IS NULL AND RECORD_STATUS = 0)
+		START WITH IDX = '#nodeIDX#'
+		CONNECT BY PRIOR IDX = PARENT_IDX
+		      
+	]]>
+	</sql>
+	<!-- 获取本节点在内的所有父级节点列表 -->
+	<sql id="getAllParentNodeList">
+	<![CDATA[
+			SELECT * 
+		      FROM JXGC_JOB_PROCESS_NODE_HIS 
+	         WHERE RECORD_STATUS = 0
+		START WITH IDX = '#nodeIDX#'
+		CONNECT BY PRIOR PARENT_IDX = IDX
+		      
+	]]>
+	</sql>	
+</SqlMap>

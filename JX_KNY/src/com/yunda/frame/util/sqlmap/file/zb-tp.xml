@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 整备V3.2 临碎修提票 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 实例化提票状态 -->
+	<sql id="saveForInstanceTp">
+	<![CDATA[
+		UPDATE ZB_ZBGL_JT6 
+		   SET FAULT_NOTICE_STATUS = '#STATUS_DRAFT#', 
+		   	   UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'), 
+		   	   RDP_IDX = '#rdpIDX#',
+		   	   REPAIR_CLASS = '#REPAIRCLASS#' 
+		 WHERE FAULT_NOTICE_STATUS = '#STATUS_INIT#' 
+		   AND RECORD_STATUS = #NO_DELETE# 
+		   AND TRAIN_TYPE_SHORTNAME = '#trainTypeShortName#' 
+		   AND TRAIN_NO = '#trainNo#' 
+		   and idx not in(
+		   	select a.JT6_IDX from ZB_ZBGL_JT6_Exception a where a.RECORD_STATUS = 0
+		   )
+	]]>
+	</sql>
+	<!-- 提票处理-碎修领活 -->
+	<sql id="receiveSXTp">
+	<![CDATA[
+		UPDATE ZB_ZBGL_JT6 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   REV_PERSON_ID = #revPersonId#,
+		   	   REV_PERSON_NAME = '#revPersonName#',		   	   
+		   	   REV_TIME = TO_DATE('#revTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   REV_ORGID = #revOrgID#,
+		   	   REV_ORGNAME = '#revOrgName#',
+		   	   REV_ORGSEQ = '#revOrgSeq#',
+		   	   FAULT_NOTICE_STATUS = '#STATUS_OPEN#'
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	<!-- 提票处理-临修领活 -->
+	<sql id="receiveLXTp">
+	<![CDATA[
+		UPDATE ZB_ZBGL_JT6 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   REV_PERSON_ID = #revPersonId#,
+		   	   REV_PERSON_NAME = '#revPersonName#',		   	   
+		   	   REV_TIME = TO_DATE('#revTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   FAULT_NOTICE_STATUS = '#STATUS_OPEN#'
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	<!-- 提票处理-销活 -->
+	<sql id="handleTp">
+	<![CDATA[
+		UPDATE ZB_ZBGL_JT6 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   METHOD_DESC = '#methodDesc#',
+		   	   REPAIR_RESULT = #repairResult#,
+		   	   REPAIR_DESC = '#repairDesc#',
+		   	   HANDLE_PERSON_ID = #handlePersonId#,		   	    
+		   	   HANDLE_PERSON_NAME = '#handlePersonName#',		   	    
+		   	   HANDLE_TIME = TO_DATE('#handleTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   HANDLE_SITEID = '#handleSiteID#',
+		   	   HANDLE_SITENAME = '#handleSiteName#',
+		   	   FAULT_NOTICE_STATUS = '#STATUS_OVER#',
+		   	   PROFESSIONAL_TYPE_IDX = '#professionalTypeIdx#',
+		   	   PROFESSIONAL_TYPE_NAME = '#professionalTypeName#',
+		   	   PROFESSIONAL_TYPE_SEQ = '#professionalTypeSeq#',
+		   	   FAULT_FIX_FULLNAME = '#faultFixFullName#',
+		   	   Repair_Emp_ID = '#repairEmpID#',
+		   	   Repair_Emp = '#repairEmp#',
+		   	   Fault_Reason = '#faultReason#'   	    
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	<!-- 提票处理-撤销碎修领活 -->
+	<sql id="cancelReceivedSXTp">
+	<![CDATA[
+		UPDATE ZB_ZBGL_JT6 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   REV_PERSON_ID = null,
+		   	   REV_PERSON_NAME = '',
+		   	   REV_TIME = null,
+		   	   REV_ORGID = null,
+		   	   REV_ORGNAME = '',
+		   	   REV_ORGSEQ = '',
+		   	   FAULT_NOTICE_STATUS = '#STATUS_DRAFT#'		   	    
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	
+	<!-- 提票处理-撤销临修领活 -->
+	<sql id="cancelReceivedLXTp">
+	<![CDATA[
+		UPDATE ZB_ZBGL_JT6 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   REV_PERSON_ID = null,
+		   	   REV_PERSON_NAME = '',
+		   	   REV_TIME = null,
+		   	   FAULT_NOTICE_STATUS = '#STATUS_DRAFT#'		   	    
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	<!-- 临修调度派工 -->
+	<sql id="updateForLxDdpg">
+	<![CDATA[
+		UPDATE ZB_ZBGL_JT6 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   REV_ORGID = #revOrgID#,
+		   	   REV_ORGNAME = '#revOrgName#',
+		   	   REV_ORGSEQ = '#revOrgSeq#'
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+</SqlMap>

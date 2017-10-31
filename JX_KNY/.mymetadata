@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="JX_KNY"
+  id="myeclipse.1490064639907"
+  context-root="/JX_KNY"
+  j2ee-spec="1.4"
+  archive="JX_KNY.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

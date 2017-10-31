@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 该文件用于配置机车检修系统V2.0的首页页面信息 -->
+<HomePage>
+	<synSites>
+		<synSite>
+			<synSiteID>A</synSiteID>
+			<synSiteName>中国神华集团铁路分公司神朔机务段</synSiteName>
+			<links>
+				<link imgUrl="/jsp/jx/homepage/smjwd/01.png" title="机车同步装置动态检测系统" openUrl="http://10.42.97.220:5555/SS4B/"
+					imgWidth="196" imgHeight="180" titleWidth="196" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/02.png" title="机车视频监控系统"	openUrl="http://10.42.97.221/"
+					imgWidth="196" imgHeight="180" titleWidth="196" titleHeight="50"/>
+			</links>
+		</synSite>
+		<synSite>
+			<synSiteID>TJJD</synSiteID>
+			<synSiteName>天津基地</synSiteName>
+			<links>
+				<link imgUrl="/jsp/jx/homepage/smjwd/01.png" title="机车同步装置动态检测系统" openUrl="http://10.42.97.220:5555/SS4B/"
+					imgWidth="196" imgHeight="180" titleWidth="196" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/02.png" title="机车视频监控系统"	openUrl="http://10.42.97.221/"
+					imgWidth="236" imgHeight="220" titleWidth="236" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/01.png" title="机车同步装置动态检测系统" openUrl="http://10.42.97.220:5555/SS4B/"
+					imgWidth="126" imgHeight="110" titleWidth="126" titleHeight="40"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/02.png" title="机车视频监控系统"	openUrl="http://10.42.97.221/"
+					imgWidth="246" imgHeight="220" titleWidth="246" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/01.png" title="机车同步装置动态检测系统" openUrl="http://10.42.97.220:5555/SS4B/"
+					imgWidth="196" imgHeight="180" titleWidth="196" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/02.png" title="机车视频监控系统"	openUrl="http://10.42.97.221/"
+					imgWidth="196" imgHeight="180" titleWidth="196" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/01.png" title="机车同步装置动态检测系统" openUrl="http://10.42.97.220:5555/SS4B/"
+					imgWidth="196" imgHeight="180" titleWidth="196" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/02.png" title="机车视频监控系统"	openUrl="http://10.42.97.221/"
+					imgWidth="196" imgHeight="180" titleWidth="196" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/01.png" title="机车同步装置动态检测系统" openUrl="http://10.42.97.220:5555/SS4B/"
+					imgWidth="196" imgHeight="180" titleWidth="196" titleHeight="50"/>
+				<link imgUrl="/jsp/jx/homepage/smjwd/02.png" title="机车视频监控系统"	openUrl="http://10.42.97.221/"
+					imgWidth="146" imgHeight="130" titleWidth="146" titleHeight="40"/>
+			</links>
+		</synSite>
+	</synSites>
+</HomePage>

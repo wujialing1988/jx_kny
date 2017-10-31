@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html class="htmlBack">
+<head id="Head">
+
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui"
+          id="viewport" name="viewport">
+    <title>电子地图</title>
+    <script src="Dlls/JS/Script/ScriptList.js"></script>
+    <script src="Dlls/JS/Read/Read.js"></script>
+    <script type="text/javascript" src="lhgdialog/lhgcore.min.js"></script>
+	<script type="text/javascript" src="lhgdialog/lhgdialog.min.js"></script>
+    <link href="Css/IndexCss/WebMain.css" rel="stylesheet" />
+    <link href="Css/SideMenu/SideMenu.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript"> 
+        //window.onload = function () {
+        //    with (document.body) {
+        //        oncontextmenu = function () { return false }
+        //        ondragstart = function () { return false }
+        //        onselectstart = function () { return false }
+        //        onbeforecopy = function () { return false }
+        //        onselect = function () { document.selection.empty() }
+        //        oncopy = function () { document.selection.empty() }
+        //    }
+        //}
+	        function test1(url){
+	        	return encodeURI(url);
+	        }
+	        function openPage(url){
+		        window.open(url);
+	        }
+	        function showWin(url, title){
+				var testDG = new J.dialog({ page:url, lockScroll:true, cover:true, width:800, height:500, rang:true, title:title, btnBar:false, iconTitle:false});
+				testDG.ShowDialog();
+				
+				// 给top对象赋值窗口对象
+				top.jDiaglog = testDG;
+			}
+		
+		
+			 
+    </script>
+</head>
+<body id="body" class="Background" oncontextmenu="return false;">
+    <div id="ServerForm" class="ServerFormDiv" style="display:none;">
+        <div id ="ServerHead" class="ServerFormHead">
+            <img class="img" src="images/chart_line.png" />
+            <b>选 择 站 场</b>
+             <button id="EsButton" class="TopButton" style="margin-right:9px;height:26px;"><img src="images/on-off.png" /></button>
+        </div>
+        <div style="width:100%;height:100%">
+            <b style="position:absolute;top:55px;left:15px;">站场</b>
+            <select id="Select1" name="D1" style="position:absolute; top: 53px; left: 52px; width:200px;" >
+             <option></option>
+         </select>
+             <button id ="EnButton" class="TopButton" style="margin-top:45px;margin-right:20px;height:30px;"><b style="color:#ffffff;">确 定</b></button>
+        </div>
+    </div>
+     <div class="Head">
+         
+        <img id="img" src="images/notepad_2.png" style="margin-bottom:3px;margin-left:2px;" />
+         <b id="Title" style="margin-left:2px;font-size:16px;font-family:'宋体';">电子地图</b>
+         <span class="label">电子地图</span>
+         <button id="FullscreenButton" class="TopButton" style="margin-right:3px;"><img src="images/app_window.png" /></button>
+         <button id="ServerButton" class="TopButton" style="margin-right:6px;"><img src="images/download.png" /></button>
+      <!--   <button class="TopButton" style="margin-right:9px;"><img src="images/undo.png" /></button>-->
+        <!-- <button class="TopButton" style="margin-right:12px;"><img src="images/user1.png" /></button>-->
+     </div>
+      
+    <div class="Canvas">
+        <iframe id="CanvasControlIframe" src="Dlls/HTML/CanvasControl/CanvasControl.html" style="height: 500%; width: 500%; border: 0px;"></iframe>
+       
+        </div>
+    <div style="height:100%;width:100%;">
+        <b id="text" class="b" style="visibility:collapse;">未找到服务器,连接失败!</b>
+                  <div id="TrainColor" style="width:100%;height:70px;background:rgba(100, 100, 100, 0.05);position:absolute;left:0;bottom:0;border-top:0.1px solid rgba(91, 101, 127,0.2);">
+                    
+    </div>
+
+        <div id="SideMenuDiv" class="SideMenuDiv">
+        <button id="SideMenuButton" class="SideMenuButton" >机车列表</button>
+        <div id="SideMenu" class="SideMenu">
+            <iframe id="Iframe" src="Dlls/HTML/SideMenuList/SideMenuList.html" style=" width: 100%; border: 0;" ></iframe>
+        </div>   
+        </div>
+    </div>
+             <div>
+  <!--    <div id="Time" class="TimeCss">
+          <iframe id="TimeControl" style="width:auto;border:0;"></iframe>
+      </div>-->
+      <div>
+      	<form method="post">
+      		<input type="hidden" id="basePath" name="basePath">
+      		<input type="hidden" id="userID" name="userID" >
+      	</form>
+      </div>
+  </div>
+    </body>
+</html>

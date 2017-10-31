@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 机车整备系统-机车交接 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 根据机车交接模板idx获取其下级idx -->
+	<sql id="findAllChildIDXForModel">
+	<![CDATA[
+		select idx from ZB_ZBGL_HO_Model_Item
+		start with idx = '#modelIDX#'
+		connect by prior idx = parent_idx
+	]]>
+	</sql>
+	<!-- 逻辑删除机车交接项模板 -->
+	<sql id="logicDeleteAllChildForModel">
+	<![CDATA[
+		update ZB_ZBGL_HO_Model_Item
+		set record_status = 1 
+		where record_status = 0 and idx in
+	]]>
+	</sql>
+	<!-- 逻辑删除机车交接情况模板 -->
+	<sql id="logicDeleteAllResultForModel">
+	<![CDATA[
+		update ZB_ZBGL_HO_Model_Item_Result
+		set record_status = 1
+		where record_status = 0 and HANDOVERITEM_IDX in
+	]]>
+	</sql>
+	<!-- 机车交接项列表select -->
+	<sql id="hoModelItemList-select">
+	<![CDATA[
+		select distinct(t.idx) as "idx",t.handoveritemname as "handOverItemName",t.handoveritemstatus as "handOverItemStatus",	
+		(select a.handoveritemname from ZB_ZBGL_HO_Model_Item a where a.idx = t.parent_idx) as "parentItemName",
+		t.parent_idx as "parentIDX" 
+	]]>
+	</sql>
+	<!-- 机车交接项列表from -->
+	<sql id="hoModelItemList-from">
+	<![CDATA[
+ 		from (select * from ZB_ZBGL_HO_Model_Item where record_status=0 and parent_idx != '0') t
+ 		order by t.parent_idx
+	]]>
+	</sql>
+</SqlMap>

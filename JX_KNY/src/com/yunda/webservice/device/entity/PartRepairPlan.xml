@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<partRepairPlanList>
+	<partRepairPlan>
+		<specificationModel>(Q)B74990A01</specificationModel>
+		<specificationModelCode>232345</specificationModelCode>
+		<partsName>构架</partsName>
+		<partsCode>A323523</partsCode>
+		<unloadTrainType>HDD3</unloadTrainType>
+		<unloadTrainNo>2334</unloadTrainNo>
+		<unloadPosition>I号</unloadPosition>
+		<planRepairTime>2013-05-01 14:20:23</planRepairTime>
+	</partRepairPlan>
+	<partRepairPlan>
+		<specificationModel>(Q)B74990A02</specificationModel>
+		<specificationModelCode>5887</specificationModelCode>
+		<partsName>构架3</partsName>
+		<partsCode>A3235222</partsCode>
+		<unloadTrainType>HDD3C</unloadTrainType>
+		<unloadTrainNo>2378</unloadTrainNo>
+		<unloadPosition>D号</unloadPosition>
+		<planRepairTime>2014-06-11 12:20:23</planRepairTime>
+	</partRepairPlan>
+</partRepairPlanList>

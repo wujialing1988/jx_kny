@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 整备V3.2 普查整治任务处理 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 工位终端webservice待领活查询 -->
+	<sql id="queryPczzPageList">
+		<![CDATA[
+	       select * from(select ROWNUM AS IDX,
+         pczzquery.RDP_IDX AS RDP_IDX,
+         pczzquery.SITEID,
+         pczzquery.SITENAME,
+         pczzquery.TRAIN_TYPE_IDX,
+         pczzquery.TRAIN_TYPE_SHORTNAME,
+         pczzquery.TRAIN_NO,
+         pczzquery.train_type_shortname || ' ' || pczzquery.train_no as Train_Type_No,
+         pczzquery.item_name,
+         pczzquery.item_content,
+         pczzwi.FETCH_TIME,
+         pczzquery.ZBGL_PCZZ_IDX,
+         pczzquery.ZBGL_PCZZ_ITEM_IDX AS PCZZ_ITEM_IDX,
+         pczzwi.UPDATE_TIME,
+         pczzwi.HANDLE_PERSON_ID,
+         pczzwi.HANDLE_PERSON_NAME,
+         pczzwi.IDX AS ZBGL_PCZZ_WI_IDX
+      from (select distinct *
+          from (select idx as rdp_idx,
+                       train_type_idx as train_type_idx_rdp,
+                       train_type_shortname as train_type_shortname_rdp,
+                       train_no as train_no_rdp,
+                       siteid,
+                       sitename
+                  from ZB_ZBGL_RDP
+                 where rdp_status = 'ONGOING' and record_status = 0
+                   and rdp_start_time in (select max(t.rdp_start_time)
+                   from ZB_ZBGL_RDP t
+                  where t.record_status = 0 and t.rdp_status = 'ONGOING'
+                  group by t.train_type_shortname,t.train_no)) rdp,
+               (select b.zbgl_pczz_idx,
+                       b.idx as zbgl_pczz_item_idx,
+                       b.item_name,
+                       b.item_content,
+                       c.train_no,
+                       c.train_type_idx,
+                       c.train_type_shortname
+                  from ZB_ZBGL_PCZZ a, ZB_ZBGL_PCZZ_ITEM b,ZB_ZBGL_PCZZ_ITEM_TO_TRAININFO c
+                 where a.idx = b.zbgl_pczz_idx
+                   and a.record_status = 0
+                   and b.record_status = 0
+                   and b.idx = c.zbgl_pczz_item_idx
+                   and a.status = 'RELEASED') pczz
+           where pczz.train_no = rdp.train_no_rdp 
+           and pczz.train_type_shortname = rdp.train_type_shortname_rdp
+             and (pczz.train_type_idx, pczz.train_no, zbgl_pczz_item_idx) not in
+               (select train_type_idx, train_no, zbgl_pczz_item_idx
+                  from ZB_ZBGL_PCZZ_WI
+                 where wi_status = 'COMPLETE')) pczzquery
+        left join ZB_ZBGL_PCZZ_WI pczzwi on pczzquery.rdp_idx = pczzwi.rdp_idx
+                                  and pczzquery.zbgl_pczz_item_idx =
+                                      pczzwi.zbgl_pczz_item_idx)
+
+       where 0=0 
+	]]>
+	</sql>
+	<!-- 工位终端webservice待销活查询 -->
+	<sql id="queryPczzingPageList">
+		<![CDATA[
+		select idx,
+		idx as ZBGL_PCZZ_WI_IDX,
+		train_type_idx,
+		train_type_shortname,
+		train_no,
+		train_type_shortname || ' ' || a.train_no as Train_Type_No,
+		zbgl_pczz_idx,
+		rdp_idx,
+		update_time,
+		null as siteid,
+		null as sitename
+		from ZB_ZBGL_PCZZ_WI a
+		where a.wi_status <> 'CHECKED'
+		and a.record_status = 0
+
+	]]>
+	</sql>
+</SqlMap>

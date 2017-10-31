@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 检修V3.2.1 故障提票 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 实例化提票状态 -->
+	<sql id="saveForInstanceTp">
+	<![CDATA[
+		UPDATE JXGC_FAULT_TICKET 
+		   SET STATUS = '#STATUS_OPEN#', 
+		   	   UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'), 
+		   	   WORK_PLAN_IDX = '#workPlanIDX#'
+		 WHERE STATUS = '#STATUS_DRAFT#' 
+		   AND RECORD_STATUS = #NO_DELETE# 
+		   AND TRAIN_TYPE_SHORTNAME = '#trainTypeShortName#' 
+		   AND TRAIN_NO = '#trainNo#' 
+	]]>
+	</sql>
+	<!-- 获取无提票质量检查的未处理的对应车型车号的提票IDX列表 -->
+	<sql id="getNotComAndQCTpIDXListByTrain">
+	<![CDATA[
+		SELECT A.IDX 
+		  FROM JXGC_FAULT_TICKET A		   
+		 WHERE A.RECORD_STATUS = 0
+       	   AND A.STATUS != #STATUS_OVER#
+		   AND A.TRAIN_TYPE_SHORTNAME = '#trainTypeShortName#' 
+		   AND A.TRAIN_NO = '#trainNo#' 
+       	   AND NOT EXISTS (SELECT * FROM JXGC_FAULT_QC_RESULT WHERE RELATION_IDX = A.IDX) 
+	]]>
+	</sql>
+	<!-- 新增提票质量检查 -->
+	<sql id="insertQCResult">
+	<![CDATA[
+		INSERT INTO JXGC_FAULT_QC_RESULT(IDX,
+			                            RELATION_IDX,
+			                            CHECK_ITEM_CODE,
+			                            CHECK_ITEM_NAME,
+			                            CHECK_WAY,
+			                            IS_ASSIGN,
+			                            SEQ_NO,
+			                            STATUS)
+		      SELECT SYS_GUID (),
+		             '#faultIDX#',
+		             QC_ITEM_NO,
+		             QC_ITEM_NAME,
+		             CHECK_WAY,
+		             IS_ASSIGN,
+		             SEQ_NO,
+		             #STATUS_WKF#
+		       FROM  JXGC_TPQC_ITEM_DEFINE
+		      WHERE  RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 提票调度派工 -->
+	<sql id="updateForDdpg">
+	<![CDATA[
+		UPDATE JXGC_FAULT_TICKET 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   REPAIR_TEAM = '#repairTeam#',
+		   	   REPAIR_TEAM_NAME = '#repairTeamName#',
+		   	   REPAIR_TEAM_ORGSEQ = '#repairTeamOrgseq#'
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	<!-- 提票工长派工 -->
+	<sql id="updateForGzpg">
+	<![CDATA[
+		UPDATE JXGC_FAULT_TICKET 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   DISPATCH_EMP_ID = '#repairEmpID#',
+		   	   DISPATCH_EMP = '#repairEmp#'
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	<!-- 保存指派的质量检查参与者 -->
+	<sql id="saveIsAssignParticiant">
+	<![CDATA[
+		INSERT INTO JXGC_FAULT_QC_PARTICIPANT(IDX, 
+											  WORK_PLAN_IDX, 
+											  RELATION_IDX, 
+											  CHECK_ITEM_CODE, 
+											  CHECK_PERSON_ID, 
+											  CHECK_PERSON_NAME)
+			SELECT SYS_GUID(), 
+			       A.WORK_PLAN_IDX, 
+			       A.IDX, 
+			       '#CHECKITEMCODE#', 
+			       '#CHECKPERSONID#', 
+			       '#CHECKPERSONNAME#'
+			FROM 
+				  (SELECT WORK_PLAN_IDX, IDX FROM JXGC_FAULT_TICKET WHERE IDX = '#tpIDX#' AND RECORD_STATUS = 0) A
+		]]>
+	</sql>	
+	<!-- 保存非指派的质量检查参与者 -->
+	<sql id="saveNotAssignParticiant">
+	<![CDATA[
+		INSERT INTO JXGC_FAULT_QC_PARTICIPANT(IDX, 
+											  WORK_PLAN_IDX, 
+											  RELATION_IDX, 
+											  CHECK_ITEM_CODE, 
+											  CHECK_PERSON_ID, 
+											  CHECK_PERSON_NAME)
+			SELECT SYS_GUID(), 
+			       A.WORK_PLAN_IDX, 
+			       A.IDX, 
+			       B.CHECK_ITEM_CODE, 
+			       B.CHECK_EMPID, 
+			       B.CHECK_EMPNAME
+			FROM 
+				  (SELECT WORK_PLAN_IDX, IDX FROM JXGC_FAULT_TICKET WHERE IDX = '#tpIDX#' AND RECORD_STATUS = 0) A,
+				  (SELECT A.RELATION_IDX, A.CHECK_ITEM_CODE, B.CHECK_EMPID, B.CHECK_EMPNAME
+			  		FROM 
+			  			(SELECT RELATION_IDX, CHECK_ITEM_CODE FROM JXGC_FAULT_QC_RESULT WHERE IS_ASSIGN = #CONST_INT_IS_ASSIGN_N# 
+			   				AND STATUS = #STATUS_WKF# AND RELATION_IDX = '#tpIDX#') A
+			  			INNER JOIN  
+			  			V_JXGC_TPQC_QC_EMPANDORG B
+			  			ON A.CHECK_ITEM_CODE = B.QC_ITEM_NO AND B.CHECK_ORGID = #CHECKORGID#) B
+				  WHERE A.IDX = B.RELATION_IDX
+		]]>
+	</sql>
+	<!-- 根据提票单IDX开放提票质量检查项 -->
+	<sql id="updateOpenQCResultByTp">
+	<![CDATA[
+			UPDATE JXGC_FAULT_QC_RESULT 
+			   SET STATUS = #STATUS_DCL#
+			 WHERE RELATION_IDX = '#tpIDX#'
+	]]>
+	</sql>
+	<!-- 查询当前人员的提票质量检查项列表 -->
+	<sql id="getFaultQCList">
+		<![CDATA[
+			SELECT
+                A.CHECK_ITEM_CODE AS "checkItemCode",
+                A.IDX AS "idx",
+                A.CHECK_ITEM_NAME AS "checkItemName",
+                C.TRAIN_TYPE_SHORTNAME AS "trainTypeShortName",
+                C.TRAIN_NO AS "trainNo",
+                D.TICKET_CODE AS "ticketCode",
+                to_char(D.TICKET_TIME,'yyyy-MM-dd HH24:mi') AS "ticketTime",
+                D.FAULT_NAME AS "faultName",
+                D.FAULT_DESC AS "faultDesc",
+                D.FIXPLACE_FULLNAME AS "fixPlaceFullName",
+                D.TYPE AS "type",
+                D.TICKET_EMP AS "ticketEmp",
+                D.IDX AS "tpIDX",
+                C.IDX AS "workPlanIDX",
+                to_char(D.FAULT_OCCUR_DATE,'yyyy-MM-dd HH24:mi') AS "faultOccurDate",
+                D.METHOD_NAME AS "methodName",
+                D.METHOD_DESC AS "methodDesc",
+                D.REPAIR_RESULT AS "repairResult",
+                to_char(D.COMPLETE_TIME,'yyyy-MM-dd HH24:mi') AS "completeTime",
+                D.COMPLETE_EMP AS "completeEmp" 
+		]]>
+	</sql>
+	<!-- 查询当前人员的提票质量检查项列表from部分 -->
+	<sql id="getFaultQCListFrom">
+		<![CDATA[			
+			 FROM
+                (SELECT
+                    IDX,
+                    RELATION_IDX,
+                    CHECK_ITEM_CODE,
+                    CHECK_ITEM_NAME      
+                FROM
+                    JXGC_FAULT_QC_RESULT 
+                WHERE
+                    STATUS = #STATUS_DCL#   
+                    #CHECKWAY#) A,
+                (SELECT
+                    RELATION_IDX,
+                    CHECK_ITEM_CODE,
+                    WORK_PLAN_IDX      
+                FROM
+                    JXGC_FAULT_QC_PARTICIPANT 
+                WHERE
+                    CHECK_PERSON_ID = #CURRENTEMPID#) B,
+                (SELECT
+                    IDX,
+                    TRAIN_TYPE_SHORTNAME,
+                    TRAIN_NO     
+                FROM
+                    JXGC_TRAIN_WORK_PLAN 
+                WHERE
+                    RECORD_STATUS = 0 
+                    AND WORK_PLAN_STATUS = '#STATUS_HANDLING#') C,
+             (SELECT *                                
+                FROM
+                    JXGC_FAULT_TICKET 
+                WHERE
+                    STATUS = #STATUS_OVER# 
+                    AND RECORD_STATUS = 0) D    
+            WHERE
+                A.RELATION_IDX = B.RELATION_IDX      
+                AND  A.CHECK_ITEM_CODE = B.CHECK_ITEM_CODE     
+                AND  A.RELATION_IDX = D.IDX      
+                AND  B.WORK_PLAN_IDX = C.IDX
+		]]>
+	</sql>
+	<!-- 批量修改质检结果的状态 -->
+	<sql id="updateFinishQCResult">
+		<![CDATA[
+		   UPDATE JXGC_FAULT_QC_RESULT 
+			  SET STATUS = #STATUS_YCL#, 
+			      QC_EMPID = #empid#, 
+			      QC_EMPNAME = '#empname#', 
+			      QC_TIME = TO_DATE('#qcTime#', 'yyyy-mm-dd hh24:mi:ss') ,
+			      REMARKS = '#remarks#'     
+      		WHERE IDX IN #IDXS#      		  
+		]]>
+	</sql>
+	<!-- 终止提票状态 -->
+	<sql id="terminalTpByPlan">
+	<![CDATA[
+		UPDATE JXGC_FAULT_TICKET 
+		   SET STATUS = '#STATUS_DRAFT#', 
+		   	   WORK_PLAN_IDX = '',
+		   	   UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss')
+		 WHERE STATUS != '#STATUS_OVER#' 
+		   AND RECORD_STATUS = #NO_DELETE# 
+		   AND WORK_PLAN_IDX = '#workPlanIDX#'
+	]]>
+	</sql>
+	
+	<!-- 查询提票确认统计列表 -->
+	<sql id="queryCheckStatisticsList">
+		<![CDATA[
+           select rownum as rn, t.*,t1.filter1,t1.filter2 from (
+                   select t.work_plan_idx ,t.type,a.sortno,
+       sum(case when (t.status = '30' and nvl(t.status_affirm,0) = 0) then 1 else 0 end) doneCount,
+       sum(case when t.status <> '30' then 1 else 0 end) undoCount,
+       sum(case when (t.status = '30' and t.status_affirm = 1) then 1 else 0 end) doneAffirm,
+       sum(case when (t.status = '30' and t.status_affirm = 2) then 1 else 0 end) doneCheck
+     from JXGC_Fault_Ticket t 
+     inner join  EOS_DICT_ENTRY a on t.type = a.dictname and a.dicttypeid = 'JCZL_FAULT_TYPE_AFFIRM' and a.status = 1 and #where1# = 'true'
+     inner join JXGC_Train_Work_Plan wp on wp.idx = t.work_plan_idx and wp.work_plan_status = 'ONGOING' 
+      and wp.idx = '#workPlanIDX#'
+      where t.record_status = 0 group by t.work_plan_idx ,t.type,a.sortno
+      )  t left join 
+      ( 
+        select * from EOS_DICT_ENTRY a where a.dicttypeid = 'JCZL_FAULT_TYPE_AFFIRM' and a.status = 1
+      ) t1 on t1.dictname = t.type
+        order by t.sortno 
+		]]>
+	</sql>
+	
+	
+		<!-- 查询提票确认统计列表（新） -->
+	<sql id="queryCheckStatisticsListNew">
+		<![CDATA[
+       select rownum as rn, t.*,a1.is_affirm,a1.is_check,a1.is_done_control from(
+       select t.work_plan_idx ,t.type,a.seq_no as SORTNO,
+       sum(case when (t.status = '30' and nvl(t.status_affirm,0) = 0) then 1 else 0 end) doneCount,
+       sum(case when (t.status <> '30' and nvl(t.status_affirm,0) = 0) then 1 else 0 end) undoCount,
+       sum(case when (t.status_affirm = 1) then 1 else 0 end) doneAffirm,
+       sum(case when (t.status_affirm = 2) then 1 else 0 end) doneCheck
+       from JXGC_Fault_Ticket t 
+       inner join  JXGC_FAULT_TICKET_RULE a on t.type = a.fault_ticket_type and a.record_status = 0 and a.is_affirm = 1
+       inner join JXGC_Train_Work_Plan wp on wp.idx = t.work_plan_idx and wp.work_plan_status = 'ONGOING' 
+            where t.record_status = 0 group by t.work_plan_idx ,t.type,a.seq_no
+         ) t
+         left join JXGC_FAULT_TICKET_RULE a1 on a1.fault_ticket_type = t.type
+          where t.work_plan_idx = '#workPlanIDX#'
+		]]>
+	</sql>
+	
+	
+	<!-- 查询角色分类统计 -->
+	<sql id="queryCheckStatisticsListTotal">
+		<![CDATA[
+         select ruo.role_name,      
+          sum(case when (t.status = '30' and nvl(t.status_affirm,0) = 0) then 1 else 0 end) doneCount,
+          sum(case when (t.status <> '30' and nvl(t.status_affirm,0) = 0) then 1 else 0 end) undoCount,
+          sum(case when (t.status_affirm = 1) then 1 else 0 end) doneAffirm,
+          sum(case when (t.status_affirm = 2) then 1 else 0 end) doneCheck
+                  from JXGC_Fault_Ticket t 
+         inner join  JXGC_Train_Work_Plan wp on wp.idx = t.work_plan_idx and wp.work_plan_status = 'ONGOING' and wp.record_status = 0 
+         and not exists (select 1 from JXGC_FAULT_TICKET_RECORD a where a.record_status = 0 and a.work_plan_idx = wp.idx)
+         inner join (
+         select distinct ro.fault_ticket_type,ro.role_name from JXGC_FAULT_TICKET_ROLE ro 
+         left join JXGC_FAULT_TICKET_RULE ru on ru.fault_ticket_type = ro.fault_ticket_type and ro.record_status = 0
+         where ro.record_status = 0 and ru.is_affirm = 1) ruo on ruo.fault_ticket_type = t.type 
+         where not exists (select 1 from JXGC_FAULT_TICKET_AFFIRM a where a.work_plan_idx = wp.idx and a.AFFIRM_ROLENAME = ruo.role_name and a.fault_ticket_idx = t.idx)
+         and ruo.role_name in (#roleIns#)
+         group by ruo.role_name 
+		]]>
+	</sql>
+	
+</SqlMap>

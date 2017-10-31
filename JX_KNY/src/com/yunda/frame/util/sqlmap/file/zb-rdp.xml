@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 整备V3.2 整备单 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 整备单列表-碎修转临修 -->
+	<sql id="findSXRdpList">
+	<![CDATA[
+		SELECT A.IDX,
+		       A.TRAIN_TYPE_SHORTNAME,
+		       A.TRAIN_NO,
+		       A.D_NAME,
+		       B.IN_TIME,
+		       B.TO_GO,
+		       A.RDP_START_TIME,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_RDP_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND WI_STATUS = '#STATUS_HANDLED#')||'/'||
+		       (SELECT COUNT(1) FROM ZB_ZBGL_RDP_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS rdpCount,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_JT6 WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND FAULT_NOTICE_STATUS = '#STATUS_OVER#')||'/'||
+		       (SELECT COUNT(1) FROM ZB_ZBGL_JT6 WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS tpCount,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_PCZZ_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND WI_STATUS = '#STATUS_HANDLED#')||'/'||
+		       (SELECT COUNT(1) FROM ZB_ZBGL_PCZZ_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS pczzCount,
+		       A.SITENAME,
+		       A.REPAIR_CLASS as handlePersonName,
+		       A.UPDATE_TIME as handleTime,
+		       A.REPAIR_CLASS as handleReason
+		 FROM ZB_ZBGL_RDP A,
+		      TWT_TRAIN_ACCESS_ACCOUNT B
+		WHERE A.TRAIN_ACCESS_ACCOUNT_IDX = B.IDX
+		  AND A.RECORD_STATUS = 0
+		  AND A.RDP_STATUS = '#STATUS_HANDLING#'
+		  AND A.REPAIR_CLASS = '#REPAIRCLASS_SX#'
+		  AND B.RECORD_STATUS = 0
+		  AND B.SITEID = '#siteID#'		  
+	]]>
+	</sql>
+	<!-- 整备单列表-临修 -->
+	<sql id="findLXRdpList">
+	<![CDATA[
+		SELECT A.IDX,
+		       A.TRAIN_TYPE_SHORTNAME,
+		       A.TRAIN_NO,
+		       A.D_NAME,
+		       B.IN_TIME,
+		       B.TO_GO,
+		       A.RDP_START_TIME,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_RDP_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND WI_STATUS = '#STATUS_HANDLED#')||'/'||
+		       (SELECT COUNT(1) FROM ZB_ZBGL_RDP_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS rdpCount,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_JT6 WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND FAULT_NOTICE_STATUS = '#STATUS_OVER#')||'/'||
+		       (SELECT COUNT(1) FROM ZB_ZBGL_JT6 WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS tpCount,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_PCZZ_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND WI_STATUS = '#STATUS_HANDLED#')||'/'||
+		       (SELECT COUNT(1) FROM ZB_ZBGL_PCZZ_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS pczzCount,
+		       A.SITENAME,
+		       C.HANDLE_PERSON_NAME as handlePersonName,
+		       C.HANDLE_TIME as handleTime,
+		       C.HANDLE_REASON as handleReason
+		 FROM ZB_ZBGL_RDP A,
+		      TWT_TRAIN_ACCESS_ACCOUNT B,
+      		  ZB_ZBGL_RDP_TEMPREPAIR C
+		WHERE A.TRAIN_ACCESS_ACCOUNT_IDX = B.IDX
+		  AND A.IDX = C.RDP_IDX
+		  AND A.RECORD_STATUS = 0
+		  AND A.RDP_STATUS = '#STATUS_HANDLING#'
+		  AND A.REPAIR_CLASS = '#REPAIRCLASS_LX#'
+		  AND B.RECORD_STATUS = 0
+		  AND B.SITEID = '#siteID#'
+		  AND C.RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 机车整备任务活处理-领活 -->
+	<sql id="receiveRdp">
+	<![CDATA[
+		UPDATE ZB_ZBGL_RDP_WI 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   FETCH_TIME = TO_DATE('#fetchTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   WI_STATUS = '#STATUS_HANDLING#',
+		   	   HANDLE_PERSON_ID = #handlePersonId#,
+		   	   HANDLE_PERSON_NAME = '#handlePersonName#',	
+		   	   HANDLE_ORGID = #handleOrgID#,
+		   	   HANDLE_ORGNAME = '#handleOrgName#'
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>
+	<!-- 机车整备任务活处理-撤销领活 -->
+	<sql id="cancelReceivedRdp">
+	<![CDATA[
+		UPDATE ZB_ZBGL_RDP_WI 
+		   SET UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		   	   FETCH_TIME = NULL,
+		   	   WI_STATUS = '#STATUS_TODO#',
+		   	   HANDLE_PERSON_ID = NULL,
+		   	   HANDLE_PERSON_NAME = '',	
+		   	   HANDLE_ORGID = NULL,
+		   	   HANDLE_ORGNAME = ''
+		 WHERE IDX IN #IDXS# 
+	]]>
+	</sql>	
+	<!-- 机车整备任务活处理-撤销领活-删除暂存数据 -->
+	<sql id="cancelReceivedRdpWidi">
+	<![CDATA[
+		UPDATE ZB_ZBGL_RDP_WI_DI 
+		   SET DI_Result = NULL
+		 WHERE RDP_WI_IDX IN #IDXS# 
+	]]>
+	</sql>	
+	<!-- 整备单未交验列表 -->
+	<sql id="findRdpListForJYOngoing">
+	<![CDATA[
+		SELECT A.IDX,
+		       A.TRAIN_TYPE_SHORTNAME,
+		       A.TRAIN_NO,
+		       A.D_NAME,
+		       B.IN_TIME,
+		       B.TO_GO,
+		       A.RDP_START_TIME,
+		       A.REPAIR_CLASS,
+		       A.TO_GO AS afterToGo,
+		       A.SITENAME,
+		       A.TRAIN_ACCESS_ACCOUNT_IDX,
+		       A.RDP_STATUS,
+		       A.FROM_PERSONID,
+		       A.FROM_PERSONNAME,
+		       A.TO_PERSONID,
+		       A.TO_PERSONNAME,
+		       A.OUT_ORDER,
+		       A.REMARKS,
+		       A.Rdp_End_Time,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_RDP_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND WI_STATUS = '#STATUS_HANDLED#') AS handledRdpCount,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_RDP_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS allRdpCount,
+		       ((SELECT COUNT(1) FROM ZB_ZBGL_JT6 WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND FAULT_NOTICE_STATUS = '#STATUS_OVER#') +
+               (SELECT COUNT(1) FROM ZB_ZBGL_JT6 WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND FAULT_NOTICE_STATUS = '#STATUS_CHECK#')) AS handledTpCount,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_JT6 WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS allTpCount,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_PCZZ_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX AND WI_STATUS = '#STATUS_HANDLED#') AS handledPczzCount,
+		       (SELECT COUNT(1) FROM ZB_ZBGL_PCZZ_WI WHERE RECORD_STATUS = 0 AND RDP_IDX = A.IDX ) AS allPczzCount
+		 FROM ZB_ZBGL_RDP A,
+		      TWT_TRAIN_ACCESS_ACCOUNT B
+		WHERE A.TRAIN_ACCESS_ACCOUNT_IDX = B.IDX
+		  AND A.RECORD_STATUS = 0
+		  AND B.RECORD_STATUS = 0
+		  AND A.SITEID = '#siteID#'		  		  
+	]]>
+	</sql>	
+	<!-- 整备单已交验列表 -->
+	<sql id="findRdpListForJYComplete">
+	<![CDATA[
+		SELECT A.IDX,
+		       A.TRAIN_TYPE_SHORTNAME,
+		       A.TRAIN_NO,
+		       A.D_NAME,
+		       B.IN_TIME,
+		       B.TO_GO,
+		       A.RDP_START_TIME,
+		       A.REPAIR_CLASS,
+		       A.TO_GO AS afterToGo,
+		       A.SITENAME,
+		       A.TRAIN_ACCESS_ACCOUNT_IDX,
+		       A.RDP_STATUS,
+		       A.FROM_PERSONID,
+		       A.FROM_PERSONNAME,
+		       A.TO_PERSONID,
+		       A.TO_PERSONNAME,
+		       A.OUT_ORDER,
+		       A.REMARKS,
+		       A.Rdp_End_Time,
+		       0 AS handledRdpCount,
+		       0 AS allRdpCount,
+		       0 AS handledTpCount,
+		       0 AS allTpCount,
+		       0 AS handledPczzCount,
+		       0 AS allPczzCount
+		 FROM ZB_ZBGL_RDP A,
+		      TWT_TRAIN_ACCESS_ACCOUNT B
+		WHERE A.TRAIN_ACCESS_ACCOUNT_IDX = B.IDX
+		  AND A.RECORD_STATUS = 0
+		  AND B.RECORD_STATUS = 0
+		  AND A.SITEID = '#siteID#'		  		  
+	]]>
+	</sql>	
+</SqlMap>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 检修过程-作业工单查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 获取作业工单查询列表  -->
+	<sql id="getWorkCardListByNode">
+	<![CDATA[
+		   SELECT A.IDX,
+		          A.WORK_CARD_CODE as workCardCode,
+		          A.WORK_CARD_NAME as workCardName,
+		          A.STATUS,
+		          A.QC_NAME as qcName,
+		          A.EXTENSION_CLASS AS extensionClass,
+		          A.WORKER as worker
+		     FROM JXGC_WORK_CARD A
+		    WHERE A.NODE_CASE_IDX = '#nodeIDX#'
+		      AND A.RECORD_STATUS = 0
+	]]>
+	</sql>
+	<!-- 根据工艺节点获取处理中和已处理的作业工单列表  -->
+	<sql id="getOnGoingCardByNode">
+	<![CDATA[
+		select idx from jxgc_work_card where node_case_idx in 
+		(select idx from JXGC_JOB_PROCESS_NODE
+		start with idx = '#nodeCaseIDX#'
+		connect by prior idx = parent_idx) and status in ('#STATUS_HANDLING#','#STATUS_HANDLED#','#STATUS_FINISHED#') and record_status = 0		
+		union all
+		select idx from JXGC_JOB_PROCESS_NODE where PROCESS_IDX = '#tecProcessCaseIDX#'
+		and work_plan_idx = '#workPlanIDX#'
+		and status in ('#STATUS_GOING#','#STATUS_COMPLETE#') and record_status = 0
+	]]>	
+	</sql>
+	<!-- 工长派工查询-生产任务单: 获取处于新兑现和已开工状态的机车检修作业计划数据 -->
+	<sql id="findByTrainAndParts">
+	SELECT 
+		   R.IDX AS "idx",		   
+		   R.TRAIN_TYPE_SHORTNAME AS "trainTypeShortName",
+		   R.TRAIN_TYPE_SHORTNAME||' '||R.TRAIN_NO||' '||R.REPAIR_CLASS_NAME||' '||R.REPAIR_TIME_NAME||(CASE R.WORK_PLAN_STATUS
+						WHEN 'INITIALIZE' THEN '【未启动】'
+						WHEN 'ONGOING' THEN '【已启动】'
+						END) AS "groupRdpInfo"
+		  FROM JXGC_TRAIN_WORK_PLAN R
+		  WHERE 
+		        EXISTS (SELECT 1
+		          FROM JXGC_WORK_CARD C
+		         WHERE C.RDP_IDX = R.IDX AND C.WORK_STATION_BELONG_TEAM = '?' and (###) AND STATUS IN ('INITIALIZE','OPENED','ONGOING')
+		        ) AND R.WORK_PLAN_STATUS IN ('INITIALIZE','ONGOING')
+		        AND R.RECORD_STATUS = 0
+		        ORDER BY R.WORK_PLAN_STATUS, R.TRAIN_NO	
+	</sql>
+	<!-- 作业工单-查询在运行兑现单用于base_combo查询 -->
+	<sql id='workFindRunRdpForBaseCombo'>
+		 select r.idx as "idx",
+                  r.TRAIN_TYPE_SHORTNAME||' '||r.TRAIN_NO||' '||r.REPAIR_CLASS_NAME||' '||(case r.REPAIR_TIME_NAME||'a' when 'a' then '' else r.REPAIR_TIME_NAME end) as "rdpText"			          
+            from JXGC_TRAIN_WORK_PLAN r
+           where r.WORK_PLAN_STATUS = 'ONGOING'
+           and exists(select 1 from jxgc_work_card c, jxgc_worker w where c.rdp_idx = r.idx and w.worker_id = '人员ID' 
+            and c.status in ('ONGOING', 'OPENED') and c.idx=w.work_card_idx
+		       and c.record_status = 0 )
+	</sql>
+	<!-- 获取节点下无工位和班组的未完成的作业工单列表  -->
+	<sql id="getNoStationAndTeamListByNode">
+	<![CDATA[
+		    from WorkCard 
+		   where recordStatus = 0
+		     and nodeCaseIDX in #nodeIDXS#
+		     and status in ('#STATUS_OPEN#','#STATUS_NEW#','#STATUS_HANDLING#')
+		     and workStationIDX is null
+		     and workStationBelongTeam is null		   
+	]]>
+	</sql>
+</SqlMap>

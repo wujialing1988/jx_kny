@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+		"http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings 
+		cacheModelsEnabled="true" 
+		enhancementEnabled="true"
+		lazyLoadingEnabled="true" 
+		errorTracingEnabled="true" 
+		maxRequests="512"
+		maxSessions="128" 
+		maxTransactions="32" 
+		useStatementNamespaces="true" />
+	
+	<!--<sqlMap resource="com/yunda/jcjx/plan/sqlmap/sqlmap-plan-rebuildItem.xml" />	
+	<sqlMap resource="com/yunda/jx/pjwz/intowarehouse/sqlmap/sqlmap-PartsWarehousingDetail.xml" />
+	<sqlMap resource="com/yunda/jx/pjwz/intowarehouse/sqlmap/sqlmap-PartsWarehousingDetail_Easy.xml" />
+	-->
+	<sqlMap resource="com/yunda/flow/om/om.xml" />
+		
+</sqlMapConfig>

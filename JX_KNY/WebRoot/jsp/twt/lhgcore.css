@@ -1,0 +1,30 @@
+* {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+BODY {
+	PADDING-BOTTOM: 10px; FONT: 12px Tahoma,arial,sans-serif; COLOR: #000; BACKGROUND-COLOR: #eee
+}
+A:visited {
+	COLOR: #00f
+}
+.container {
+	BORDER-RIGHT: #d3d3d3 1px solid; BORDER-TOP: #d3d3d3 1px solid; BACKGROUND: #fff; MARGIN: 10px auto auto; BORDER-LEFT: #d3d3d3 1px solid; WIDTH: 900px; BORDER-BOTTOM: #d3d3d3 1px solid
+}
+.line {
+	FONT-SIZE: 0px; BACKGROUND: #3b62a7; MARGIN: 5px 10px; HEIGHT: 2px
+}
+.header {
+	PADDING-RIGHT: 20px; PADDING-LEFT: 20px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; HEIGHT: 50px
+}
+.header_logo {
+	FLOAT: left; PADDING-TOP: 20px
+}
+.header_nav {
+	FLOAT: right; LINE-HEIGHT: 18px; PADDING-TOP: 25px
+}
+.footer {
+	PADDING-RIGHT: 20px; PADDING-LEFT: 20px; PADDING-BOTTOM: 30px; PADDING-TOP: 10px
+}
+.copyright {
+	FLOAT: right
+}

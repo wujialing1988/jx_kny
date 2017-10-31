@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 生产调度子系统 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 影响生产因素的sql 统计当前登录人员可接受和待确认的 任务总数  -->
+	<sql id="getFactorSolutionCount">
+	<![CDATA[
+	select * from V_SCDD_Solution_LIST
+	where (stauts=10 or stauts=20) and orgid=${orgid} and (receive_person is null or (receive_person=${empid} and (confirm_person is null or confirm_person=${empid})))
+	]]>
+	</sql>
+
+	
+	<!-- 根据车型和车号查询是否同一生产计划的明细中已存在相同的机车,并返回实体列表  -->
+	<sql id="isExistRepairPlanDetail">
+	<![CDATA[
+		from TrainEnforcePlanDetail where trainTypeIDX = ? and trainNo = ? and (planStatus = ? or planStatus = ?) and trainEnforcePlanIDX = ? and recordStatus = 0
+	]]>
+	</sql>
+	<!-- 根据生产计划外键查询计划主单的信息 -->
+	<sql id="queryPlanInfo">
+	<![CDATA[
+		from TrainEnforcePlan where idx = ?	and recordStatus = 0 
+	]]>
+	</sql>
+	
+	<!-- 根据计划明细Id获取已经处于兑现或者检修完成的信息  -->
+	<sql id="isExistNotAllowUpdateData">
+	<![CDATA[
+		select count(*) from TrainEnforcePlanDetail where idx = ? and (planStatus = ? or planStatus = ?) and recordStatus = 0
+	]]>
+	</sql>
+
+	<!-- 生产计划明细更新时调用:根据车型/车号返回不等于当前计划明细信息主键id的且状态等于新编制或已兑现的实体 -->
+	<sql id="getExistPlanDetailList">
+	<![CDATA[
+		from TrainEnforcePlanDetail where trainTypeIDX = ? and trainNo = ? and idx <> ? and (planStatus = ? or planStatus = ?) and trainEnforcePlanIDX = ? and recordStatus = 0 
+	]]>
+	</sql>
+		
+	<!-- 根据计划明细实体中的车型主键\车型名称\车号, 获取机车信息维护表的对应数据实体
+		 param: 1. 车型主键Idx  2.车型简称  3.车号  4.资产状态(10使用中，20报废)  5.机车状态(10检修，20运用，30备用)
+	 -->
+	<sql id="getTrainJCJXEntity">
+	<![CDATA[
+		FROM JczlTrain WHERE trainTypeIDX = ? and trainTypeShortName = ? and trainNo = ? and assetState = ? and trainState = ? and recordStatus = 0 
+	]]>
+	</sql>
+	
+	<!-- 根据计划明细实体中的车型主键\车型名称\承修单位主键, 在承修机车类型表中找到对应承修机车的主键信息
+		 param: 1. 车型主键Idx  2.车型简称  3.承修单位编码
+	 -->
+	<sql id="getUndertakeTrainTypeIdx">
+	<![CDATA[
+		FROM UndertakeTrainType WHERE trainTypeIDX = ? and trainTypeShortName = ? and undertakeOrgId = ? and recordStatus = 0 
+	]]>
+	</sql>
+	<!-- 2016-10-31 根据计划明细实体中的车型主键\车型名称\车号主键, 查询机车兑现信息
+		 param: 1. 车型主键Idx  2.车型简称  3.车号
+	 -->
+	<sql id="getTrainWorkPlan">
+	<![CDATA[
+		FROM TrainWorkPlan WHERE trainTypeIDX = ? and trainTypeShortName = ? and trainNo = ? and recordStatus = 0 and workPlanStatus !='TERMINATED' order by updateTime desc
+	]]>
+	</sql>
+	
+	<!-- 机车入厂台账新增/更新时调用: 根据当前入厂数据的车型/车号在计划明细表中进行检索,找到状态为新编制及已兑现的数据,获取最近的计划进车日期的实体 -->
+	<sql id="getPlanDetailEntity">
+	<![CDATA[
+		from TrainEnforcePlanDetail where trainTypeIDX = ? and trainNo = ? and (planStatus = ? or planStatus = ?) and recordStatus = 0 order by planStartDate asc
+	]]>
+	</sql>
+	
+	<!-- 台位图模块： hql语句，物理删除台位信息表所有记录   -->
+	<sql id="deleteAllTWTStation">
+	<![CDATA[
+		delete from TWTStation
+	]]>
+	</sql>
+
+	<!-- 兑现选择生产计划明细列表-select部分 -->
+	<sql id="planDetailListForRdp-select">
+	<![CDATA[
+		select distinct(a.IDX) as "idx",
+		       a.TRAIN_ENFORCE_PLAN_IDX as "trainEnforcePlanIDX",
+		       a.TRAIN_TYPE_IDX as "trainTypeIDX",
+		       a.TRAIN_TYPE_SHORTNAME as "trainTypeShortName",
+		       a.TRAIN_NO as "trainNo",
+		       a.B_SHORTNAME as "bShortName",
+		       a.D_SHORTNAME as "dShortName",
+		       a.b_id as "bid",
+		       a.b_name as "bName",
+		       a.d_id as "did",
+		       a.d_name as "dNAME",
+		       a.REPAIR_CLASS_IDX as "repairClassIDX",
+		       a.REPAIR_CLASS_NAME as "repairClassName",
+		       a.REPAIR_TIME_IDX as "repairtimeIDX",
+		       a.REPAIR_TIME_NAME as "repairtimeName",
+		       a.last_repair_time_idx as "lastRepairClassIDX",
+		       a.last_repair_class_name as "lastRepairClassName",
+		       a.last_repair_class_idx as "lastRepairtimeIDX",
+		       a.last_repair_time_name as "lastRepairtimeName",
+		       a.UNDERTAKE_ORGID as "undertakeOrgId",
+		       a.UNDERTAKE_ORGSEQ as "undertakeOrgSeq",
+		       a.UNDERTAKE_ORGNAME as "undertakeOrgName",
+		       a.PLAN_START_DATE as "planStartDate",
+		       a.PLAN_END_DATE as "planEndDate",
+          	   a.record_status as "recordStatus",
+          	   a.BPS_PROCESS_CHNAME as "bpsProcessChName",
+			   a.BPS_PROCESS_DEFNAME as "bpsProcessDefName",
+			   a.PROCESS_IDX	as "processIDX",
+			   a.PROCESS_NAME as "processName",
+			   a.bps_Template_Idx as "bpsTemplateIdx",
+			   a.Plan_Status as "planStatus",
+			   a.DELEGATE_D_ID as "delegateDId",
+			   a.DELEGATE_D_NAME as "delegateDName",
+			   a.DELEGATE_D_SHORTNAME as "delegateDShortname",
+			   a.remarks as "remarks",
+			   a.used_d_name as "usedDName",
+			   a.used_d_shortname as "usedDShortName",
+          	   a.used_d_id as "usedDId",
+          	   a.running_km as "runningKM"
+	]]>
+	</sql>
+	<!-- 兑现选择生产计划明细列表-from部分 -->
+	<sql id="planDetailListForRdp-from"> 
+	<![CDATA[
+		   FROM SCDD_TRAIN_ENFORCE_PLAN_DETAIL A,SCDD_Train_Enforce_Plan P
+	      WHERE A.RECORD_STATUS = 0 
+	      	AND A.TRAIN_ENFORCE_PLAN_IDX = P.IDX
+	      	AND P.PLAN_STATUS = #P_PLAN_STATUS#
+	        AND A.PLAN_STATUS = #STATUS_PLAN#
+	        AND A.TRAIN_TYPE_IDX||A.TRAIN_NO NOT IN 
+	            (SELECT TRAIN_TYPE_IDX||TRAIN_NO FROM JXGC_TRAIN_WORK_PLAN WHERE RECORD_STATUS = 0
+	             AND WORK_PLAN_STATUS IN ('#INITIALIZE#' , '#ONGOING#'))
+	]]>
+	</sql>
+	
+	<!-- 根据工位终端信息表主键删除"台位与工位终端绑定表"记录 -->
+	<sql id="TWTStationBindTerminalManager.deleteByWorkTerminalidx">
+	<![CDATA[
+	delete from TWTStationBindTerminal where workTerminalidx in (${workTerminalidxs})	
+	]]>
+	</sql>
+	<!-- 根据操作员id查找该人员所属机构的orgseq -->
+	<sql id="TWTStationMapManager.findOrgseqByOperatorid">
+	<![CDATA[
+	select o.orgseq
+	from OmEmployee e, OmEmporg eo, OmOrganization o
+	where e.operatorid=${operatorid} and e.empid=eo.id.empid and eo.id.orgid=o.orgid	
+	]]>
+	</sql>
+	<!-- 根据生产计划主单id查找该主单下的所有计划明细 -->
+	<sql id="TrainEnforcePlanManager.validateDelete">
+	<![CDATA[
+		from TrainEnforcePlanDetail where trainEnforcePlanIDX = ? and recordStatus = 0
+	]]>
+	</sql>	
+	<!-- 生产计划明细列表-from部分 -->
+	<sql id="planDetailList-from">
+	<![CDATA[
+		  from SCDD_TRAIN_ENFORCE_PLAN_DETAIL a
+	      where a.RECORD_STATUS = 0 
+	]]>	
+	</sql>
+	<!-- 生成入段计划 -->
+	<sql id="generateTheTrainInPlan">
+	<![CDATA[
+		 INSERT INTO JXGC_TRAIN_IN_PLAN
+					  (TRAIN_ENFORCE_PLAN_IDX,
+					   IDX,
+					   train_type_idx,
+					   train_type_shortname,
+					   train_no,
+					   repair_class_IDX,
+					   repair_class_name,
+					   USED_D_ID,
+					   USED_D_NAME,
+					   PLAN_START_DATE,
+					   REMARKS,
+					    Save_Status,
+					   siteID,
+					   Plan_Generate_Date,
+					   record_status,
+					   creator,
+					   create_time,
+					   updator,
+					   update_time)
+					  SELECT distinct (a.IDX) as idx,
+					                  SYS_GUID(),
+					                  a.TRAIN_TYPE_IDX,
+					                  a.TRAIN_TYPE_SHORTNAME,
+					                  a.TRAIN_NO,
+					                  a.REPAIR_CLASS_IDX,
+					                  a.REPAIR_CLASS_NAME,
+					                  a.used_d_id,
+					                  a.used_d_name,					                  
+					                  a.PLAN_START_DATE,
+					                  a.remarks,
+					                  0,
+					                  a.siteid,
+					                  to_char(sysdate, 'yyyy-mm-dd'),
+					                  0,
+					                  '#creator#',
+					                  sysdate,
+					                  '#creator#',
+					                  sysdate
+					    FROM SCDD_TRAIN_ENFORCE_PLAN_DETAIL A
+					   WHERE A.RECORD_STATUS = 0
+					     AND A.PLAN_STATUS = 10
+					     AND A.TRAIN_TYPE_IDX || A.TRAIN_NO NOT IN
+					         (SELECT TRAIN_TYPE_IDX || TRAIN_NO
+					            FROM JXGC_TRAIN_WORK_PLAN
+					           WHERE RECORD_STATUS = 0
+					             AND WORK_PLAN_STATUS IN ('INITIALIZE', 'ONGOING'))
+					     AND to_char(A.PLAN_START_DATE, 'yyyy-mm-dd') >=
+					         to_char(SYSDATE, 'yyyy-mm-dd')
+	]]>	
+	</sql>
+	<!-- 生成年兑现统计报表 -->
+	<sql id="generateTheRepairReport">
+	<![CDATA[
+		INSERT INTO jxgc_work_plan_repair_report
+				  (idx,
+				   TRAIN_TYPE_IDX,
+				   TRAIN_TYPE_SHORTNAME,
+				   REPAIR_CLASS_IDX,
+				   REPAIR_CLASS_NAME,
+				   year_plan_count,
+				   COUNT,
+				   Save_Status,
+				   siteID,
+				   Plan_Generate_Date,
+				   record_status,
+				   creator,
+				   create_time,
+				   updator,
+				   update_time)				
+				  select SYS_GUID(),
+					        n.TRAIN_TYPE_IDX,
+					        n.train_type_shortname,
+					        n.REPAIR_CLASS_IDX,
+					        n.repair_class_name,
+					        n.plan_count,
+					        nvl( m.completeCount,0) +  nvl(n.INITIAL_VALUE,0) as completeCount,
+					        0,
+					        m.siteID,
+					        to_char(sysdate, 'yyyy-mm-dd'),
+					        0,
+					        '#creator#',
+					        sysdate,
+					        '#creator#',
+					        sysdate
+						   from (select t.TRAIN_TYPE_IDX,
+						                t.train_type_shortname,
+						                t.REPAIR_CLASS_IDX,
+						                t.repair_class_name,
+						                t.plan_count,
+						                t.INITIAL_VALUE
+						           from SCDD_TRAIN_YEAR_PLAN t
+						          where t.record_status = 0
+						            and t.date_year = to_char(SYSDATE, 'yyyy')) n
+						   left join (select TRAIN_TYPE_IDX,
+						                     train_type_shortname,
+						                     REPAIR_CLASS_IDX,
+						                     repair_class_name,
+						                     count(repair_class_name) as completeCount,
+						                     siteID
+						                from jxgc_train_work_plan
+						               where work_plan_status = 'COMPLETE'
+						                 and to_char(END_TIME, 'yyyy') = to_char(SYSDATE, 'yyyy')
+						              
+						               group by REPAIR_CLASS_IDX,
+						                        repair_class_name,
+						                        TRAIN_TYPE_IDX,
+						                        train_type_shortname,
+						                        siteID) m on n.TRAIN_TYPE_IDX = m.TRAIN_TYPE_IDX
+						                                 and n.REPAIR_CLASS_IDX =
+						                                     m.REPAIR_CLASS_IDX
+	]]>	
+	</sql>
+	
+	</SqlMap>

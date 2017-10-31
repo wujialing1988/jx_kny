@@ -1,0 +1,58 @@
+/* 页面链接被点击后的显示样式 */
+a:VISITED {
+	color: blue;
+}
+a:HOVER {
+	color: green;
+	font-weight:bold;
+}
+
+/* 配件检修工单处理页面下方配件信息展示面板的样式 */
+.pjjx-show-info-table {
+    font-size: 12px;
+    width: 100%;
+}
+.pjjx-show-info-table td {
+    padding: 3px 0;
+}
+.pjjx-show-info-table-label {
+    text-align: right;
+    color: gray;
+}
+
+#id_record_card_ri_detail {
+	width: 100%;
+	/*line-height: 400px; height: 400px;*/
+	text-align: center;
+}
+#id_record_card_ri_detail table {
+	width: 100%;
+	border-right:1px solid rgb(208,208,208);
+	border-bottom:1px solid rgb(208,208,208);
+}
+#id_record_card_ri_detail table thead tr td {
+	background:url(images/table_thead_bg.gif) repeat;
+	/*text-align:center;*/
+	padding: 2px 2px 2px 5px;
+	height:23px;
+}
+#id_record_card_ri_detail table tr td {
+	font-size: 12px;
+	padding: 2px 2px 2px 5px;
+	height:23px;
+	border-left:1px solid rgb(208,208,208);
+	border-top:1px solid rgb(208,208,208);
+}
+
+.moveUpIcon {
+	background-image:url(images/move_up.png) !important;
+}
+.moveDownIcon {
+	background-image:url(images/move_down.png) !important;
+}
+.moveTopIcon {
+	background-image:url(images/move_top.png) !important;
+}
+.moveBottomIcon {
+	background-image:url(images/move_bottom.png) !important;
+}

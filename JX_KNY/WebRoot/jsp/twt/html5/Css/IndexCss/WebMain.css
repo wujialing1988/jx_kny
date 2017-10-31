@@ -1,0 +1,249 @@
+﻿.Background {
+    background: url('../../images/background.jpg');
+    -webkit-background-size: auto;
+    -moz-background-size: auto;
+    -o-background-size: auto;
+    background-size: auto;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+.b
+{
+    position:absolute;
+    width:600px;
+    height:50px;
+    left:50%;
+    top:50%;
+    margin-left:-300px;
+    margin-top:-25px;
+    font-size:50px;
+    font-family:'宋体';
+    color:#ff0000;
+}
+.Canvas 
+{
+    position:absolute;
+    width:100%;
+    height:100%;
+
+}
+
+.ServerButton{
+    background:#667393;
+    float:right;
+    
+    margin-top:-3px;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+}
+.buttonEn{
+    background:#667393;
+    float:right;
+    position:absolute;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+}
+.TopButton{
+    background:#667393;
+    float:right;
+    
+    margin-top:-3px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+}
+.JumbotronBackground {
+    background-image: radial-gradient(white, rgba(158, 158, 158, 0.9961) 0.9%, #7F8097);
+}
+
+.label {
+  background-color: red;
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 68%;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+.htmlBack {
+    border-top: 5px solid #667393;
+    border-bottom: 3px solid #667393;
+    border-left: 3px solid #667393;
+    border-right: 3px solid #667393;
+    width: 100%;
+    height: 100%;
+}
+
+
+.SmallHead {
+    background: #3c698b;
+    width: auto;
+    height: 2px;
+}
+
+*.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /*
+          Introduced in IE 10.
+          See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+        */
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.Head {
+    background: #ffffff;
+    width: auto;
+    -moz-user-select: -moz-none;
+    margin-left:1px;
+
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /*
+          Introduced in IE 10.
+          See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+        */
+    -ms-user-select: none;
+    user-select: none;
+    height: 23px;
+}
+.ServerFormHead {
+    background: white;
+     border-bottom:2px solid #667393;
+} 
+.ServerFormDiv {
+    background: white;
+    width: auto;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+   
+    right:45px;
+    top:32px;
+   
+    position:absolute;
+    z-index:99999;
+    border:3px solid #667393;
+    width:280px;
+    height:130px;
+}
+.img {
+    background:#667393;
+  vertical-align: middle;
+    height: 30px;
+    width: 30px;
+    margin:-1px 3px 3px 3px;
+    border:5px solid #667393;
+    
+}
+.Central {
+    margin: 8% auto;
+    text-align: center;
+    text-shadow: -2px 2px 2px #000000;
+}
+
+.boby-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    height: 100%;
+}
+
+.right-div {
+    text-align: right;
+}
+
+.primary {
+    color: #fff;
+    background-color: #3c698b;
+}
+
+.button {
+    display: inline-block;
+    padding: 6px 12px 5px;
+    margin-bottom: 4px;
+    margin-left: 33px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    height: 73px;
+}
+
+.Mainthumbnail {
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #3c698b;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: white;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.MainCentral {
+    width: 100%;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0,0,0,.4),0 0 30px rgba(0,0,0,.075);
+}
+.TimeCss
+{
+    height:150px;
+    width:300px;
+    background:rgba(100, 100, 100, 0.5);
+    position:absolute;
+    right:5px;
+    bottom:75px;
+    z-index:5555;
+}

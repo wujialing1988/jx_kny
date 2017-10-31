@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 该文件用于配置机车检修系统V2.0的全局属性 -->
+<JXConfig>
+	<synSiteID>A</synSiteID><!-- 用于数据同步，设置每条数据记录的站点标识（哈尔滨检修基地HEBJD） -->
+	<overseaOrgcode>A</overseaOrgcode><!-- 用于设置当前系统应用单位（段）的机构代码（哈尔滨检修基地HEBJXJD），1105=重庆西机务段的orgcode -->
+	<orgRootName>上海检修段</orgRootName><!-- 顶级机构名称(Constants类常量引用此值，因神木和基地不一样，所以添加此配置项), (哈尔滨检修基地铁路分公司机务段,中国神华神朔铁路分公司机务段)-->
+	<orgTopRootName>铁路总公司</orgTopRootName><!-- 顶级机构名称(Constants类常量引用此值，因神木和基地不一样，所以添加此配置项), (铁路总公司,中国神华集团)-->
+	<reportContext>/ydReport</reportContext><!-- 设置报表上下文路径名称，目前在客户生产环境中：报表是独立的web应用（建议统一配置为ydReport），开发环境中使用默认配置 -->
+	<sqlMapUseCache>false</sqlMapUseCache><!-- 设置sql-map工具类参数，sql语句是否使用缓存，默认false不开启缓存 -->
+	<useJcglQueryCache>true</useJcglQueryCache><!-- 是否启用基础管理模块查询缓存.-->
+	
+	<!-- 检修段代码和名称，以下配置来源于总公司基础码表t_jcbm_jwdzd或者t_jcbm_jxdzd -->
+	<did>1801</did><!-- 本段配属段编码 -->
+	<dname>西安机务段</dname><!-- 本段配属段名称 -->
+	
+	<!-- 所在列检所K_TRAIN_INSPECTION-->
+	<inspectionCode>CDU</inspectionCode><!-- 本段配属段编码 -->
+	<inspectionName>成都列检所</inspectionName><!-- 本段配属段名称 -->
+	
+	<!--<systemType>jx</systemType> 系统类型：整备系统:zb,检修系统：jx或为空-->
+	
+	
+	<onlineMessageEnable>false</onlineMessageEnable><!-- 是否开启页面在线消息，false关闭，默认true开启  -->
+	<!-- 短信通知功能,目前只有神木考虑使用短信接口 -->
+	<smsEnable>false</smsEnable>					<!-- 是否启用短信接口, 默认false禁用 -->
+	<smsFaultEnable>true</smsFaultEnable>			<!-- 提票派工是否发送短信通知，提票派工短信功能开关 -->
+	<smsWorkCardEnable>true</smsWorkCardEnable>	<!-- 工单派工是否发送短信通知，工单派工短信功能开关 -->
+	<smsHeadManEnable>true</smsHeadManEnable>		<!-- 派工中的工长派工是否发送短信通知，工长派工短信功能开关 -->
+	<smsPostfix>【肯尼亚综合管理系统】</smsPostfix>				<!-- 短信消息后缀 -->
+	<!-- 短信通知功能 -->
+	<uploadPath>/weblogic/JXUpload/</uploadPath><!-- 设置当前系统附件上传后，存放文件的根目录 -->
+	<uploadMaxSize>100</uploadMaxSize><!-- 设置上传文件体积上限，单位MB(100MB) -->
+	<uploadFileType>*.*</uploadFileType><!-- 设置允许上传的文件类型 -->
+	<uploadFileDescription>可以上传所有类型的文件</uploadFileDescription><!-- 设置允许上传文件类型的描述（可以上传所有类型的文件） -->
+	<!-- 同车同位置提票判断时间(当前时间向之前推算的天数) -->
+	<faultCountDays>60</faultCountDays>
+	
+	<stationMapName>重庆机务段</stationMapName><!-- 设置本系统使用的台位图名称(天津电力机车有限公司) -->
+	<stationMapURL>http://10.2.4.11:8733/TerminalStationService/?wsdl</stationMapURL><!-- 设置本系统调用的台位图服务器地址 -->
+	<messageURL>http://192.168.0.112:8732/MessageService/?wsdl</messageURL><!-- 设置消息推送URL -->
+	<stationMapTimeDifference>1440</stationMapTimeDifference><!-- 设置台位图中计算出入厂时间差参数(单位:分钟) 默认为一天 60*24 = 1440 -->
+	<checkIntoFactoryTimeByCurrentTime>30</checkIntoFactoryTimeByCurrentTime><!-- 判断机车入库和出库的时间(整备子系统)-->
+	<checkIntoFactoryTimeByOnceTime>30</checkIntoFactoryTimeByOnceTime><!-- 判断机车本次入库时间和上次出库时间(整备子系统) -->
+	<checkIntoJxByIntoTime>30</checkIntoJxByIntoTime><!-- 判断机车进入检修库的时间和入库时间(整备子系统)-->
+	<appURL>http://10.2.4.11:8080/CoreFrame/</appURL><!-- 设置本机检修系统应用访问地址 -->
+	<appName>肯尼亚综合管理系统</appName><!-- 设置检修系统名称（天津机车检修管理系统,哈尔滨检修基地机车检修管理系统） -->
+	<appPicName>jcjx</appPicName><!-- 当前应用图片文件名称(不要后缀),(神木为smjx,基地为jcjx) -->
+	<appFooter>成都运达公司.保留所有权利.</appFooter><!-- 设置版权信息（成都运达科技股份有限公司 保留所有权利.），（中国铁路总公司运输局 信息技术中心 成都运达公司 沈阳科研所.保留所有权利.） -->
+	<subSystem> <!-- 四个子系统的编号和名称，将显示在登录页和主框架的顶部 -->
+		<subSysInfo appid="JCJX" appname="肯尼亚综合管理系统"/>
+		<subSysInfo appid="SCDD" appname="肯尼亚综合管理系统-生产调度子系统"/>
+		<subSysInfo appid="JCZB" appname="肯尼亚综合管理系统-机车整备子系统"/>
+		<subSysInfo appid="PJWL" appname="肯尼亚综合管理系统-配件物流子系统"/>
+	</subSystem>	
+	<!-- 报表服务部署绝对路径，用于系统自动报表模板部署管理，根据现场服务器部署情况进行配置 -->
+	<!-- 配置示例1 D:\runtime\Servers\apache-tomcat-5.5.20\webapps\ydReport\WEB-INF\reportlets -->
+	<!-- 配置示例2 /weblogic/eos/eosdomain/applications/ydReport.war/WEB-INF/reportlets -->
+	<!-- 备注：如果没有配置该项，则默认使用TOMCAT服务报表服务运行路径：..\apache-tomcat-5.5.20\webapps\ydReport\WEB-INF\reportlets -->
+	<webappsPath></webappsPath>
+	<!-- ipad二维码解析规则，HXHC表示“换行回车”，KG表示空格，BS表示截取标识多个标识以+间隔，从前往后依次匹配；START开始截取位置，END结束截取位置
+		1、如果配置同时配置了START，END，则前面配置无效；直接截取START到END位置；
+		   eg:二维码录入：PJ-100186 ；规则配置：HXHC:Y,KG:N,BS:|,START:1,END:5 ； 截取字符为：J-100
+		2、如果未同时配置START，END，则按照前面规则进行匹配，START，END无效；
+		   eg:二维码录入：PJ-100186|HMDSJ001 ；规则配置：HXHC:Y,KG:N,BS:|,START:,END: ； 截取字符为：PJ-100186 先匹配换行符号，再匹配|标识（KG为空不进行匹配）
+	 -->
+	<qRCodeRule>HXHC:Y,KG:N,BS:|+J+Y,START:,END:</qRCodeRule>
+	<!-- 1 上海机车检修段 -->
+	<!-- <webappsPath>/weblogic/eos/eosdomain/applications/ydReport.war/WEB-INF/reportlets</webappsPath> -->
+</JXConfig>

@@ -1,0 +1,15 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<style type="text/css">
+	.expandIcon{background-image:url(<%= request.getContextPath() %>/frame/resources/vis/images/expand.png) !important;}
+	.returnIcon{background-image:url(<%= request.getContextPath() %>/frame/resources/vis/images/return.png) !important;}
+	.centerIcon{background-image:url(<%= request.getContextPath() %>/frame/resources/vis/images/center.png) !important;}
+	.locationIcon{background-image:url(<%= request.getContextPath() %>/frame/resources/vis/images/location.png) !important;}
+</style>
+<%-- 
+<script language="javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.1/moment-with-locales.min.js"></script>
+--%>
+<script language="javascript" src="<%= request.getContextPath() %>/frame/resources/vis/util/VisUtil.js"></script>
+<script language="javascript" src="<%= request.getContextPath() %>/frame/resources/vis/util/DateUtil.js"></script>
+<script language="javascript" src="<%= request.getContextPath() %>/frame/resources/vis/moment-with-locales.js"></script>
+<script language="javascript" src="<%= request.getContextPath() %>/frame/resources/vis/vis.js"></script>
+<link href="<%= request.getContextPath() %>/frame/resources/vis/vis.css" rel="stylesheet" type="text/css">

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 流水线-工位使用质量技术单查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 作业处理情况查询 质量检验 -->
+	<sql id="findPageList">
+		<![CDATA[
+		SELECT * 
+		FROM (SELECT E.EMPID,
+               E.EMPCODE,
+               E.EMPNAME,
+               E.GENDER,
+               OX.ORGID,
+               OX.ORGNAME,
+               OX.ORGSEQ
+          FROM OM_EMPLOYEE E
+         INNER JOIN OM_EMPORG O ON O.EMPID = E.EMPID
+         INNER JOIN OM_ORGANIZATION OX ON OX.ORGID = O.ORGID AND OX.STATUS = 'running'
+        UNION
+        SELECT EMPID,
+               EMPCODE,
+               EMPNAME,
+               GENDER,
+               TO_NUMBER(TEMPORARY_TREAM_ID),
+               TEMPORARY_TREAM_NAME,
+               TEMPORARY_TREAM_SEQ
+          FROM JXPZ_TEMPORARY_EMP)
+		]]>
+	</sql>
+</SqlMap>

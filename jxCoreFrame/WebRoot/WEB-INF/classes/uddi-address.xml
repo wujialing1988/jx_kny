@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<uddi__address__list>
+    <uddi__address id="CoreFrame">
+        <name>ydserver</name>
+        <logicName>CoreFrame</logicName>
+        <type>remote</type>
+        <uddiHost>127.0.0.1</uddiHost>
+        <uddiPort>8080</uddiPort>
+        <uddiAdminPort>6199</uddiAdminPort>
+        <uddiWebContext>CoreFrame</uddiWebContext>
+        <uddiUserID>bps</uddiUserID>
+        <uddiPassword>000000</uddiPassword>
+        <description>
+        </description>
+    </uddi__address>
+</uddi__address__list>

@@ -1,0 +1,36 @@
+#accordion{
+	color: rgb(44, 116, 145);
+	-webkit-user-select:none;
+	use-select: none;
+}
+#accordion div{
+	height: 20px;
+	line-height:20px;
+	font-size:14px;
+	font-family: Microsoft-YaHei;
+	border-bottom: solid gray 1px;
+	border-top: solid rgb(250, 247, 247) 1px;				
+	overflow:hidden;
+	cursor: pointer;
+	padding:2px;
+	padding-left:5px;
+	white-space:nowrap;
+	transition: 0.3s background-color;
+	transition: 0.5s color;
+}
+#accordion div:hover{
+	background-color:skyblue;
+	color: white;
+}
+#accordion div:active{
+	border:solid 1px rgb(44, 116, 145);
+	background-color: rgb(171, 184, 218);
+}
+.active {
+	background-color: rgb(93, 104, 101);
+	font-weight:bold;
+	color:white;
+}
+.active:hover{
+	background-color: rgb(93, 104, 101);
+}

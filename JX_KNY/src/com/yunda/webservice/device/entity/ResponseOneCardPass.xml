@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DetectDatas>
+    <DetectData>
+        <DataType>03</DataType>
+        <Edition>1.0</Edition>
+        <DetectorCode>00011000000001</DetectorCode>
+        <MaterielCode>220011000000001</MaterielCode>
+        <State>01</State>
+    </DetectData>
+</DetectDatas>

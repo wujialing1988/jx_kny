@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+    <!-- 平均分配工时 -->
+	<sql id='insertPartsRdpWorkTime'>
+	    INSERT INTO pjjx_parts_rdp_worktime
+			  (IDX,
+			   Rdp_IDX,
+			   Work_EmpID,
+			   Work_EmpName,
+			   WorkTime,
+			   RECORD_STATUS,
+			   SITEID,
+			   CREATOR,
+			   CREATE_TIME,
+			   UPDATOR,
+			   UPDATE_TIME)
+			  SELECT SYS_GUID(),
+			         a.rdp_idx,
+			         a.work_empid,
+			         a.work_empname,
+			         (select nvl(r.Rated_Worktime, 0) / x.countx
+			            from PJJX_Parts_Rdp r,
+			                 (select count(1) as countx
+			                    from PJJX_Parts_Rdp_Worker w
+			                   where w.rdp_idx = '任务单id'
+			                     and w.record_status = 0) x
+			           where r.idx = '任务单id'),
+			         0,
+			         '站点',
+			         '创建人',
+			         to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+			         '创建人',
+			         to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss')
+			    FROM PJJX_Parts_Rdp_Worker a
+			   WHERE a.record_status = 0
+			     and a.rdp_idx = '任务单id'
+    </sql>
+</SqlMap>

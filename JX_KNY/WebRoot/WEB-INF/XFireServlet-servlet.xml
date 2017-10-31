@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <bean id="baseWebService" class="org.codehaus.xfire.spring.remoting.XFireExporter"  lazy-init="false" abstract="true">
+        <property name="serviceFactory">
+            <ref bean="xfire.serviceFactory" />
+        </property>
+        
+        <property name="xfire">
+            <ref bean="xfire" />
+        </property>
+    </bean>
+    
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>            	
+                <!-- 工位终端 登陆接口 -->
+                <entry key="/StationTerminalService">
+                    <ref bean="stationTerminalService" />
+                </entry>
+                 <!-- 人员接口 -->
+                <entry key="/TrainEmployeeService">
+                    <ref bean="trainEmployeeService" />
+                </entry>
+                <!-- 台位图配置接口 -->
+                <entry key="/SiteMapConfigService">
+                    <ref bean="stationMapConfigWS" />
+                </entry>
+                <!-- 台位图机车状态管理接口 -->
+                <entry key="/TrainStatusManageService">
+                    <ref bean="trainStatusManageWS" />
+                </entry>   
+                <!-- 台位图机车位置管理接口 -->
+                <entry key="/TrainPositionManageService">
+                    <ref bean="trainPositionManageWS" />
+                </entry>                 
+                <!-- 系统配置项接口 -->
+                <entry key="/SystemConfigService">
+                    <ref bean="systemConfigWS" />
+                </entry>    
+                <!-- 机务设备发布接口 -->
+                <entry key="/DeviceInterface">
+                    <ref bean="deviceService" />
+                </entry>
+                <!-- 指纹绑定与识别接口 -->
+                <entry key="/FingerprintService">
+                    <ref bean="fingerprintService" />
+                </entry>
+                <!-- 配件检修作业接口 -->
+                <entry key="/PartsRdpService">
+                    <ref bean="partsRdpService" />
+                </entry>
+                <!-- 配件检修记录工单接口 -->
+                <entry key="/PartsRdpRecordCardService">
+                    <ref bean="partsRdpRecordCardService" />
+                </entry>
+                <!-- 配件检修工艺工单接口 -->
+                <entry key="/PartsRdpTecCardService">
+                    <ref bean="partsRdpTecCardService" />
+                </entry>
+                <!-- 配件检修提票工单接口 -->
+                <entry key="/PartsRdpNoticeService">
+                    <ref bean="partsRdpNoticeService" />
+                </entry>
+                <!-- 配件检修质量检验接口 -->
+                <entry key="/PartsRdpQCService">
+                    <ref bean="partsRdpQCService" />
+                </entry>
+                <!-- 机车出入段接口 -->
+                <entry key="/TrainAccessAccountService">
+                    <ref bean="trainWareHouseService" />
+                </entry>
+                <!-- 配件规格型号接口 -->
+                <entry key="/PBPartsTypeService">
+                    <ref bean="pbPartsTypeService" />
+                </entry>
+                <!-- 车型接口 -->
+                <entry key="/TBTrainTypeService">
+                    <ref bean="tbTrainTypeService" />
+                </entry>
+                <!-- 机车整备提票接口 -->
+                <entry key="/ZbglTpService">
+                    <ref bean="faultNoticeService" />
+                </entry>
+                <!-- 机车整备任务单接口 -->
+                <entry key="/ZbglRdpService">
+                    <ref bean="zbglRdpWS" />
+                </entry>
+                <!-- 机车整备上砂接口 -->
+                <entry key="/ZbglSandingService">
+                    <ref bean="zbglSandingWS" />
+                </entry>
+                <!-- 机车交接接口 -->
+                <entry key="/ZbglHoService">
+                    <ref bean="zbglHoWS" />
+                </entry>
+                <!-- 机车保洁接口 -->
+                <entry key="/ZbglCleaningService">
+                    <ref bean="zbglCleaningWS" />
+                </entry>
+                <!-- 普查整治接口 -->
+                <entry key="/ZbglPczzService">
+                    <ref bean="zbglPczzWS" />
+                </entry>
+                <!-- 工位终端公用接口 -->
+                <entry key="/TerminalCommonService">
+                    <ref bean="terminalCommonWS" />
+                </entry>
+                <!-- 消息推送接口 -->
+                <entry key="/MessagePropellingService">
+                    <ref bean="messagePropellingService" />
+                </entry>
+                <!-- 刷卡器制卡接口 -->
+                <entry key="/MakeCardService">
+                    <ref bean="makeCardService" />
+                </entry>
+                <!-- 作业工单接口 -->
+                <entry key="/WorkCardService">
+                    <ref bean="workCardWS" />
+                </entry>
+                <!-- 故障提票接口 -->
+                <entry key="/FaultTicketService">
+                    <ref bean="faultTicketWS" />
+                </entry>
+                <!-- 传感器接口 -->
+                <entry key="/TWTSensorService">
+                    <ref bean="tWTSensorWS" />
+                </entry>
+                <!-- 配件检修作业节点接口 -->
+                <entry key="/PartsRdpNodeService">
+                    <ref bean="partsRdpNodeService" />
+                </entry>
+                <!-- 配件修竣合格验收接口 -->
+                <entry key="/PartsRdpAcceptanceService">
+                	<ref bean="partsRdpAcceptanceService"/>
+                </entry>
+                <!-- 工位接口 -->
+                <entry key="/WorkStationImpl">
+                	<ref bean="workStationImpl"/>
+                </entry>
+                <!-- 配件检修工位接口 -->
+                <entry key="/PartsWorkStationService">
+                    <ref bean="partsWorkStationWS" />
+                </entry>  
+                <!-- 配件周转信息台帐接口 -->
+                <entry key="/PartsAccountService">
+                    <ref bean="partsAccountWS" />
+                </entry> 
+                <!-- 机车检修工位接口 -->
+                <entry key="/WorkStationService">
+                    <ref bean="workStationServiceWS" />
+                </entry>
+                
+                <!-- 机车组成接口 -->
+                <entry key="/JcgxBuildService">
+                    <ref bean="jcgxBuildService" />
+                </entry>
+                <!--机车检修任务处理  -->
+                <entry key="/TrainRdpWorkService">
+                    <ref bean="trainRdpWorkService" />
+                </entry>
+                <!--  配件委外接口 -->  
+                <entry key="/PartsOutsourcingService">
+                    <ref bean="partsOutsourcingService" />
+                </entry>
+                <!--  配件检修情况查看接口 -->  
+                <entry key="/PartsRdpQueryService">
+                    <ref bean="partsRdpQueryService" />
+                </entry>
+                <!--  工位绑定接口 -->  
+                <entry key="/ZbglWorkStationBindingService">
+                    <ref bean="zbglWorkStationBindingService" />
+                </entry>
+                  <!--  机车质量检修接口 -->  
+                <entry key="/TrainWorkRdpQcService">
+                    <ref bean="trainWorkRdpQcService" />
+                </entry>
+                  <!--  物料消耗接口（新） -->  
+                <entry key="/PartsRdpNodeMatService">
+                    <ref bean="partsRdpNodeMatService" />
+                </entry>
+                  <!-- 机车年计划修程接口 -->
+                <entry key="/TrainYearPlanService">
+                	<ref bean="trainYearPlanService"/>
+                </entry>
+                <!-- 机车提票检查签到 -->
+                <entry key="/FaultTicketCheckSignService">
+                	<ref bean="faultTicketCheckSignService"/>
+                </entry>
+                <!-- 机车提票检查确认 -->
+                <entry key="/FaultTicketCheckAffirmService">
+                	<ref bean="faultTicketCheckAffirmService"/>
+                </entry>
+                
+               	<!-- 肯尼亚业务新start -->
+               	
+               <entry key="/KnyTest">
+                	<ref bean="knyTest"/>
+                </entry>	
+                
+				<!-- 列检计划 start -->
+                <entry key="/ZbglRdpPlanService">
+                	<ref bean="zbglRdpPlanService"/>
+                </entry>
+ 
+                 <entry key="/ZbglRdpNodeService">
+                	<ref bean="zbglRdpNodeService"/>
+                </entry>   
+
+                 <entry key="/ZbglRdpWiService">
+                	<ref bean="zbglRdpWiService"/>
+                </entry>  
+
+                 <entry key="/TrainVehicleTypeService">
+                	<ref bean="trainVehicleTypeService"/>
+                </entry>
+                <!-- 列检计划 end -->
+                
+                <!-- 故障登记 start -->
+                <entry key="/GztpService">
+                    <ref bean="gztpService"/>
+                </entry>
+                <!-- 故障登记 end -->
+                
+                <!-- 质量检验 start -->
+                <entry key="/ZbglQualityControlService">
+                    <ref bean="qualityControlService"/>
+                </entry>
+                <!-- 质量检验 end -->
+
+                <!-- 扣车管理 start -->
+                <entry key="/DetainTrainService">
+                    <ref bean="detainTrainService"/>
+                </entry>
+                <!-- 扣车管理 end -->
+
+                <!-- 作业指导书 start -->
+                <entry key="/WorkInstructorServcie">
+                    <ref bean="workInstructorServcie"/>
+                </entry>
+                <!-- 作业指导书 end -->               
+                
+                
+				<!-- 肯尼亚业务新end -->
+                
+            </map>
+        </property>
+    </bean>
+	<!-- 工位终端 登陆服务接口 -->
+	<bean id="stationTerminalService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="stationTerminalWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.webservice.stationTerminal.base.IStationTerminal</value>
+	    </property>
+	</bean>
+	<!-- 人员服务接口 -->
+	<bean id="trainEmployeeService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="trainEmployeeWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.webservice.employee.ITrainEmployeeService</value>
+	    </property>
+	</bean>
+	<!--台位图配置接口 -->
+	<bean id="stationMapConfigWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="siteMapConfigService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.twt.webservice.service.ISiteMapConfigService</value>
+	    </property>
+	</bean>
+	<!-- 台位图机车状态管理接口 -->
+	<bean id="trainStatusManageWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="trainStatusManageService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.twt.webservice.service.ITrainStatusManageService</value>
+	    </property>
+	</bean>	
+	<!-- 台位图机车位置管理接口 -->
+	<bean id="trainPositionManageWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="trainPositionManageService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.twt.webservice.service.ITrainPositionManageService</value>
+	    </property>
+	</bean>
+	<!-- 系统配置项接口 -->
+	<bean id="systemConfigWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="systemConfigService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.webservice.systemconfig.ISystemConfigService</value>
+	    </property>
+	</bean>
+	<!-- 机务设备服务接口  -->
+    <bean id="deviceService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="deviceInterfaceService"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.webservice.device.IDeviceInterface</value>
+        </property>
+    </bean>
+    <!-- 指纹绑定与识别接口  -->
+    <bean id="fingerprintService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="fingerprintWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.webservice.fingerprint.IFingerprintService</value>
+        </property>
+    </bean>
+    <!-- 配件检修作业接口  -->
+    <bean id="partsRdpService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsRdpWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.webservice.IPartsRdpService</value>
+        </property>
+    </bean>
+    <!-- 配件检修记录工单接口  -->
+    <bean id="partsRdpRecordCardService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsRdpRecordCardWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.webservice.IPartsRdpRecordCardService</value>
+        </property>
+    </bean>
+    <!-- 配件检修工艺工单接口  -->
+    <bean id="partsRdpTecCardService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsRdpTecCardWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.webservice.IPartsRdpTecCardService</value>
+        </property>
+    </bean>
+    <!-- 配件检修提票工单接口  -->
+    <bean id="partsRdpNoticeService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsRdpNoticeWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.webservice.IPartsRdpNoticeService</value>
+        </property>
+    </bean>
+    <!-- 配件检修质量检验接口  -->
+    <bean id="partsRdpQCService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsRdpQCWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.webservice.IPartsRdpQCService</value>
+        </property>
+    </bean>
+    <!-- 机车出入段服务接口 -->
+	<bean id="trainWareHouseService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="trainAccessAccountService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.twt.trainaccessaccount.webservice.ITrainAccessAccountService</value>
+	    </property>
+	</bean>
+    <!-- 配件规格型号接口 -->
+	<bean id="pbPartsTypeService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="pbPartsTypeWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.webservice.partsbase.IPBPartsTypeService</value>
+	    </property>
+	</bean>
+    <!-- 车型接口 -->
+	<bean id="tbTrainTypeService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="tbTrainTypeWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.webservice.trainbase.ITBTrainTypeService</value>
+	    </property>
+	</bean>
+	<!-- 提票接口 -->
+	<bean id="faultNoticeService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="zbglTpService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.zb.tp.webservice.IZbglTpService</value>
+	    </property>
+	</bean>	
+	<!-- 机车整备任务单接口 -->
+	<bean id="zbglRdpWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="zbglRdpService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.zb.rdp.webservice.IZbglRdpService</value>
+	    </property>
+	</bean>
+	<!-- 机车整备上砂接口 -->
+	<bean id="zbglSandingWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="zbglSandingService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.zb.trainonsand.webservice.IZbglSandingService</value>
+	    </property>
+	</bean>
+	<!-- 机车交接接口 -->
+	<bean id="zbglHoWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="zbglHoService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.zb.trainhandover.webservice.IZbglHoService</value>
+	    </property>
+	</bean>
+	<!-- 机车保洁接口 -->
+	<bean id="zbglCleaningWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="zbglCleaningService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.zb.trainclean.webservice.IZbglCleaningService</value>
+	    </property>
+	</bean>
+	<!-- 普查整治接口 -->
+	<bean id="zbglPczzWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="zbglPczzService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.zb.pczz.webservice.IZbglPczzService</value>
+	    </property>
+	</bean>
+	<!-- 工位终端公用接口 -->
+	<bean id="terminalCommonWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="terminalCommonService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.zb.common.webservice.ITerminalCommonService</value>
+	    </property>
+	</bean>	
+	<!-- 消息推送接口 -->
+	<bean id="messagePropellingService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="messagePropellingWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.frame.baseapp.message.IMessagePropellingService</value>
+	    </property>
+	</bean>
+	<!-- 刷卡器制卡接口 -->
+	<bean id="makeCardService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="makeCardWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.webservice.makecard.IMakeCardService</value>
+	    </property>
+	</bean>
+	<!-- 作业工单接口 -->
+	<bean id="workCardWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="workCardService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.jxgc.webservice.IWorkCardService</value>
+	    </property>
+	</bean>	
+	<!-- 故障提票接口 -->
+	<bean id="faultTicketWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="faultTicketService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.jxgc.webservice.IFaultTicketService</value>
+	    </property>
+	</bean>	
+	<!-- 传感器接口 -->
+	<bean id="tWTSensorWS" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="tWTSensorService"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.twt.sensor.webservice.ITWTSensorService</value>
+	    </property>
+	</bean>	
+	<!-- 配件检修作业节点接口  -->
+    <bean id="partsRdpNodeService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsRdpNodeWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.webservice.IPartsRdpNodeService</value>
+        </property>
+    </bean>
+	<!-- 配件修竣合格验收接口  -->
+    <bean id="partsRdpAcceptanceService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsRdpAcceptanceWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.webservice.IPartsRdpAcceptance</value>
+        </property>
+    </bean>
+	<!-- 工位接口  -->
+    <bean id="workStationImpl" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="workStationWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.webservice.stationTerminal.IWorkStation</value>
+        </property>
+    </bean>
+    <!-- 配件检修工位接口  -->
+    <bean id="partsWorkStationWS" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsWorkStationService"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.repairline.webservice.IPartsWorkStationService</value>
+        </property>
+    </bean>
+    <!-- 配件周转信息台帐接口  -->
+    <bean id="partsAccountWS" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="partsAccountService"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.pjjx.webservice.IPartsAccountService</value>
+        </property>
+    </bean>
+    <!-- 机车检修工位接口  -->
+    <bean id="workStationServiceWS" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="workStationService"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.jxgc.dispatchmanage.webservice.IWorkStationService</value>
+        </property>
+    </bean>
+    
+    <!-- 机车组成接口 -->
+	<bean id="jcgxBuildService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="jcgxBuildWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jcbm.webservice.IJcgxBuildService</value>
+	    </property>
+	</bean>
+    <!-- 机车检修任务处理 -->
+	<bean id="trainRdpWorkService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="trainRdpWorkWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.jxgc.webservice.ITrainRdpWorkService</value>
+	    </property>
+	</bean>
+    <!-- 配件委外接口 -->
+	<bean id="partsOutsourcingService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="partsOutsourcingWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.pjwz.partsoutsourcing.partsoutsourceregister.webservice.IPartsOutsourcingService</value>
+	    </property>
+	</bean>
+    <!-- 配件检修情况查看接口 -->
+	<bean id="partsRdpQueryService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="partsRdpQueryWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.pjjx.webservice.IPartsRdpQueryService</value>
+	    </property>
+	</bean>
+	<!-- 工位绑定接口 -->
+	<bean id="zbglWorkStationBindingService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="zbglWorkStationBindingWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.jxgc.dispatchmanage.webservice.IZbglWorkStationBindingService</value>
+	    </property>
+	</bean>
+	<!-- 机车质量检查接口 -->
+	<bean id="trainWorkRdpQcService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="trainWorkRdpQcWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.jxgc.webservice.ITrainWorkRdpQcService</value>
+	    </property>
+	</bean>
+	<!-- 物料消耗接口 -->
+	<bean id="partsRdpNodeMatService" parent="baseWebService">
+	    <property name="serviceBean">
+	        <ref bean="partsRdpNodeMatWS"/>
+	    </property>
+	    <property name="serviceClass">
+	        <value>com.yunda.jx.pjjx.webservice.IPartsRdpNodeMatService</value>
+	    </property>
+	</bean>
+	<!-- 机车年计划修程接口 -->
+	<bean id="trainYearPlanService" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="trainYearPlanServiceWS"/>
+		</property>
+		<property name="serviceClass">
+			<value>com.yunda.jx.jxgc.webservice.ITrainYearPlanService</value>
+		</property>
+	</bean>
+	
+	<!-- 机车提票检查签到 -->
+	<bean id="faultTicketCheckSignService" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="faultTicketCheckSignWS"/>
+		</property>
+		<property name="serviceClass">
+			<value>com.yunda.jx.jxgc.webservice.IFaultTicketCheckSignService</value>
+		</property>
+	</bean>
+	
+	<!-- 机车提票检查确认 -->
+	<bean id="faultTicketCheckAffirmService" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="faultTicketCheckAffirmWS"/>
+		</property>
+		<property name="serviceClass">
+			<value>com.yunda.jx.jxgc.webservice.IFaultTicketCheckAffirmService</value>
+		</property>
+	</bean>
+	
+	
+	<!-- 肯尼亚业务新start -->
+	
+	<!-- 测试用 start -->
+	<bean id="knyTest" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="knyTestWS"/>
+		</property>
+		<property name="serviceClass">
+			<value>com.yunda.webservice.test.IKnyTest</value>
+		</property>
+	</bean>
+	<!-- 测试用 end -->
+	
+	
+	<!-- 列检计划 start -->
+	<bean id="zbglRdpPlanService" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="zbglRdpPlanServiceWS"/>
+		</property>
+		<property name="serviceClass">
+			<value>com.yunda.freight.zb.plan.webservice.IZbglRdpPlanService</value>
+		</property>
+	</bean>
+	
+	<bean id="zbglRdpNodeService" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="zbglRdpNodeServiceWS"/>
+		</property>
+		<property name="serviceClass">
+			<value>com.yunda.freight.zb.rdp.webservice.IZbglRdpNodeService</value>
+		</property>
+	</bean>
+	
+	<bean id="zbglRdpWiService" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="zbglRdpWiServiceWS"/>
+		</property>
+		<property name="serviceClass">
+			<value>com.yunda.freight.zb.rdp.webservice.IZbglRdpWiService</value>
+		</property>
+	</bean>
+	
+	<bean id="trainVehicleTypeService" parent="baseWebService">
+		<property name="serviceBean">
+			<ref bean="trainVehicleTypeServiceWS"/>
+		</property>
+		<property name="serviceClass">
+			<value>com.yunda.freight.base.vehicle.webservice.ITrainVehicleTypeService</value>
+		</property>
+	</bean>
+	<!-- 列检计划 start -->
+	
+	<!-- 故障登记 start -->
+    <bean id="gztpService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="gztpServiceWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.freight.zb.gztp.webservice.IGztpService</value>
+        </property>
+    </bean>
+	<!-- 故障登记 end -->
+	
+	<!-- 质量检验 start -->
+    <bean id="qualityControlService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="zbglQualityControlService"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.freight.zb.qualitycontrol.webservice.IZbglQualityControlService</value>
+        </property>
+    </bean>
+    <!-- 质量检验 end -->
+    
+	<!-- 扣车管理 start -->
+    <bean id="detainTrainService" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="detainTrainServiceWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.freight.zb.detain.webservice.IDetainTrainService</value>
+        </property>
+    </bean>
+    <!-- 扣车管理 end -->
+    
+    <!-- 作业指导书 start -->
+    <bean id="workInstructorServcie" parent="baseWebService">
+        <property name="serviceBean">
+            <ref bean="workInstructorServcieWS"/>
+        </property>
+        <property name="serviceClass">
+            <value>com.yunda.jx.base.workInstructor.webservice.IWorkInstructorServcie</value>
+        </property>
+    </bean>
+    <!-- 作业指导书 end -->
+    
+	
+	<!-- 肯尼亚业务新end -->
+	
+</beans>

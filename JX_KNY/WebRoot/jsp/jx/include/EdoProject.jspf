@@ -1,0 +1,20 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<link href="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edo/res/css/edo-all.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edo/res/product/all.css" rel="stylesheet" type="text/css" />
+<script src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edo/edo.js" type="text/javascript"></script>
+<%-- -数据交互 --%>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/ProjectService.js"></script>
+<%-- 按钮工具栏 --%>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/ProjectToolBar.js"></script>
+<%-- 项目管理调度插件 --%>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/ProjectSchedule.js"></script>
+<%-- 操作面板 --%>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/windows/ProjectSelectWindow.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/windows/ProjectWindow.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/windows/TaskWindow.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/windows/CalendarWindow.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/windows/ConstraintWindow.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/windows/PredecessorWindow.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/windows/ResourceWindow.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/edoproject/windows/CalendarWindow.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/jsp/jx/third/edo/scripts/thirdlib/excanvas/excanvas.js"></script>

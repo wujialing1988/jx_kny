@@ -1,0 +1,20 @@
+.x-container{
+	position: absolute;
+	left:0px;
+	top:0px;
+	padding:5px;
+	width: auto;
+	border:solid 1px skyblue;
+	box-shadow: 1px 1px 8px skyblue;
+	background-color:white;
+	z-index: 10000;
+}
+.x-container span{
+	display:inline-block;
+}
+.x-container span label{
+	line-height:20px;
+	font-size:0.8em;
+	padding-left:2px;
+	padding-right:2px;
+}

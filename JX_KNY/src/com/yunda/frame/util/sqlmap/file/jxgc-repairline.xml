@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 检修过程-流水线，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>	
+	<!-- 工长默认派工页面列表select  -->
+	<sql id="gzforeman-select">
+	<![CDATA[
+		SELECT A.IDX AS "idx",
+ 		D.REPAIR_LINE_CODE AS "repairLineCode",
+ 		D.REPAIR_LINE_NAME AS "repairLineName",
+ 		A.WORK_STATION_CODE AS "workStationCode",
+ 		A.WORK_STATION_NAME AS "workStationName",
+ 		A.TEAM_ORGID AS "teamOrgId",
+ 		A.TEAM_ORGNAME AS "teamOrgName",
+ 		A.TEAM_ORGSEQ AS "teamOrgSeq",
+ 		A.DESK_NAME AS "deskName",
+ 		(SELECT TO_CHAR(WMSYS.WM_CONCAT(WORKER_NAME)) FROM JXGC_WORK_STATION_WORKER C WHERE C.RECORD_STATUS = 0 
+        AND C.WORK_STATION_IDX = A.IDX) AS "persons"
+	]]>
+	</sql>
+	<!-- 工长默认派工页面列表from  -->
+	<sql id="gzforeman-from">
+	<![CDATA[
+		 FROM JXGC_WORK_STATION A
+		 INNER JOIN JXGC_REPAIR_LINE D
+		 ON A.REPAIR_LINE_IDX = D.IDX
+		 AND A.RECORD_STATUS = 0 AND A.STATUS = #stationStatus#
+	]]>
+	</sql>
+</SqlMap>

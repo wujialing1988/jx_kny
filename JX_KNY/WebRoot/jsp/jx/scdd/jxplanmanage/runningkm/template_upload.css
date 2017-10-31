@@ -1,0 +1,68 @@
+.mybtn, .myselect{
+	width:150px;
+	height:50px;
+	color:white;
+	background-color:#0088FF;
+	position: relative;
+	margin:10px;				
+}
+.mybtn{
+	float:right;
+	cursor:pointer;
+}
+.myselect{
+	float:left;
+}
+.mybtn:hover, .myselect:hover{
+	background-color:#0060C0;
+}
+.btndisable{
+	background-color:gray;
+	cursor:default;
+}
+.btndisable:hover{
+	background-color:gray;
+}
+.btnText{
+	position: absolute;
+	left:0px;
+	top:0px;
+	line-height:50px;
+	z-index:1;
+	text-align:center;
+	width:100%;
+	font-size:14px;
+}
+.btnUpload{
+	position: absolute;
+	left:0px;
+	top:0px;
+	z-index:2;
+}
+.fileTip{
+	margin:10px;
+}
+body{
+	-webkit-user-select:none;
+}
+#window_el{
+	position: relative;
+	padding:0px;
+	margin:0px;
+	height:118px;
+}
+.progressbar{
+	width:100%;
+	height:5px;
+	bottom:0px;
+	left:0px;
+	position: absolute;
+	padding:0px;				
+}
+.progress{
+	text-align:left;
+	width:0%;
+	background-color:green;
+	color:green;
+	height:5px;
+}

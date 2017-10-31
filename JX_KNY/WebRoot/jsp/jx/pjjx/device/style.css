@@ -1,0 +1,22 @@
+@media screen and (max-width: 1062px){
+	#buttons{		
+		left: 980px!important;
+	}
+	
+	#buttons > table{
+		width: 50px!important;
+	}
+}
+
+#buttons{
+	position: absolute;
+	left: 1050px;
+	top: 5px;
+	width: auto;
+	height: 30px;
+	transition: .5s all;
+}
+
+#buttons > table{
+	width: 100px;
+}

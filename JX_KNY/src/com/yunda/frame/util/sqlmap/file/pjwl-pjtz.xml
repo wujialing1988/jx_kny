@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 配件下车登记查询——select部份 -->
+	<sql id="findDetrainPartsRegist_select">
+		<![CDATA[
+			select t.idx as "idx",
+				a.specification_model as "specificationModel",
+				a.parts_name as "partsName",
+				a.nameplate_No as "nameplateNo",
+				a.parts_status as "status",
+				a.parts_no as "partsNo",
+				t.dismantle_date as "dismantleDate",
+		        t.unload_traintype as "unloadTrainType",
+		        t.unload_trainno as "unloadTrainNo",
+		        t.unload_repairprogram as "unloadRepairProgram",
+		        t.unload_repairno as "unloadRepairNo",
+		        t.parts_account_idx as "partsAccountIDX",
+		        t.UNLOAD_PLACE as "unloadPlace",
+		        t.UNLOAD_REASON as "unloadReason",
+		        a.MADE_FACTORY_IDX as "madeFactoryIdx",
+		        a.MADE_FACTORY_NAME as "madeFactoryName"
+		]]>
+	</sql>
+	
+	<!-- 配件下车登记查询——from部份 -->
+	<sql id="findDetrainPartsRegist_from">
+		<![CDATA[
+			from pjwz_parts_register t, pjwz_parts_account a
+			 where 1=1 and a.idx = t.parts_account_idx
+			and t.record_status=0
+			and a.record_status=0
+		]]>
+	</sql>
+	<!-- 查询退库明细数量 -->
+	<sql id="getBackDetailCount">
+		<![CDATA[
+			adfdf
+		]]>
+	</sql>
+	<!-- 新增退库申请明细 -->
+	<sql id="insertPartsBackWHDetail">
+		<![CDATA[
+			insert into PJWZ_Parts_BackWH_Detail(IDX,PARTS_BACKWH_DETAIL,MAT_EX_WH_DETAIL_IDX,
+			BILL_NO,APPLY_GROUP,APPLY_GROUP_NAME,DELIVER_PERSON,DELIVER_PERSON_NAME,OUTWH_TIME,
+			PARTS_ACCOUNT_IDX,PARTS_NAME,SPECIFICATION_MODEL,NAMEPLATE_NO,PARTS_NO,
+			RECORD_STATUS,SITEID,CREATOR,CREATE_TIME,UPDATOR,UPDATE_TIME)
+			select sys_guid(),'退库单主键',t.idx,w.bill_no,w.apply_group,w.apply_group_name,
+			w.deliver_person,w.deliver_person_name,w.outwh_time,t.parts_account_idx,
+			t.parts_name,t.specification_model,t.nameplate_no,t.parts_no,0,
+			'SIETID',操作员,sysdate,操作员,sysdate
+			from PJWZ_MAT_EX_WAREHOUSE_DETAIL t , pjwz_mat_ex_warehouse w
+			 where w.idx = t.parts_outwh_idx and t.idx in ('主键')
+		]]>
+	</sql>
+	<!-- 查询出库单明细 -->
+	<sql id="findWHDetail_Select">
+		<![CDATA[
+			select t.idx as "idx",
+			w.bill_no as "billNo",
+			w.wh_name as "whName",
+			w.apply_plant_name as "applyPlantName",
+			w.deliver_person_name as "deliverPersonName",
+			to_char(w.outwh_time,'yyyy-MM-dd HH24:mi') as "outWhTime",
+			t.parts_name as "partsName",
+			t.specification_model as "specificationModel",
+			t.nameplate_no as "nameplateNo",
+			t.parts_no as "partsNo"
+		]]>
+	</sql>
+	<!-- 查询出库单明细 -->
+	<sql id="findWHDetail_Form">
+		<![CDATA[
+			from PJWZ_MAT_EX_WAREHOUSE_DETAIL t , pjwz_mat_ex_warehouse w where 1=1 and w.idx = t.parts_outwh_idx
+			and t.idx not in (select d.mat_ex_wh_detail_idx from PJWZ_Parts_BackWH_Detail d,
+				 pjwz_parts_backwh wx where d.record_status=0 and wx.record_status=0 and wx.idx = d.parts_backwh_detail and wx.status !='STATUS')
+			 and t.record_status=0 and w.record_status=0
+		]]>
+	</sql>
+	<!-- 委外查询机车信息 -->
+	<sql id="findTrainInfo">
+		<![CDATA[
+			select a.* ,b.b_name,b.shortname, d.d_name, d.shortname from (
+				select t.train_type_idx,t.train_no, t.train_type_shortname,t.b_id,t.d_id, max(r.register_time) 
+					from pjwz_parts_register r,jczl_train t where t.train_type_shortname = r.unload_traintype
+					and t.train_no = r.unload_trainno and r.parts_account_idx='PARTS_ACCOUNT_IDX' 
+					group by t.train_type_idx,t.train_no, t.train_type_shortname,t.b_id,t.d_id
+				) a,j_gyjc_bureau b,j_gyjc_deport d
+			where a.b_id = b.b_id and d.d_id = a.d_id
+		]]>
+	</sql>
+	<!-- 查询退库明细 -->
+	<sql id="findBackWHDetail_select">
+		<![CDATA[
+			select t.idx as "idx",
+			t.bill_no as "billNO",
+			w.wh_name as "whName",
+			w.apply_group_name as "applyGroupName",
+			w.deliver_person_name as "deliverPersonName",
+			to_char(w.outwh_time,'yyyy-MM-dd HH24:mi') as "outWHTimeStr",
+			t.specification_model as "specificationModel",
+			t.parts_name as "partsName",
+			t.nameplate_no as "nameplateNo"
+		]]>
+	</sql>
+	<!-- 查询退库明细 -->
+	<sql id="findBackWHDetail_From">
+		<![CDATA[
+			from PJWZ_Parts_BackWH_Detail t ,
+			 PJWZ_MAT_EX_WAREHOUSE_DETAIL d ,pjwz_mat_ex_warehouse w
+			 where 1=1 and w.idx = d.parts_outwh_idx and t.mat_ex_wh_detail_idx = d.idx
+			and d.record_status=0 and w.record_status=0 and t.record_status=0
+		]]>
+	</sql>
+	<!-- 统计委外配件  -->
+	<sql id="statisticsOutsourcing">
+		<![CDATA[
+		select count(1),parts_name , round(AVG(back_date - leave_date)) from scdd_parts_outsourcing
+			where idx in (select idx from scdd_parts_outsourcing 
+			where to_char(leave_date,'yyyy') = to_char(sysdate,'yyyy')) and record_status=0
+			group by parts_name
+		]]>
+	</sql>
+	<!-- 查询配件委外 -->
+	<sql id="findPartsOutsourcing_select">
+		<![CDATA[
+			select
+	            t.idx as "idx",
+	            t.B_ID as "bID",
+	            t.B_Name as "bName",
+	            t.B_ShortName as "bShortName",
+	            to_char(t.Back_Date,'yyyy-MM-dd') as "backDateStr",
+	            t.Back_Parts_Account_IDX as "backPartsAccountIDX",
+	            to_char(t.Certificate_Back_Date,'yyyy-MM-dd') as "certificateBackDateStr",
+	            to_char(t.Check_Date,'yyyy-MM-dd') as "checkDateStr",            
+	            t.D_ID as "dID",
+	            t.D_NAME as "dName",
+	            t.D_ShortName as "dShortName",
+	            to_char(t.Leave_Date,'yyyy-MM-dd') as "leaveDateStr",
+	            to_char(t.LoadTrain_Date,'yyyy-MM-dd') as "loadTrainDateStr",
+	            t.Nameplate_NO as "nameplateNO",
+	            t.PARTS_OUTSOURCING_SEQ as "outSourcingSeq",
+	            t.Outsourcing_Factory as "outsourcingFactory",
+	            t.Outsourcing_Type as "outsourcingType",
+	            t.Parts_Account_IDX as "partsAccountIDX",
+	            t.Parts_NO as "partsNO",
+	            t.Parts_Name as "partsName",
+	            t.remarks as "remarks",
+	            t.Specification_Model as "specificationModel",
+	            t.status as "status",
+	            t.Train_No as "trainNo",
+	            t.Train_Type_IDX as "trainTypeIDX",
+	            t.Train_Type_ShortName as "trainTypeShortName",
+	            t.Work_Number as "workNumber",
+	            a.nameplate_no as "backNameplateNo",
+                t.traffic_trainno as "trafficTrainNo",
+                t.repair_content as "repairContent",
+                t.check_personid as "checkPersonId",
+                t.check_personname as "checkPersonName",
+                t.outsourcing_reason as "outsourcingReason"
+		]]>
+	</sql>
+	<!-- 查询配件委外 -->
+	<sql id="findPartsOutsourcing_From">
+		<![CDATA[
+			from
+	            SCDD_Parts_Outsourcing t
+	        left join pjwz_parts_account a on a.idx=t.back_parts_account_idx and a.record_status=0
+	        where 1=1 and t.record_status=0
+		]]>
+	</sql>
+</SqlMap>

@@ -1,0 +1,85 @@
+﻿.SideMenuBackground {
+    background:#ffffff;
+    -webkit-background-size: auto;
+    -moz-background-size: auto;
+    -o-background-size: auto;
+    background-size: auto;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+.Head {
+    background: #667393;
+    width: auto;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 36px;
+}
+.Select {
+    background: #C5C5C5;
+    width: auto;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 32px;
+}
+.img {
+  vertical-align: middle;
+    height: 26px;
+    width: 26px;
+    margin:3px;
+}
+.htmlBack {
+    border-top: 5px solid #667393;
+    border-bottom: 3px solid #667393;
+    border-right: 3px solid #667393;
+    width: 100%;
+    height: 100%;
+}
+.Text {
+    margin-top: 5px;
+    margin-left: 3px;
+    width: 130px;
+    height: 23px;
+}
+.SideMenuButton {
+    height: 23px;
+    background: #667393;
+    float: right;
+    margin-right: 3px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid #667393;
+}
+.RefreshButton {
+    height: 23px;
+    background: #667393;
+    float: right;
+    margin-right: 3px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid #667393;
+}

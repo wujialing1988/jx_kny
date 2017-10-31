@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 查询在运行修程修机车与配件兑现单 TODO V3.2.1代码重构-->
+	<sql id='findRunRdpForBaseCombo'>
+		select
+            distinct r.idx as "idx",
+            r.train_name||' '||r.x_no||' '||r.rc_name||' '||r.rt_name as "rdpText"          
+        from
+            jxgc_process_task t,
+            v_rdp r,
+            wfworkitem w
+        where
+            r.idx = t.rdp_idx           
+            and r.bill_status = 'ONGOING' 流程实例ID
+            and r.rdp_type != 'zb'
+            and t.current_state = 'RUNNING'
+            and w.currentstate in ( 4, 10 )
+            and w.processinstid = t.processinstid
+	</sql>
+	<!-- 根据车型分组查询未启动和处理中的机车兑现单【在修机车选择控件】 -->
+	<sql id="findRdpGroupByTrain">
+	<![CDATA[
+		select t.train_type_shortname from 
+		(select * from jxgc_train_work_plan where WORK_PLAN_STATUS in ('#ONGOING#','#INITIALIZE#','#COMPLETE')) t
+		group by t.train_type_shortname
+	]]>
+	</sql>
+	<!-- 根据车型查询未启动和处理中的机车兑现单【在修机车选择控件】 -->
+	<sql id="findRdpByTrain">
+	<![CDATA[
+		select a.idx,
+			   a.TRAIN_TYPE_IDX,
+			   a.TRAIN_NO,
+			   a.TRAIN_TYPE_SHORTNAME,
+			   a.REPAIR_CLASS_IDX,
+			   a.REPAIR_CLASS_NAME,
+			   a.REPAIR_TIME_IDX,
+			   a.REPAIR_TIME_NAME,
+			   a.WORK_PLAN_STATUS,
+			   to_char(a.work_plan_time,'yyyyMMdd') as planDay 
+		from 
+		(select * from jxgc_train_work_plan where WORK_PLAN_STATUS in ('#ONGOING#','#INITIALIZE#','#COMPLETE')) a
+		where a.train_type_shortname = '#trainTypeShortName#'
+		order by a.WORK_PLAN_TIME desc
+	]]>
+	</sql>
+	<!-- 生成机车检修计划时生成不下车配件清单记录 -->
+	<sql id="insertInseparablParts">
+	<![CDATA[
+		INSERT INTO JXGC_Parts_Inseparabl_Record
+		            ( IDX,
+		              RDP_IDX,
+		              PARTS_TYPE_IDX,
+		              SPECIFICATION_MODEL,
+		              PARTS_NAME,
+		              PLACE,
+		              WORK_CARD_IDX)
+		       SELECT SYS_GUID(),
+		              D.RDP_IDX,
+		              A.PARTS_TYPE_IDX,
+		              B.SPECIFICATION_MODEL,
+		              B.PARTS_NAME,              
+		              A.PLACE,
+		              D.IDX
+		         FROM JXGC_PARTS_LIST A, PJWZ_PARTS_TYPE B, JXGC_WORK_SEQ C, JXGC_WORK_CARD D, JXGC_TRAIN_WORK_PLAN E
+		        WHERE A.PARTS_TYPE_IDX = B.IDX
+		          AND A.RELATION_IDX = C.IDX
+		          AND C.IDX = D.WORK_SEQ_CARD_IDX
+		          AND E.IDX = D.RDP_IDX
+		          AND B.RECORD_STATUS = 0
+		          AND C.RECORD_STATUS = 0
+		          AND D.RECORD_STATUS = 0
+		          AND E.RECORD_STATUS = 0
+		          AND E.IDX = '任务单id'
+		          AND A.TYPE = '在车配件'
+	]]>
+	</sql>
+	<!-- 生成机车检修计划时生成下车配件登记记录 -->
+	<sql id="insertUnloadParts">
+	<![CDATA[
+		INSERT INTO PJWZ_PARTS_UNLOAD_REGISTER
+		           (IDX,
+		            PARTS_TYPE_IDX,
+		            SPECIFICATION_MODEL,
+		            PARTS_NAME,
+		            UNLOAD_TRAINTYPE,
+		            UNLOAD_TRAINTYPE_IDX,
+		            UNLOAD_TRAINNO,
+		            UNLOAD_REPAIR_CLASS_IDX,
+		            UNLOAD_REPAIR_CLASS,
+		            UNLOAD_REPAIR_TIME_IDX,
+		            UNLOAD_REPAIR_TIME,
+		            UNLOAD_PLACE,
+		            STATUS,
+		            RECORD_STATUS,
+		            SITEID,
+		            CREATOR,
+		            CREATE_TIME,
+		            UPDATOR,
+		            UPDATE_TIME,
+		            IS_IN_RANGE,
+		            RDP_IDX,
+		            RDP_TYPE,
+		            WORK_CARD_IDX)
+		    SELECT  SYS_GUID(),
+		            A.PARTS_TYPE_IDX,
+		            B.SPECIFICATION_MODEL,
+		            B.PARTS_NAME,
+		            E.TRAIN_TYPE_SHORTNAME,
+		            E.TRAIN_TYPE_IDX,
+		            E.TRAIN_NO,
+		            E.REPAIR_CLASS_IDX,
+		            E.REPAIR_CLASS_NAME,
+		            E.REPAIR_TIME_IDX,
+		            E.REPAIR_TIME_NAME,              
+		            A.PLACE,
+		            '状态',
+		            0,
+		            '站点',
+		            '创建人',
+		            to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+		            '创建人',
+		            to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+		            '是',
+		            E.IDX,
+		            '机车',
+		            D.IDX
+		       FROM JXGC_PARTS_LIST A, PJWZ_PARTS_TYPE B, JXGC_WORK_SEQ C, JXGC_WORK_CARD D, JXGC_TRAIN_WORK_PLAN E
+		      WHERE A.PARTS_TYPE_IDX = B.IDX
+		        AND A.RELATION_IDX = C.IDX
+		        AND C.IDX = D.WORK_SEQ_CARD_IDX
+		        AND E.IDX = D.RDP_IDX
+		        AND B.RECORD_STATUS = 0
+		        AND C.RECORD_STATUS = 0
+		        AND D.RECORD_STATUS = 0
+		        AND E.RECORD_STATUS = 0
+		        AND E.IDX = '任务单id'
+		        AND A.TYPE = '下车配件'
+	]]>
+	</sql>
+	<!-- 生成机车检修计划时生成上车配件登记记录 -->
+	<sql id="insertFixParts">
+	<![CDATA[
+		INSERT INTO PJWZ_Parts_FIX_Register
+		           (IDX,
+		            RDP_IDX,
+		            RDP_TYPE,
+		            IS_IN_RANGE,
+		            PARTS_TYPE_IDX,
+		            SPECIFICATION_MODEL,
+		            PARTS_NAME,
+		            ABOARD_TRAINTYPE,
+		            ABOARD_TRAINTYPE_IDX,
+		            ABOARD_TRAINNO,
+		            ABOARD_REPAIR_CLASS_IDX,
+		            ABOARD_REPAIR_CLASS,
+		            ABOARD_REPAIR_TIME_IDX,
+		            ABOARD_REPAIR_TIME,
+		            ABOARD_PLACE,
+		            STATUS,
+		            RECORD_STATUS,
+		            SITEID,
+		            CREATOR,
+		            CREATE_TIME,
+		            UPDATOR,
+		            UPDATE_TIME,
+		            WORK_CARD_IDX)
+		    SELECT  SYS_GUID(),
+		            E.IDX,
+		            '机车',
+		            '是',
+		            A.PARTS_TYPE_IDX,
+		            B.SPECIFICATION_MODEL,
+		            B.PARTS_NAME,
+		            E.TRAIN_TYPE_SHORTNAME,
+		            E.TRAIN_TYPE_IDX,
+		            E.TRAIN_NO,
+		            E.REPAIR_CLASS_IDX,
+		            E.REPAIR_CLASS_NAME,
+		            E.REPAIR_TIME_IDX,
+		            E.REPAIR_TIME_NAME,              
+		            A.PLACE,
+		            '状态',
+		            0,
+		            '站点',
+		            '创建人',
+		            to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+		            '创建人',
+		            to_date('创建时间', 'yyyy-MM-dd HH24:mi:ss'),
+		            D.IDX
+		       FROM JXGC_PARTS_LIST A, PJWZ_PARTS_TYPE B, JXGC_WORK_SEQ C, JXGC_WORK_CARD D, JXGC_TRAIN_WORK_PLAN E
+		      WHERE A.PARTS_TYPE_IDX = B.IDX
+		        AND A.RELATION_IDX = C.IDX
+		        AND C.IDX = D.WORK_SEQ_CARD_IDX
+		        AND E.IDX = D.RDP_IDX
+		        AND B.RECORD_STATUS = 0
+		        AND C.RECORD_STATUS = 0
+		        AND D.RECORD_STATUS = 0
+		        AND E.RECORD_STATUS = 0
+		        AND E.IDX = '任务单id'
+		        AND A.TYPE = '上车配件'
+	]]>
+	</sql>
+	
+	<!-- 机车检修生产日报查询 -->
+	<sql id="searchTrainWorkPlanDailtReportInfo">
+	<![CDATA[
+		select t1.*
+  from (select a.idx,
+               a.train_type_shortname || ' | ' || a.train_no,
+               a.repair_class_name || ' ' || a.repair_time_name,
+               a.d_name,
+               a.delegate_d_name,
+               b.in_time,
+               a.begin_time,
+               (a.plan_end_time - a.plan_begin_time) + 1 planStateTime,
+               (case
+                 when (to_char(sysdate, 'yyyy-mm-dd') >
+                      to_char(a.end_time, 'yyyy-mm-dd')) then
+                  (a.end_time - a.begin_time) + 1
+                 else
+                  (sysdate - a.begin_time) + 1
+               end) as realStateTime,
+               a.train_no,
+               a.train_type_shortname,
+               a.repair_class_name,
+               a.repair_time_name,
+               a.plan_begin_time,
+               a.plan_end_time
+          from jxgc_train_work_plan a
+          left join 
+          (select * from ( SELECT T.*,ROW_NUMBER() OVER (PARTITION BY  T.train_no,T.train_type_shortname ORDER BY T.in_time desc)RV fROM twt_train_access_account T)  where RV=1) b
+          on a.train_no = b.train_no
+                                              and a.train_type_shortname =
+                                                  b.train_type_shortname
+         where a.work_plan_status != 'TERMINATED'
+         and a.work_plan_status != 'COMPLETE'
+       and a.record_status = 0
+         and to_char(a.plan_begin_time, 'yyyy-mm-dd') <= '#searchDate#'
+           and to_char(a.plan_end_time, 'yyyy-mm-dd') >= '#searchDate#'
+            or (to_char(a.begin_time, 'yyyy-mm-dd') >= '#searchDate#' and a.work_plan_status != 'TERMINATED' and a.record_status = 0 and a.work_plan_status != 'COMPLETE')
+                             and (to_char(sysdate, 'yyyy-mm-dd') <= '#searchDate#' or to_char(a.begin_time, 'yyyy-mm-dd') <= '#searchDate#' )
+            ) t1
+	]]>
+	</sql>
+	<!-- 机车检修生产日报查询 -->
+	<sql id="getTrainWorkPlanInfo">
+	<![CDATA[
+	Select idx,Train_Type_IDX,Train_No,Train_Type_ShortName,Repair_Class_IDX,
+            Repair_Class_Name, Repair_time_IDX, Repair_time_Name,
+           TO_CHAR(Plan_Begin_Time, 'YYYY-MM-DD HH24:MI') as "Plan_Begin_Time",
+           TO_CHAR(Plan_End_Time, 'YYYY-MM-DD HH24:MI') as "Plan_End_Time",
+           TO_CHAR(Begin_Time, 'YYYY-MM-DD HH24:MI') as "Begin_Time",
+           TO_CHAR(End_Time, 'YYYY-MM-DD HH24:MI') as "End_Time",
+           TO_CHAR(Work_Plan_Time,'YYYY-MM-DD HH24:MI') as "Work_Plan_Time",
+           D_ID, D_NAME, Delegate_D_ID, Delegate_D_Name,
+           Enforce_Plan_Detail_IDX
+           FROM JXGC_TRAIN_WORK_PLAN where RECORD_STATUS = 0
+     ]]>
+	</sql>
+	<!-- 机车检修生产日报查询 -->
+	<sql id="searchClassAndWorkPlan">
+	<![CDATA[
+	select rc.xc_id,rc.xc_name, nvl(t1.plan_count,0) as plan_count , nvl(t2.jcCount,0) as jcCount , nvl(t3.jgCount,0) as jgCount from j_jcgy_xc rc
+		left join (
+		     select p.repair_class_idx,p.repair_class_name,p.date_year,sum(p.plan_count) as plan_count from SCDD_TRAIN_YEAR_PLAN p where p.record_status = 0
+		     group by p.repair_class_idx,p.repair_class_name,p.date_year
+		) t1 on rc.xc_id = t1.repair_class_idx and t1.date_year = '#Year#'
+		left join (
+		     select wp.repair_class_idx , wp.repair_class_name ,to_char(wp.begin_time,'yyyy') as workYear,count(wp.idx) as jcCount   from JXGC_Train_Work_Plan wp 
+		    where wp.record_status = 0 and wp.begin_time is not null and wp.work_plan_status <> 'TERMINATED'
+		    group by wp.repair_class_idx , wp.repair_class_name ,to_char(wp.begin_time,'yyyy')
+		) t2 on rc.xc_id = t2.repair_class_idx and t2.workYear = '#Year#'
+		left join (
+		     select wp.repair_class_idx , wp.repair_class_name ,to_char(wp.begin_time,'yyyy') as workYear,count(wp.idx) as jgCount   from JXGC_Train_Work_Plan wp 
+		where wp.record_status = 0 and wp.begin_time is not null and wp.work_plan_status = 'COMPLETE'
+		group by wp.repair_class_idx , wp.repair_class_name ,to_char(wp.begin_time,'yyyy')
+		) t3 on rc.xc_id = t3.repair_class_idx and t3.workYear = '#Year#'
+     ]]>
+	</sql>
+		<!-- 机车检修生产动态生成-->
+	<sql id="generateTheDynamic">
+	<![CDATA[
+		select SYS_GUID (), t1.*
+ 		from (select a.idx, a.train_type_idx,
+               a.train_type_shortname, 
+               a.train_no,                        
+               a.repair_class_idx,
+               a.repair_class_name, 
+               a.repair_time_idx,
+               a.repair_time_name,
+               a.d_id,
+               a.d_name, 
+               a.delegate_d_id,
+               a.delegate_d_name,
+               a.begin_time,
+               b.in_time,
+               a.plan_end_time,              
+               a.REMARKS,
+               a.siteid
+          from jxgc_train_work_plan a
+           left join (select * from ( SELECT T.*,ROW_NUMBER() OVER (PARTITION BY  T.train_no,T.train_type_shortname ORDER BY T.in_time)RV fROM twt_train_access_account T)  where RV=1) b  on a.train_no = b.train_no
+                                              and a.train_type_shortname = b.train_type_shortname
+         where a.work_plan_status != 'TERMINATED'
+         and a.work_plan_status != 'COMPLETE'
+       and a.record_status = 0
+         and to_char(a.plan_begin_time, 'yyyy-mm-dd') <= '#searchDate#'
+           and to_char(a.plan_end_time, 'yyyy-mm-dd') >= '#searchDate#'
+            or (to_char(a.begin_time, 'yyyy-mm-dd') >= '#searchDate#' and a.work_plan_status != 'TERMINATED' and a.record_status = 0 and a.work_plan_status != 'COMPLETE')
+                             and (to_char(sysdate, 'yyyy-mm-dd') <= '#searchDate#' or to_char(a.begin_time, 'yyyy-mm-dd') <=  '#searchDate#' )
+            ) t1
+     ]]>
+	</sql>
+		<!-- 修峻待离段机车信息生成-->
+	<sql id="generateTheWaitoutTrain">
+	<![CDATA[
+		insert into JXGC_Work_plan_wartout_train
+			  (idx,
+			   Work_Plan_IDX,
+			   train_type_idx,
+			   train_type_shortname,
+			   train_no,
+			   repair_class_IDX,
+			   repair_class_name,
+			   DELEGATE_D_ID,
+			   delegate_d_name,
+			   END_TIME,
+			   REMARKS,
+			   siteID,
+			   in_time,
+			   Save_Status,
+			   Plan_Generate_Date,
+			   record_status,
+			   creator,
+			   create_time,
+			   updator,
+			   update_time)
+			  select SYS_GUID(),
+			         c.*,
+			         b.in_time,
+			         0,
+			         to_char(sysdate, 'yyyy-mm-dd'),
+			         0,
+			         '#creator#',
+			         sysdate,
+			         '#creator#',
+			         sysdate
+			    from (SELECT idx,
+			                 train_type_idx,
+			                 train_type_shortname,
+			                 train_no,
+			                 repair_class_IDX,
+			                 repair_class_name,
+			                 DELEGATE_D_ID,
+			                 delegate_d_name,
+			                 END_TIME,
+			                 REMARKS,
+			                 siteid
+			            FROM (SELECT temp.*,
+			                         ROW_NUMBER() OVER(PARTITION BY temp.trainTypeAndNo ORDER BY temp.create_time desc) RV
+			                    from (select a.train_type_shortname || '-' || a.train_no as trainTypeAndNo,
+			                                 a.idx,
+			                                 a.repair_class_IDX,
+			                                 a.repair_class_name,
+			                                 A.DELEGATE_D_ID,
+			                                 a.delegate_d_name,
+			                                 a.create_time,
+			                                 a.work_plan_status,
+			                                 a.END_TIME,
+			                                 a.REMARKS,
+			                                 a.train_type_idx,
+			                                 a.train_type_shortname,
+			                                 a.train_no,
+			                                 a.siteid
+			                            from jxgc_train_work_plan a
+			                           where a.train_type_idx || '-' || a.train_no in
+			                                 (select t.train_type_idx || '-' || t.train_no as tn
+			                                    from twt_train_access_account t
+			                                   where t.out_time is null)) temp)
+			           where RV = 1
+			             and work_plan_status = 'COMPLETE') c
+			    left join (select train_type_idx, train_no, in_time
+			                 from (SELECT T.*,
+			                              ROW_NUMBER() OVER(PARTITION BY T.train_no, T.train_type_shortname ORDER BY T.in_time desc) RV
+			                         fROM twt_train_access_account T)
+			                where RV = 1
+			                  and out_time is null) b on b.train_type_idx is not null
+			                                         and b.train_no is not null
+			                                         and c.train_type_idx =
+			                                             b.train_type_idx
+			                                         and c.train_no = b.train_no
+			                                         and c.END_TIME > b.in_time
+
+     ]]>
+	</sql>
+<!--                 where NOT EXISTS(select Work_Plan_IDX from JXGC_Work_plan_wartout_train where record_status = 0 and c.idx = Work_Plan_IDX and Plan_Generate_Date = to_char(sysdate, 'yyyy-mm-dd'))-->		
+		<!-- 重要信息动态生成-->
+	<sql id="generateTheExpandInformation">
+	<![CDATA[
+		INSERT INTO jxgc_expand_information
+						  (IDX,
+						   DICTID,
+						   DICTNAME,
+						   Save_Status,
+						   siteID,
+						   Plan_Generate_Date,
+						   record_status,
+						   creator,
+						   create_time,
+						   updator,
+						   update_time)
+						  select SYS_GUID(),
+						         t.dictid,
+						         t.dictname,
+						         0,
+						         '#siteID#',
+						         to_char(sysdate, 'yyyy-mm-dd'),
+						         0,
+						         '#creator#',
+						         sysdate,
+						         '#creator#',
+						         sysdate
+						    from EOS_DICT_ENTRY t
+						   where t.dicttypeid = '#dicttypeid#'
+						     and t.status = 1
+     ]]>
+	</sql>
+		
+</SqlMap>

@@ -1,0 +1,15 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="com.yunda.frame.common.JXSystemProperties" %>
+<%@ page import="com.yunda.jx.component.manager.OmOrganizationSelectManager" %>
+<%@ page import="com.yunda.frame.yhgl.entity.OmOrganization"%>
+<%
+	String systemOrgcode = JXSystemProperties.OVERSEA_ORGCODE;
+	OmOrganization systemOrg = OmOrganizationSelectManager.getOrgByOrgcode(systemOrgcode);
+ %>
+<script language="javascript">
+	var systemOrgcode = "<%=systemOrgcode%>";
+	var systemOrgname = "<%=systemOrg.getOrgname()%>"; 
+	var systemOrgid = "<%=systemOrg.getOrgid()%>";
+	var systemOrgseq = "<%=systemOrg.getOrgseq() %>";
+</script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmOrganizationCustom.js"></script>

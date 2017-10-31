@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 机车质量子系统-机车信息 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+
+	<!-- 根据车型id和车号查找机车基本信息，用于台位图中查看指定机车履历的基本信息 -->
+	<sql id="findByTypeAndNo">
+	<![CDATA[
+	select 	t.idx,
+	       	t.train_type_shortname,t.train_no,train_state,
+	       	t.train_use,psdw.orgname,zpdw.orgname,
+	       	ypsdw.orgname,make_factory_name,leave_date,
+	       	remarks,u.t_use_name,train_type_idx
+	from Jczl_Train t,Om_Organization psdw, Om_Organization zpdw,
+	     	Om_Organization ypsdw, j_jcgy_train_use u 
+	where t.hold_OrgId = psdw.orgid(+) and t.used_OrgId = zpdw.orgid(+)
+	      	and t.old_Hold_OrgId = ypsdw.orgid(+)
+	      	and t.train_Use = u.t_use_id(+) 
+	      	and t.train_type_idx='${trainTypeIdx}' and t.train_no='${trainNo}'
+	]]>
+	</sql>
+	
+	<!-- 根据车型id查找机车入厂细录,是否已存在模板,如果存在,则不允许添加 -->
+	<sql id="findByTrainType">
+	<![CDATA[
+		from JczlReCheck where trainTypeIdx = ? and repairClassIdx = ? and recordStatus = 0
+	]]>
+	</sql>
+	<!-- 查询属于某个入厂细录明细的所有子明细中最大的排序号 -->
+	<sql id="findMaxOrderNumber">
+	<![CDATA[
+		from JczlReCheckDetail where jczlReCheckIdx = ? and parentIdx = ? and orderNumber is not null and recordStatus = 0 order by orderNumber desc
+	]]>
+	</sql>
+	
+	<!-- 根据车型id查找机车入厂细录,是否已存在模板,如果存在,则不允许添加 -->
+	<sql id="isExistsChildNode">
+	<![CDATA[
+		from JczlReCheckDetail where jczlReCheckIdx = ? and parentIdx = ? and recordStatus = 0
+	]]>
+	</sql>
+</SqlMap>

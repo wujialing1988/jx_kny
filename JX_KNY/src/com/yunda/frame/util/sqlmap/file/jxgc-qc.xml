@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 检修过程 质量检查管理 -->
+
+	<!-- 根据作业工单idx获取需要指派的质量检查项列表 -->
+	<sql id="getIsAssignCheckItems">
+		<![CDATA[
+			SELECT 
+				   DISTINCT(A.CHECK_ITEM_CODE) CHECKITEMCODE, 
+				   A.CHECK_ITEM_NAME CHECKITEMNAME 
+			  FROM JXGC_QC_RESULT A
+			 WHERE A.IS_ASSIGN = #CONST_INT_IS_ASSIGN_Y# 
+			   AND A.STATUS = 0
+			   AND A.WORK_CARD_IDX IN (#WORKCARDIDXS#)
+		]]>
+	</sql>
+	<!-- 保存指派的质量检查参与者 -->
+	<sql id="saveIsAssignParticiant">
+		<![CDATA[
+			INSERT INTO JXGC_QC_PARTICIPANT (IDX, 
+											 RDP_IDX, 
+											 WORK_CARD_IDX, 
+											 CHECK_ITEM_CODE,
+											 CHECK_PERSON_ID, 
+											 CHECK_PERSON_NAME,
+			 								 RECORD_STATUS, 
+			 								 SITEID, 
+			 								 CREATOR, 
+			 								 CREATE_TIME, 
+			 								 UPDATOR, 
+			 								 UPDATE_TIME)
+			SELECT SYS_GUID(), 
+			       A.RDP_IDX, 
+			       A.IDX, 
+			       B.CHECK_ITEM_CODE, 
+			       '#CHECKPERSONID#', 
+			       '#CHECKPERSONNAME#', 
+				   0, 
+				   '#SITEID#', 
+				   #OPERATORID#, 
+				   TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'), 
+				   #OPERATORID#, 
+				   TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss')
+			FROM 
+				  (SELECT RDP_IDX, IDX FROM JXGC_WORK_CARD WHERE IDX = '#WORKCARDIDX#' AND RECORD_STATUS = 0) A,
+				  (SELECT WORK_CARD_IDX, CHECK_ITEM_CODE 
+			 		FROM JXGC_QC_RESULT WHERE IS_ASSIGN = #CONST_INT_IS_ASSIGN_Y# AND STATUS = #STATUS_WKF# 
+			  		AND RECORD_STATUS = 0 AND CHECK_ITEM_CODE = '#CHECKITEMCODE#' AND WORK_CARD_IDX = '#WORKCARDIDX#') B
+			WHERE  A.IDX = B.WORK_CARD_IDX
+		]]>
+	</sql>	
+	<!-- 保存非指派的质量检查参与者 -->
+	<sql id="saveNotAssignParticiant">
+		<![CDATA[
+			INSERT INTO JXGC_QC_PARTICIPANT (IDX, 
+											 RDP_IDX, 
+											 WORK_CARD_IDX, 
+											 CHECK_ITEM_CODE, 
+											 CHECK_PERSON_ID, 
+											 CHECK_PERSON_NAME,
+			 								 RECORD_STATUS, 
+			 								 SITEID, 
+			 								 CREATOR, 
+			 								 CREATE_TIME, 
+			 								 UPDATOR, 
+			 								 UPDATE_TIME)
+			SELECT SYS_GUID(), 
+			       A.RDP_IDX, 
+			       A.IDX, 
+			       B.CHECK_ITEM_CODE, 
+			       B.CHECK_EMPID, 
+			       B.CHECK_EMPNAME, 
+			       0, 
+			       '#SITEID#', 
+			       #OPERATORID#, 
+			       TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'), 
+			       #OPERATORID#, 
+			       TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss')
+			FROM 
+				  (SELECT RDP_IDX, IDX FROM JXGC_WORK_CARD WHERE IDX = '#WORKCARDIDX#' AND RECORD_STATUS = 0) A, 
+				  (SELECT A.WORK_CARD_IDX, A.CHECK_ITEM_CODE, B.CHECK_EMPID, B.CHECK_EMPNAME
+			  		FROM 
+			  			(SELECT WORK_CARD_IDX, CHECK_ITEM_CODE FROM JXGC_QC_RESULT WHERE IS_ASSIGN = #CONST_INT_IS_ASSIGN_N# 
+			   				AND STATUS = #STATUS_WKF# AND RECORD_STATUS = 0 AND WORK_CARD_IDX = '#WORKCARDIDX#') A
+			  			INNER JOIN  
+			  			V_JXGC_JCQC_QC_EMPANDORG B
+			  			ON A.CHECK_ITEM_CODE = B.QC_ITEM_NO AND B.CHECK_ORGID = #CHECKORGID#) B
+			WHERE A.IDX = B.WORK_CARD_IDX
+		]]>
+	</sql>
+	<!-- 查询当前人员的质量检查项列表 -->
+	<sql id="getQCList">
+		<![CDATA[
+			SELECT 
+				DISTINCT A.CHECK_ITEM_CODE AS "checkItemCode", 
+				D.IDX||A.CHECK_ITEM_CODE AS "idx",
+				A.CHECK_ITEM_NAME AS "workItemName", 
+				C.TRAIN_TYPE_SHORTNAME AS "trainType", 
+				C.TRAIN_NO AS "trainNo", 
+				C.REPAIR_CLASS_NAME AS "repairClassName", 
+				C.REPAIR_TIME_NAME AS "repairtimeName", 
+				D.WORK_CARD_NAME AS "workCardName", 
+				D.WORK_STATION_BELONG_TEAM_NAME AS "repairTeam",
+				D.IDX AS "sourceIdx",
+				C.IDX AS "rdpIdx"			 
+		]]>
+	</sql>
+	<!-- 查询在运行兑现单用于base_combo查询  -->
+	<sql id='findRdpForBaseCombo'>
+		SELECT 
+			   DISTINCT R.IDX AS "idx", 
+			   R.TRAIN_TYPE_SHORTNAME||' '||R.TRAIN_NO||' '||R.REPAIR_CLASS_NAME||' '||R.REPAIR_TIME_NAME AS "rdpText"
+		FROM 
+			  (SELECT WORK_CARD_IDX, CHECK_ITEM_CODE FROM JXGC_QC_RESULT 
+		 	   WHERE STATUS = #STATUS_DCL# AND RECORD_STATUS = 0 AND CHECK_WAY = #CHECKWAY#) A,
+			  (SELECT WORK_CARD_IDX, CHECK_ITEM_CODE, RDP_IDX 
+		 	   FROM JXGC_QC_PARTICIPANT WHERE CHECK_PERSON_ID = #CURRENTEMPID# AND RECORD_STATUS = 0) B, 
+			  JXGC_TRAIN_WORK_PLAN R 
+		WHERE A.WORK_CARD_IDX = B.WORK_CARD_IDX 
+		  AND A.CHECK_ITEM_CODE = B.CHECK_ITEM_CODE 
+		  AND R.IDX = B.RDP_IDX 
+	</sql>
+	<!-- 查询当前工单的质量检查项列表 -->
+	<sql id="findQCResultList">
+		<![CDATA[
+			SELECT 
+				DISTINCT A.CHECK_ITEM_CODE AS "idx", 
+				A.CHECK_ITEM_NAME AS "checkItemName", 
+				A.CHECK_WAY AS "checkWay",
+				A.QC_EMPNAME AS "qcEmpName",
+				A.QC_TIME AS "qcTime",
+				A.REMARKS AS "remarks",
+				A.STATUS AS "status"
+			 FROM 
+				(SELECT CHECK_ITEM_CODE, CHECK_ITEM_NAME, CHECK_WAY, QC_EMPNAME, QC_TIME, REMARKS, STATUS
+			 	 FROM JXGC_QC_RESULT WHERE RECORD_STATUS = 0 AND WORK_CARD_IDX = '#workCardIDX#') A
+		]]>
+	</sql>
+	<!-- 批量修改质检结果的状态 -->
+	<sql id="updateFinishQCResult">
+		<![CDATA[
+		   UPDATE JXGC_QC_RESULT 
+			  SET STATUS = #STATUS_YCL#, 
+			      QC_EMPID = #empid#, 
+			      QC_EMPNAME = '#empname#', 
+			      QC_TIME = #qcTime#, 
+			      REMARKS = '#remarks#', 
+			      UPDATOR = #updator#, 
+			      UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss')      
+      		WHERE STATUS = #STATUS_DCL# 
+      		  AND RECORD_STATUS = 0  
+      		  AND CHECK_WAY = #CONST_INT_CHECK_WAY# 
+      		  AND WORK_CARD_IDX||CHECK_ITEM_CODE IN (#workCardIDXAndCheckCode#) 
+		]]>
+	</sql>
+	<!-- 查询当前人员的所有质量检查项列表 -->
+	<sql id="getAllQCList">
+		<![CDATA[
+			SELECT 
+				A.IDX			 
+		]]>
+	</sql>
+	<!-- 查询当前人员的质量检查项列表from部分 -->
+	<sql id="getQCListFrom">
+		<![CDATA[			
+			 FROM 
+			(SELECT IDX, WORK_CARD_IDX, CHECK_ITEM_CODE, CHECK_ITEM_NAME 
+			 FROM JXGC_QC_RESULT WHERE STATUS = #STATUS_DCL# AND RECORD_STATUS = 0 #CHECKWAY#) A,
+			(SELECT WORK_CARD_IDX, CHECK_ITEM_CODE, RDP_IDX 
+			 FROM JXGC_QC_PARTICIPANT WHERE CHECK_PERSON_ID = #CURRENTEMPID# AND RECORD_STATUS = 0) B,
+			(SELECT IDX, TRAIN_TYPE_SHORTNAME, TRAIN_NO, REPAIR_CLASS_NAME, REPAIR_TIME_NAME ,T_VEHICLE_TYPE
+			 FROM JXGC_TRAIN_WORK_PLAN WHERE RECORD_STATUS = 0 ) C,
+       		(SELECT IDX, WORK_CARD_NAME, WORK_STATION_BELONG_TEAM_NAME 
+       		 FROM JXGC_WORK_CARD WHERE #STATUS_FINISHED# AND RECORD_STATUS = 0) D
+			WHERE A.WORK_CARD_IDX = B.WORK_CARD_IDX 
+			 AND  A.CHECK_ITEM_CODE = B.CHECK_ITEM_CODE
+			 AND  A.WORK_CARD_IDX = D.IDX 
+			 AND  B.RDP_IDX = C.IDX
+		]]>
+	</sql>
+	<!-- 根据查询条件全部修改质检结果的状态 -->
+	<sql id="updateAllFinishQCResult">
+		<![CDATA[
+		   update JXGC_QC_RESULT 
+			  SET STATUS = #STATUS_YCL#, 
+				  QC_EMPID = #empid#, 
+				  QC_EMPNAME = '#empname#', 
+				  QC_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'), 
+				  REMARKS = '#remarks#', 
+				  UPDATOR = #updator#, 
+				  UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss')      
+      		WHERE STATUS = #STATUS_DCL# 
+		      AND RECORD_STATUS = 0  
+		      AND CHECK_WAY = #CONST_INT_CHECK_WAY_BJ# 
+		      AND #idx# 
+		]]>
+	</sql>
+	<!-- 根据兑现单idx终止质量检验结果 -->
+	<sql id="updateTerminateQCResult">
+		<![CDATA[
+			UPDATE JXGC_QC_RESULT 
+			   SET STATUS = #STATUS_YZZ# , 
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator#
+			WHERE WORK_CARD_IDX IN 
+			(SELECT IDX FROM JXGC_WORK_CARD WHERE RECORD_STATUS = 0 AND RDP_IDX = '#rdpIDX#' AND STATUS NOT IN ('#STATUS_HANDLED#','#STATUS_FINISHED#'))			
+		]]>
+	</sql>
+	<!-- 根据兑现单idx终止未处理的质量检验结果，在机车作业流程完成时调用 -->
+	<sql id="updateTerminateWclQCResult">
+		<![CDATA[
+			UPDATE JXGC_QC_RESULT 
+			   SET STATUS = #STATUS_YZZ# , 
+			       UPDATOR = #updator#, 
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss')
+			 WHERE WORK_CARD_IDX IN 
+			       (SELECT IDX FROM JXGC_WORK_CARD WHERE RECORD_STATUS = 0 AND RDP_IDX = '#rdpIDX#')
+			   AND STATUS != #STATUS_YCL# 
+			   AND RECORD_STATUS = 0			
+		]]>
+	</sql>
+	<!-- 查询节点下关联工单的质量检查项,可扩展查询字段 -->
+	<sql id="getQCListByNode">
+		<![CDATA[
+     	   SELECT IDX
+		     FROM JXGC_QC_RESULT
+		    WHERE RECORD_STATUS = 0 AND WORK_CARD_IDX IN
+		   (SELECT IDX FROM JXGC_WORK_CARD WHERE RECORD_STATUS = 0 AND NODE_CASE_IDX IN #nodeIDXS#)		     
+		]]>
+	</sql>
+	<!-- 批量逻辑删除质检指派人 -->
+	<sql id="logicDelParticipant">
+		<![CDATA[
+		   UPDATE JXGC_QC_PARTICIPANT 
+			  SET RECORD_STATUS = 1     
+      		WHERE WORK_CARD_IDX||CHECK_ITEM_CODE IN (#workCardIDXAndCheckCode#) 
+		]]>
+	</sql>
+	<!-- 查询当前的作业工单IDX和质检项编号组合 -->
+	<sql id="getWorkCardIDXAndCode">
+		<![CDATA[
+			SELECT D.IDX||A.CHECK_ITEM_CODE 
+		]]>
+	</sql>
+	<!-- 查询当前的当前人员质检项的from语句 -->
+	<sql id="getRdpQcIdxFromList">
+		FROM 
+			(SELECT IDX, WORK_CARD_IDX, CHECK_ITEM_CODE, CHECK_ITEM_NAME 
+			 FROM JXGC_QC_RESULT WHERE STATUS = #STATUS_DCL# AND RECORD_STATUS = 0 ) A,
+			(SELECT WORK_CARD_IDX, CHECK_ITEM_CODE 
+			 FROM JXGC_QC_PARTICIPANT WHERE CHECK_PERSON_ID = #CURRENTEMPID# AND RECORD_STATUS = 0) B,
+       		(SELECT IDX, WORK_CARD_NAME, RDP_IDX, Repair_Activity_IDX
+       		 FROM JXGC_WORK_CARD WHERE #STATUS_FINISHED# AND RECORD_STATUS = 0 and Repair_Activity_IDX is not null) D
+			WHERE A.WORK_CARD_IDX = B.WORK_CARD_IDX 
+			 AND  A.CHECK_ITEM_CODE = B.CHECK_ITEM_CODE
+			 AND  A.WORK_CARD_IDX = D.IDX 
+  	</sql>
+	<sql id="getRdpQcCountList">
+		SELECT A.CHECK_ITEM_CODE, A.CHECK_ITEM_NAME, COUNT(A.CHECK_ITEM_CODE) FROM  
+			  (SELECT WORK_CARD_IDX, CHECK_ITEM_CODE, CHECK_ITEM_NAME FROM JXGC_QC_RESULT 
+		 	   WHERE STATUS = #STATUS_DCL# AND RECORD_STATUS = 0  ) A,
+			   (SELECT IDX, Rdp_IDX, Repair_Activity_IDX FROM JXGC_Work_Card 
+		 	   WHERE  RECORD_STATUS = 0 and #STATUS_FINISHED# ) B 
+		 WHERE A.WORK_CARD_IDX = B.IDX  
+		 AND A.WORK_CARD_IDX || A.CHECK_ITEM_CODE IN (SELECT WORK_CARD_IDX || CHECK_ITEM_CODE
+		 	   FROM JXGC_QC_PARTICIPANT WHERE CHECK_PERSON_ID = #CURRENTEMPID# AND RECORD_STATUS = 0)  
+         AND B.RDP_IDX = '#RDPIDX#'  and #RepairActivityIDX#
+         GROUP BY A.CHECK_ITEM_CODE, A.CHECK_ITEM_NAME
+  	</sql>
+  	
+  	<!-- 查询当前人员的rdpidx -->
+	<sql id="getRdpIdxList">
+		<![CDATA[
+			SELECT 	
+				RDP_IDX	 		 
+		]]>
+	</sql>
+  	<!-- 查询当前人员的Repair_Activity_IDX集合 -->
+	<sql id="getRepairActivityIDXList">
+		<![CDATA[
+			SELECT 	
+				Repair_Activity_IDX	 		 
+		]]>
+	</sql>
+  	<!-- 查询当前人员的可检测项的记录卡集合 -->
+	<sql id="getWorkCardIDXList">
+		<![CDATA[
+			SELECT 	
+				WORK_CARD_IDX, CHECK_ITEM_CODE 		 
+		]]>
+	</sql>
+</SqlMap>

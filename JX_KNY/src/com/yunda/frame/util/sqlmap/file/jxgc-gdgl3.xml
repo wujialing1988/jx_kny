@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 作业工单查询 SELECT部份（作业计划编辑查询） -->
+	<sql id="find_work_select">
+		
+		select  t.idx as "idx",
+                t.Work_Card_Code  as "workCardCode",
+                t.node_case_name as "nodeCaseName",
+                t.work_card_name as"workCardName",
+                t.fixplace_fullname as "fixPlaceFullName",
+                t.status as "status",
+                t.extension_class as "extensionClass",
+                a.activity_name as "repairActivityName" 
+		
+	</sql>
+	
+	<!-- 查询作业计划编辑可以删除的作业工单 -->
+	<sql id='findCanDeleteWork'>
+		select c.idx from jxgc_work_card c where c.idx in ('作业工单主键') and c.status not in ('处理中', '完成')
+	</sql>
+	
+	<!-- 查询可完工工单 -->
+	<sql id="filterWork">
+		select t.idx,(
+         			select count(1) as xcount from jxgc_work_task tk where tk.status = '待领取'
+                    and tk.work_card_idx=t.idx and tk.record_status = 0
+                ) , (
+         			select count(1) as ycount from jxgc_work_task tk, JXGC_Detect_Result r where r.work_task_idx = tk.idx
+                     and tk.work_card_idx = t.idx
+                     and tk.status = '待领取'
+                     and r.isnotblank = 0 and r.detect_result is null and r.record_status = 0 and tk.record_status = 0
+              	), (
+         			select count(1) as zcount from JXGC_Work_Step_Result r, jxgc_work_task tk where tk.work_step_idx = r.work_step_idx 
+         			and tk.status = '待领取'
+                    and tk.work_card_idx = t.idx and r.is_default=1 and r.record_status = 0 and tk.record_status = 0
+                )
+            from
+                jxgc_work_card t  where t.idx in(工单主键 )
+	</sql>
+	<!-- 查询所有在运行中的流程工单 -->
+	<sql id="findAllTaskOfRuning_select">
+		select w.activityinstid as "idx",
+	 		t.train_type as "trainType",
+	  		t.train_no as "trainNo",
+	   		t.repair_class_name as "repairClassName",
+	    	t.repair_time_name as "repairtimeName",
+	    	w.workitemname as "workItemName",
+	     	w.partiname as "participantStr",
+	      	t.task_depict as "taskDepict",
+	       	t.token as "token",
+	       	t.nameplate_no as "nameplateNo",
+	       	t.specification_model as "specificationModel"
+
+	</sql>
+	<!-- 查询所有在运行中的流程工单 -->
+	<sql id="findAllTaskOfRuning_from">
+		from jxgc_process_task t ,
+			(select t.activityinstid,t.processinstid, t.workitemname,
+				 to_char(wm_concat(t.partiname)) partiname 
+			 from wfworkitem t where t.currentstate in (4, 10)
+	 		 group by t.activityinstid, t.processinstid, t.workitemname) w	 		 
+		 where 1=1 and w.processinstid = t.processinstid and t.record_status = 0
+		 and not exists (select 1 from jxgc_zb_rdp where idx = t.rdp_idx 
+		 and bill_status = 'ONGOING' and record_status = 0)
+	</sql>
+</SqlMap>

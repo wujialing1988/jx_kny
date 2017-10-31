@@ -1,0 +1,1 @@
+alter table JXPZ_Attachment_Manage add REAL_PATH varchar(500);

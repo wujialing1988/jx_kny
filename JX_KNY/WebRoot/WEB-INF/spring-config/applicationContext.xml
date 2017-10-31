@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-autowire="autodetect">
+
+	<!-- start 数据源 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:dataSource.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+    <!-- Druid数据源
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"/> -->
+	<!-- 使用hibernate官方推荐的c3p0数据源，性能更好 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClassName}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="minPoolSize" value="5"/>
+		<property name="maxPoolSize" value="200"/>
+		<property name="maxIdleTime" value="1800"/>
+		<property name="acquireIncrement" value="5"/>
+		<property name="maxStatements" value="0"/>
+		<property name="initialPoolSize" value="5"/>
+		<property name="idleConnectionTestPeriod" value="1800"/>
+		<property name="acquireRetryAttempts" value="30"/>
+		<property name="breakAfterAcquireFailure" value="true"/>
+		<property name="testConnectionOnCheckout" value="false"/>
+	</bean>
+	<!-- end 数据源 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<!-- Hibernate映射文件 -->
+		<property name="mappingLocations">
+			<list>
+				<value>
+					classpath:com/yunda/frame/yhgl/entity/*.hbm.xml
+				</value>
+				<value>
+					classpath:com/yunda/flow/*/entity/*.hbm.xml
+				</value>
+			</list>
+		</property>
+        <!-- 基于包扫描包含注解信息的实体类  -->
+        <property name="packagesToScan">
+            <list>
+                <value>com.yunda.</value>
+            </list>
+        </property>		
+		<!-- Hibernate配置属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					${hibernate.dialect}
+				</prop>
+				<!-- 为true表示将hibernate的sql语句显示打印在控制台 -->
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- 为true表示将hibernate的sql语句格式化排版打印在控制台 -->
+				<prop key="hibernate.format_sql">false</prop>
+                <!-- 为true表示hibernate开启二级缓存 -->
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <!-- 为true表示hibernate开启查询缓存 -->
+                <prop key="hibernate.cache.use_query_cache">true</prop>				
+                <!-- 表示hibernate缓存的插件使用Ehcache，并且是单例模式 -->
+                <!-- <prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop>-->
+        		<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletonEhCacheProvider</prop>
+		  
+			</props>
+		</property>
+		<property name="useTransactionAwareDataSource" value="true"></property>
+	</bean>	
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="logicDelete*" propagation="REQUIRED" />
+			<tx:method name="startUp" propagation="REQUIRED" />
+			<tx:method name="giveUp" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="confirm*" propagation="REQUIRED" />
+			<tx:method name="finish*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="serviceOperation"
+			expression="execution(* com.yunda..*Manager.*(..))" />
+		<aop:advisor pointcut-ref="serviceOperation"
+			advice-ref="txAdvice" />
+	</aop:config>
+	
+	<!-- start ibatis -->
+	<bean id="sqlMapTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient"/>
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="/WEB-INF/ibatis-config/sql-map-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="useTransactionAwareDataSource" value="true"></property>
+	</bean>
+	<!-- end ibatis -->
+	
+		<!-- spring线程池 -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 线程池维护线程的最小数量 -->
+		<property name="corePoolSize" value="5" />
+		<!-- 允许空闲时间 -->
+		<property name="keepAliveSeconds" value="200" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name="maxPoolSize" value="10" />
+		<!-- 缓存队列 -->
+		<property name="queueCapacity" value="20" />
+		<!-- 对拒绝的task的处理策略 -->
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+
+	<bean id="baseManager" abstract="true" class="com.yunda.base.BaseManager" />
+		
+	<bean id="oracleLobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler" />
+
+	<bean id="systemInit" class="com.yunda.SystemInit"></bean>
+	
+    <!-- 开启注解配置声明式事务，proxy-target-class="true" 表示统一采用以继承方式（接口方式会失败）实现代理-->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>	
+	<!-- 对指定包中的所有类进行扫描，完成Bean创建和自动依赖注入的功能-->
+    <context:component-scan base-package="com.yunda.*">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    
+	<!-- <import resource="applicationContext-manager-train.xml" />  -->
+	<!-- <import resource="applicationContext-manager-plan.xml" />  -->
+	<import resource="applicationContext-manager-system.xml" />
+	<import resource="applicationContext-manager-quartz.xml" />
+	<import resource="applicationContext-manager.xml" />
+	<!-- <import resource="applicationContext-security.xml" /> -->
+
+</beans>

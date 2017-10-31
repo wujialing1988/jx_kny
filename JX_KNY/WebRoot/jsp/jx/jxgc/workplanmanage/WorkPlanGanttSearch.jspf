@@ -1,0 +1,42 @@
+<%@include file="/jsp/jx/include/EdoProject.jspf" %>
+<%@include file="/frame/jspf/RowEditorGrid.jspf" %>
+<%@page contentType="text/html; charset=UTF-8"%>
+<%@page import="java.net.URLDecoder"%>
+<%@page import="com.yunda.frame.util.StringUtil" %>
+<%@page import="com.yunda.jx.jxgc.processdef.entity.JobProcessNodeDef" %>
+<%@page import="com.yunda.jx.jxgc.workplanmanage.manager.WorkPlanGanttManager" %>
+<%@page import="com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlan" %>
+<script language="javascript">
+var CONST_INT_IS_LEAF_YES = <%=JobProcessNodeDef.CONST_INT_IS_LEAF_YES%>;
+var CONST_INT_IS_LEAF_NO = <%=JobProcessNodeDef.CONST_INT_IS_LEAF_NO%>;
+			
+/* 作业计划状态-未启动 */
+var WORKPLAN_STATUS_NEW = "<%=TrainWorkPlan.STATUS_NEW%>";
+/* 作业计划状态-处理中 */
+var WORKPLAN_STATUS_HANDLING = "<%=TrainWorkPlan.STATUS_HANDLING%>";
+/* 作业计划状态-已处理 */
+var WORKPLAN_STATUS_HANDLED = "<%=TrainWorkPlan.STATUS_HANDLED%>";
+/* 作业计划状态-终止 */
+var WORKPLAN_STATUS_NULLIFY = "<%=TrainWorkPlan.STATUS_NULLIFY%>";
+		    
+/** 甘特图上任务类型 */
+var NODETYPE = "<%=WorkPlanGanttManager.NODETYPE%>";    
+var PROCESSTYPE = "<%=WorkPlanGanttManager.PROCESSTYPE%>";
+
+/** 单个节点派工的全局变量-start */
+var workStationIDX = "";//工位主键
+var nodeIDX = "";//工艺节点主键
+var nodeCaseIDX = "";//工艺节点实例主键
+var cascadingIDX = "";//流水线排程主键
+var repairLinePlantId = '';//流水线所属车间主键
+var dataParam = {};//全局数据集合
+var nodeCaseName = "";//工艺节点实例名称
+/** 单个节点派工的全局变量-end */
+
+Ext.onReady(function(){	
+Ext.namespace('TrainWorkPlanGanttSearch'); 
+	TrainWorkPlanGanttSearch.workPlanIDX = '';		
+});		
+</script>		
+			
+<%@include file="/jsp/jx/jxgc/workplanmanage/NodeAndWorkCardEditSearch.jspf" %>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 流水线-工位使用质量技术单查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>	
+	<!-- 查询质量检查信息 -->
+	<sql id="findWorkTaskPerson">
+		<![CDATA[
+			SELECT Q.IDX "idx",
+				   Q.RELATION_IDX "relationIDX",
+				   Q.CHECK_ITEM_CODE "checkItemCode",
+				   Q.CHECK_ITEM_NAME "checkItemName",
+				   Q.QC_EMPNAME "qcEmpName"
+			FROM JXGC_QC_RESULT Q
+			WHERE Q.RECORD_STATUS=0 
+		]]>
+	</sql>
+	<!-- 查询检修项目关联工序select -->
+	<sql id="findWorkSeqByProject_select">
+		select 
+		 s.work_seq_code as "workSeqCode",
+		 s.work_seq_name as "workSeqName",
+		 s.P_TRAIN_TYPE_IDX as "pTrainTypeIDX",
+		 s.P_TRAIN_TYPE_SHORTNAME as "pTrainTypeShortName",
+		 s.REPAIR_SCOPE as "repairScope",
+		 s.SAFE_ANNOUNCEMENTS as "safeAnnouncements",
+		 s.REMARK as "remark",
+		 s.seq as "seq"
+	</sql>
+	<!-- 查询检修项目关联工序form -->
+	<sql id="findWorkSeqByProject_from">
+		 from jxgc_work_seq s
+		 where s.record_status = 0 
+	</sql>
+	<!-- 作业计划编辑页面查询新增作业工单 -->
+	<sql id='searchWorkSeq_select'>
+		select
+            t.idx as "idx",
+            t.BuildUp_Type_Code as "buildUpTypeCode",
+            t.BuildUp_Type_IDX as "buildUpTypeIDX",
+            t.BuildUp_Type_Name as "buildUpTypeName",
+            t.Chart_No as "chartNo",
+            t.Extension_Class as "extensionClass",
+            t.P_Object_Type as "pObjectType",
+            t.P_Parts_Name as "pPartsName",
+            t.P_Parts_Type_IDX as "pPartsTypeIDX",
+            t.P_Specification_Model as "pSpecificationModel",
+            t.P_Train_Type_IDX as "pTrainTypeIDX",
+            t.P_Train_Type_ShortName as "pTrainTypeShortName",
+            t.Rated_WorkHours as "ratedWorkHours",
+            t.remark as "remark",
+            t.Repair_Scope as "repairScope",
+            t.Safe_Announcements as "safeAnnouncements",
+            t.status as "status",
+            t.Work_Class as "workClass",
+            t.Work_Seq_Code as "workSeqCode",
+            t.Work_Seq_Name as "workSeqName",
+            t.Work_Seq_Type as "workSeqType"
+	</sql>
+	<!-- 机车作业计划编辑页面查询新增作业工单 -->
+	<sql id='searchWorkSeq_from'>
+		from JXGC_Work_Seq t 
+		 where 1=1 and t.idx not in (select work_seq_card_idx from jxgc_work_card c where c.repair_activity_idx = '检修活动主键' 
+		 				and work_seq_card_idx is not null and record_status = 0)
+		 	and t.record_status = 0 
+	</sql>
+	<!-- 配件作业计划编辑页面查询新增作业工单 -->
+	<sql id='searchWorkSeq_from2'>
+		from JXGC_Work_Seq t 
+		 where 1=1 and t.record_status = 0
+	</sql>
+	<!-- 查询配件工艺节点关联检修工单 -->
+	<sql id="findNodeUnionWork_select">
+		select u.idx as "idx",
+		 s.work_seq_code as "workSeqCode",
+		 s.work_seq_name as "workSeqName",
+		 s.p_specification_model as "pSpecificationModel",
+		 s.p_parts_name as "pPartsName",
+		 s.chart_no as "chartNo",
+		 s.rated_workhours as "ratedWorkHours",
+		 s.work_class as "workClass"		 
+	</sql>
+</SqlMap>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 配件规格型号查询中查询规格型号对应的试用车型信息 -->
+	<sql id="partstypesearch_traintype">
+		<![CDATA[
+			select t.idx "idx",t.train_type_shortname "trainTypeShortName",
+       t.standard_qty "standardQty",to_char(WMSYS.WM_CONCAT(r.repair_class_name || ':' || r.parts_class)) "RCandCLASS"
+	  from PJWZ_TrainType_To_Parts t, PJWZ_RcClass_To_Parts r
+	 where t.idx = r.traintype_to_parts_idx and t.parts_type_idx='${partsTypeIDX}'
+	 and t.record_status=0 and r.record_status=0 
+	 group by t.idx,t.train_type_shortname,t.standard_qty 
+					
+		]]>
+	</sql>
+	<!-- 新增委外配件型号列表 -->
+	<sql id="newOutSourcingList">
+		insert into pjwz_parts_outsourcing_list(idx, parts_type_idx, record_status, siteid, creator, create_time, updator, update_time)
+		select sys_guid(), t.idx, 0, '站点', 操作员, sysdate, 操作员, sysdate from pjwz_parts_type t where idx in (配件型号主键)
+	</sql>
+	<!-- 修改委外配件委修工厂 -->
+	<sql id="updateOutSourcingMadeFactory">
+		update pjwz_parts_outsourcing_list t set t.made_factory_id ='工厂ID', updator = 操作员, update_time = sysdate where idx in (列表主键)
+	</sql>
+	<!-- 配件规格型号查询中查询规格型号对应的试用车型信息 -->
+	<sql id="findTraintypeToPartsTypeSelect">
+		<![CDATA[
+			select
+            t.idx,
+            t.Train_Type_IDX ,
+            t.Train_Type_ShortName ,
+            t.PARTS_TYPE_IDX ,
+            t.standard_qty ,
+            p.Parts_NAME ,
+            p.Specification_Model ,
+            (select count(1) from PJWZ_PARTS_ACCOUNT d where d.parts_type_idx=t.parts_type_idx and d.UNLOAD_TRAINTYPE_IDX = 'trainTypeIDX' and d.UNLOAD_TRAINNO = 'trainNo' and d.UNLOAD_REPAIR_CLASS_IDX = 'repairClassId' and d.parts_status like 'partsStatus' and d.record_status = 0) as "checkQty",
+            (t.standard_qty - (select count(1) from PJWZ_PARTS_ACCOUNT d where d.parts_type_idx=t.parts_type_idx and d.UNLOAD_TRAINTYPE_IDX = 'trainTypeIDX' and d.UNLOAD_TRAINNO = 'trainNo' and d.UNLOAD_REPAIR_CLASS_IDX = 'repairClassId' and d.parts_status like 'partsStatus' and d.record_status = 0)) as "unCheckQty"
+					
+		]]>
+	</sql>
+	<sql id="findTraintypeToPartsTypeFrom">
+		<![CDATA[
+        from 
+            PJWZ_TrainType_To_Parts_TYPE t,
+            PJWZ_RcClass_To_Parts_TYPE r,
+            PJWZ_Parts_Type p
+        where
+            t.PARTS_TYPE_IDX=p.idx 
+            and r.TrainType_To_Parts_IDX=t.idx 
+            and t.RECORD_STATUS=0 
+            and p.Record_Status=0 
+            and r.Record_Status=0 
+            and t.Train_Type_IDX='trainTypeIDX'
+            and r.REPAIR_CLASS_IDX = 'repairClassId'
+					
+		]]>
+	</sql>
+</SqlMap>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 新增派工记录 (select部分在代码中) -->
+	<sql id="insertDesignateRecord">
+		<![CDATA[
+			insert into JXGC_Designate_Record(idx, Relation_Idx, Designate_Type, Worker_Id,
+			 Worker_Name, Worker_Code, Designate_Time, Record_Status, Siteid,
+			  Creator, Create_Time, Updator, Update_Time)
+		]]>
+	</sql>
+	<!-- 工单查询 (SELECT部分，用于工长未派工)-->
+	<sql id="findWorkCard_Foremanselect">
+		<![CDATA[
+			select distinct t.idx as "idx",
+				t.Work_Card_Code  as "workCardCode",
+				t.work_card_name as"workCardName",
+				t.work_scope as"workScope",
+				t.work_station_belong_team_name as"workStationBelongTeamName",
+				r.TRAIN_TYPE_SHORTNAME as "trainSortName",
+				r.TRAIN_NO as "trainNo",              
+				t.work_station_name as "workStationName",
+				t.status as "status",
+				r.REPAIR_CLASS_NAME||' | '||r.REPAIR_TIME_NAME as "repairClassRepairTime",
+				r.TRAIN_TYPE_SHORTNAME||' | '||r.TRAIN_NO as "trainTypeTrainNo",
+				to_char(r.plan_begin_time,'yyyy-MM-dd HH24:mi') as "transinTimeStr",
+				to_char(r.plan_end_time,'yyyy-MM-dd HH24:mi') as "planTrainTimeStr",
+				t.remarks as "remarks",
+				w.workers as "workers",
+				n.NODE_NAME as "nodeCaseName",
+			    w.workers_Name as "lastTimeWorker",
+			    t.update_time as "updateTime"
+		]]>
+	</sql>
+	<!-- 工单查询 (SELECT部分，用于工长已派工)-->
+	<sql id="findWorkCard_Foremanselect2">
+		<![CDATA[
+			select t.idx as "idx",
+				t.Work_Card_Code  as "workCardCode",
+				t.work_card_name as"workCardName",
+				t.work_scope as"workScope",
+				t.work_station_belong_team_name as"workStationBelongTeamName",
+				r.TRAIN_TYPE_SHORTNAME as "trainSortName",
+				r.TRAIN_NO as "trainNo",                
+				t.work_station_name as "workStationName",
+				t.status as "status",
+				r.REPAIR_CLASS_NAME||' | '||r.REPAIR_TIME_NAME as "repairClassRepairTime",
+				r.TRAIN_TYPE_SHORTNAME||' | '||r.TRAIN_NO as "trainTypeTrainNo",
+				to_char(r.plan_begin_time,'yyyy-MM-dd HH24:mi') as "transinTimeStr",
+				to_char(r.plan_end_time,'yyyy-MM-dd HH24:mi') as "planTrainTimeStr",
+				t.remarks as "remarks",
+				n.NODE_NAME as "nodeCaseName"
+		]]>
+	</sql>	
+	
+	<!-- 工单工长派工查询(FROM部份) 未派工 -->
+	<sql id="foremanWorkCard_form">
+		<![CDATA[
+			from jxgc_work_card t ,				
+				jxgc_job_process_node n,
+				jxgc_train_work_plan r,
+                jxgc_work_last_dispatch w		 			 
+			 where 1=1 
+			  and n.record_status = 0 and r.record_status=0 and t.record_status=0
+			  and w.work_seq_card_idx(+) = t.work_seq_card_idx
+                and w.work_repair_team(+) = t.work_station_belong_team
+                and n.idx = t.node_case_idx
+				and r.idx = t.rdp_idx
+				and (t.status ='
+		]]>
+	</sql>
+	<!-- 工单工长批量派工 -->
+	<sql id="getWorkCardSql">
+		<![CDATA[
+		    select t.idx
+			from jxgc_work_card t ,
+				jxgc_job_process_node n,
+				jxgc_train_work_plan r                
+			 where 1=1 and r.record_status=0 and t.record_status=0 and n.record_status = 0
+			 	and n.idx = t.node_case_idx
+				and r.idx = t.rdp_idx
+				and (t.status ='
+		]]>
+	</sql>	
+	<!-- 工单工长派工查询(FROM部份) 已派工 -->
+	<sql id="foremanWorkCard_form2">
+		<![CDATA[
+			from jxgc_work_card t ,				
+				jxgc_job_process_node n,
+				jxgc_train_work_plan r		 
+			 where 1=1 
+		      and n.record_status = 0 and r.record_status=0 and t.record_status=0
+			  and n.idx = t.node_case_idx 
+		      and r.idx = t.rdp_idx
+		      and t.status in ('初始化','已开放','处理中')
+		]]>
+	</sql>	
+	<!-- 新增默认上次派工 -->
+	<sql id="insertDefaultLastTimeWorker">
+		<![CDATA[
+			insert into JXGC_Worker 
+						(idx,Work_Card_Idx,Worker_Id,Worker_Name,Worker_Code,Worker_Tream_Idx,Worker_Tream_Name,Worker_Tream_Seq)
+					select sys_guid(), '作业工单主键',e.empid, e.empname, e.empcode, 班组ID, '班组名称', '班组系列'
+		      		  from om_employee e 			    
+	       			 where e.empid = 人员ID
+		]]>
+	</sql>
+	<!-- 作业工单查询 SELECT部份（作业查询） -->
+	<sql id="findWorkCard_work_select">
+		<![CDATA[
+			select
+                t.idx as "idx",
+                t.Work_Card_Code  as "workCardCode",
+                t.rdp_idx as "rdpIDX",
+                t.NODE_CASE_IDX as "nodeCaseIDX",
+                c.NODE_NAME as "nodeCaseName",
+                t.work_card_name as "workCardName",
+                t.work_scope as "workScope",
+                t.work_station_belong_team as "workStationBelongTeam",
+                t.work_station_belong_team_name as "workStationBelongTeamName",
+                t.work_seq_card_idx as "workSeqCardIDX",
+                t.WORKER_ID as "workerID",
+                r.TRAIN_TYPE_SHORTNAME as "trainSortName",
+                r.TRAIN_TYPE_IDX as "trainTypeIdx",
+                r.TRAIN_NO as "trainNo",
+                r.TRAIN_TYPE_SHORTNAME||(case r.TRAIN_NO||'a' when 'a' then '' else ' | '||r.TRAIN_NO end) as "trainTypeAndNo",
+                r.REPAIR_CLASS_NAME as "repairClassName",
+                r.REPAIR_CLASS_IDX as "repairClassIdx",
+                '' as "repairTimeIdx",
+                t.work_station_name as "workStationName",
+                r.REPAIR_CLASS_NAME||(case r.REPAIR_TIME_NAME||'a' when 'a' then '' else ' | '||r.REPAIR_TIME_NAME end) as "repairClassRepairTime",
+                r.TRAIN_TYPE_SHORTNAME||' | '||r.TRAIN_NO as "trainTypeTrainNo",
+                t.remarks as "remarks" ,
+                t.safe_announcements as "safeAnnouncements" , 
+                (
+         			select count(1) as xcount from jxgc_work_task tk where tk.status = '待领取'
+                    and tk.work_card_idx=t.idx and tk.record_status = 0
+                ) ||'|'|| (
+         			select count(1) as ycount from jxgc_work_task tk, JXGC_Detect_Result r where r.work_task_idx = tk.idx
+                     and tk.work_card_idx = t.idx
+                     and tk.status = '待领取'
+                     and r.isnotblank = 0 and r.detect_result is null and r.record_status = 0 and tk.record_status = 0
+              	) ||'|'|| (
+         			select count(1) as zcount from JXGC_Work_Step_Result r, jxgc_work_task tk where tk.work_step_idx = r.work_step_idx 
+         			and tk.status = '待领取'
+                    and tk.work_card_idx = t.idx and r.is_default=1 and r.record_status = 0 and tk.record_status = 0
+                ) as "batch",
+                to_char(t.REAL_BEGIN_TIME, 'yyyy-MM-dd HH24:mi') as "realBeginTimeStr",
+                to_char(t.REAL_END_TIME, 'yyyy-MM-dd HH24:mi') as "realEndTimeStr"
+		]]>
+	</sql>
+	<!-- 作业工单查询FORM部份（作业查询） -->
+	<sql id="findWorkCard_work_from">
+		<![CDATA[
+			from
+                jxgc_work_card t ,
+                jxgc_train_work_plan r,
+                jxgc_job_process_node c,
+                Jxgc_Worker k
+            where 1=1 
+                and r.idx = t.rdp_idx 
+                and c.idx = t.node_case_idx
+                and k.worker_id = 人员ID 
+                and k.work_card_idx = t.idx 
+                and r.record_status=0 
+                and t.record_status=0 
+                and c.record_status = 0
+		]]>
+	</sql>
+	<!-- 检查是否能完工 -->
+	<sql id="checkWorkTask">
+		<![CDATA[
+				select (
+         			select count(1) as xcount from jxgc_work_task tk where tk.status = '待领取'
+                    and tk.work_card_idx=t.idx and  tk.record_status = 0
+                ) ||'|'|| (
+         			select count(1) as ycount from jxgc_work_task tk, JXGC_Detect_Result r where r.work_task_idx = tk.idx
+                     and tk.work_card_idx = t.idx
+                     and tk.status = '待领取'
+                     and r.isnotblank = 0 and r.detect_result is null and r.record_status = 0 and tk.record_status = 0
+              	) ||'|'|| (
+         			select count(1) as zcount from JXGC_Work_Step_Result r, jxgc_work_task tk where tk.work_step_idx = r.work_step_idx 
+         			and tk.status = '待领取'
+                    and tk.work_card_idx = t.idx and r.is_default=1 and r.record_status = 0 and tk.record_status = 0
+                ) from jxgc_work_card t where t.idx in ('作业工单')
+		]]>
+	</sql>
+	<!-- 生成工单作业人员 -->
+	<sql id="insertWorker">
+		<![CDATA[
+		insert into JXGC_Worker
+        			(idx,
+        			 Work_Card_Idx,
+        			 Worker_Id,
+        			 Worker_Name,
+        			 Worker_Code,
+        			 Worker_Tream_Idx,
+        			 Worker_Tream_Name,
+	        		 Worker_Tream_Seq) 
+	         select  sys_guid(),
+            		 c.idx,
+            		 t.empid,
+            		 t.empname,
+            		 t.empcode,
+            		 t.orgid,
+            		 t.orgname,
+            		 t.orgseq
+              from   (select e.empid, e.empname,e.empcode,o.orgid,o.orgname,o.orgseq from 
+            		  Om_Organization o,
+            		  Om_Employee e,
+		              Om_EmpOrg eo where eo.orgid = o.orgid 
+		              and eo.empid = e.empid 
+		              and e.empid in (
+		                     人员ID
+		                  )) t
+         left join    jxgc_work_card c on c.idx in (作业工单主键)   
+		]]>
+	</sql>
+	<!-- 批量生成工单作业人员 -->
+	<sql id="batchInsertWorker">
+		<![CDATA[
+			insert into JXGC_Worker
+        				(idx,
+        				 Work_Card_Idx,
+        				 Worker_Id,
+        				 Worker_Name,
+        				 Worker_Code,
+        				 Worker_Tream_Idx,
+        				 Worker_Tream_Name,
+	        			 Worker_Tream_Seq) 
+	        	 select  sys_guid(),
+            			 t.Work_Card_Idx,
+            			 t.empid,
+            			 t.empname,
+            			 t.empcode,
+            			 t.orgid,
+            			 t.orgname,
+	                     t.orgseq
+        		 from    (select e.empid, e.empname,e.empcode,o.orgid,o.orgname,o.orgseq,c.idx as Work_Card_Idx  from 
+            			  Om_Organization o,
+            			  Om_Employee e,
+            			  Om_EmpOrg eo,
+            			  (作业工单sql) c
+             			  where eo.orgid = o.orgid 
+            			  and eo.empid = e.empid 
+            			  and e.empid in (
+                		  人员ID
+            			  )) t
+		]]>
+	</sql>
+	<!-- 过滤不能完工的作业工单 -->
+	<sql id='filterWorkCard'>
+		<![CDATA[
+			select
+                t.idx as "idx",
+                (
+         			select count(1) as xcount from jxgc_work_task tk where tk.status = '待领取'
+                    and tk.work_card_idx=t.idx and tk.record_status = 0
+                ) ||'|'|| (
+         			select count(1) as ycount from jxgc_work_task tk, JXGC_Detect_Result r where r.work_task_idx = tk.idx
+                     and tk.work_card_idx = t.idx
+                     and tk.status = '待领取'
+                     and r.isnotblank = 0 and r.detect_result is null and r.record_status = 0 and tk.record_status = 0
+              	) ||'|'|| (
+         			select count(1) as zcount from JXGC_Work_Step_Result r, jxgc_work_task tk where tk.work_step_idx = r.work_step_idx 
+         			and tk.status = '待领取'
+                    and tk.work_card_idx = t.idx and r.is_default=1 and r.record_status = 0 and tk.record_status = 0
+                ) as "batch"
+			from
+                jxgc_work_card t ,
+                jxgc_train_work_plan r,
+                Jxgc_Worker k
+            where 1=1 
+                and r.idx = t.rdp_idx 
+                and k.worker_id = 人员ID 
+                and k.work_card_idx = t.idx 
+                and r.record_status=0 
+                and t.record_status=0
+                and t.idx in('作业工单主键')
+		]]>
+	</sql>
+	<!-- 流程工单查询在运行兑现单用于base_combo查询  and t.current_state = 'RUNNING' V3.2.1代码重构-->
+	<sql id='findRunRdpForBaseCombo'>
+		select distinct r.idx as "idx", r.train_name||' '||r.x_no||' '||r.rc_name||' '||r.rt_name as "rdpText"
+		       from jxgc_process_task t, JXGC_Train_Work_Plan r where r.idx = t.rdp_idx 
+		       and r.work_plan_status = 'ONGOING' 流程实例ID
+	</sql>
+	
+	<!-- 作业工单查询检修活动用于base_combo查询【作业处理情况查询中的作业工单】 V3.2.1代码重构-->
+	<sql id="workCardFindRepairActivity">
+		select distinct a.idx as "idx", a.activity_name as "activityName"
+				  from jxgc_work_card c,JXGC_Train_Work_Plan r, JXGC_Work_Plan_Repair_Activity a where r.idx = c.rdp_idx 
+				  and r.Work_Plan_Status = 'ONGOING' and c.status in ('INITIALIZE', 'ONGOING', 'OPENED')
+		          and a.idx = c.repair_activity_idx　and r.idx = '兑现单'
+	</sql>
+	<!-- 新增最后一次派工记录 -->
+	<sql id="insertLastDispatch">
+		insert into jxgc_work_last_dispatch t(t.idx, t.fixplace_fullname, t.work_repair_team_name,t.work_repair_team,
+		t.work_seq_card_idx, t.workers, t.workers_name, record_status, siteid, creator, create_time,updator, update_time)
+				
+		select sys_guid(), '', c.work_station_belong_team_name, c.work_station_belong_team,c.work_seq_card_idx, '作业人员ID', '作业人员名称',
+		0, '站点' , 操作员, TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'), 操作员, TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss')
+		from jxgc_work_card c where c.record_status = 0 and c.status IN ('初始化', '开放中', '处理中') and c.idx in(作业工单主键)
+	</sql>
+	<!-- 删除最后一次派工记录 -->
+	<sql id="deleteLastDispatch">
+		delete jxgc_work_last_dispatch t 
+		where exists(select 1 from jxgc_work_card c where t.work_repair_team = c.work_station_belong_team and t.work_seq_card_idx = c.work_seq_card_idx
+	      	and c.idx in(作业工单主键)
+	      )
+	</sql>
+	<!-- 查询工单上次作业人员 -->
+	<sql id="findLastDispatch">
+		select distinct workers, c.idx from jxgc_work_last_dispatch t,jxgc_work_card c where 
+	      	t.work_repair_team = c.work_station_belong_team and t.work_seq_card_idx = c.work_seq_card_idx
+	      	and c.idx in(作业工单主键) and t.work_repair_team = 施修班组
+	</sql>
+	<!-- 查询工单上次作业人员 -->
+	<sql id="findFinishedWorkCard">
+		SELECT C.IDX, C.RDP_IDX,
+	       C.WORK_CARD_NAME,
+	       C.STATUS,
+	       C.REAL_BEGIN_TIME,
+	       C.REAL_END_TIME,
+	       C.REMARKS,
+	       N.NODE_NAME,
+	       P.TRAIN_TYPE_SHORTNAME,
+	       P.TRAIN_NO,
+	       p.TRAIN_TYPE_SHORTNAME||' | '||p.TRAIN_NO as trainTypeTrainNo,
+	       TO_CHAR(C.REAL_BEGIN_TIME, 'YYYY-MM-DD HH24:MI') AS "realBeginTimeStr",
+	       TO_CHAR(P.PLAN_BEGIN_TIME, 'YYYY-MM-DD HH24:MI') AS "transinTimeStr",
+	       TO_CHAR(P.PLAN_END_TIME, 'YYYY-MM-DD HH24:MI') AS "planTrainTimeStr",
+	       P.REPAIR_CLASS_NAME || ' | ' || P.REPAIR_TIME_NAME AS "repairClassRepairTime"
+	  FROM JXGC_WORK_CARD C, JXGC_TRAIN_WORK_PLAN P, JXGC_JOB_PROCESS_NODE N
+	 WHERE C.RECORD_STATUS = '0'
+	   AND P.RECORD_STATUS = '0'
+	   AND N.RECORD_STATUS = '0'
+	   AND P.WORK_PLAN_STATUS='ONGOING'
+	   AND C.RDP_IDX = P.IDX
+	   AND C.NODE_CASE_IDX = N.IDX
+	   AND C.STATUS IN ('COMPLETE', 'FINISHED')
+	   AND C.WORKER_ID LIKE '%?%'
+	   
+	</sql>
+</SqlMap>

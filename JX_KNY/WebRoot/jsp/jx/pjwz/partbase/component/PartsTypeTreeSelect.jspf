@@ -1,0 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@include file="/frame/jspf/TreeFilter.jspf" %>
+<script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsTypeTree.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsRepairListTree.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/TrainTypeToPartsTree.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsTypeTreeSelect.js"></script>

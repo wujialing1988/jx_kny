@@ -1,0 +1,65 @@
+/**
+ * @author 何涛
+ * Created by hetao on 2016-12-08 该文件定义了使用Ext模板【Ext.XTemplate】利用HTML的table展示数据信息的基本样式
+ *
+ * 基本用法示例：
+ *  1、引入文件：<link rel="stylesheet" href="<%= ctx %>/frame/resources/css/ext-yunda-tpl.css" type="text/css"/>
+ *  2、定义要进行数据展示的html文本，通过class属性标识要引用的样式集，例如：
+ 		html: '<div id="equipment_base_info" class="tpl-3col-table"></div>'
+ *	3、使用Ext模板进行数据展示，例如： 	
+ 		EquipmentScrapApply.tpl.overwrite(Ext.get('equipment_base_info'), record.data);
+ */
+
+/* ******************************************** 你看，这是一条分割线 ******************************************** */
+
+/* Ext模板样式定义 - 两列的table - 开始 */
+.tpl-2col-table {
+	overflow: auto;
+}
+.tpl-2col-table table {
+	width: 100%;
+	font-size: 12px;
+}
+.tpl-2col-table table tr td {
+	width: 50%;
+	/* 自动换行 */
+	word-break: break-all;
+	word-wrap: break-word;
+	text-indent: -100px;
+	padding: 0px 15px 6px 100px;
+}
+.tpl-2col-table table tr td span {
+	color: gray;
+	width: 100px;
+	text-align: right;
+	display: inline-block;
+}
+/* Ext模板样式定义 - 两列的table - 结束 */
+
+/* ******************************************** 你看，这是一条分割线 ******************************************** */
+
+/* Ext模板样式定义 - 三列的table - 开始 */
+.tpl-3col-table {
+	overflow: auto;
+}
+.tpl-3col-table table {
+	width: 100%;
+	font-size: 12px;
+}
+.tpl-3col-table table tr td {
+	width: 33.33%;
+	/* 自动换行 */
+	word-break: break-all;
+	word-wrap: break-word;
+	text-indent: -100px;
+	padding: 0px 15px 6px 100px;
+}
+.tpl-3col-table table tr td span {
+	color: gray;
+	width: 100px;
+	text-align: right;
+	display: inline-block;
+}
+/* Ext模板样式定义 - 三列的table - 结束 */
+
+/* ******************************************** 你看，这是一条分割线 ******************************************** */

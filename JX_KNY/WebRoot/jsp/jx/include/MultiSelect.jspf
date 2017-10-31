@@ -1,0 +1,53 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/frame/resources/ext-3.4.0/ux/MultiSelect/css/MultiSelect.css" />
+<script language="javascript" src="<%=request.getContextPath() %>/frame/resources/ext-3.4.0/ux/MultiSelect/MultiSelect.js"></script>
+<script language="javascript" src="<%=request.getContextPath() %>/frame/resources/ext-3.4.0/ux/ItemSelector/ItemSelector.js"></script>
+<script type="text/javascript">
+Ext.override(Ext.ux.form.ItemSelector, {
+	setValue: function(values) {
+		var index;
+		var selectionsArray = [];
+		this.toMultiselect.view.clearSelections();
+		this.hiddenField.dom.value = '';
+ 
+		if (!values || (values == '')) { return; }
+ 
+		if (!Ext.isArray(values)) { values = values.split(this.delimiter); }
+		for (var i=0; i<values.length; i++) {
+			index = this.fromMultiselect.view.store.indexOf(this.fromMultiselect.view.store.query(this.fromMultiselect.valueField, new RegExp('^' + values[i] + '$', "i")).itemAt(0));
+			if (index > -1) {
+				selectionsArray.push(index);
+			}
+		}
+ 
+		var records = [], record;
+		if (selectionsArray.length > 0) {
+			for (var i=0; i<selectionsArray.length; i++) {
+				var record = this.fromMultiselect.view.store.getAt(selectionsArray[i]);
+				records.push(record);
+			}
+			if(!this.allowDup)selectionsArray = [];
+			for (var i=0; i<records.length; i++) {
+				record = records[i];
+				if(this.allowDup){
+					var x=new Ext.data.Record();
+					record.id=x.id;
+					delete x;
+					this.toMultiselect.view.store.add(record);
+				}else{
+					this.fromMultiselect.view.store.remove(record);
+					this.toMultiselect.view.store.add(record);
+					selectionsArray.push((this.toMultiselect.view.store.getCount() - 1));
+				}
+			}
+		}
+		this.toMultiselect.view.refresh();
+		this.fromMultiselect.view.refresh();
+		var si = this.toMultiselect.store.sortInfo;
+		if(si){
+			this.toMultiselect.store.sort(si.field, si.direction);
+		}
+		this.toMultiselect.view.select(selectionsArray);
+	}
+});
+</script>

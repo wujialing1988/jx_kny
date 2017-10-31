@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DetectDatas>
+	<DetectData>
+		<DataType>01</DataType>
+		<Edition>1.0</Edition>
+		<MaterielCode>10000000000001</MaterielCode>
+		<DetectorCode>100000000001</DetectorCode>
+		<WorkerCode>00021000000003</WorkerCode>
+		<WorkOrderCode>11100312</WorkOrderCode>
+		<WorkOrderDescribe>工单描述内容</WorkOrderDescribe>
+		<RealBeginTime> YYYY/MM/DD HH:MM </RealBeginTime>
+		<RealEndTime> YYYY/MM/DD HH:MM </RealEndTime> 
+		<Parameters>
+			<Parameter>
+				<Code>1000001</Code>
+				<Name>高度</Name>
+				<Unit>cm</Unit>
+				<Describe>高度</Describe>
+				<Value>20</Value>
+			</Parameter>
+			<Parameter>
+				<Code>1000002</Code>
+				<Name>厚度</Name>
+				<Unit>mm</Unit>
+				<Describe>厚度</Describe>
+				<Value>30</Value>
+			</Parameter>
+		</Parameters>
+	</DetectData>
+	<DetectData>
+		<DataType>01</DataType>
+		<Edition>1.0</Edition>
+		<MaterielCode>10000000000002</MaterielCode>
+		<DetectorCode>100000000002</DetectorCode>
+		<WorkerCode>00021000000005</WorkerCode>
+		<WorkOrderCode>111001</WorkOrderCode>
+		<WorkOrderDescribe>工单描述内容2</WorkOrderDescribe>
+		<RealBeginTime> YYYY/MM/DD HH:MM </RealBeginTime>
+		<RealEndTime> YYYY/MM/DD HH:MM </RealEndTime> 
+		<Parameters>
+			<Parameter>
+				<Code>1000005</Code>
+				<Name>高度2</Name>
+				<Unit>cm</Unit>
+				<Describe>高度2</Describe>
+				<Value>20</Value>
+			</Parameter>
+			<Parameter>
+				<Code>1000003</Code>
+				<Name>厚度2</Name>
+				<Unit>mm</Unit>
+				<Describe>厚度2</Describe>
+				<Value>30</Value>
+			</Parameter>
+		</Parameters>
+	</DetectData>
+</DetectDatas>

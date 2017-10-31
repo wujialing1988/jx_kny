@@ -1,0 +1,71 @@
+<!-- 整备V3.2 位置历史 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 更新出入段台账对应的位置历史信息 -->
+	<sql id="updatePostionHIS">
+	<![CDATA[
+		UPDATE TWT_TRAIN_POSITION_HIS
+   		   SET END_TIME = TO_DATE('#endTime#', 'yyyy-mm-dd hh24:mi:ss')
+    	 WHERE TRAIN_ACCESS_ACCOUNT_IDX IN #IDXS# 
+           AND END_TIME IS NULL 	  
+	]]>
+	</sql>	
+	<!-- 更新位置历史对应的位置顺序历史信息 -->
+	<sql id="updateOrderHIS">
+	<![CDATA[
+		UPDATE TWT_TRAIN_ORDER_HIS
+   		   SET END_TIME = TO_DATE('#endTime#', 'yyyy-mm-dd hh24:mi:ss')
+    	 WHERE TRAIN_POSITION_HIS_IDX IN  #IDXS#
+           AND END_TIME IS NULL 	  
+	]]>
+	</sql>
+	<!-- 更新位置历史对应的位置顺序历史信息 -->
+	<sql id="updateOrderHISByAccount">
+	<![CDATA[
+		UPDATE TWT_TRAIN_ORDER_HIS
+   		   SET END_TIME = TO_DATE('#endTime#', 'yyyy-mm-dd hh24:mi:ss')
+    	 WHERE TRAIN_POSITION_HIS_IDX IN (SELECT IDX FROM TWT_TRAIN_POSITION_HIS WHERE TRAIN_ACCESS_ACCOUNT_IDX IN #IDXS#)
+           AND END_TIME IS NULL 	  
+	]]>
+	</sql>	
+	<!-- 更新所有在轨道上的在段机车的设备位置信息 -->
+	<sql id="updatePostionByTrackGUID">
+	<![CDATA[
+		UPDATE TWT_TRAIN_ACCESS_ACCOUNT
+		   SET EQUIP_NO = '',
+		       EQUIP_CLASS = '',
+		       EQUIP_NAME = '',
+		       START_TIME2 = NULL,
+		       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		       EQUIPGUID = '',
+		       EQUIPORDER = '',
+		       TRAIN_POSITION_HIS_IDX = ''
+		 WHERE EQUIPGUID IN #trackGUIDS#
+		   AND RECORD_STATUS = 0
+		   AND OUT_TIME IS NULL 	  
+	]]>
+	</sql>	
+	<!-- 更新所有在轨道上的在段机车的位置历史信息 -->
+	<sql id="updatePostionHISByTrackGUID">
+	<![CDATA[
+		UPDATE TWT_TRAIN_POSITION_HIS
+   		   SET END_TIME = TO_DATE('#endTime#', 'yyyy-mm-dd hh24:mi:ss')
+    	 WHERE IDX IN 
+			   (SELECT TRAIN_POSITION_HIS_IDX FROM TWT_TRAIN_ACCESS_ACCOUNT 
+			    WHERE EQUIPGUID IN #trackGUIDS#
+		   		  AND RECORD_STATUS = 0
+		          AND OUT_TIME IS NULL )	  
+	]]>
+	</sql>
+	<!-- 更新所有在轨道上的在段机车的位置顺序历史信息 -->
+	<sql id="updateOrderHISByTrackGUID">
+	<![CDATA[
+		UPDATE TWT_TRAIN_ORDER_HIS
+   		   SET END_TIME = TO_DATE('#endTime#', 'yyyy-mm-dd hh24:mi:ss')
+    	 WHERE TRAIN_POSITION_HIS_IDX IN 
+			   (SELECT TRAIN_POSITION_HIS_IDX FROM TWT_TRAIN_ACCESS_ACCOUNT 
+			    WHERE EQUIPGUID IN #trackGUIDS#
+		   		  AND RECORD_STATUS = 0
+		          AND OUT_TIME IS NULL )	  
+	]]>
+	</sql>	
+</SqlMap>

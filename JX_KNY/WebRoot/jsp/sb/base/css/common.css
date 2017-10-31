@@ -1,0 +1,23 @@
+/* 仿QQ未读消息数量提示样式定义，红色圆形背景+白字 */
+.count_tip_red {
+	margin-left: 2px;
+	background: red;
+	display: inline-block !important;
+	border-radius: 7px;
+	color: white;
+	font-weight: normal;
+	width: 15;
+	height: 15;
+	text-align: center;
+}
+
+/* 仿QQ未读消息数量提示样式定义，绿色圆形背景+黑字 */
+.count_tip_green {
+	background: #0f0;
+	display: inline-block !important;
+	border-radius: 7px;
+	font-weight: normal;
+	width: 15;
+	height: 15;
+	text-align: center;
+}

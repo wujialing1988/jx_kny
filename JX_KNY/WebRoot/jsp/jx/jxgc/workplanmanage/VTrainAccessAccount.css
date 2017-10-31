@@ -1,0 +1,66 @@
+/* 在修机车分类信息展示面板样式 */
+.infoPanel {
+	margin-left: 4px;
+	margin-top: 4px;
+	width: 24%;
+	height: 125px;
+	border-color: #666 !important;
+	border-width: 1px;
+	border-style: solid;
+	-moz-border-top-left-radius:5px;
+	-webkit-border-top-left-radius:5px;
+	float: left;
+	background-color:#f2f2f2;
+	overflow-y: scroll;
+	-moz-box-shadow:2px 2px 2px gray !important;
+	-webkit-box-shadow:2px 2px 2px gray !important;
+}
+/* 机车分类信息展示面板标题样式 */
+.infoPanel_title {
+	font-size:smaller;
+	width: 150px;
+	height: 26px;
+	line-height: 30px;
+	/*background-image: url("images/title_bg.png");*/
+	background-repeat: no-repeat;
+	-moz-border-radius: 0 13px 13px 0;
+	-webkit-border-radius: 0 13px 13px 0;
+	color: #FFF;
+	margin-bottom: 6px;
+	-moz-box-shadow:2px 2px 2px gray;
+	-webkit-box-shadow:2px 2px 2px gray;
+	-moz-box-text-shadow: 1px 1px 1px #000;
+	-webkit-box-text-shadow: 1px 1px 1px #000;
+	position: relative;
+}
+/* 机车分类信息状态样式 */
+.infoPanel_title .status {
+	margin-left:10px;
+}
+/* 机车分类信息数量样式 */
+.infoPanel_title .number {
+	position:absolute;
+	right:15px;
+	line-height:26px;
+}
+.train_pic_bg {
+	background-position: center left;
+	background-image: url("images/train.png");
+	background-repeat: no-repeat;
+	padding-left: 25px;
+}
+/* 机车分类信息展示面板条目样式 */
+.infoPanel_items {
+	float: left;
+	border-color: #666;
+	border-width: 1px;
+	border-style: solid;
+	background-color:#fff;
+	margin-left: 2px;
+	margin-bottom: 2px;
+	padding: 4px 4px 4px 25px;
+	box-shadow:2px 2px 2px #000;
+}
+	
+	
+	

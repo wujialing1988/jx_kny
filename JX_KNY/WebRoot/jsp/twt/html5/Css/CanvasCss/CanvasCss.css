@@ -1,0 +1,14 @@
+﻿.htmlBack {
+
+    width: 100%;
+    height: 100%;
+}
+.Button {
+    width: auto;
+    margin: 5px;
+    background: #667393;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    color: #ffffff;
+}

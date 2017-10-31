@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 流水线-工位使用质量技术单查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 作业处理情况查询 质量检验 -->
+	<sql id="findPageList">
+		<![CDATA[
+			SELECT SOURCE_IDX,
+			       TRAIN_TYPE_SHORTNAME,
+			       TRAIN_NO,
+			       REPAIR_NAME,
+			       WORK_CARD_NAME,
+			       FIXPLACE_FULLNAME,
+			       WORK_STATION_BELONG_TEAM_NAME,
+			       CHECK_ITEM_CODE, 
+			       CHECK_ITEM_NAME,
+			       CHECK_WAY,
+			       CHECK_PERSON_NAME,
+			       STATUS,
+			       RDP_IDX 
+			       FROM (
+			SELECT 
+			      DISTINCT 
+			      A.CHECK_ITEM_CODE,
+			      A.CHECK_WAY,
+			      A.CHECK_ITEM_NAME,
+			      A.STATUS,
+			      C.TRAIN_TYPE_SHORTNAME,
+			      C.TRAIN_NO,
+			      C.REPAIR_CLASS_NAME || C.REPAIR_TIME_NAME AS "REPAIR_NAME",
+			      D.WORK_CARD_NAME,
+			      D.FIXPLACE_FULLNAME,
+			      D.WORK_STATION_BELONG_TEAM_NAME,
+			      D.IDX AS "SOURCE_IDX",
+			      C.IDX as "RDP_IDX",
+			      TO_CHAR(WM_CONCAT(B.CHECK_PERSON_NAME)) AS "CHECK_PERSON_NAME"
+			  FROM (SELECT * FROM JXGC_QC_RESULT WHERE RECORD_STATUS = 0) A,
+			       (SELECT * FROM JXGC_QC_PARTICIPANT WHERE RECORD_STATUS = 0) B,
+			       (SELECT * FROM JXGC_Train_Work_Plan WHERE RECORD_STATUS = 0 AND Work_Plan_Status = 'ONGOING') C,
+			       (SELECT * FROM JXGC_WORK_CARD WHERE RECORD_STATUS = 0) D
+			 WHERE A.WORK_CARD_IDX = B.WORK_CARD_IDX (+)
+			   AND A.CHECK_ITEM_CODE = B.CHECK_ITEM_CODE (+) 
+			   AND A.WORK_CARD_IDX = D.IDX
+			   AND D.RDP_IDX = C.IDX
+			   GROUP BY A.CHECK_ITEM_CODE,
+			                A.CHECK_WAY,
+			                A.CHECK_ITEM_NAME ,
+			                A.STATUS,
+			                C.TRAIN_TYPE_SHORTNAME,
+			                C.TRAIN_NO,
+			                C.REPAIR_CLASS_NAME,
+			                C.REPAIR_TIME_NAME,
+			                D.WORK_CARD_NAME,
+			                D.FIXPLACE_FULLNAME,
+			                D.WORK_STATION_BELONG_TEAM_NAME,
+			                D.IDX,
+			                C.IDX
+			)
+		]]>
+	</sql>
+</SqlMap>

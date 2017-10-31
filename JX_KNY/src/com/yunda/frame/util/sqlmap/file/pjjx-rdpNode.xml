@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 配件检修流程节点查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 获取配件检修作业计划中无前置节点列表 -->
+	<sql id="getFirstNodeList">
+	<![CDATA[
+		 from PartsRdpNode
+		 where recordStatus = 0 and parentWPNodeIDX = ?
+		 and wpNodeIDX not in 
+		 (select wPNodeIDX from PartsRdpNodeSeq where rdpIDX = ? and recordStatus = 0)
+		 and rdpIDX = ?
+	]]>
+	</sql>
+	<!-- 得到此作业计划下节点的前置关系列表 -->
+	<sql id='getRelListByWorkPlan'>
+		from PartsRdpNodeSeq 
+	   where recordStatus = 0
+		 and rdpIDX = ?
+	</sql>
+	<!-- 得到同一配件检修作业计划下的节点的最小开工时间和最大完工时间 -->
+	<sql id="getMinBeginAndMaxEndTimeByNode">
+	<![CDATA[
+		 SELECT TO_CHAR(MIN(PLAN_STARTTIME), 'yyyy-MM-dd HH24:mi:ss'),  
+		 		TO_CHAR(MAX(PLAN_ENDTIME), 'yyyy-MM-dd HH24:mi:ss') 
+		   FROM PJJX_PARTS_RDP_NODE  
+		  WHERE RDP_IDX = '#rdpIDX#'
+		    AND RECORD_STATUS = 0
+	]]>
+	</sql>
+</SqlMap>

@@ -1,0 +1,52 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@include file="/frame/jspf/FileUploadField.jspf" %>
+<%@ page import="com.yunda.frame.order.IOrderManager"%>
+<%@ page import="com.yunda.frame.report.entity.ReportConstants" %>
+
+<script type="text/javascript">
+	<%-- 图片虚拟目录 --%>
+	var imgpath = '<%=ctx %>/frame/resources/images/toolbar';
+	<%-- 下载图标虚拟路径 --%>
+	var downloadImg = imgpath + '/download.png';
+	
+	var CONST_STR_T = '<%= ReportConstants.CONST_STR_T%>';		// 是否可编辑 - 是
+	var CONST_STR_F = '<%= ReportConstants.CONST_STR_F%>';		// 是否可编辑 - 否
+	
+	var UNEDITABLE_COLOR = '<%= ReportConstants.CONST_STR_UNEDITABLE_COLOR%>';		// 不可编辑记录的字体颜色
+	
+	// 自定义vtype，确保报表部署名称字段必须以.cpt结尾
+	Ext.applyIf(Ext.form.VTypes, {
+		fineReport: function(_v) {
+			return /[\d\w\s\.]+.cpt$/.test(_v);
+		},
+		fineReportText: "报表部署名称格式为*.cpt！\n例如：report.cpt",
+		fineReportMask: /[\w\d\s\.]/
+	});
+	
+	// 自定义vtype，验证日期范围
+	Ext.applyIf(Ext.form.VTypes, {
+		dateRange: function(_v, field) {
+			if (field.dateRange) {
+				// 开始日期
+				var startId = field.dateRange.startDate;
+				this.startField = Ext.getCmp(startId);
+				var startDate = this.startField.getValue();
+				// 结束日期
+				var endId = field.dateRange.endDate;
+				this.endField = Ext.getCmp(endId);
+				var endDate = this.endField.getValue();
+				if (null == startDate || null == endDate) {
+					return true;
+				}
+				return startDate <= endDate ? true : false
+			}
+		},
+		// 验证失败信息
+		dateRangeText: "开始日期不能大于结束日期"
+	});
+	
+</script>
+<script language="javascript" src="<%= ctx%>/jsp/jx/js/component/BaseComboTree.js"></script> 
+<script language="javascript" src="<%= ctx%>/frame/report/FileObject.js"></script>
+<script language="javascript" src="<%= ctx%>/frame/report/ReportMgr.js"></script>
+

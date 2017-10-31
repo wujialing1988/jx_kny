@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 流水线-工位使用质量技术单查询，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 查询工位对应的工序卡（质量记录单） -->
+	<sql id="findUnionWPNode">
+		<![CDATA[
+			SELECT *
+			  FROM (SELECT IDX,
+			               WP_IDX,
+			               PARENT_WP_NODE_IDX,
+			               WP_NODE_NAME,
+			               WP_NODE_DESC,
+			               RATED_PERIOD,
+			               SEQ_NO,
+			               IS_LEAF,
+			               TO_CHAR(WM_CONCAT(PRE_WP_NODE_IDX)) AS PRE_WP_NODE_IDX,
+			               TO_CHAR(WM_CONCAT(PRE_WP_NODE_NAME)) AS PRE_WP_NODE_NAME,
+			               TO_CHAR(WM_CONCAT(PRE_WP_NODE_SEQ_NO)) AS PRE_WP_NODE_SEQ_NO
+			          FROM (SELECT A.IDX,
+			                       A.WP_IDX,
+			                       A.PARENT_WP_NODE_IDX,
+			                       A.WP_NODE_NAME,
+			                       A.WP_NODE_DESC,
+			                       A.RATED_PERIOD,
+			                       A.SEQ_NO,
+			                       A.IS_LEAF,
+			                       B.PRE_WP_NODE_IDX,
+			                       B.WP_NODE_NAME AS PRE_WP_NODE_NAME,
+                             B.SEQ_NO AS PRE_WP_NODE_SEQ_NO
+			                  FROM (SELECT A.IDX,
+			                               A.WP_IDX,
+			                               A.PARENT_WP_NODE_IDX,
+			                               A.WP_NODE_NAME,
+			                               A.WP_NODE_DESC,
+			                               A.RATED_PERIOD,
+			                               A.SEQ_NO,
+			                               A.IS_LEAF
+			                          FROM PJJX_WP_NODE A
+			                         WHERE A.RECORD_STATUS = 0) A
+			                  LEFT JOIN (SELECT A.WP_NODE_IDX,
+			                                   A.PRE_WP_NODE_IDX,
+			                                   B.WP_NODE_NAME,
+                                         B.Seq_No
+			                              FROM pjjx_wp_node_seq A, pjjx_wp_node B
+			                             WHERE A.RECORD_STATUS = 0
+			                               AND B.RECORD_STATUS = 0
+			                               AND A.PRE_WP_NODE_IDX = B.IDX) B ON A.IDX =
+			                                                                   B.WP_Node_IDX)
+			         GROUP BY IDX,
+			                  WP_IDX,
+			                  PARENT_WP_NODE_IDX,
+			                  WP_NODE_NAME,
+			                  WP_NODE_DESC,
+			                  RATED_PERIOD,
+			                  SEQ_NO,
+			                  IS_LEAF)
+			 WHERE 0 = 0
+		]]>
+	</sql>
+</SqlMap>

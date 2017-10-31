@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 检修过程-流水线，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 流水线排程-根据工艺节点id查询列表select  -->
+	<sql id="findWorkStationDispatchList-select">
+	<![CDATA[
+		SELECT 
+		A.IDX AS "idx",
+		A.NODE_IDX AS "nodeIDX",
+		A.Node_Name AS "nodeCaseName",
+		A.PROCESS_IDX AS "tecProcessCaseIDX",
+		D.REPAIR_LINE_NAME AS "repairLineName",
+		D.WORK_STATION_NAME AS "workStationName",
+		A.WORK_STATION_BELONG_TEAM_NAME AS "teamOrgName",
+		D.IDX AS "workStationIDX",
+		D.WORK_STATION_CODE AS "workStationCode",
+		A.STATUS AS "status",
+		ROUND(A.RATED_WORKMINUTES/60,2) AS "ratedWorkMinutes",
+		TO_CHAR(A.PLAN_BEGIN_TIME,'yyyy-MM-dd HH24:mi') AS "planBeginTimeStr",
+		TO_CHAR(A.PLAN_END_TIME,'yyyy-MM-dd HH24:mi') AS "planEndTimeStr",
+		TO_CHAR(A.REAL_BEGIN_TIME,'yyyy-MM-dd HH24:mi') AS "realBeginTimeStr",
+		TO_CHAR(A.REAL_END_TIME,'yyyy-MM-dd HH24:mi') AS "realEndTimeStr",
+		D.REPAIR_LINE_IDX AS "repairLineIDX"
+	]]>
+	</sql>
+	<!-- 流水线排程-根据工艺节点id查询列表from  -->
+	<sql id="findWorkStationDispatchList-from">
+	<![CDATA[
+		 FROM JXGC_JOB_PROCESS_NODE A
+		LEFT JOIN
+		(SELECT * FROM JXGC_JOBNODE_STATION_DEF WHERE RECORD_STATUS = 0 ) C
+		ON A.NODE_IDX = C.NODE_IDX
+		INNER JOIN 
+		(SELECT * FROM JXGC_WORK_STATION WHERE RECORD_STATUS = 0 AND STATUS = 20 AND REPAIR_LINE_IDX = '#repairLineIDX#') D
+		 ON C.WORK_STATION_IDX = D.IDX		
+		WHERE
+		A.RECORD_STATUS = 0 		
+		AND A.IDX = '#nodeCaseIDX#'
+	]]>
+	</sql>	
+	<!-- 获取只关联一个工位的同一工位的工艺节点分组列表  -->
+	<sql id="findOnlyOneSameWorkStationNodeList">
+	<![CDATA[
+		SELECT TO_CHAR(WMSYS.WM_CONCAT(A.IDX)) AS "nodeCaseIDXS",
+		D.IDX AS "workStationIDX",
+       	D.WORK_STATION_NAME AS "workStationName",         
+        D.WORK_STATION_CODE AS "workStationCode",
+        D.REPAIR_LINE_IDX AS "repairLineIDX",
+        D.TEAM_ORGID AS "teamOrgID",
+        D.TEAM_ORGNAME AS "teamOrgName",
+        D.TEAM_ORGSEQ AS "teamOrgSeq"
+		FROM JXGC_JOB_PROCESS_NODE A
+		LEFT JOIN
+		(SELECT T.NODE_IDX,T.WORK_STATION_IDX FROM JXGC_JOBNODE_STATION_DEF T WHERE RECORD_STATUS = 0 
+         AND T.NODE_IDX IN
+		(SELECT T.NODE_IDX FROM JXGC_JOBNODE_STATION_DEF T WHERE T.RECORD_STATUS = 0
+		 AND T.WORK_STATION_IDX IN (SELECT IDX FROM JXGC_WORK_STATION WHERE RECORD_STATUS = 0 AND STATUS = 20) 
+		GROUP BY T.NODE_IDX  HAVING COUNT(T.IDX) = 1) ) C
+		ON A.NODE_IDX = C.NODE_IDX
+		INNER JOIN 
+		(SELECT * FROM JXGC_WORK_STATION WHERE RECORD_STATUS = 0 AND STATUS = 20) D
+		 ON C.WORK_STATION_IDX = D.IDX		
+		WHERE
+		A.RECORD_STATUS = 0 		
+		AND A.WORK_PLAN_IDX = '#workPlanIDX#'
+		AND A.IS_LEAF = 1
+		GROUP BY D.IDX,D.WORK_STATION_CODE,D.WORK_STATION_NAME, D.REPAIR_LINE_IDX, D.TEAM_ORGID, D.TEAM_ORGNAME, D.TEAM_ORGSEQ
+	]]>
+	</sql>
+	<!-- 与指定流程节点关联的流水线列表  -->
+	<sql id="repairListForNodeCase">
+	<![CDATA[
+		 from RepairLine 
+		 where idx in
+		 (select a.repairLineIdx from WorkStation a, JobNodeStationDef b, JobProcessNode c
+		 where a.recordStatus = 0 and b.recordStatus = 0 and c.recordStatus = 0 and a.status = 20
+		 and a.idx = b.workStationIDX and b.nodeIDX = c.nodeIDX and c.idx = '#nodeCaseIDX#')
+	]]>
+	</sql>
+</SqlMap>

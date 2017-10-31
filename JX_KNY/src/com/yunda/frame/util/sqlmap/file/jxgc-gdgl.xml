@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 检修过程 工单管理 -->
+
+	<!-- 查询工序延误 -->
+	<sql id="findWorkSeqPutOff_select">
+		<![CDATA[
+		 SELECT DISTINCT T.IDX AS "idx",
+                R.TRAIN_TYPE_SHORTNAME AS "trainTypeShortName",
+                R.TRAIN_NO AS "trainNo",
+                R.REPAIR_CLASS_NAME AS "repairClassName",
+                R.REPAIR_TIME_NAME AS "repairTimeName",
+                R.PROCESS_NAME AS "processCaseName",
+                T.NODE_NAME AS "nodeName",                
+                T.WORK_PLAN_IDX AS "rdpIDX" ,
+                TO_CHAR(T.PLAN_BEGIN_TIME,'yyyy-MM-dd HH24:mi') AS "planBeginTimeStr",
+                TO_CHAR(T.PLAN_END_TIME,'yyyy-MM-dd HH24:mi') AS "planEndTimeStr",
+                TO_CHAR(T.REAL_BEGIN_TIME,'yyyy-MM-dd HH24:mi') AS "realBeginTimeStr",
+                TO_CHAR(T.REAL_END_TIME,'yyyy-MM-dd HH24:mi') AS "realEndTimeStr",
+                T.PLAN_BEGIN_TIME,
+                T.PLAN_END_TIME,
+                T.REAL_BEGIN_TIME,
+                T.REAL_END_TIME,
+                T.RATED_WORKMINUTES AS "ratedWorkMinutes",
+                T.REAL_WORKMINUTES AS "realWorkMinutes",
+                T.NODE_IDX AS "nodeIDX",
+                T.PROCESS_IDX AS "tecProcessCaseIDX",
+                D.DELAY_REASON AS "delayReason",
+                TO_CHAR(D.DELAY_TIME) AS "delayTimeStr",
+                D.DELAY_TYPE AS "delayType",
+                TO_CHAR(T.REAL_WORKMINUTES - T.RATED_WORKMINUTES) AS "tempDelayTime",
+                CX.WORK_STATION_BELONG_TEAM_NAME AS "teamOrgName",
+                R.WORK_PLAN_STATUS AS "workPlanStatus",
+                CX.WORKER AS "workerNames"
+		]]>
+	</sql>
+	<!-- 查询工序延误 -->
+	<sql id="findWorkSeqPutOff_from">
+		<![CDATA[
+			FROM (
+				SELECT  A.IDX,  A.NODE_NAME, 
+	                    A.WORK_PLAN_IDX, A.PLAN_BEGIN_TIME, A.PLAN_END_TIME,
+	                    A.REAL_BEGIN_TIME, A.REAL_END_TIME, A.RATED_WORKMINUTES,
+	                    A.REAL_WORKMINUTES, A.NODE_IDX, A.PROCESS_IDX
+                FROM 
+				JXGC_JOB_PROCESS_NODE A				
+				WHERE 
+				A.REAL_WORKMINUTES > A.RATED_WORKMINUTES
+				AND A.RECORD_STATUS = 0	
+				AND A.STATUS != 'TERMINATED'
+				AND A.IS_LEAF = 1
+			) T,
+            JXGC_TRAIN_WORK_PLAN R,
+            JXGC_NODE_CASE_DELAY D,
+            JXGC_WORK_CARD CX			    
+            WHERE 1=1 
+                AND T.IDX = D.NODE_CASE_IDX(+)
+                AND CX.NODE_CASE_IDX = T.IDX
+                AND T.WORK_PLAN_IDX = R.IDX
+                
+		]]>
+	</sql>	
+	<!-- 查询流程实例部份信息 -->
+	<sql id="findProcessInst">
+		<![CDATA[
+			select a.activityinstid, a.processinstid, a.activitydefid, p.processdefid
+			 from (select * from wfprocessinst t 
+			              start with processinstid=processInstID
+			        connect by parentprocid = prior processinstid) p,wfactivityinst a
+			 where a.processinstid = p.processinstid
+			   and a.subprocessid = -1
+			   and a.currentstate = 2
+		]]>
+	</sql>	
+	<!-- 查询父流程实例部份信息 -->
+	<sql id="findParentProcessInst">
+		<![CDATA[
+			select a.activityinstid, a.processinstid,a.activitydefid,p.processdefid from wfprocessinst p,wfactivityinst a
+			 where a.processinstid = p.processinstid and a.subprocessid = -1 and a.currentstate=2 
+       		and exists (select 1 from wfprocessinst b where a.processinstid = b.parentprocid
+       		 and a.activityinstid = b.parentactid and b.processinstid=processInstID)
+		]]>
+	</sql>
+	<!-- 查询在运行的子流程实例ID -->
+	<sql id="findRunningSubProcess">
+		<![CDATA[
+			select to_char(wm_concat(processinstid)) from wfprocessinst where parentprocid = PARENTPROCID and parentactid = PARENTACTID and currentstate=2
+		]]>
+	</sql>
+	<!-- 查询关联的游离流程数量 -->
+	<sql id="findRunningFreeProcess">
+		<![CDATA[
+			select count(1) from jxgc_process_task where current_state = 'CurrentState'
+		]]>
+	</sql>
+	<!-- 查询未完成作业卡数量 -->
+	<sql id="findRunningWorkCard">
+		<![CDATA[
+			select count(1) from jxgc_work_card t where status in('ONGOING','OPENED')
+		]]>
+	</sql>
+	<!-- 查询提票施修流程的人工活动 -->
+	<sql id="findFaultActivity">
+		<![CDATA[
+			select distinct a.activityinstid, a.activityinstname, a.currentstate, a.activitydefid, a.processinstid, w.actionurl
+			 from wfactivityinst a, wfworkitem w where w.activityinstid = a.activityinstid
+			  and a.processinstid = (select processinstid from jxgc_process_task where source_idx='FaultIDX' and token = 'TOKEN'
+			  							and current_state = 'RUNNING'
+			  						)
+			and a.activitytype='manual'
+		]]>
+	</sql>
+	<!-- 统计作业卡任务数量 -->
+	<sql id="statisticsWorkCardTaskCount">
+		<![CDATA[
+    		select
+                count(1)
+            from
+                jxgc_work_card t ,
+                jxgc_train_work_plan r,
+                jxgc_job_process_node c,
+                Jxgc_Worker k 
+            where   t.status ='ONGOING'
+                and k.worker_id = WORKER
+                and k.work_card_idx = t.idx 
+                and r.idx = t.rdp_idx 
+                and c.idx = t.node_case_idx
+                and r.record_status=0 
+                and t.record_status=0 
+                and c.record_status = 0
+		]]>
+	</sql>	
+	<!-- 调度派工统计任务数量 TODO V3.2.1代码重构-->
+	<sql id="statisticsDispatcher">
+	select
+                count(1)
+            from
+                jxgc_work_card t ,
+                JXGC_Train_Enforce_Plan_Rdp r,
+                JXGC_Repair_Activity a 
+            where
+                t.Work_Station_IDX IS NOT NULL 
+                and r.undertake_dep = 'DEPORG'
+                and r.idx = t.rdp_idx 
+                and a.idx = t.repair_activity_idx 
+                and r.record_status=0 
+                and t.record_status=0 
+                and a.record_status=0 
+                and (
+                    status ='OPENED' 
+                    or status = 'INITIALIZE'
+                ) 
+union all                
+                select
+                count(1)
+            from
+                jxgc_work_card t ,
+                JXGC_Train_Enforce_Plan_Rdp r,
+                JXGC_Repair_Activity a 
+            where
+                t.Work_Station_IDX IS NULL 
+                and r.undertake_dep = 'DEPORG'
+                and r.idx = t.rdp_idx 
+                and a.idx = t.repair_activity_idx 
+                and r.record_status=0 
+                and t.record_status=0 
+                and a.record_status=0 
+                and (
+                    status ='OPENED' 
+                    or status = 'INITIALIZE'
+                )
+	</sql>
+	<!-- 工长派工任务统计 -->
+	<sql id="statisticsForeman">
+		<![CDATA[
+			select
+                count(1)
+            from
+                jxgc_work_card t
+            where
+                (
+                    t.HAVE_DEFAULT_PERSON = 0 
+                    or  t.HAVE_DEFAULT_PERSON IS NULL 
+                )
+                and  t.work_station_belong_team = 'TEAM'  
+                and t.record_status=0 
+                and (t.status = 'STATUS)		
+		]]>
+	</sql>
+	<!-- 工序延误通知数据查询 -->
+	<sql id="findStatisticsDelay">
+		<![CDATA[
+			SELECT
+        		  DISTINCT T.IDX, 
+        		  T.NODE_NAME, 
+        		  R.TRAIN_TYPE_SHORTNAME, 
+        		  R.TRAIN_NO,
+        		  R.REPAIR_CLASS_NAME, 
+        		  R.REPAIR_TIME_NAME, 
+				  to_char(t.PLAN_BEGIN_TIME,'yyyy-MM-dd HH24:mi'), 
+	              to_char(t.PLAN_END_TIME,'yyyy-MM-dd HH24:mi'),
+	              to_char(t.REAL_BEGIN_TIME,'yyyy-MM-dd HH24:mi'),
+              	  D.DELAY_REASON
+            FROM (SELECT * 
+                   FROM JXGC_JOB_PROCESS_NODE          
+                  WHERE REAL_WORKMINUTES > RATED_WORKMINUTES
+            		AND RECORD_STATUS = 0	
+            		AND STATUS != 'TERMINATED'
+            		AND IS_LEAF = 1
+                    AND MSG_REMIND !=1) T,
+                JXGC_TRAIN_WORK_PLAN R,
+                JXGC_NODE_CASE_DELAY D,
+                JXGC_WORK_CARD CX             
+          WHERE T.IDX = D.NODE_CASE_IDX(+)                 
+                AND CX.NODE_CASE_IDX = T.IDX     
+                AND T.WORK_PLAN_IDX = R.IDX                  
+                AND R.WORK_PLAN_STATUS = 'ONGOING'
+		]]>
+	</sql>
+	<!-- 查询所有待领取工单的主键 -->
+	<sql id="findWaitReceiveIdx">
+		select
+                t.idx
+            from
+                jxgc_work_card t ,
+                jxgc_train_work_plan r,
+                JXGC_Work_Plan_Repair_Activity a,
+                jxgc_job_process_node c,
+                Jxgc_Worker k             
+        where 1=1 and  t.status in ('开放', '处理中') 
+            and  t.work_station_belong_team = 班组                   
+            and r.idx = t.rdp_idx                  
+            and a.idx(+) = t.repair_activity_idx                  
+            and c.idx = t.node_case_idx                 
+            and k.worker_id = 人员                  
+            and k.work_card_idx = t.idx                  
+            and r.record_status=0                  
+            and t.record_status=0                  
+            and a.record_status(+)=0                  
+            and c.record_status = 0                 
+            and k.record_status=0 
+	</sql>	
+	
+	<!-- 更新作业任务数据状态 -->
+	<sql id="updateWorkTaskComplete">
+		update jxgc_work_task t set t.repair_result = (select to_char(wm_concat(result_name)) from JXGC_Work_Step_Result x 
+		where x.work_step_idx = t.work_step_idx and x.is_default=1 and x.record_status = 0), t.status = '已处理' where t.work_card_idx in (工单主键) and t.status in ('待领取')
+	</sql>
+	<!-- 查询可以完工的工单数据 -->
+	<sql id="findComplateable">
+		select w.work_card_idx, max(w.overtime)
+		  from jxgc_worker w
+		 where w.record_status = 0
+		   and w.status = '已处理'
+		   and w.work_card_idx in (工单主键)
+		   and not exists (select k.work_card_idx
+		          from jxgc_worker k
+		         where k.status in ('处理中','待处理')
+		           AND W.WORK_CARD_IDX = K.WORK_CARD_IDX)
+		 group by w.work_card_idx
+	</sql>
+	<!-- 查询是否质量检查 -->
+	<sql id="findHasQC">
+			SELECT SUM(CT) FROM (
+				SELECT COUNT(R.IDX) CT FROM JXGC_QC_RESULT R WHERE R.RELATION_IDX IN (SELECT IDX FROM JXGC_WORK_TASK WHERE WORK_CARD_IDX = '工单主键') 
+				UNION ALL
+				SELECT COUNT(R.IDX) CT FROM JXGC_QC_RESULT R  WHERE R.RELATION_IDX = '工单主键'
+			)
+	</sql>
+</SqlMap>

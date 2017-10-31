@@ -1,0 +1,71 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@include file="/jsp/jx/include/OmOrganizationSelect.jspf" %>
+<%@include file="/frame/jspf/EosDictEntry.jspf" %>
+<%@page import="com.yunda.jx.jxgc.workplanmanage.entity.JobProcessNode" %>
+<%@page import="com.yunda.jx.jxgc.producttaskmanage.entity.WorkCard" %>
+<%@page import="com.yunda.jxpz.utils.SystemConfigUtil" %>
+<%@page import="com.yunda.jx.jxgc.repairrequirement.manager.WorkSeqManager"%>
+<%@page import="com.yunda.frame.util.JSONUtil"%>
+<%@page import="com.yunda.jx.jxgc.processdef.entity.JobNodeExtConfigDef"%>
+
+<script language="javascript">
+	var PLANMODE_AUTO = '<%=JobProcessNode.PLANMODE_AUTO%>';
+	var PLANMODE_MUNAUL = '<%=JobProcessNode.PLANMODE_MUNAUL%>';
+	var PLANMODE_TIMER = '<%=JobProcessNode.PLANMODE_TIMER%>';  //计划模式 - 定时
+	/** 作业工单状态-初始化 */
+    var WORKCARD_STATUS_NEW = '<%=WorkCard.STATUS_NEW%>';
+    /** 作业工单状态-已开放 */
+    var WORKCARD_STATUS_OPEN = '<%=WorkCard.STATUS_OPEN%>';
+    /** 作业工单状态-处理中 */
+    var WORKCARD_STATUS_HANDLING = '<%=WorkCard.STATUS_HANDLING%>';
+    /** 作业工单状态-已处理 */
+    var WORKCARD_STATUS_HANDLED = '<%=WorkCard.STATUS_HANDLED%>';
+    /** 作业工单状态-工单处理完成，质量检查处理中 */
+    var WORKCARD_STATUS_FINISHED = '<%=WorkCard.STATUS_FINISHED%>';
+    /** 作业工单状态-终止 */
+    var WORKCARD_STATUS_TERMINATED = '<%=WorkCard.STATUS_TERMINATED%>';
+    
+    /** 节点状态 */
+    var NODE_STATUS_UNSTART = "<%=JobProcessNode.STATUS_UNSTART%>";// 未启动
+    
+    var NODE_STATUS_GOING = "<%=JobProcessNode.STATUS_GOING%>";// 运行
+    
+    var NODE_STATUS_COMPLETE = "<%=JobProcessNode.STATUS_COMPLETE%>";// 完成
+    
+    var NODE_STATUS_STOP = "<%=JobProcessNode.STATUS_STOP%>";// 终止
+    
+    var isDefault_yes = <%=com.yunda.jx.jxgc.repairrequirement.entity.WorkStepResult.ISDEFAULT_YES%>;//是否默认的处理结果 是
+   	var isDefault_no = <%=com.yunda.jx.jxgc.repairrequirement.entity.WorkStepResult.ISDEFAULT_NO%>;//是否默认的处理结果 否
+   	
+   	var isNotBlank_yes = "<%=com.yunda.jx.jxgc.repairrequirement.entity.DetectItem.ISNOTBLANK_YES %>";//是否必填 0必填
+    var isNotBlank_no = "<%=com.yunda.jx.jxgc.repairrequirement.entity.DetectItem.ISNOTBLANK_NO %>";//是否必填 1非必填
+    var objList = <%=JSONUtil.write(WorkSeqManager.getWorkSeqQualityControl("null"))%>; 
+    var workDefineType = '<%=WorkCard.EXT_CLASS_DEFINE%>';//自定义工单类型
+    
+    // 作业节点扩展配置
+	var EXT_TRAIN_STATUS = '<%= JobNodeExtConfigDef.EXT_TRAIN_STATUS %>';					// 机车状态设置
+    var EXT_CHECK_CONTROL = '<%= JobNodeExtConfigDef.EXT_CHECK_CONTROL %>';					// 质量检查卡控
+    var EXT_CHECK_TICKET = '<%= JobNodeExtConfigDef.EXT_CHECK_TICKET %>';					// 检查提票卡控
+    
+    var EXT_CHECK_CONTROL_NONE = '<%= JobNodeExtConfigDef.EXT_CHECK_CONTROL_NONE %>';					// 质量检查卡控
+    var EXT_CHECK_CONTROL_CURRENT = '<%= JobNodeExtConfigDef.EXT_CHECK_CONTROL_CURRENT %>';					// 质量检查卡控
+    var EXT_CHECK_CONTROL_ALL = '<%= JobNodeExtConfigDef.EXT_CHECK_CONTROL_ALL %>';			// 质量检查卡控
+    
+    var EXT_CHECK_TICKET_NONE = '<%= JobNodeExtConfigDef.EXT_CHECK_TICKET_NONE %>';					// 检查提票无卡控
+    var EXT_CHECK_TICKET_CURRENT = '<%= JobNodeExtConfigDef.EXT_CHECK_TICKET_CURRENT %>';					// 检查提票卡控
+</script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/js/component/jxgc/PartsBuildSelect.js"></script><%-- 选择零部件及位置的控件 --%>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ux/layout/TableFormLayout.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/js/component/jxgc/JobNodeStationDefSelect.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/js/component/jxgc/JobProcessNodeTreeWin.js"></script>
+
+<script type="text/javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/defineworkcard/WorkEdit_DetectItemSearch.js"></script><!-- 自定义作业工单-检测项 -->
+<script type="text/javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/defineworkcard/WorkEdit_WorkStepEdit_QrKeySearch.js"></script><!-- 自定义作业工单-检测/修项目新增编辑操作 -->
+<script type="text/javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/defineworkcard/WorkEdit_WorkStep_QrKeySearch.js"></script><!-- 自定义作业工单-检测/修项目Grid -->
+<script type="text/javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/defineworkcard/Train_Work_Edit_QrKeySearch.js"></script><!-- 自定义作业工单表单 -->	
+
+<script language="javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/WorkCardEditSearch.js"></script><!-- 作业工单列表 -->
+<script language="javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/JobProcessNodeSearch.js"></script><!-- 新增编辑节点表单 -->
+<script language="javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/JobProcessNodeRelSearch.js"></script><!-- 节点前置关系列表 -->
+<script language="javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/JobNodeExtConfigSearch.js"></script><!-- 扩展配置窗口-->
+<script language="javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/NodeAndWorkCardEditSearch.js"></script><!-- 节点编辑主页面窗口 -->

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础管理 组织机构 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 根据orgid来获取所属的部门org记录, orgid应该是该部门下的子机构 -->
+	<sql id="findDepBySubOrgid">
+	<![CDATA[
+	select tt.*
+	from 
+	(select t.* from om_organization t start with t.orgid=${subOrgid}
+	connect by prior t.parentorgid = t.orgid) tt
+	where tt.orgdegree='plant'
+	order by tt.orgid
+	]]>
+	</sql>
+	
+	<!-- 查找并返回该组织机构的所有下属（包括最末层级）机构 -->
+	<sql id="findSubOrg">
+	<![CDATA[
+	select t.* from om_organization t
+	where t.status='running' and t.orgseq like '${orgseq}%' ${hasSelf}
+	]]>
+	</sql>
+	
+	<!-- 查询特定工作日历的信息 -->
+	<sql id="findWorkCalendarInfoByIdx">
+	<![CDATA[
+		from WorkCalendarInfo where recordStatus = 0 and idx = ?
+	]]>
+	</sql>
+	
+	<!-- 查询默认工作日历的信息 -->
+	<sql id="findDefaultWorkCalendarInfo">
+	<![CDATA[
+		from WorkCalendarInfo where recordStatus = 0 and ISDEFAULT = 1
+	]]>
+	</sql>
+	
+	<!-- 查找指定工作日历的某一天的工作时间数据 -->
+	<sql id="findWorkCalendarDetail">
+	<![CDATA[
+		from WorkCalendarDetail where infoIdx = ? and calDate = ? and recordStatus = 0 
+	]]>
+	</sql>		
+	
+	<!-- 查找指定月度的工作日历信息 -->
+	<sql id="findCurrentCalendar">
+	<![CDATA[
+		from WorkCalendarDetail where infoIdx = ? and calDate like ? and recordStatus = 0 
+	]]>
+	</sql>
+	
+	<!-- 完工日期算法:查询默认工作日历的每天工作毫秒数 -->
+	<sql id="defaultEveryDayWorkTime">
+	<![CDATA[
+		SELECT
+		   '' CALDATE, '' CALDATETYPE,
+		   PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+		   period1,period2,period3,period4,
+          (PERIOD1 + PERIOD2 + PERIOD3 + PERIOD4) defaultEveryDayWorkTime
+	    FROM (SELECT
+	       PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+	    decode(PERIOD1END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD1END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD1BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD1END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD1BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD1,
+	    decode(PERIOD2END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD2END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD2BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD2END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD2BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD2,
+      decode(PERIOD3END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD3END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD3BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD3END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD3BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD3,
+      decode(PERIOD4END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD4END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD4BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD4END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD4BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD4
+	    FROM JCGY_WORK_CALENDAR_INFO WHERE RECORD_STATUS = 0 and ISDEFAULT = 1)
+	]]>
+	</sql>
+	<!-- 完工日期算法:查询特定工作日历的每天工作毫秒数 -->
+	<sql id="getEveryDayWorkTimeByInfoIdx">
+	<![CDATA[
+		SELECT
+		   '' CALDATE, '' CALDATETYPE,
+		   PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+		   period1,period2,period3,period4,
+          (PERIOD1 + PERIOD2 + PERIOD3 + PERIOD4) defaultEveryDayWorkTime
+	    FROM (SELECT
+	       PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+	    decode(PERIOD1END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD1END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD1BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD1END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD1BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD1,
+	    decode(PERIOD2END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD2END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD2BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD2END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD2BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD2,
+      decode(PERIOD3END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD3END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD3BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD3END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD3BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD3,
+      decode(PERIOD4END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD4END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD4BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE('20121224'||PERIOD4END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE('20121224'||PERIOD4BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD4
+	    FROM JCGY_WORK_CALENDAR_INFO WHERE RECORD_STATUS = 0 and idx = '#INFOIDX#')
+	]]>
+	</sql>
+	<!-- 完工日期算法:根据起始和结束日期,查询在该段时间范围内每天的工作时间(毫秒数),
+		只需要查寻出非默认工作时间填写了值的以及设置为非工作日的, 至于默认工作时间的不需要查 -->
+	<sql id="getStartToEndWorkTimeInfo">
+	<![CDATA[
+		SELECT 
+		   CALDATE,CALDATETYPE,
+		   PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+      	   period1,period2,period3,period4, 
+		   defaultEveryDayWorkTime
+		FROM (
+		SELECT CALDATE,CALDATETYPE,
+		   PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+      		period1,period2,period3,period4,
+		(PERIOD1 + PERIOD2 + PERIOD3 + PERIOD4) defaultEveryDayWorkTime
+	    FROM (SELECT CALDATE,CALDATETYPE,
+	    PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+	    decode(PERIOD1END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD1END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD1BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD1END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD1BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD1,
+	    decode(PERIOD2END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD2END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD2BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD2END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD2BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD2,
+      decode(PERIOD3END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD3END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD3BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD3END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD3BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD3,
+      decode(PERIOD4END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD4END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD4BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD4END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD4BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD4
+	    FROM JCGY_WORK_CALENDAR_DETAIL WHERE RECORD_STATUS = 0 
+        and to_date(CALDATE,'YYYY-MM-DD') between to_date('#BEGINDATE#','YYYY-MM-DD') and to_date('#ENDDATE#','YYYY-MM-DD')
+        order by caldate)
+        ) WHERE (CALDATETYPE = 0 AND defaultEveryDayWorkTime <> 0) OR CALDATETYPE = 1 
+	]]>
+	</sql>		
+	<!-- 完工日期算法:根据起始、结束日期和日历主键,查询在该段时间范围内每天的工作时间(毫秒数),
+		只需要查寻出非默认工作时间填写了值的以及设置为非工作日的, 至于默认工作时间的不需要查 -->
+	<sql id="getStartToEndWorkTimeInfoByInfoIdx">
+	<![CDATA[
+		SELECT 
+		   CALDATE,CALDATETYPE,
+		   PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+      	   period1,period2,period3,period4, 
+		   defaultEveryDayWorkTime
+		FROM (
+		SELECT CALDATE,CALDATETYPE,
+		   PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+      		period1,period2,period3,period4,
+		(PERIOD1 + PERIOD2 + PERIOD3 + PERIOD4) defaultEveryDayWorkTime
+	    FROM (SELECT CALDATE,CALDATETYPE,
+	    PERIOD1BEGIN,PERIOD1END,
+		   PERIOD2BEGIN,PERIOD2END,
+		   PERIOD3BEGIN,PERIOD3END,
+		   PERIOD4BEGIN,PERIOD4END,
+	    decode(PERIOD1END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD1END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD1BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD1END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD1BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD1,
+	    decode(PERIOD2END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD2END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD2BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD2END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD2BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD2,
+      decode(PERIOD3END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD3END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD3BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD3END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD3BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD3,
+      decode(PERIOD4END,'23:59:59',
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD4END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD4BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000) + 1000,
+             ROUND(TO_NUMBER(TO_DATE(CALDATE||PERIOD4END,'YYYY-MM-DD HH24:MI:SS') -  TO_DATE(CALDATE||PERIOD4BEGIN,'YYYY-MM-DD HH24:MI:SS'))*24*60*60*1000)) PERIOD4
+	    FROM JCGY_WORK_CALENDAR_DETAIL WHERE RECORD_STATUS = 0 
+        and to_date(CALDATE,'YYYY-MM-DD') between to_date('#BEGINDATE#','YYYY-MM-DD') and to_date('#ENDDATE#','YYYY-MM-DD')
+        and INFOIDX='#INFOIDX#'
+        order by caldate)
+        ) WHERE (CALDATETYPE = 0 AND defaultEveryDayWorkTime <> 0) OR CALDATETYPE = 1 
+	]]>
+	</sql>	
+	<!-- 完工日期算法:获得指定日期当日的工作时间表 -->
+	<sql id="findSpecifyDayWorkTime">
+	<![CDATA[
+		from WorkCalendarDetail where calDate = ? and recordStatus = 0 
+	]]>
+	</sql>
+	<!-- 查询工作日历列表 -->	
+	<sql id="queryCalendarInfoList">
+		<![CDATA[
+			select t.idx as "idx",
+		       t.calendarname as "calendarname",
+		       substr(t.period1begin, 0, 5) || '~' || substr(decode(t.period1end,'23:59:59','00:00:00',t.period1end), 0, 5) as "period1Begin",
+		       substr(t.period2begin, 0, 5) || '~' || substr(decode(t.period2end,'23:59:59','00:00:00',t.period2end), 0, 5) as "period2Begin",
+		       substr(t.period3begin, 0, 5) || '~' || substr(decode(t.period3end,'23:59:59','00:00:00',t.period3end), 0, 5) as "period3Begin",
+		       substr(t.period4begin, 0, 5) || '~' || substr(decode(t.period4end,'23:59:59','00:00:00',t.period4end), 0, 5) as "period4Begin",
+		       t.isdefault as "isdefault",
+		       t.remark as "remark"
+		  from jcgy_work_calendar_info t
+		  where t.record_status=0
+		]]>
+	</sql>
+</SqlMap>

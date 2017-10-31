@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 检修过程-作业卡，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>	
+	<!-- 生产任务查看：作业卡列表（三检一验未完成，显示状态为未完成）select部分  -->
+	<sql id="getWorkCardByQuantity-select">
+	<![CDATA[				
+		select 
+		b.WORK_CARD_NAME as "workCardName",
+		case b.status when '#COMPLETE#' then 
+		decode((select count(a.idx) from JXGC_PROCESS_TASK a 
+		where a.CURRENT_STATE != 'COMPLETE' and a.SOURCE_IDX= b.idx 
+		and token = '#QualityControlCheck#'),0,'已完成','未完成')
+		else '未完成' end as "status",n.node_case_name as "nodeCaseName"
+	]]>
+	</sql>
+	<!-- 根据工艺节点实例主键更新作业工单工位信息  -->
+	<sql id="updateWorkStationForDispatchByNode">
+	<![CDATA[
+		update JXGC_Work_Card c set
+			   c.work_station_idx = '#workStationIDX#',
+		       c.work_station_name = '#workStationName#',		
+		       c.HAVE_DEFAULT_PERSON = 0,
+		       C.UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		 	   C.UPDATOR = #updator# 
+		 where c.node_case_idx = '#nodeCaseIDX#' and c.record_Status = 0 and c.status in ('#STATUS_OPEN#','#STATUS_NEW#','#STATUS_HANDLING#')
+	]]>	
+	</sql>
+	<!-- 根据工艺节点实例主键更新作业工单工位等信息  -->
+	<sql id="updateWorkCardForDispatchByNode">
+	<![CDATA[
+		update JXGC_Work_Card c 
+		   set c.work_station_idx = '#workStationIDX#',
+			   c.work_station_name = '#workStationName#',
+			   c.work_station_belong_team = #workStationBelongTeam#,
+		       c.work_station_belong_team_name = '#workStationBelongTeamName#',
+		       c.HAVE_DEFAULT_PERSON = (select case count(1) when 0 then 0 else 1 end from jxgc_work_station_worker 
+		 								where WORK_STATION_IDX = '#workStationIDX#' and record_status = 0),
+		 	   C.UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		 	   C.UPDATOR = #updator# 
+		 where c.node_case_idx = '#nodeCaseIDX#' and c.record_Status = 0 and c.status in ('#STATUS_OPEN#','#STATUS_NEW#','#STATUS_HANDLING#')
+	]]>	
+	</sql>
+	<!-- 根据作业工单主键更新默认作业人员信息  -->
+	<sql id="updateWorkerForDispatch">
+	<![CDATA[
+		insert into JXGC_WORKER 
+		(IDX,WORK_CARD_IDX,WORKER_ID,WORKER_NAME,WORKER_CODE,WORKER_TREAM_IDX,WORKER_TREAM_NAME,
+		WORKER_TREAM_SEQ)
+		select sys_guid(),a.idx,a.worker_id,a.worker_name,a.worker_code, #workStationBelongTeam#, '#workStationBelongTeamName#','#workStationBelongTeamSeq#'
+		from (select c.idx, k.worker_id, k.worker_name, k.worker_code 
+		from  jxgc_work_station_worker k,om_employee e,jxgc_work_card c
+		where k.WORK_STATION_IDX = '#workStationIDX#'
+		and e.empid = k.worker_id and k.record_status=0 and c.idx ='#id#') a 
+	]]>	
+	</sql>
+	<!-- 根据流程节点实例主键更新默认作业人员信息  -->
+	<sql id="insertWorkerForDispatchByNode">
+	<![CDATA[
+		insert into JXGC_WORKER 
+					(IDX,
+					 WORK_CARD_IDX,
+					 WORKER_ID,
+					 WORKER_NAME,
+					 WORKER_CODE,
+					 WORKER_TREAM_IDX,
+					 WORKER_TREAM_NAME,
+					 WORKER_TREAM_SEQ)
+		     select sys_guid(),
+		     		a.idx,
+		     		a.worker_id,
+		     		a.worker_name,
+		     		a.worker_code,
+		     		#workStationBelongTeam#, 
+		     		'#workStationBelongTeamName#',
+					'#workStationBelongTeamSeq#'
+		      from (select c.idx, k.worker_id, k.worker_name, k.worker_code 
+					  from  jxgc_work_station_worker k,om_employee e,jxgc_work_card c
+					 where k.WORK_STATION_IDX = '#workStationIDX#'							
+					 and e.empid = k.worker_id and k.record_status=0 and c.Node_Case_IDX = '#nodeCaseIDX#'
+					 and c.record_status = 0 and c.status in ('#STATUS_OPEN#','#STATUS_NEW#','#STATUS_HANDLING#')) a 
+	]]>	
+	</sql>
+	<!-- 根据多个工艺节点实例主键更新作业工单工位等信息  -->
+	<sql id="updateWorkCardForBatchDispatch">
+	<![CDATA[
+		update JXGC_Work_Card c set
+		c.work_station_idx = '#workStationIDX#',
+		c.work_station_name = '#workStationName#',
+		c.work_station_belong_team = #workStationBelongTeam#,
+		c.work_station_belong_team_name = '#workStationBelongTeamName#',
+		c.HAVE_DEFAULT_PERSON = (select case count(1) when 0 then 0 else 1 end from jxgc_work_station_worker 
+		 where WORK_STATION_IDX = '#workStationIDX#' and record_status = 0)
+		 where c.node_case_idx in #nodeCaseIDXS# and c.record_Status = 0 and c.status in ('#STATUS_OPEN#','#STATUS_NEW#','#STATUS_HANDLING#')
+	]]>	
+	</sql>
+	<!-- 根据多个流程节点实例主键更新默认作业人员信息  -->
+	<sql id="insertWorkerForDispatchByNodes">
+	<![CDATA[
+		insert into JXGC_WORKER 
+					(IDX,
+					 WORK_CARD_IDX,
+					 WORKER_ID,
+					 WORKER_NAME,
+					 WORKER_CODE,
+					 WORKER_TREAM_IDX,
+					 WORKER_TREAM_NAME,
+					 WORKER_TREAM_SEQ)
+		      select sys_guid(),
+		      		 a.idx,
+		      		 a.worker_id,
+		      		 a.worker_name,
+		      		 a.worker_code, 
+		      		 #workStationBelongTeam#, 
+		      		 '#workStationBelongTeamName#',
+		      		 '#workStationBelongTeamSeq#'
+		        from (select c.idx, k.worker_id, k.worker_name, k.worker_code 
+					    from jxgc_work_station_worker k,om_employee e,jxgc_work_card c
+					   where k.WORK_STATION_IDX  = '#workStationIDX#'							
+							 and e.empid = k.worker_id and k.record_status=0 
+							 and c.Node_Case_IDX in #nodeCaseIDXS# and c.record_status = 0 
+							 and c.status in ('#STATUS_OPEN#','#STATUS_NEW#','#STATUS_HANDLING#')) a 
+	]]>	
+	</sql>
+	<!-- 根据多个工艺节点实例主键更新作业工单工位信息  -->
+	<sql id="updateWorkStationForBatchDispatch">
+	<![CDATA[
+		update JXGC_Work_Card c set
+		c.work_station_idx = '#workStationIDX#',
+		c.work_station_name = '#workStationName#',		
+		c.HAVE_DEFAULT_PERSON = 0
+		 where c.node_case_idx in #nodeCaseIDXS# and c.record_Status = 0 and c.status in ('#STATUS_OPEN#','#STATUS_NEW#')
+	]]>	
+	</sql>
+	<!-- 更新作业工单所属节点 -->
+	<sql id="updateForChangeNode">
+	<![CDATA[
+			UPDATE JXGC_WORK_CARD
+			   SET NODE_CASE_IDX = '#nodeIDX#',
+			       STATUS = '#status#',
+			       REAL_BEGIN_TIME = #realBeginTime#,
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator# 
+			 WHERE IDX IN #IDXS# AND RECORD_STATUS = 0 
+	]]>
+	</sql>
+	<!-- 根据工艺节点实例主键更新作业工单工位等信息  -->
+	<sql id="updateWorkCardForDispatch">
+	<![CDATA[
+		UPDATE JXGC_WORK_CARD C 
+		   SET C.WORK_STATION_IDX = '#workStationIDX#',
+			   C.WORK_STATION_NAME = '#workStationName#',
+			   C.WORK_STATION_BELONG_TEAM = #workStationBelongTeam#,
+		       C.WORK_STATION_BELONG_TEAM_NAME = '#workStationBelongTeamName#',
+		       c.HAVE_DEFAULT_PERSON = (SELECT CASE COUNT(1) WHEN 0 THEN 0 ELSE 1 END FROM JXGC_WORK_STATION_WORKER 
+		                                WHERE WORK_STATION_IDX = '#workStationIDX#' AND RECORD_STATUS = 0),
+		 	   C.UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		 	   C.UPDATOR = #updator# 
+		 WHERE C.IDX IN #IDXS# AND C.RECORD_STATUS = 0 AND C.STATUS IN ('#STATUS_OPEN#','#STATUS_NEW#','#STATUS_HANDLING#')
+	]]>	
+	</sql>
+	<!-- 根据作业工单主键更新默认作业人员信息  -->
+	<sql id="insertWorkerForDispatchByWorkCard">
+	<![CDATA[
+		insert into JXGC_WORKER 
+					(IDX,
+					 WORK_CARD_IDX,
+					 WORKER_ID,
+					 WORKER_NAME,
+					 WORKER_CODE,
+					 WORKER_TREAM_IDX,
+					 WORKER_TREAM_NAME,
+					 WORKER_TREAM_SEQ)
+			  select sys_guid(),
+			  		 a.idx,
+			  		 a.worker_id,
+			  		 a.worker_name,
+			  		 a.worker_code, 
+			  		 #workStationBelongTeam#, 
+			  		 '#workStationBelongTeamName#',
+			  		 '#workStationBelongTeamSeq#'
+		       from (select c.idx, k.worker_id, k.worker_name, k.worker_code, e.empid 
+					 from  jxgc_work_station_worker k,om_employee e,jxgc_work_card c
+					 where k.WORK_STATION_IDX = '#workStationIDX#'					
+					 and e.empid = k.worker_id and k.record_status=0 and c.idx in #IDXS# and c.record_status = 0 and c.status in ('#STATUS_OPEN#','#STATUS_NEW#','#STATUS_HANDLING#')) a 
+	]]>	
+	</sql>
+	<!-- 更新作业工单工位信息  -->
+	<sql id="updateWorkStationForDispatch">
+	<![CDATA[
+		update JXGC_Work_Card c set
+			   c.work_station_idx = '#workStationIDX#',
+		       c.work_station_name = '#workStationName#',		
+		       c.HAVE_DEFAULT_PERSON = 0,
+		       C.UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+		 	   C.UPDATOR = #updator# 
+		 where c.idx in #IDXS# and c.record_Status = 0 and c.status in ('#STATUS_OPEN#','#STATUS_NEW#')
+	]]>	
+	</sql>
+</SqlMap>

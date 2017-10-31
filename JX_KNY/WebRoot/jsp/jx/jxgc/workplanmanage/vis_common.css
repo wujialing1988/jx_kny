@@ -1,0 +1,123 @@
+body, html, input {
+  	font-family: sans-serif;
+  	font-size: 12pt;
+}
+
+/* 设置timeline奇数列的背景色 */
+
+ .vis-time-axis .grid.vis-odd{
+  	background: #f5f5f5;
+}
+
+/* 设置timeline时间轴坐标的字体加粗 */
+ .vis-time-axis .vis-text{
+  	font-weight: bold;
+}
+
+/* 设置timeline周末的背景色为绿色，字体为白色 */
+  .vis-time-axis .vis-grid.vis-saturday,
+  .vis-time-axis .vis-grid.vis-sunday {
+	background: #C7EDCC;
+}
+  .vis-time-axis .vis-text.vis-saturday,
+  .vis-time-axis .vis-text.vis-sunday {
+  color: white;
+}
+.vis-item {
+	color:#FFF;
+  	box-shadow: 2px 2px 10px gray;
+}
+.group_gray { background-color: #F0F0F0; }
+.group_white { background-color: white; }
+
+/* 未开工，未处理显示样式定义 */
+.vis-item.wkg {
+	color: #FFF;
+	background-color: #999999;
+    border-color: black;
+}
+
+/* 已开工，处理中显示样式定义 */
+.vis-item.ykg {
+	color: #FFF;
+	background-color: #fec80c;
+    border-color: black;
+}
+
+/* 已延期显示样式定义 */
+.vis-item.yyq {
+	color: #FFF;
+	background-color: #ff0000;
+  	border-color: black;
+}
+
+/* 已完工,已处理显示样式定义 */
+.vis-item.ywg {
+	color: #FFF;
+	background-color: #008000;
+  	border-color: black;
+}
+
+/* 申请延期 显示样式定义 */
+.vis-item.sqyq {
+	color: black;
+	background-color:#FF7F6E;
+  	border-color: #ff0000;
+}
+/* 计划对比显示样式定义 */
+.vis-item.plan {
+	color: black !important;
+	background-color: #fffff0;
+    border-color: fffff0;
+}
+
+/* 条目被选选择时的样式定义 */
+.vis-item.vis-selected {
+    background-color: #7cfc00;
+    border-color: black;
+    color: black !important;
+  	/*text-align: center;*/
+}
+   
+/* 加小号字体 */
+.xsmallFont {
+	font-size: xx-small;
+}
+/* 小号字体 */
+.smallFont {
+	font-size: x-small;
+}
+/* 中号字体 */
+.middleFont {
+	font-size: small;
+}
+/* 加粗字体 */
+.boldFont {
+	font-weight: bold;
+}
+
+/* 页面链接被点击后的显示样式 */
+a:VISITED {
+	color: blue;
+}
+a:HOVER {
+	font-weight:bold;
+}
+
+/* 图例样式 */
+.status_example { color:#FFF; padding:5px 15px; }
+.status_example_wkg { background-color:#999999; }
+.status_example_ykg { background-color:#fec80c; }
+.status_example_yyq { background-color:#ff0000; }
+.status_example_ywg { background-color:#008000; }
+.status_example_sqyq {color: black;	background-color:#FF7F6E; 	border-color: #ff0000;}
+
+.status_example_wkg_zb { background-color:#999999; }
+.status_example_ykg_zb { background-color:#00BFFF; }
+.status_example_ywg_zb { background-color:#008000; }
+
+/* 车辆状态 */
+.status_example_yx_zb { background-color:#99CC00; }
+.status_example_lj_zb { background-color:#00BFFF; }
+.status_example_jx_zb { background-color:#33CCCC; }
+.status_example_kc_zb { background-color:#FF6600; }

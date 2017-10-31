@@ -1,0 +1,12 @@
+<!-- 整备V3.2 状态历史 Sql语句映射管理，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 更新出入段台账对应的状态历史信息 -->
+	<sql id="updateStationHIS">
+	<![CDATA[
+		UPDATE TWT_TRAIN_STATUS_HIS
+   		   SET END_TIME = TO_DATE('#endTime#', 'yyyy-mm-dd hh24:mi:ss')
+    	 WHERE TRAIN_ACCESS_ACCOUNT_IDX IN #IDXS# 
+           AND END_TIME IS NULL 	  
+	]]>
+	</sql>
+</SqlMap>	

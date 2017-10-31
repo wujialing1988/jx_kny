@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlMap>
+	<!-- 配件检修 质量检查管理 -->
+	<!-- 查询当前人员的质量检查项列表 -->
+	<sql id="getQCList">
+		<![CDATA[
+			SELECT 
+				A.QC_ITEM_NO AS "qcItemNo", 
+				A.IDX AS "idx",
+				A.QC_ITEM_NAME AS "qcItemName",
+				D.RECORD_CARD_DESC AS "recordCardDesc", 
+				D.WORK_EMPNAME AS "workEmpName",
+				D.IDX AS "rdpRecordCardIDX",
+				B.RDP_IDX AS "rdpIDX",
+				D.RECORD_CARD_NO AS "recordCardNo",
+				TO_CHAR(D.WORK_STARTTIME, 'YYYY-MM-DD HH24:MI') AS "workStartTime",
+				TO_CHAR(D.WORK_ENDTIME, 'YYYY-MM-DD HH24:MI') AS "workEndTime"							 
+		]]>
+	</sql>
+	<!-- 查询当前人员的所有质量检查项列表 -->
+	<sql id="getAllQCList">
+		<![CDATA[
+			SELECT 
+				A.IDX			 
+		]]>
+	</sql>
+	<!-- 查询当前人员的质量检查项列表from部分 -->
+	<sql id="getQCListFrom">
+		<![CDATA[			
+			 FROM 
+			(SELECT IDX, RDP_RECORD_CARD_IDX, QC_ITEM_NO, QC_ITEM_NAME 
+			 FROM PJJX_PARTS_RDP_QR WHERE STATUS = '#STATUS_DCL#' AND RECORD_STATUS = 0 #CHECKWAY#) A,
+			(SELECT RDP_RECORD_CARD_IDX, QC_ITEM_NO, RDP_IDX 
+			 FROM PJJX_PARTS_RDP_QC_PARTICIPANT WHERE QC_EMPID = #CURRENTEMPID# AND RECORD_STATUS = 0) B,
+       		(SELECT IDX, RECORD_CARD_DESC, WORK_EMPNAME, RECORD_CARD_NO, WORK_STARTTIME, WORK_ENDTIME 
+       		 FROM PJJX_PARTS_RDP_RECORD_CARD WHERE #STATUS_FINISHED# AND RECORD_STATUS = 0) D
+			WHERE A.RDP_RECORD_CARD_IDX = B.RDP_RECORD_CARD_IDX 
+			 AND  A.QC_ITEM_NO = B.QC_ITEM_NO
+			 AND  A.RDP_RECORD_CARD_IDX = D.IDX 
+		]]>
+	</sql>
+	<!-- 根据查询条件全部修改质检结果的状态 -->
+	<sql id="updateAllFinishQCResult">
+		<![CDATA[
+		   update PJJX_PARTS_RDP_QR 
+			  SET STATUS = '#STATUS_YCL#', 
+				  QR_EMPID = #empid#, 
+				  QR_EMPNAME = '#empname#',
+				  QR_RESULT = '#qrResult#' ,
+				  QR_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'), 
+				  UPDATOR = #updator#, 
+				  UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss')      
+      		WHERE STATUS = '#STATUS_DCL#' 
+		      AND RECORD_STATUS = 0  
+		      AND CHECK_WAY = #checkWay# 
+		      AND #idx# 
+		]]>
+	</sql>
+	<!-- 根据配件检修任务单idx终止质量检验结果 -->
+	<sql id="updateTerminateQCResult">
+		<![CDATA[
+			UPDATE PJJX_PARTS_RDP_QR 
+			   SET STATUS = '#STATUS_YZZ#',
+			       UPDATE_TIME = TO_DATE('#updateTime#', 'yyyy-mm-dd hh24:mi:ss'),
+			       UPDATOR = #updator#
+			WHERE RDP_RECORD_CARD_IDX IN 
+				  (SELECT IDX FROM PJJX_PARTS_RDP_RECORD_CARD WHERE RECORD_STATUS = 0 AND RDP_IDX = '#rdpIDX#' )	
+			  AND RECORD_STATUS = 0		
+			  AND STATUS = '#STATUS_DCL#'
+		]]>
+	</sql>
+	<!-- 查询节点下关联工单的质量检查项,可扩展查询字段 -->
+	<sql id="getQCListByNode">
+		<![CDATA[
+     	   SELECT IDX
+		     FROM PJJX_PARTS_RDP_QR
+		    WHERE RECORD_STATUS = 0 AND RDP_RECORD_CARD_IDX IN
+		   (SELECT IDX FROM PJJX_PARTS_RDP_RECORD_CARD WHERE RECORD_STATUS = 0 AND RDP_NODE_IDX IN #nodeIDXS#)		     
+		]]>
+	</sql>
+	<!-- 查询配件检修任务单下关联工单的质量检查项,可扩展查询字段 -->
+	<sql id="getQCListByRdp">
+		<![CDATA[
+     	   SELECT IDX
+		     FROM PJJX_PARTS_RDP_QR
+		    WHERE RECORD_STATUS = 0 AND RDP_RECORD_CARD_IDX IN
+		   (SELECT IDX FROM PJJX_PARTS_RDP_RECORD_CARD WHERE RECORD_STATUS = 0 AND RDP_IDX = '#rdpIDX#')		     
+		]]>
+	</sql>	
+	
+	<!-- 查询当前人员的质量检查项数量from部分 -->
+	<sql id="getQCCountFrom">
+		<![CDATA[			
+			 FROM 
+			(SELECT IDX, RDP_RECORD_CARD_IDX, QC_ITEM_NO, QC_ITEM_NAME 
+			 FROM PJJX_PARTS_RDP_QR WHERE STATUS = '#STATUS_DCL#' AND RECORD_STATUS = 0 #CHECKWAY#) A,
+			(SELECT RDP_RECORD_CARD_IDX, QC_ITEM_NO, RDP_IDX 
+			 FROM PJJX_PARTS_RDP_QC_PARTICIPANT WHERE QC_EMPID = #CURRENTEMPID# AND RECORD_STATUS = 0) B,
+       		(SELECT IDX, RECORD_CARD_DESC, WORK_EMPNAME, RECORD_CARD_NO, WORK_STARTTIME, WORK_ENDTIME 
+       		 FROM PJJX_PARTS_RDP_RECORD_CARD WHERE #STATUS_FINISHED# AND RECORD_STATUS = 0) D,
+       		 pjjx_parts_rdp E,
+          	 pjwz_parts_account F
+			WHERE A.RDP_RECORD_CARD_IDX = B.RDP_RECORD_CARD_IDX 
+			 AND  A.QC_ITEM_NO = B.QC_ITEM_NO
+			 AND  A.RDP_RECORD_CARD_IDX = D.IDX 
+			  and B.rdp_idx = E.idx
+  			 and E.parts_no = F.parts_no
+   			and F.parts_status in ('01020201')
+		]]>
+	</sql>
+	
+	
+	<!-- 获取配件检修作业计划对应的质量检测项结果 -->
+	<sql id="getQRRdpList">
+		<![CDATA[			
+			  select rownum as idx,A.* from (
+				  select  c.rdp_idx, qr.qc_item_idx , qr.qc_item_no ,qr.qc_item_name,r.qc_empid,r.qc_empname,count(qr.idx) as qrCount 
+				  from PJJX_Parts_Rdp_QR qr 
+				  inner join PJJX_Parts_Rdp_Record_Card c on c.idx = qr.rdp_record_card_idx
+				  inner join PJJX_Parts_Rdp_QC_Participant r on c.idx = r.rdp_record_card_idx and qr.qc_item_no = r.qc_item_no 
+				  where c.record_status = 0 and qr.record_status = 0 and r.record_status = 0 and qr.status = '01'
+				  group by qr.qc_item_idx , qr.qc_item_no ,qr.qc_item_name ,c.rdp_idx ,r.qc_empid,r.qc_empname
+			  ) A where A.qc_empid = '#EMP_ID#'
+		]]>
+	</sql>
+	
+		<!-- 获取配件检修记录单对应的质量检测项结果 -->
+	<sql id="getQRRecordList">
+		<![CDATA[			
+			select rownum as idx,A.* from (
+				  select  c.rdp_idx,c.rdp_record_idx, qr.qc_item_idx , qr.qc_item_no ,qr.qc_item_name,r.qc_empid,r.qc_empname,count(qr.idx) as qrCount 
+				  from PJJX_Parts_Rdp_QR qr 
+				  inner join PJJX_Parts_Rdp_Record_Card c on c.idx = qr.rdp_record_card_idx
+				  inner join PJJX_Parts_Rdp_QC_Participant r on c.idx = r.rdp_record_card_idx and qr.qc_item_no = r.qc_item_no
+				  where c.record_status = 0 and qr.record_status = 0 and r.record_status = 0 and qr.status = '01'
+				  group by qr.qc_item_idx , qr.qc_item_no ,qr.qc_item_name ,c.rdp_idx ,r.qc_empid,r.qc_empname ,c.rdp_record_idx
+			  ) A where A.qc_empid = '#EMP_ID#' and A.rdp_idx = '#RDP_IDX#'
+		]]>
+	</sql>
+	
+	
+	
+</SqlMap>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- coreframe基础管理-其他管理，Sql语句映射，第一行不能是注释否则会解析错误  -->
+<SqlMap>
+	<!-- 查询承修车型： -->
+	<sql id="findTrainType">
+	<![CDATA[
+		select t.train_type_idx,t.train_type_shortname,p.t_type_name
+		from JCZL_UNDERTAKE_TRAIN_TYPE  t,J_JCGY_TRAIN_TYPE p
+		where t.train_type_idx=p.t_type_id and t.record_status=0 
+	]]>
+	</sql>
+	
+	<!-- 查询承修修程： -->
+	<sql id="findXC">
+	<![CDATA[
+		select t.TRAIN_TYPE_IDX,t.xc_name,t.xc_id from v_jczl_train_rc t
+		where ${where}
+		order by t.xc_name asc
+	]]>
+	</sql>
+	
+	<!-- 根据条件查询统计配件数量： -->
+	<sql id="getPartsCounts">
+	<![CDATA[
+		select idx
+		  from pjwz_parts_account
+		 where parts_type_idx = ${partsTypeIDX}
+		   and record_status = 0
+		   and parts_status in (${partsStatus})
+	]]>
+	</sql>
+	<!-- 查询承修修程： -->
+	<sql id="findPartsClass">
+	<![CDATA[
+		select t.dictid,t.dictname
+		from eos_dict_entry t
+		where t.dicttypeid='PJWZ_PARTS_CLASS'
+	]]>
+	</sql>
+</SqlMap>

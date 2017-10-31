@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 肯尼亚项目新增的sql  -->
+<SqlMap>
+
+	<!-- 执行修程预警的数据的插入操作（客车） -->
+	<sql id="insertKCRepairClassWarning">
+	<![CDATA[
+				INSERT INTO K_REPAIR_CLASS_WARNING(
+					IDX, 
+					TRAIN_TYPE_IDX, 
+					TRAIN_TYPE, 
+					TRAIN_NO, 
+					REPAIR_CLASS, 
+					REPAIR_CLASS_NAME, 
+					REPAIR_ORDER, 
+					REPAIR_ORDER_NAME, 
+					IS_END, 
+					T_VEHICLE_TYPE, 
+					START_TIME
+					)
+					select 
+					SYS_GUID(),
+					A.train_type_idx,
+					A.train_type_shortname,
+					A.train_no,
+					A.repair_class,
+					A.repair_class_name,
+					A.repair_order,
+					A.repair_order_name,
+					0,
+					'20',
+					sysdate
+					from (
+					select a.train_type_idx,a.train_type_shortname,a.train_no,a.totalrm,s.repair_class,s.repair_class_name,s.repair_order,s.repair_order_name,s.min_running_km,s.max_running_km from (
+					select t.train_type_idx , t.train_type_shortname , t.train_no , k.new_running_km + k.recently_running_km as totalrm from JCZL_TRAIN t 
+					inner join JCJX_RUNNING_KM k on t.train_type_idx = k.train_type_idx and t.train_no = k.train_no
+					where t.record_status = 0 and t.t_vehicle_type = '20'  
+					and exists (select 1 from JCJX_REPAIR_STANDARD s where s.train_type_idx = t.train_type_idx)
+					) a left join JCJX_REPAIR_STANDARD s on s.train_type_idx = a.train_type_idx and a.totalrm between s.min_running_km and s.max_running_km
+					) A where not exists (select 1  from K_REPAIR_CLASS_WARNING w where w.train_type_idx = A.train_type_idx and w.train_no = A.train_no and w.repair_class = A.repair_class and w.repair_order = A.repair_order)
+					  and not exists (select 1 from JXGC_Train_Work_Plan p where p.train_type_idx = A.train_type_idx and p.train_no = A.train_no and p.repair_class_idx = A.repair_class and p.repair_time_idx = A.repair_order 
+					      and p.record_status = 0 and ( p.work_plan_status = 'ONGOING' or p.work_plan_status = 'COMPLETE' )
+					      ) 
+					  and A.max_running_km - A.totalrm < #LIMIT_VALUE#
+	]]>
+	</sql>
+	
+	<!-- 查询修程预警（客车） -->
+	<sql id="findKCRepairClassWarningList">
+	<![CDATA[
+			select w.idx , w.train_type_idx , w.train_type , w.train_no , w.repair_class , w.repair_class_name , w.repair_order , w.repair_order_name,
+		         k.new_running_km + k.recently_running_km as totalrm , s.min_running_km, s.max_running_km
+		   from K_REPAIR_CLASS_WARNING w 
+		  left join JCJX_RUNNING_KM k on w.train_type_idx = k.train_type_idx and w.train_no = k.train_no
+		  left join JCJX_REPAIR_STANDARD s on w.train_type_idx = s.train_type_idx and w.repair_class = s.repair_class and w.repair_order = s.repair_order
+		  where w.is_end = 0 and w.t_vehicle_type = '20' 
+		  and not exists (select 1 from JXGC_Train_Work_Plan p where p.train_type_idx = w.train_type_idx and p.train_no = w.train_no and p.repair_class_idx = w.repair_class and p.repair_time_idx = w.repair_order 
+		      and p.record_status = 0 and ( p.work_plan_status = 'ONGOING' or p.work_plan_status = 'COMPLETE' )
+		      ) 
+	]]>
+	</sql>	
+	
+	<!-- 执行修程预警的数据的插入操作（货车） -->
+	<sql id="insertHCRepairClassWarning">
+	<![CDATA[
+				INSERT INTO K_REPAIR_CLASS_WARNING(
+					IDX, 
+					TRAIN_TYPE_IDX, 
+					TRAIN_TYPE, 
+					TRAIN_NO, 
+					REPAIR_CLASS, 
+					REPAIR_CLASS_NAME, 
+					REPAIR_ORDER, 
+					REPAIR_ORDER_NAME, 
+					IS_END, 
+					T_VEHICLE_TYPE, 
+					START_TIME
+					)
+					select 
+					SYS_GUID(),
+					A.train_type_idx,
+					A.train_type_shortname,
+					A.train_no,
+					A.repair_class,
+					A.repair_class_name,
+					A.repair_order,
+					A.repair_order_name,
+					0,
+					'10',
+					sysdate
+					from (
+		            select a.train_type_idx , a.train_type_shortname , a.train_no , a.totalday,s.repair_class,s.repair_class_name,s.repair_order,s.repair_order_name,s.min_running_km,s.max_running_km 
+		            from (
+		          select t.train_type_idx , t.train_type_shortname , t.train_no , trunc(sysdate) - trunc(t.leave_date) as totalday
+		           from JCZL_TRAIN t where t.record_status = 0 and t.t_vehicle_type = '10' and t.leave_date is not null
+		           ) a inner join JCJX_REPAIR_STANDARD s on s.train_type_idx = a.train_type_idx and  a.totalday between s.min_running_km and s.max_running_km
+		           ) A where not exists (select 1  from K_REPAIR_CLASS_WARNING w where w.train_type_idx = A.train_type_idx and w.train_no = A.train_no and w.repair_class = A.repair_class and w.repair_order = A.repair_order)
+		            and not exists (select 1 from JXGC_Train_Work_Plan p where p.train_type_idx = A.train_type_idx and p.train_no = A.train_no and p.repair_class_idx = A.repair_class and p.repair_time_idx = A.repair_order 
+		                and p.record_status = 0 and ( p.work_plan_status = 'ONGOING' or p.work_plan_status = 'COMPLETE' )
+		                ) 
+		            and A.max_running_km - A.totalday < #LIMIT_VALUE#
+	]]>
+	</sql>
+	
+	<!-- 查询修程预警（货车） -->
+	<sql id="findHCRepairClassWarningList">
+	<![CDATA[
+		select w.idx , w.train_type_idx , w.train_type , w.train_no , w.repair_class , w.repair_class_name , w.repair_order , w.repair_order_name,
+		          trunc(sysdate) - trunc(t.leave_date) as totalrm , s.min_running_km, s.max_running_km
+		   from K_REPAIR_CLASS_WARNING w 
+      left join JCZL_TRAIN t on t.train_type_idx = w.train_type_idx and t.train_no = w.train_no
+		  left join JCJX_REPAIR_STANDARD s on w.train_type_idx = s.train_type_idx and w.repair_class = s.repair_class and w.repair_order = s.repair_order
+		  where w.is_end = 0 and w.t_vehicle_type = '10' and t.record_status = 0 and t.leave_date is not null
+		  and not exists (select 1 from JXGC_Train_Work_Plan p where p.train_type_idx = w.train_type_idx and p.train_no = w.train_no and p.repair_class_idx = w.repair_class and p.repair_time_idx = w.repair_order 
+		      and p.record_status = 0 and ( p.work_plan_status = 'ONGOING' or p.work_plan_status = 'COMPLETE' )
+		      )  
+	]]>
+	</sql>	
+	
+	<!-- 客车库列检专业查询（客车库列检按专业） -->
+	<sql id="findRdpWis">
+	<![CDATA[
+			select * from (
+			select 
+			  wi.wi_idx , 
+			  wi.wi_name ,
+			  sum(case when wi.wi_status <> 'COMPLETE' then 1 else 0 end) unDoneCount ,
+			  sum(case when wi.wi_status = 'COMPLETE' then 1 else 0 end) doneCount 
+			 from zb_zbgl_rdp_wi wi
+			inner join zb_zbgl_rdp rdp on wi.rdp_idx = rdp.idx 
+			inner join ZB_ZBGL_PLAN_RECORD r on r.rdpidx = rdp.idx
+			inner join ZB_ZBGL_PLAN p on p.idx = r.rdp_plan_idx
+			where wi.record_status = 0 and rdp.record_status = 0 and r.record_status = 0 and p.idx = '#planIdx#' 
+			group by wi.wi_idx , wi.wi_name
+			) order by wi_name
+	]]>
+	</sql>		
+	
+	<!-- 客车库列检通过专业查询车辆（客车库列检按专业） -->
+	<sql id="findRecordByWi">
+	<![CDATA[
+			select r.idx ,r.train_type_idx , r.train_type_code , r.train_type_name , r.train_no ,r.seq_num ,
+			       wi.handle_person_id , wi.handle_person_name , wi.handle_time , wi.wi_status
+			 from ZB_ZBGL_PLAN_RECORD r 
+			inner join ZB_ZBGL_PLAN p on p.idx = r.rdp_plan_idx 
+			inner join zb_zbgl_rdp rdp on r.rdpidx = rdp.idx
+			inner join zb_zbgl_rdp_wi wi on rdp.idx = wi.rdp_idx
+			where r.record_status = 0 and rdp.record_status = 0 and wi.record_status = 0 and p.record_status = 0
+			and wi.wi_idx = '#wiIdx#' and p.idx = '#planIdx#' 
+			order by r.seq_num
+	]]>
+	</sql>	
+	
+		<!-- 客车库列检车辆查询（客车库列检按车辆） -->
+	<sql id="findRecordsForKC">
+	<![CDATA[
+	      select * from (
+	      select r.idx , 
+	             r.rdpidx , 
+	             r.train_type_code , 
+	             r.train_type_idx ,
+	             r.train_type_name ,
+	             r.train_no ,
+	             r.seq_num ,
+	             sum(case when wi.wi_status <> 'COMPLETE' then 1 else 0 end) unDoneCount ,
+	             sum(case when wi.wi_status = 'COMPLETE' then 1 else 0 end) doneCount 
+	              from ZB_ZBGL_PLAN_RECORD r 
+	      left join ZB_ZBGL_PLAN p on p.idx = r.rdp_plan_idx
+	      left join zb_zbgl_rdp rdp on r.rdpidx = rdp.idx
+	      left join zb_zbgl_rdp_wi wi on rdp.idx = wi.rdp_idx
+	      where wi.record_status = 0 and rdp.record_status = 0 and r.record_status = 0 and p.idx = '#planIdx#' 
+	      group by r.idx , r.rdpidx , r.train_type_code , r.train_type_idx , r.train_type_name , r.train_no ,r.seq_num
+	      ) order by seq_num
+	]]>
+	</sql>	
+	
+			<!-- web端查询客车列检（按专业） -->
+	<sql id="findKCLJLIst">
+	<![CDATA[
+		  select wi.idx as "idx",
+		  		 wi.wi_idx as "wiIdx",
+	             wi.wi_name as "wiName",
+	             wi.wi_status as "wiStatus",
+	             wi.handle_person_id as "handlePersonId",
+	             wi.handle_person_name as "handlePersonName",
+	             to_char(wi.handle_time,'yyyy-MM-dd HH24:mi') as "handleTime", 
+	             r.idx as "recordId",
+	             r.train_type_idx as "trainTypeIdx",
+	             r.train_type_code as "trainTypeCode", 
+	             r.train_type_name as "trainTypeName", 
+	             r.train_no as "trainNo",
+	             r.train_type_code || ' ' || r.train_no as "trainTypeNo",
+	             r.seq_num as "seqNum"
+	             from zb_zbgl_rdp_wi wi
+	      inner join zb_zbgl_rdp rdp on wi.rdp_idx = rdp.idx 
+	      inner join ZB_ZBGL_PLAN_RECORD r on r.rdpidx = rdp.idx
+	      inner join ZB_ZBGL_PLAN p on p.idx = r.rdp_plan_idx
+	      where wi.record_status = 0 and rdp.record_status = 0 and r.record_status = 0 and p.idx = '#planIdx#' 	      
+	]]>
+	</sql>	
+	
+	
+</SqlMap>

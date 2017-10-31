@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html class="htmlBack">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+        id="viewport" name="viewport" />
+    <title></title>
+     <script src="../../../Scripts/jquery-2.1.4.js"></script>
+     <script src="../../../Scripts/jquery.d.js"></script>
+     <script src="../../../Dlls/JS/LinQ/LINQ.js"></script>
+     <script src="../../../Dlls/JS/Dictionary/Dictionary.js"></script>
+     <script src="../../../Dlls/JS/Pollution/Pollution.js"></script>
+     <script src="../../../Dlls/JS/BasicClass/MessageClass.js"></script>
+     <script src="../../../Dlls/JS/WebSocket/TcpClient.js"></script>
+     <script src="../../../Dlls/JS/SVG/SVG.js"></script>
+     <script src="../../../Dlls/JS/Graphics/TrackLine.js"></script>
+     <script src="../../../Dlls/JS/Graphics/Overhaul.js"></script>
+     <script src="../../../Dlls/JS/Graphics/TextFrame.js"></script>
+     <script src="../../../Dlls/JS/Graphics/Position.js"></script>
+     <script src="../../../Dlls/JS/Graphics/Insulation.js"></script>
+     <script src="../../../Dlls/JS/Graphics/Light.js"></script>
+     <script src="../../../Dlls/JS/Graphics/Switches.js"></script>
+     <script src="../../../Dlls/JS/Graphics/Train.js"></script>
+     <script src="../../../Dlls/JS/Read/Read.js"></script>
+     <script src="../../../Dlls/JS/Canvas/CanvasJS.js"></script>
+     <link href="../../../Content/bootstrap.css" rel="stylesheet" />
+     <link href="../../../Css/CanvasCss/CanvasCss.css" rel="stylesheet" />
+</head>
+<body id="body" onload="load()"oncontextmenu="return false;" style="background:rgba(0, 0, 0, 0.00);width: 100%; height:100%; overflow:hidden;" >
+    <div id="Main"></div>
+    <div id="Tooltip"  style="background:#ffffff;position:absolute;border:1px solid black;left:1px;top:1px;display:none" >
+        <svg  width="234px" height="115px">
+        <rect width="234px" height="2px" y="30px" fill="#FF000000"></rect>
+        <rect width="34px" height="27px" y="0px" x="10px" fill="#667393"></rect>
+        <image width="17px" height="17px" x="19px" y="5px"  xlink:href="../../../images/notepad.png" />
+        <text id="Name" x="47px" y="22px" fill="#FF000000" style="font-size:20px"> aaaa</text>
+        <text id ="Time" x="5px" y="50px" fill="#FF000000" style="font-size:12px">机车入段时间:</text>
+        <text id="Position" x="5px" y="70px" fill="#FF000000" style="font-size:12px">台位:</text>
+        <text id="State" x="5px" y="90px" fill="#FF000000" style="font-size:12px">状态:</text>
+        <text id="PositionTime" x="5px" y="110px" fill="#FF000000" style="font-size:12px">上台位的时间:</text>
+    </svg>
+    </div>
+    <div id="layer"  style="background: rgb(255, 255, 255); border: 1px solid black;left: 0px; top: 200px; width: 400px; float: left; display:none; position: fixed; z-index: 11000;" >
+        <svg  width="400px" height="34px">
+        <rect width="400px" height="2px" y="30px" fill="#FF000000"></rect>
+        <rect width="34px" height="27px" y="0px" x="10px" fill="#667393"></rect>
+        <image width="17px" height="17px" x="19px" y="5px"  xlink:href="../../../images/notepad.png" />
+        <text id="LayerName" x="47px" y="22px" fill="#FF000000" style="font-size:20px">机车权限</text>
+    </svg>
+        <div id="ButtonList" style="float:left;display:inline; margin-left:2%;">
+            
+        </div>
+        <div style="height:5px;"></div>
+    </div>
+    <div id='lean_overlay' style="height:100%;background: #000; width:100%;z-index: 10000;position: fixed;display:none;opacity:0;"></div>
+</body>
+</html>
