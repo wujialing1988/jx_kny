@@ -1,0 +1,201 @@
+<%@page contentType="text/html; charset=UTF-8"%>
+<%@page import="com.yunda.base.context.SystemContext"%>
+<%@page import="com.yunda.frame.common.JXConfig"%>
+<%@page import="com.yunda.frame.common.hibernate.Condition"%>
+<%@page import="com.yunda.frame.common.Constants" %>
+<%
+//应用程序根目录
+String ctx = request.getContextPath();
+//客户端禁用缓存
+response.addHeader("Cache-Control", "no-cache");
+response.addHeader("Pragma", "No-cache");
+response.addDateHeader("Expires", 0);
+
+String browserLang = request.getLocale().toString().toLowerCase();
+
+%>
+<!-- Bootstrap 3.3.6 -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/bootstrap/css/bootstrap.min.css">
+<!-- bootstrap-table css  -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/bootstrap/css/bootstrap-table.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/bootstrappageselect/css/selectpage.base.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/bootstrappageselect/css/selectpage.bootstrap3.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/bootstrap/css/build.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/dist/css/font-awesome.min.css">
+<!-- Validator 验证 -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/yunda/validator/css/bootstrapValidator.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/dist/css/ionicons.min.css">
+ <!-- toastr -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/yunda/toastr/toastr.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/dist/css/AdminLTE.css">
+<!--datetimepicker-->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/bootstrap/css/bootstrap-datetimepicker.min.css">
+<!--selectPage-->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/bootstrappageselect/css/selectpage.base.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/bootstrappageselect/css/selectpage.bootstrap3.css">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/dist/css/skins/all-skins.min.css">
+
+<link rel="stylesheet" href="<%=request.getContextPath() %>/pages/resource/angular-1.5.8/pageinator.css">
+<!-- angular-1.5.8 -->
+<script src="<%=request.getContextPath() %>/pages/resource/angular-1.5.8/angular.min.js"></script>
+
+<!-- jQuery 2.2.3 -->
+<script src="<%=request.getContextPath() %>/pages/resource/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="<%=request.getContextPath() %>/pages/resource/plugins/fastclick/fastclick.js"></script>
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrappageselect/js/selectpage.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<%=request.getContextPath() %>/pages/resource/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="<%=request.getContextPath() %>/pages/resource/dist/js/demo.js"></script>
+<!--tabs-->
+<script src="<%=request.getContextPath() %>/pages/resource/dist/js/app_iframe.js"></script>
+<script src="<%=request.getContextPath() %>/pages/resource/angular-1.5.8/pageination.js"></script>
+
+<!--bootstrap-table-->
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrap/js/bootstrap-table.js"></script>
+<!--bootstrap-table-->
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+<!--bootstrap-table-editable-->
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrap/js/bootstrap-editable.min.js"></script>
+<!--bootstrap-table-commonutil-->
+<script src="<%=request.getContextPath() %>/pages/resource/yunda/utils/CommonTableUtils.js"></script>
+<!--bootstrap-paginator-->
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrap/js/bootstrap-paginator.js"></script>
+<!--toastr 消息提示-->
+<script src="<%=request.getContextPath() %>/pages/resource/yunda/toastr/toastr.min.js"></script>
+<!--Validator 验证-->
+<script src="<%=request.getContextPath() %>/pages/resource/yunda/validator/js/bootstrapValidator.min.js"></script>
+<script src="<%=request.getContextPath() %>/pages/resource/yunda/validator/js/language/zh_CN.js"></script>
+<!--datetimepicker-->
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<!--MessageInfo-->
+<script src="<%=request.getContextPath() %>/pages/resource/yunda/MessageInfo.js"></script>
+<!--iCheck-->
+<script src="<%=request.getContextPath() %>/pages/resource/plugins/iCheck/icheck.min.js"></script>
+<!--selectPage-->
+<script src="<%=request.getContextPath() %>/pages/resource/bootstrappageselect/js/selectpage.min.js"></script>
+<!--通用工具类-->
+<script src="<%=request.getContextPath() %>/pages/resource/yunda/utils/CommonUtils.js"></script>
+
+<!-- Slimscroll -->
+<script src="<%=request.getContextPath() %>/pages/resource/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript">
+	
+	var ctx = "<%=ctx%>";
+	var uid = '<%=SystemContext.getAcOperator().getOperatorid() %>';<%-- Operator id --%>
+	var empid ='${ sessionScope.emp.empid}';
+	var uname = '<%=SystemContext.getAcOperator().getOperatorname() %>';<%-- Operator name --%>
+	var synSiteID = '<%=JXConfig.getInstance().getSynSiteID()%>';
+	<%-- var teamOrgId = '${sessionScope.tream}';班组ID --%>
+	var teamOrgId = '${sessionScope.org.orgid}'; <%-- 当前登录人员部门ID --%>
+	var Condition = {};
+	/** 以下是查询条件常量，一一对应com.yunda.frame.common.hibernate.Condition的所有常量 */
+	Condition.EQ = <%=Condition.EQ%>;
+	Condition.ALL_EQ = <%=Condition.ALL_EQ%>;
+	Condition.GT = <%=Condition.GT%>;
+	Condition.GE = <%=Condition.GE%>;
+	Condition.LT = <%=Condition.LT%>;
+	Condition.LE = <%=Condition.LE%>;
+	Condition.BETWEEN = <%=Condition.BETWEEN%>;
+	Condition.LIKE = <%=Condition.LIKE%>;
+	Condition.IN = <%=Condition.IN%>;
+	Condition.EQ_PROPERTY = <%=Condition.EQ_PROPERTY%>;
+	Condition.GT_PROPERTY = <%=Condition.GT_PROPERTY%>;
+	Condition.GE_PROPERTY = <%=Condition.GE_PROPERTY%>;
+	Condition.LT_PROPERTY = <%=Condition.LT_PROPERTY%>;
+	Condition.LE_PROPERTY = <%=Condition.LE_PROPERTY%>;
+	Condition.NOT = <%=Condition.NOT%>;
+	Condition.PK_EQ = <%=Condition.PK_EQ%>;
+	Condition.ILIKE = <%=Condition.ILIKE%>;
+	Condition.IS_EMPTY = <%=Condition.IS_EMPTY%>;
+	Condition.IS_NOT_EMPTY = <%=Condition.IS_NOT_EMPTY%>;	
+	Condition.IS_NOT_NULL = <%=Condition.IS_NOT_NULL%>;
+	Condition.IS_NULL = <%=Condition.IS_NULL%>;
+	Condition.NE = <%=Condition.NE%>;
+	Condition.NE_PROPERTY = <%=Condition.NE_PROPERTY%>;
+	Condition.SIZE_EQ = <%=Condition.SIZE_EQ%>;
+	Condition.SIZE_GE = <%=Condition.SIZE_GE%>;
+	Condition.SIZE_GT = <%=Condition.SIZE_GT%>;
+	Condition.SIZE_LE = <%=Condition.SIZE_LE%>;
+	Condition.SIZE_LT = <%=Condition.SIZE_LT%>;
+	Condition.SIZE_NE = <%=Condition.SIZE_NE%>;	
+	Condition.SQL = <%=Condition.SQL%>;
+	Condition.SQL_PARAM = <%=Condition.SQL_PARAM%>;
+	Condition.SQL_PARAMS = <%=Condition.SQL_PARAMS%>;
+	Condition.AND = <%=Condition.AND%>;
+	Condition.OR = <%=Condition.OR%>;
+	Condition.CONJUNCTION = <%=Condition.CONJUNCTION%>;
+	Condition.DISJUNCTION = <%=Condition.DISJUNCTION%>;
+	Condition.LLIKE = <%=Condition.LLIKE%>;
+	//获取报表文件根路径的方法，报表上下文路径
+	function getReportPath(){
+		return '<%=JXConfig.getInstance().getReportContext()%>';
+	}
+	
+	var orgRootName = '<%=JXConfig.getInstance().getOrgRootName()%>';//单位树根节点显示用
+	var orgTopRootName = '<%=JXConfig.getInstance().getOrgTopRootName()%>';//配属局树根节点显示用
+	
+	var browserLang = '<%=browserLang %>' ;
+	
+	// toastr options配置
+	
+	/* toast-top-left  顶端左边
+	toast-top-right    顶端右边
+	toast-top-center  顶端中间
+	toast-top-full-width 顶端，宽度铺满整个屏幕
+	toast-botton-right  
+	toast-bottom-left
+	toast-bottom-center
+	toast-bottom-full-width
+	
+	onclick，点击消息框自定义事件 
+	showDuration: “300”，显示动作时间 
+	hideDuration: “1000”，隐藏动作时间 
+	timeOut: “2000”，自动关闭超时时间 
+	extendedTimeOut: “1000” 
+	showEasing: “swing”, 
+	hideEasing: “linear”, 
+	showMethod: “fadeIn” 显示的方式，和jquery相同 
+	hideMethod: “fadeOut” 隐藏的方式，和jquery相同 
+	
+	//常规消息提示，默认背景为浅蓝色  
+	 toastr.info("你有新消息了!");  
+	//成功消息提示，默认背景为浅绿色 
+	 toastr.success("你有新消息了!"); 
+	//警告消息提示，默认背景为橘黄色 
+	 toastr.warning("你有新消息了!"); 
+	//错误消息提示，默认背景为浅红色 
+	 toastr.error("你有新消息了!");  
+	//带标题的消息框
+	 toastr.success("你有新消息了!","消息提示");
+	//另一种调用方法
+	 toastr["info"]("你有新消息了!","消息提示");
+	
+	*/
+	
+	toastr.options = {  
+        closeButton: false,  
+        debug: false,  
+        progressBar: true,  
+        positionClass: "toast-top-center",  
+        onclick: null,  
+        showDuration: "300",  
+        hideDuration: "1000",  
+        timeOut: "2000",  
+        extendedTimeOut: "1000",  
+        showEasing: "swing",  
+        hideEasing: "linear",  
+        showMethod: "fadeIn",  
+        hideMethod: "fadeOut"  
+    };
+    
+</script>

@@ -158,7 +158,10 @@ public class JczlTrainManager extends JXBaseManager<JczlTrain, JczlTrain> implem
      * @throws InvocationTargetException
      */
     public JczlTrain saveOrUpdateNewTrainNew(String trainTypeIDX,String trainNo) throws NoSuchFieldException, IllegalAccessException, InvocationTargetException {
-        TrainVehicleType vehicleType = trainVehicleTypeManager.getModelById(trainTypeIDX);
+        if(StringUtil.isNullOrBlank(trainTypeIDX)){
+        	return null ;
+        }
+    	TrainVehicleType vehicleType = trainVehicleTypeManager.getModelById(trainTypeIDX);
         if(vehicleType == null){
             return null ;
         }

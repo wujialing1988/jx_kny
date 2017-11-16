@@ -281,6 +281,10 @@ var tree =
                 {id:'文件操作', text:'文件操作', leaf:true, funcaction:'/jsp/test/office.jsp'}
         ]
     },{
+        id:'bootstrap', text:'新页面开发', leaf:false, children:[
+                    {id:'检修月计划编制', text:'检修月计划编制', leaf:true, funcaction:'/pages/view/scdd/enforceplan/trainEnforcePlan.jsp'}
+                                            ]
+    },{
         id:'oldtree', text:'开发调试菜单导航', leaf:false, children:tree1
     }]
 ;

@@ -327,7 +327,7 @@ public class ZbglRdpPlanServiceImpl implements IZbglRdpPlanService {
             SystemContextUtil.setSystemInfoByOperatorId(operatorId);
             
             // 获取查询条件实体对象
-            String ids = jo.getString(Constants.IDS);
+            String ids = jo.getString(Constants.IDX);
             String[] idArray = JSONUtil.read(ids, String[].class);
             zbglRdpPlanRecordManager.bacthCompleteRecordHC(idArray);
             return WsConstants.OPERATE_SUCCESS;
