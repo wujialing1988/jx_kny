@@ -12,7 +12,7 @@ Ext.onReady(function(){
 		loader : new Ext.tree.TreeLoader({
 			dataUrl : ctx + 'jczlTrain!findVehicleKindTree.action'
 		}),
-		root : new Ext.tree.AsyncTreeNode({
+		root : new Ext.tree.AsyncTreeNode({ 
 			text : "车种",
 			id : '',
 			leaf : false
