@@ -15,7 +15,7 @@
 <title>编辑信息维护</title>
 <link href="<%= ctx %>/jsp/jx/jxgc/workplanmanage/vis_common.css" rel="stylesheet" type="text/css">
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 
-<script language="javascript" src="<%=ctx %>/jsp/freight/zb/plan/ZbglRdpPlanSVG.js"></script>
+<script language="javascript" src="<%=ctx %>/jsp/freight/zb/planhc/ZbglRdpPlanSVG.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/passenger/marshalling/JczlTrainServiceWin.js"></script><!-- 车辆窗口 -->
 <script language="javascript" src="<%=ctx%>/jsp/passenger/marshalling/marshallingTrain.js"></script><!--编组车辆信息 -->
 <script language="javascript" src="<%=ctx%>/jsp/passenger/marshalling/marshalling.js"></script><!-- 编组基本信息 -->
