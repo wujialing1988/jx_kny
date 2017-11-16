@@ -329,6 +329,7 @@ public class ZbglRdpPlanServiceImpl implements IZbglRdpPlanService {
             // 获取查询条件实体对象
             String ids = jo.getString(Constants.IDX);
             String[] idArray = JSONUtil.read(ids, String[].class);
+            // test
             zbglRdpPlanRecordManager.bacthCompleteRecordHC(idArray);
             return WsConstants.OPERATE_SUCCESS;
         } catch (Exception e) {
