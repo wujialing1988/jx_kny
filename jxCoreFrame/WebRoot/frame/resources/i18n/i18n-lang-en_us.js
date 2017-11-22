@@ -78,6 +78,15 @@ i18n.common.yunda.pageRow50 = '50 rows/page';
 i18n.common.yunda.pageRow100 = '100 rows/page';
 i18n.common.yunda.pageButton = 'show {0} row to {1} row,all {2} rows';
 
+/**
+ * 生产厂家选择
+ */
+i18n.GyjcFactorySelect = {} ;
+i18n.GyjcFactorySelect.emptyText = '--XX--' ;
+i18n.GyjcFactorySelect.title = 'title' ;
+i18n.GyjcFactorySelect.fID = 'ID' ;
+i18n.GyjcFactorySelect.fName = 'NAME' ;
+
 
 /**
  *  配件委外目录

@@ -12,20 +12,20 @@ TrainType.grid = new Ext.yunda.Grid({
     saveURL: ctx + '/trainVehicleType!saveOrUpdate.action',             //保存数据的请求URL
     deleteURL: ctx + '/trainVehicleType!logicDelete.action',            //删除数据的请求URL
     singleSelect: true, saveFormColNum:1,
-    labelWidth: 60,                                     //查询表单中的标签宽度
-    fieldWidth: 130,
+    labelWidth: 125,                                     //查询表单中的标签宽度
+    fieldWidth: 200,
 	fields: [{
 		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	},{
-		header:'车型代码', dataIndex:'typeCode',editor:{ allowBlank:false ,maxLength:20  }
+		header:i18n.TrainVehicleType.typeCode, dataIndex:'typeCode',editor:{ allowBlank:false ,maxLength:20  }
 	},{
-		header:'车型名称', dataIndex:'typeName', editor:{allowBlank:false , maxLength:50  }
+		header:i18n.TrainVehicleType.typeName, dataIndex:'typeName', editor:{allowBlank:false , maxLength:50  }
 	},{
-		header:'简称', dataIndex:'shortName', editor:{ maxLength:20  },searcher: { hidden: true }
+		header:i18n.TrainVehicleType.shortName, dataIndex:'shortName', editor:{ maxLength:20  },searcher: { hidden: true }
 	},{
-   		header:'车型种类编码', dataIndex:'vehicleKindCode', hidden:true, editor: { xtype:'hidden',id:'vehicleKindCode' }
+   		header:i18n.TrainVehicleType.vehicleKindCode, dataIndex:'vehicleKindCode', hidden:true, editor: { xtype:'hidden',id:'vehicleKindCode' }
 	},{
-		header:'车型种类', dataIndex:'vehicleKindName',editor:{
+		header:i18n.TrainVehicleType.vehicleKindName, dataIndex:'vehicleKindName',editor:{
 				id:'vehicleKind_combo',
 				xtype: 'EosDictEntry_combo',
 				hiddenName: 'vehicleKindName',
@@ -36,9 +36,9 @@ TrainType.grid = new Ext.yunda.Grid({
 				returnField: [{widgetId:"vehicleKindCode",propertyName:"dictid"}]
 	        }, searcher: {anchor:'98%'}
 	},{
-		header:'描述', dataIndex:'description', editor:{ maxLength:20,xtype:'textarea' },searcher: { hidden: true }
+		header:i18n.TrainVehicleType.description, dataIndex:'description', editor:{ maxLength:20,xtype:'textarea' },searcher: { hidden: true }
 	},{
-		header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
+		header:i18n.TrainVehicleType.vehicleType, dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
 	}],
 	searchFn: function(searchParam){ 
 		TrainType.searchParam = searchParam ;

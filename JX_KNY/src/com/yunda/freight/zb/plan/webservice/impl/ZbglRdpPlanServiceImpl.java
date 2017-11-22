@@ -137,6 +137,11 @@ public class ZbglRdpPlanServiceImpl implements IZbglRdpPlanService {
             } else if (StringUtils.isNotBlank(filterByOperatorId) && !"true".equals(filterByOperatorId)) {
             	flag = "false";
             }
+            
+            // 客车显示全部
+            if(entity != null && "20".equals(entity.getVehicleType())){
+            	flag = "false";
+            }
             // 其他情况根据系统配置项决定
             // 过滤指派人员
             OmEmployee employee = SystemContext.getOmEmployee();
@@ -261,6 +266,14 @@ public class ZbglRdpPlanServiceImpl implements IZbglRdpPlanService {
             } else if (StringUtils.isNotBlank(filterByOperatorId) && !"true".equals(filterByOperatorId)) {
             	flag = "false";
             }
+            
+            // 客车显示全部
+            if(!StringUtil.isNullOrBlank(entity.getRdpPlanIdx())){ 
+            	 ZbglRdpPlan plan = this.zbglRdpPlanManager.getModelById(entity.getRdpPlanIdx());
+                 if(plan != null && "20".equals(plan.getVehicleType())){
+                 	flag = "false";
+                 }
+            }
             // 其他情况根据系统配置项决定
             if ("true".equals(flag)) {
                 // 过滤指派人员
@@ -293,6 +306,7 @@ public class ZbglRdpPlanServiceImpl implements IZbglRdpPlanService {
             if (null == list || list.size() <= 0) {
                 return JSONObject.toJSONString(OperateReturnMessage.newFailsInstance(MSG_RESULT_IS_EMPTY));
             }
+            System.err.println(JSONTools.toJSONList(page.getTotal(), list));
             return JSONTools.toJSONList(page.getTotal(), list);
         }catch (Exception e) {
             ExceptionUtil.process(e, logger);

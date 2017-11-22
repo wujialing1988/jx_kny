@@ -89,7 +89,7 @@ Ext.onReady(function(){
 	        region: 'center', bodyBorder: false,
 	        layout: 'fit', items : [ ZbglRdpPlanRecord.ZbglRdpPlanRecordVis ]
 	    }, {
-	         region : 'south',   height: 350,  layout: 'fit', bodyBorder: false, items: [ZbglRdpPlanDesign.recordTabs]
+	         region : 'south', title: '作业情况查看', collapsible:true,  height: 350,  layout: 'fit', bodyBorder: false, items: [ZbglRdpPlanDesign.recordTabs]
 	    }]
 	});
 	

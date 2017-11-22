@@ -472,7 +472,7 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
         record.setTrainNo(train.getTrainNo());
         record.setTrainTypeCode(train.getTrainTypeShortName());
         record.setTrainTypeIdx(train.getTrainTypeIDX());
-        record.setTrainTypeName(train.getTrainTypeName());
+        record.setTrainTypeName(train.getTrainTypeShortName());
         this.update(record);
         return record ;
     }

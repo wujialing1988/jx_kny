@@ -104,11 +104,7 @@
 
 	function showtip(){
 		var el;
-		if(WorkStationEmp.selectWin.isVisible()){
-			el = WorkStationEmp.selectWin.getEl();
-		}else{
-			el = Ext.getBody();
-		}
+		el = Ext.getBody();
 		processTips = new Ext.LoadMask(el,{
 			msg:"正在处理你的操作，请稍后...",
 			removeMask:true

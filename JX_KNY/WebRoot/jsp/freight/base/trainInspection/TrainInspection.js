@@ -12,15 +12,13 @@ TrainInspection.grid = new Ext.yunda.Grid({
     saveURL: ctx + '/trainInspection!saveOrUpdate.action',             //保存数据的请求URL
     deleteURL: ctx + '/trainInspection!logicDelete.action',            //删除数据的请求URL
     singleSelect: true, saveFormColNum:1,
-    labelWidth: 100,                                     //查询表单中的标签宽度
-    fieldWidth: 180,
 	fields: [
      {
-		header:'列检所名称', dataIndex:'inspectionName',width: 120,editor: {allowBlank:false}
+		header:i18n.TrainInspection.inspectionName, dataIndex:'inspectionName',width: 120,editor: {allowBlank:false}
 	},{
-		header:'列检所编码', dataIndex:'inspectionCode',width: 120,editor: {allowBlank:false}
+		header:i18n.TrainInspection.inspectionCode, dataIndex:'inspectionCode',width: 120,editor: {allowBlank:false}
 	},{
-		header:'等级', dataIndex:'levelName',width: 120,editor:{
+		header:i18n.TrainInspection.levelName, dataIndex:'levelName',width: 120,editor:{
 				id:'inspectionLevel_combo',
 				xtype: 'EosDictEntry_combo',
 				hiddenName: 'levelName',
@@ -33,7 +31,7 @@ TrainInspection.grid = new Ext.yunda.Grid({
 	},{
 		header:'等级编码', dataIndex:'levelCode',hidden:true,width: 120,editor: {xtype:"hidden",id:"levelCode"},searcher: { hidden: true }
 	},{
-		header:'备注', dataIndex:'remark',width: 120,editor:{ xtype:'textarea', maxLength:1000 },searcher: { hidden: true }
+		header:i18n.TrainInspection.remark, dataIndex:'remark',width: 120,editor:{ xtype:'textarea', maxLength:1000 },searcher: { hidden: true }
 	},{
 		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
 	}],
@@ -56,10 +54,10 @@ var viewport = new Ext.Viewport({
 			items:[{
 			layout: 'border',
 			items: [{
-	        region: 'center', bodyBorder: false,title: '股道维护',
+	        region: 'center', bodyBorder: false,title: i18n.TrainInspection.gdTitle,
 	        layout: 'fit', items : [ StationTrack.grid ]
 	    	},{ 		
-		     	 region: 'west', layout: 'fit',  title: '列检所维护',  bodyBorder: false, split: true,width: 600,minSize: 400, maxSize: 800, 
+		     	 region: 'west', layout: 'fit',  title: i18n.TrainInspection.ljsTitle,  bodyBorder: false, split: true,width: 600,minSize: 400, maxSize: 800, 
 		     	 collapsible : true,   items:[TrainInspection.grid]
 			}]
 		}] 

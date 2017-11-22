@@ -12,6 +12,7 @@ response.addHeader("Pragma", "No-cache");
 response.addDateHeader("Expires", 0);
 
 String browserLang = request.getLocale().toString().toLowerCase();
+
 // 未处理状态颜色（黄色）
 String WCL_COLOR_CODE = "#ffdc35";
 // 已延期状态颜色（红色）

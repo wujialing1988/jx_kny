@@ -81,6 +81,16 @@ i18n.common.yunda.pageRow100 = '100条/页';
 i18n.common.yunda.pageButton = '显示 {0} 条到 {1} 条,共 {2} 条';
 
 /**
+ * 生产厂家选择
+ */
+i18n.GyjcFactorySelect = {} ;
+i18n.GyjcFactorySelect.emptyText = '--请输入生产厂家名称模糊查询--' ;
+i18n.GyjcFactorySelect.title = '生产厂家选择' ;
+i18n.GyjcFactorySelect.fID = '生产厂家编号' ;
+i18n.GyjcFactorySelect.fName = '生产厂家名称' ;
+
+
+/**
  *  配件委外目录
  */
 i18n.OutsourcingDir = {} ;

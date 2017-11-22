@@ -58,8 +58,8 @@ Ext.yunda.Grid = Ext.extend(Ext.grid.GridPanel, {
     storeAutoLoad: true,                                //表格的store初始化时是否自动装载数据
     singleSelect: false,                                //表格记录的行选择模式，true单选，默认false多选（表格出现多选框）
     hideRowNumberer: false,                             //默认false显示行号，true隐藏行号
-    labelWidth: 90,                                     //查询表单中的标签宽度
-    fieldWidth: 150,                                    //查询表单中的输入控件宽度
+    labelWidth: 125,                                     //查询表单中的标签宽度
+    fieldWidth: 200,                                    //查询表单中的输入控件宽度
     remoteSort: true,                                   //默认true使用远程排序
     border: false,                                      //表格是否显示边框，默认false不显示边框
     viewConfig: {forceFit: true, markDirty: false},     //随着窗口（父容器）大小自动调整,默认true表示不出现滚动条，列宽会自动压缩

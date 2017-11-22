@@ -16,7 +16,7 @@ public class GeneratorMain {
 //		g.printAllTableNames();				//打印数据库中的表名称
 		
 		g.deleteOutRootDir();							//删除生成器的输出目录
-		g.generateByTable("K_TRAIN_STATUS_CHANGE","template");	//通过数据库表生成文件,template为模板的根目录
+		g.generateByTable("JXGC_TRAIN_RECHECK_RECORD","template");	//通过数据库表生成文件,template为模板的根目录
 //		g.generateByAllTable("template");	//自动搜索数据库中的所有表并生成文件,template为模板的根目录
 //		g.generateByClass(Blog.class,"template_clazz");
 		 

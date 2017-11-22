@@ -1,15 +1,12 @@
 <%@ page import="com.yunda.frame.common.JXConfig" %>
 <%@ page import="com.yunda.frame.common.SubSystem" %>
 <%@ page import="com.yunda.frame.common.SubSysInfo" %>
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.List" %>
 <%@ page import="com.yunda.frame.util.StringUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 String ctx = request.getContextPath(); //应用程序根目录
-
-String basePath =request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+ctx+"/";
 
 String appFooter = JXConfig.getInstance().getAppFooter(); //版权信息
 /******根据请求参数中的appid（默认为JCJX），获取appid指定的子系统名称****/
@@ -39,42 +36,23 @@ if(!StringUtil.isNullOrBlank(queryString)&&queryString.toUpperCase().startsWith(
 
 String userErrMsg = request.getParameter("message1");
 String pwdErrMsg = request.getParameter("message2");
-
-// 国际化
- ResourceBundle bundle = ResourceBundle.getBundle("i18n", request.getLocale());
 %>
 <html>
   	<head>
-  		<title><s:text name="login.title"></s:text></title>
+  		<title>欢迎使用《机车检修管理信息系统》</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link type="text/css" rel="stylesheet" href="<%=ctx %>/frame/yhgl/css/login.css" />
 		<script language="javascript">
 			var ctx = "<%=ctx%>";
 		</script>
-		<script language="javascript" src="<%=ctx%>/frame/resources/jquery/jquery.js"></script>
 		<script type="text/javascript" language="javascript" src="<%=ctx %>/frame/yhgl/js/login/login.js"></script>
-		<script type="text/javascript">
-			// 切换中英文
-			function changeLanguage(localStr){
-				//alert(local);
-				jQuery.ajax({
-					url: ctx + "/login!changeLanguage.action",
-					data:{local: localStr},
-					type:"post",
-					dataType:"json",
-					success:function(data){
-						window.location.reload();
-					}
-				});
-			}
-		</script>
   	</head>
 
 	<body>
 		<!-- 页面头部 -->
 		<div id="header">
 			<div class="headerLeft">
-				<div class="headerText"><s:text name="common.sysName"></s:text></div>
+				<div class="headerText"><%=appname%></div>
 			</div>
 			<!-- 头部右上角按钮 -->
 			<div class="headerRight">
@@ -152,8 +130,7 @@ String pwdErrMsg = request.getParameter("message2");
 
 		<!-- 页面底部 -->
 		<div id="footer" align="center">
-			 <%--<a href="<%=basePath%>login!changeLanguage.action?local=zh_CN">中文</a> <a href="<%=basePath%>login!changeLanguage.action?local=en_US">English</a><br/>--%>
-			<s:text name="login.copyright"></s:text> <a href="#" onclick="changeLanguage('zh_CN');">中文</a> <a href="#" onclick="changeLanguage('en_US');">English</a>
+			<%=appFooter %><br/>
 		</div>
 		<script type="text/javascript" language="javascript">
 			document.getElementById('userIdInput').focus();

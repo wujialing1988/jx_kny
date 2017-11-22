@@ -50,15 +50,15 @@ Factory_List = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : true
 			},
-			loadMask: {msg: "正在处理，请稍侯..."},
+			loadMask: {msg: i18n.common.tip.loading},
 			// 偶数行变色
 			stripeRows : true,
 			tbar : [{	            
                 xtype:"textfield",								                
 		        width: 240,
-                emptyText:"--请输入生产厂家名称模糊查询--"
+                emptyText:i18n.GyjcFactorySelect.emptyText
 			},{
-				text : "搜索",
+				text : i18n.common.button.research,
 				iconCls : "searchIcon",
 				handler : function(){
 					var factoryname = this.getTopToolbar().get(0).getValue();
@@ -74,7 +74,7 @@ Factory_List = Ext.extend(Ext.grid.GridPanel, {
 				},
 				scope : this
 			},{
-				text : "重置",
+				text : i18n.common.button.reset,
 				iconCls : "resetIcon",
 				handler : function(){
 					this.store.baseParams.factoryname = "";
@@ -86,8 +86,8 @@ Factory_List = Ext.extend(Ext.grid.GridPanel, {
 			}],
 			colModel : new Ext.grid.ColumnModel([
 				new Ext.grid.RowNumberer(), 
-				{ sortable:true, header:"生产厂家编号", dataIndex:"fID" },			
-		        { sortable:true, header:"生产厂家名称", dataIndex:"fName" }]),
+				{ sortable:true, header:i18n.GyjcFactorySelect.fID, dataIndex:"fID" },			
+		        { sortable:true, header:i18n.GyjcFactorySelect.fName, dataIndex:"fName" }]),
 			store : Factory_store,
 			bbar: Factory_pagingToolbar,
 			listeners:{
@@ -144,8 +144,8 @@ Factory_SelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		Factory_SelectWin.superclass.constructor.call(this, {
-			title : "生产厂家选择",
-			width : 375,
+			title : i18n.GyjcFactorySelect.title,
+			width : 500,
 			height : 305,			
 			plain : true,
 			closeAction : "hide",

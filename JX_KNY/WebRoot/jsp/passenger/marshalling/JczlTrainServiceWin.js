@@ -145,7 +145,8 @@ Ext.onReady(function(){
 				}else if (sm.getCount() > 0) {
 					var records = sm.getSelections();
 					JczlTrainServiceWin.marshallingCode = records[0].data.marshallingCode;
-				}		
+				}
+				JczlTrainServiceWin.tree.root.reload();
 				JczlTrainServiceWin.grid.store.load(); 
 			}
 		},

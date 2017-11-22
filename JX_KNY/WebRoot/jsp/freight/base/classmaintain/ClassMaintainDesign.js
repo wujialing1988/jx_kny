@@ -29,7 +29,7 @@ Ext.onReady(function(){
 	        region: 'center', bodyBorder: false,
 	        layout: 'fit', items : [ ClassMaintain.grid ]
 	    }, {
-	         region : 'south',   height: 600,  layout: 'fit', bodyBorder: false, items: [ ClassMaintainDesign.ClassOrganizationPanel ]
+	         region : 'south',   height: 300,  layout: 'fit', bodyBorder: false, items: [ ClassMaintainDesign.ClassOrganizationPanel ]
 	    }]
 	});
 	

@@ -14,21 +14,19 @@ StationTrack.grid = new Ext.yunda.Grid({
     saveURL: ctx + '/stationTrack!saveOrUpdate.action',             //保存数据的请求URL
     deleteURL: ctx + '/stationTrack!logicDelete.action',            //删除数据的请求URL
     singleSelect: false, saveFormColNum:1,
-    labelWidth: 60,                                     //查询表单中的标签宽度
-    fieldWidth: 130,
 	tbar:['add','delete'],
 	fields: [
      	{
 		header:'列检所', dataIndex:'inspectionIdx', hidden:true,width: 120,editor: {xtype:'hidden'}
 	},
      	{
-		header:'股道名称', dataIndex:'trackName',width: 120,editor: {allowBlank:false}
+		header:i18n.TrainInspection.trackName, dataIndex:'trackName',width: 120,editor: {allowBlank:false}
 	},
      	{
-		header:'股道编码', dataIndex:'trackCode',width: 120,editor: {allowBlank:false}
+		header:i18n.TrainInspection.trackCode, dataIndex:'trackCode',width: 120,editor: {allowBlank:false}
 	},
      	{
-		header:'排序', dataIndex:'seqNo',width: 120,editor: {
+		header:i18n.TrainInspection.seqNo, dataIndex:'seqNo',width: 120,editor: {
 					xtype:'numberfield',
 			        allowDecimals:false,
 			        allowNegative:false,

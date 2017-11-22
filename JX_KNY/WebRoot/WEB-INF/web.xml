@@ -38,7 +38,7 @@
 				,/login!terminalLogin.action,/login!terminalLogout.action,/login!enableConnection.action
 				,/disallow.jsp,/frame/installfiles/support.jsp,/jsp/twt/asynchronouslogin/AsynchronousLogin.jsp,/asynchronousLogin!asynchronousLogin.action,
 				/frame/sso/AsynchronousLogin.jsp,/singleSign!asynchronousLogin.action,/codeRuleConfig!getBatchConfigRule.action,
-				/attachment!download.action
+				/attachment!download.action,/login!changeLanguage.action
 			</param-value>
 		</init-param>
 		<init-param><!-- 重新登录jsp -->
@@ -292,6 +292,16 @@
 			</param-value>
 		</init-param>
 	</filter>
+	
+	<!-- 国际化过滤器 -->
+	<filter>
+		<filter-name>i18nFilter</filter-name>  
+        <filter-class>com.yunda.base.filter.I18nFilter</filter-class>  
+	</filter>
+	<filter-mapping>  
+        <filter-name>i18nFilter</filter-name>  
+        <url-pattern>/*</url-pattern>  
+    </filter-mapping>  
 
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>

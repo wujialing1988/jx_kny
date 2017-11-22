@@ -374,7 +374,7 @@ Ext.onReady(function() {
 		// 清空节点
 		ZbglRdpPlanRecord.parentNodes.clear();
 		
-		var headImgUrl = getHeadImgUrl(ZbglRdpPlanRecord.railwayTime,getHeadColorByStatus(ZbglRdpPlanRecord.rdpPlanStatus));
+		var headImgUrl = getHeadImgUrl(ZbglRdpPlanRecord.railwayTime,getHeadColorByStatus(ZbglRdpPlanRecord.rdpPlanStatus),true);
 		
 		// 添加车头
 		ZbglRdpPlanRecord.parentNodes.add({
@@ -403,14 +403,15 @@ Ext.onReady(function() {
 			var trainTypeCode = Ext.isEmpty(record.data.trainTypeCode) ? "" : record.data.trainTypeCode ;
 			var trainNo = Ext.isEmpty(record.data.trainNo) ? "" : record.data.trainNo ;
 			var title = trainTypeCode + "" + trainNo ;
-			var bodyImgUrl = getBodyImgUrl(title,getBodyColorByStatus(record.data.rdpRecordStatus));
+			var workPersonName = Ext.isEmpty(record.data.workPersonName) ? "" : record.data.workPersonName ;
+			var bodyImgUrl = getBodyImgUrl(title,getBodyColorByStatus(record.data.rdpRecordStatus),true,workPersonName);
 			// 添加【配件流程节点显示】
 			ZbglRdpPlanRecord.parentNodes.add({
 						id : record.data.idx,
 						label : record.data.seqNum + "辆",
-						size : 50,
+						size : 60,
 						x : -50 + widthX * 153,
-						y : -500 + heightY * 100,
+						y : -500 + heightY * 115,
 						value : record.data.idx,
 						fixed : true,
 						shape : 'image',
