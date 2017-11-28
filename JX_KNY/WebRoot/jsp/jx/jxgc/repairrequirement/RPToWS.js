@@ -10,7 +10,7 @@ TrainQR.grid = new Ext.yunda.Grid({
     saveFormColNum: 2 ,fieldWidth: 180,
 	searchFormColNum: 2,
     tbar: [{
-	    	text:"新增机车检修记录卡",iconCls:"addIcon" ,handler: function(){
+	    	text:"新增检修记录卡",iconCls:"addIcon" ,handler: function(){
 	           //调用新增公用方法
 	            QREdit.addFn(TrainQR.grid, TrainQR.editTabs, TrainQR.saveWin);
             	Ext.Ajax.request({
@@ -31,9 +31,9 @@ TrainQR.grid = new Ext.yunda.Grid({
     	}
     }], 
 	fields: [{
-			header:'机车检修记录卡idx主键', dataIndex:'idx', hidden:true, editor: {id:"entityID", xtype:'hidden' }
+			header:'检修记录卡idx主键', dataIndex:'idx', hidden:true, editor: {id:"entityID", xtype:'hidden' }
 		},{
-			header:'机车检修记录单idx主键', dataIndex:'recordIDX', hidden:true, editor: {id:"recordIDX", xtype:'hidden' }
+			header:'检修记录单idx主键', dataIndex:'recordIDX', hidden:true, editor: {id:"recordIDX", xtype:'hidden' }
 		},{
 			header:'编号', dataIndex:'workSeqCode',width:120, editor:{ id:"workSeqCodeId",  maxLength:50 , allowBlank: false }
 		},{
@@ -158,7 +158,7 @@ TrainQR.grid = new Ext.yunda.Grid({
 	});
 	//作业工单编辑窗口
 	TrainQR.saveWin = new Ext.Window({
-		title: "机车检修记录卡编辑", maximizable:false, layout: "fit", 
+		title: "检修记录卡编辑", maximizable:false, layout: "fit", 
 		closeAction: "hide", modal: true, maximized: true , buttonAlign:"center",
 		items: [TrainQR.editTabs] 
 	});

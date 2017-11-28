@@ -93,7 +93,7 @@ JobProcessNode.form = new Ext.form.FormPanel({
 			  		    selectNodeModel: 'leaf', width: 170
 		    		},{    			
 		            	xtype: 'radiogroup',
-			            fieldLabel: '计划启动模式',
+			            fieldLabel: '启动模式',
 			            name: 'planMode',
 			            items: [
 			                { boxLabel: '定时',inputValue: PLANMODE_TIMER, name: 'planMode', checked: true

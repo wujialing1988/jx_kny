@@ -19,9 +19,18 @@ i18n.common.button.close = 'close' ;
 i18n.common.button.save = 'save' ;
 i18n.common.button.edit = 'edit' ;
 i18n.common.button.view = 'view' ;
+i18n.common.button.copy = 'copy' ;
+i18n.common.button.confirm = 'confirm' ;
+i18n.common.button.cancel = 'cancel' ;
+
+i18n.common.button.moveTop = 'moveTop' ;
+i18n.common.button.moveUp = 'moveUp' ;
+i18n.common.button.moveDown = 'moveDown' ;
+i18n.common.button.moveBottom = 'moveBottom' ;
 
 i18n.common.tip = {} ;
 i18n.common.tip.prompt = 'prompt';
+i18n.common.tip.Confirm = 'Confirm the selection';
 i18n.common.tip.loading = 'Loading...' ;
 i18n.common.tip.disableColumns = 'this.saveForm not created,connot execute the function disableColumns' ;
 i18n.common.tip.disableAllColumns = 'this.saveForm not created,connot execute the function disableAllColumns' ;
@@ -30,10 +39,17 @@ i18n.common.tip.enableAllColumns = 'this.saveForm not created,connot execute the
 i18n.common.tip.notFindRecords = 'not found records' ;
 i18n.common.tip.notSelectRecords = 'not select one record!' ;
 i18n.common.tip.onlySelectOneRecord = 'only select one record！' ;
+i18n.common.tip.ExceedsSelectRecords = 'Exceeds the maximum limit！' ;
 i18n.common.tip.dataNotRecover = 'this operation cannot recover,Go on?' ;
 i18n.common.tip.operateSuccess = 'operate Success!' ;
 i18n.common.tip.operateFail = 'operate Fail!' ;
 i18n.common.tip.operateException = 'operate Exception!' ;
+i18n.common.tip.RequestFailed = 'Request failed, server status code:\n' ;
+i18n.common.tip.cancelThechange = 'Please save or cancel the change';
+i18n.common.tip.QuickSearch = 'Quick search';
+
+i18n.common.tip.yes = 'yes';
+i18n.common.tip.no = 'no';
 
 /**
  * 验证信息

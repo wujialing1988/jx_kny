@@ -12,8 +12,8 @@ Ext.onReady(function(){
 	        xtype: "panel",	border: false,	baseCls: "x-plain",	layout: "column",	align: "center", 
 	        items: [
 	        {
-	            baseCls:"x-plain", align:"center", layout:"form", defaultType:"textfield", labelWidth:80,
-	            columnWidth: 0.25, 
+	            baseCls:"x-plain", align:"center", layout:"form", defaultType:"textfield", labelWidth:120,
+	            columnWidth: 0.33, 
 	            items: [
 	        		{ fieldLabel:"车型车号", name:"trainTypeTrainNo", width:150, style:"border:none;background:none;", readOnly:true, id:"train_Id"},
 	        		{ fieldLabel:"车型", name:"trainTypeIdx", id:"train_Type", xtype:"hidden"},
@@ -24,20 +24,20 @@ Ext.onReady(function(){
 	                { fieldLabel:"修程修次", name:"repairClassRepairTime", id:"xcxc", width:150, style:"border:none;background:none;", readOnly:true}	        		
 	            ]
 	        }, {
-	            baseCls:"x-plain", align:"center", layout:"form", defaultType:"textfield", labelWidth:80,
-	            columnWidth: 0.25, 
+	            baseCls:"x-plain", align:"center", layout:"form", defaultType:"textfield", labelWidth:120,
+	            columnWidth: 0.33, 
 	            items: [
 	            	
-	                { fieldLabel:"计划开始时间", id:'planBeginTime_Id', name:"planBeginTime", width:150, style:"border:none;background:none;", readOnly:true},
-	                { fieldLabel:"计划结束时间", id:'planEndTime_Id',name:"planEndTime", width:150, style:"border:none;background:none;", readOnly:true}
+	                { fieldLabel:"计划开始", id:'planBeginTime_Id', name:"planBeginTime", width:150, style:"border:none;background:none;", readOnly:true},
+	                { fieldLabel:"计划结束", id:'planEndTime_Id',name:"planEndTime", width:150, style:"border:none;background:none;", readOnly:true}
 	            ]
 	        }, {
-	            baseCls:"x-plain", align:"center", layout:"form", defaultType:"textfield", labelWidth:80,
-	            columnWidth: 0.25, 
+	            baseCls:"x-plain", align:"center", layout:"form", defaultType:"textfield", labelWidth:120,
+	            columnWidth: 0.33, 
 	            items: [
 	            
-	                { fieldLabel:"实际开始时间", id:'beginTime_Id', name:"beginTime", width:150, style:"border:none;background:none;", readOnly:true},
-	                { fieldLabel:"实际结束时间", id:'endTime_Id',name:"endTime", width:150, style:"border:none;background:none;", readOnly:true}
+	                { fieldLabel:"实际开始", id:'beginTime_Id', name:"beginTime", width:150, style:"border:none;background:none;", readOnly:true},
+	                { fieldLabel:"实际结束", id:'endTime_Id',name:"endTime", width:150, style:"border:none;background:none;", readOnly:true}
 	            ]
 	        }]
 	    }]
@@ -190,21 +190,21 @@ Ext.onReady(function(){
 	}
 	
 	//机车检修作业编辑TrainWorkPlanEdit.js
-	TrainWorkPlanCommHis.showWin = function(data) {		
+	TrainWorkPlanCommHis.showWin = function(data) {	
 		if(this.searchWin != null)  this.searchWin.hide(); 	
 		var dataArray = data.split(",");
 		WorkPlanGanttHis.workPlanIDX = dataArray[0];
 		RQWorkCard.rpdIdx = dataArray[0];	
 	    TrainWorkPlanCommHis.rpdIdx = dataArray[0];  //施修任务兑现单主键
-		TrainWorkPlanCommHis.workPlanStatus =  dataArray[9];
+		TrainWorkPlanCommHis.workPlanStatus =  dataArray[7];
 		RQWorkCard.workPlanStatus = 	TrainWorkPlanCommHis.workPlanStatus; // 记录单;		
 		TrainWorkCardNew.workPlanStatus = 	TrainWorkPlanCommHis.workPlanStatus; // 记录卡;	
 		Ext.getCmp("train_Id").setValue(dataArray[1]); 
 		Ext.getCmp("xcxc").setValue(dataArray[2]);
 		Ext.getCmp("planBeginTime_Id").setValue(dataArray[3]);
 	    Ext.getCmp("planEndTime_Id").setValue(dataArray[4]);
-	    Ext.getCmp("beginTime_Id").setValue(dataArray[7]);
-	   	Ext.getCmp("endTime_Id").setValue(dataArray[8]);
+	    Ext.getCmp("beginTime_Id").setValue(dataArray[5]);
+	   	Ext.getCmp("endTime_Id").setValue(dataArray[6]);
 	
 	    //为机车检修记录单传递值
 	    //车型车号
@@ -218,14 +218,14 @@ Ext.onReady(function(){
 		//结束时间
 		RQWorkCard.planEndTime = dataArray[4];
 		//开始时间
-		TrainWorkTicketDetail.planBeginTime = dataArray[7];
+		TrainWorkTicketDetail.planBeginTime = dataArray[5];
 		//结束时间
-		TrainWorkTicketDetail.planEndTime = dataArray[8];
+		TrainWorkTicketDetail.planEndTime = dataArray[6];
 	    	    
 		//作业工单界面显示信息    
 	    RQWorkCard.titleForm.getForm().reset();
 	    RQWorkCard.titleForm.find("name","trainTypeTrainNo")[0].setValue(dataArray[1]);
-	    RQWorkCard.titleForm.find("name","repairClassRepairTime")[0].setValue(dataArray[1]);
+	    RQWorkCard.titleForm.find("name","repairClassRepairTime")[0].setValue(dataArray[2]);
 	    RQWorkCard.titleForm.find("name","planBeginTime")[0].setValue(dataArray[3]);
 	    RQWorkCard.titleForm.find("name","planEndTime")[0].setValue(dataArray[4]);
 	

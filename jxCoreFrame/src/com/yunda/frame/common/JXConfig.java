@@ -142,6 +142,10 @@ public final class JXConfig {
     /** 列检所编码 **/ 
     @XmlElement
     private String inspectionName;
+    
+    /** 系统登录后跳转页面地址 默认/frame/yhgl/MainFrameNew.jsp **/ 
+    @XmlElement
+    private String mainFrameUrl;
 	
 	/*<smsFaultEnable>false</smsFaultEnable>			<!-- 提票派工是否发送短信通知 -->
 	<smsWorkCardEnable>false</smsWorkCardEnable>	<!-- 工单派工是否发送短信通知 -->
@@ -323,5 +327,15 @@ public final class JXConfig {
     public void setInspectionName(String inspectionName) {
         this.inspectionName = inspectionName;
     }
+
+	public String getMainFrameUrl() {
+		return mainFrameUrl;
+	}
+
+	public void setMainFrameUrl(String mainFrameUrl) {
+		this.mainFrameUrl = mainFrameUrl;
+	}
+    
+    
     
 }

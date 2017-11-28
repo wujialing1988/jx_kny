@@ -23,7 +23,7 @@ TrainType.grid = new Ext.yunda.Grid({
     fieldWidth: 130,
     tbar : ['&nbsp;&nbsp;',
     {
-    	xtype:'textfield', id:'query_input', enableKeyEvents:true, emptyText:'输入车型快速检索...', width:200,
+    	xtype:'textfield', id:'query_input', enableKeyEvents:true, emptyText:i18n.ZbFw.QuickSearch, width:250,
     	listeners: {
     		keyup: function(filed, e) {
     			if (TrainType.queryTimeout) {
@@ -39,17 +39,17 @@ TrainType.grid = new Ext.yunda.Grid({
 	fields: [{
 		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	},{
-		header:'车型代码', dataIndex:'typeCode',editor:{ allowBlank:false ,maxLength:20  }
+		header:i18n.ZbFw.typeCode, dataIndex:'typeCode',editor:{ allowBlank:false ,maxLength:20  }
 	},{
-		header:'车型名称', dataIndex:'typeName', editor:{ maxLength:50  }
+		header:i18n.ZbFw.trainType, dataIndex:'typeName', editor:{ maxLength:50  }
 	},{
-		header:'简称', dataIndex:'shortName', editor:{ maxLength:20  },searcher: { hidden: true }
+		header:i18n.ZbFw.trainTypeShortName, dataIndex:'shortName', editor:{ maxLength:20  },searcher: { hidden: true }
 	},{
    		header:'车型种类编码', dataIndex:'vehicleKindCode', hidden:true, editor: { xtype:'hidden',id:'vehicleKindCode' }
 	},{
-		header:'车型种类', dataIndex:'vehicleKindName', searcher: {anchor:'98%'}
+		header:i18n.ZbFw.vehicleKindName, dataIndex:'vehicleKindName', searcher: {anchor:'98%'}
 	},{
-		header:'描述', dataIndex:'description', editor:{ maxLength:20,xtype:'textarea' },searcher: { hidden: true }
+		header:i18n.ZbFw.description, dataIndex:'description', editor:{ maxLength:20,xtype:'textarea' },searcher: { hidden: true }
 	},{
 		header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
 	}],
@@ -69,14 +69,14 @@ TrainType.submit = function(){
 
 //定义选择窗口
 TrainType.selectWin = new Ext.Window({
-	title:"适用车辆选择", width:800, height:400, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
+	title:i18n.ZbFw.ApplicableTrainSelect, width:800, height:400, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
 	maximizable:false, items:[TrainType.grid],modal:true,
 	buttons: [{
-		text : "确定",iconCls : "saveIcon", handler: function(){
+		text : i18n.common.button.confirm,iconCls : "saveIcon", handler: function(){
 			TrainType.submit(); 
 		}
 	},{
-        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ TrainType.selectWin.hide(); }
+        text: i18n.common.button.close, iconCls: "closeIcon", scope: this, handler: function(){ TrainType.selectWin.hide(); }
 	}],
 	listeners:{
 		"show":function(){

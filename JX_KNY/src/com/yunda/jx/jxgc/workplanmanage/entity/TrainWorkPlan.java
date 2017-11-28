@@ -205,7 +205,7 @@ public class TrainWorkPlan implements java.io.Serializable {
     @Column(name = "Train_Access_Account_IDX")
     private String trainAccessAccountIDX;
     
-    /* 客货类型 10 货车 20 客车*/
+    /* 客货类型 10 货车 20 客车 30 柴油发电机组*/
     @Column(name = "T_VEHICLE_TYPE")
     private String vehicleType;     
     

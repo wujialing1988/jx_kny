@@ -30,7 +30,7 @@ RepairProject.copy = function() {
 RepairProject.grid = new Ext.yunda.Grid({
     loadURL: ctx + '/repairProject!pageQuery.action',                 //装载列表数据的请求URL
     tbar:['refresh',{
-        text:"机车检修作业工单处理优化", iconCls:"configIcon", tooltip:'机车检修作业工单处理优化', tooltipType:'title', handler:function(){
+        text:"检修作业工单处理优化", iconCls:"configIcon", tooltip:'机车检修作业工单处理优化', tooltipType:'title', handler:function(){
             RepairProject.copy();
         }        
 	}],

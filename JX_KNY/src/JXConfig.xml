@@ -66,4 +66,6 @@
 	<qRCodeRule>HXHC:Y,KG:N,BS:|+J+Y,START:,END:</qRCodeRule>
 	<!-- 1 上海机车检修段 -->
 	<!-- <webappsPath>/weblogic/eos/eosdomain/applications/ydReport.war/WEB-INF/reportlets</webappsPath> -->
+	<!-- 2 首页显示内容 -->
+	<mainFrameUrl>/frame/yhgl/MainFrameNew.jsp</mainFrameUrl>
 </JXConfig>

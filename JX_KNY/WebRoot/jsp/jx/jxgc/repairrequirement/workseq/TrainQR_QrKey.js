@@ -49,7 +49,7 @@ Ext.onReady(function(){
 			header:'车型', dataIndex:'pTrainTypeShortName', editor:{id: 'trainTypeShortName_Id', xtype: 'hidden' },
 			searcher:{xtype: 'textfield'}, width: 60
 		},{
-			header:'机车检修记录卡名称', dataIndex:'workSeqName',width:200, editor:{ allowBlank:false, maxLength:50 }
+			header:'检修记录卡名称', dataIndex:'workSeqName',width:200, editor:{ allowBlank:false, maxLength:50 }
 		},{
 			header:'额定工时(分)', dataIndex:'ratedWorkHours', hidden: false, editor:{ allowBlank:true, maxLength:50 },searcher: {disabled: true}
 		},{
@@ -146,7 +146,7 @@ Ext.onReady(function(){
 	});
 	//作业工单编辑窗口
 	TrainQR.saveWin = new Ext.Window({
-		title: "机车检修记录单编辑", maximizable:false, layout: "fit", 
+		title: "检修记录单编辑", maximizable:false, layout: "fit", 
 		closeAction: "hide", modal: true, maximized: true , buttonAlign:"center",
 		items: [TrainQR.editTabs] 
 	});

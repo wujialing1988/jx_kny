@@ -1096,8 +1096,15 @@ public class MenuManager extends JXBaseManager<AcMenu, AcMenu> implements IAcMen
         for(Object [] obj : list){
             map = new LinkedHashMap();
             map.put("id", obj[0]);          //menuid 菜单id
-            map.put("text", obj[1]);        //menulabel 菜单显示名称
             flag = StringUtil.isNullOrBlank(String.valueOf(obj[2]))||"n".equals(String.valueOf(obj[2]))?false:true;
+			if(flag){
+				map.put("text", "<span style=\"color:#3A5A82;\" title=\"" + obj[1] + "\">" + obj[1] + "</span>"); // menulabel 菜单显示名称
+				map.put("iconCls", "groupCheckedIcon");			
+			}else{
+				String iconCls = getIconClsByText(obj[1]+"");
+				map.put("text", "<span style=\"font-size:13px;display:inline-block;height:20px;color:rgb(21,66,139);\" title=\"" + obj[1] + "\">" + obj[1] + "</span>"); // menulabel 菜单显示名称
+				map.put("iconCls", iconCls);				
+			}
             map.put("leaf", flag);          //isleaf 是否有下级菜单
             map.put("funcaction", obj[3]);  //funcaction 应用url
             map.put("funcType", obj[4]);    //funcType 应用类型：前台功能、后台服务、报表功能...
@@ -1108,6 +1115,44 @@ public class MenuManager extends JXBaseManager<AcMenu, AcMenu> implements IAcMen
         }   
         return children;
     }
+    
+    /**
+	 * <li>说明：根据不同的菜单获取菜单图标样式
+	 * <li>创建人：何涛
+	 * <li>创建日期：2017年5月25日
+	 * <li>修改人：
+	 * <li>修改内容：
+	 * <li>修改日期：
+	 * @param text 菜单名称
+	 * @return 菜单图表样式
+	 */
+	private String getIconClsByText(String text) {
+		String iconClass = "icon-collapse-all" ;
+		if("基础配置".equals(text)){
+			iconClass = "cogIcon" ;
+		}else if("计划管理".equals(text)){
+			iconClass = "flagIcon" ;
+		}else if("系统查询".equals(text)){
+			iconClass = "previewIcon" ;
+		}else if("生产调度".equals(text)){
+			iconClass = "scddIcon" ;
+		}else if("过程管理".equals(text)){
+			iconClass = "gcglIcon" ;
+		}else if("质量控制".equals(text)){
+			iconClass = "zlkzIcon" ;
+		}else if("配件管理".equals(text)){
+			iconClass = "pjglIcon" ;
+		}else if("技术管理".equals(text)){
+			iconClass = "jsglIcon" ;
+		}else if("物资管理".equals(text)){
+			iconClass = "wlglIcon" ;
+		}else if("统计分析".equals(text)){
+			iconClass = "tjfxIcon" ;
+		}else if("系统帮助".equals(text)){
+			iconClass = "helpIcon" ;
+		}
+		return iconClass;
+	}
 	
 	/**
 	 * <li>说明：构建系统功能树的查询语句
@@ -1208,5 +1253,4 @@ public class MenuManager extends JXBaseManager<AcMenu, AcMenu> implements IAcMen
 		return _filterParam.toString();
 	}
 
-	
 }

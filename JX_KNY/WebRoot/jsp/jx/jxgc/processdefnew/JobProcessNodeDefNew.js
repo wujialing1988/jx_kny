@@ -215,7 +215,7 @@ Ext.onReady(function(){
 				name:"nodeCode", fieldLabel:"节点编码"
 			},{    			
 		            	xtype: 'radiogroup',
-			            fieldLabel: '计划启动模式',
+			            fieldLabel: '启动模式',
 			            name: 'planMode',
 			            items: [
 			                { boxLabel: '定时',inputValue: PLANMODE_TIMER, name: 'planMode', checked: true

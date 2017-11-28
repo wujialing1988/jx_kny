@@ -30,7 +30,7 @@ QM.plugin.MutilTreeFilter = Ext.extend(Object, {
         var tbar = tree.getTopToolbar();                
         var field = new Ext.form.TextField({    
             width: this.width,    
-            emptyText: '快速检索',    
+            emptyText: i18n.common.tip.QuickSearch,    
             enableKeyEvents: true,    
             listeners: {    
                 keyup: {//添加键盘点击监听    

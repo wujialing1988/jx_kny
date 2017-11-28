@@ -306,4 +306,26 @@ public class TrainEnforcePlanDetailAction extends JXBaseAction<TrainEnforcePlanD
             JSONUtil.write(this.getResponse(), map);
         }
     }
+    
+    /**
+     * <li>说明：月计划兑现情况查看
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-24
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public void findMonthRateStatistics() throws Exception {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            HttpServletRequest req = getRequest();
+            String year = req.getParameter("year");
+            map.put("root",this. manager.findMonthRateStatistics(year));
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }                 
+    }
+    
 }

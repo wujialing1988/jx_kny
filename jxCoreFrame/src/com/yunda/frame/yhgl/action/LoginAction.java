@@ -506,7 +506,17 @@ public class LoginAction extends
 			getSession().setAttribute("reloginJsp", _loginJsp);
 			getSession().setAttribute("appId", appId);
 		}
-		getResponse().sendRedirect(getRequest().getContextPath() + "/frame/yhgl/MainFrame.jsp?appId=" + appId );
+//		getResponse().sendRedirect(getRequest().getContextPath() + "/frame/yhgl/MainFrameNew.jsp?appId=" + appId );
+		String mainFrameUrl = JXConfig.getInstance().getMainFrameUrl();
+		if(StringUtil.isNullOrBlank(mainFrameUrl)){
+			mainFrameUrl = "/frame/yhgl/MainFrameNew.jsp" ;
+		}
+		// 系统超级用户
+		if (LoginPurviewCheckFilter.SYS_ADMIN.equals(acOperator
+				.getUserid()) || LoginPurviewCheckFilter.SUPER_NAME.equals(acOperator.getUserid())) {
+			mainFrameUrl = "/frame/yhgl/MainFrame.jsp" ;
+		}
+		getResponse().sendRedirect(getRequest().getContextPath() + mainFrameUrl + "?appId=" + appId );
 		return null;
 	}
 	

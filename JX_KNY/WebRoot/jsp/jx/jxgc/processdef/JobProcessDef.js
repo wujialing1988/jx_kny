@@ -6,7 +6,7 @@ Ext.onReady(function(){
 	
 	/** **************** 定义全局变量开始 **************** */
 	JobProcessDef.labelWidth = 100;
-	JobProcessDef.fieldWidth = 140;
+	JobProcessDef.fieldWidth = 250;
 	JobProcessDef.serachParams = {};
 	JobProcessDef.trainTypeIDX = "";
 	JobProcessDef.isSaveAndAdd = false;

@@ -16,6 +16,7 @@ import com.yunda.base.context.SystemContext;
 import com.yunda.common.BusinessException;
 import com.yunda.frame.common.JXBaseManager;
 import com.yunda.frame.util.EntityUtil;
+import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.frame.yhgl.entity.OmEmployee;
 import com.yunda.frame.yhgl.manager.IOmEmployeeManager;
 import com.yunda.freight.zb.gztp.entity.Gztp;
@@ -283,4 +284,18 @@ public class GztpManager extends JXBaseManager<Gztp, Gztp> {
                 matTypeUseManager.saveMatUsesForGZTP(matUses,tp.getIdx()); // 保存物料信息
             }
     }
+    
+    /**
+     * <li>说明：故障提票分类统计
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-24
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<Map<String, Object>> findGzFlStatistics(){
+        String sql = SqlMapUtil.getSql("zb-tp:findGzFlStatistics");
+        return this.queryListMap(sql);
+    }  
+    
 }

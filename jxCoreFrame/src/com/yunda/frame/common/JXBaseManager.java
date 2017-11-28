@@ -1033,6 +1033,37 @@ public abstract class JXBaseManager<T, S> extends BaseManager<T, S>{
             }
         });
     }
+    
+    /**
+     * <li>说明：通过sql返回map类型的List
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-7-11
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param sql 查询sql
+     * @return
+     * @throws BusinessException
+     */
+    @SuppressWarnings("unchecked")
+    public List<Map<String, Object>> queryListMap(String sql) throws BusinessException{
+        final String fSql = sql;
+        HibernateTemplate template = this.daoUtils.getHibernateTemplate();
+        return (List<Map<String, Object>>)template.execute(new HibernateCallback(){
+            public List<Map<String, Object>> doInHibernate(Session s) {
+                SQLQuery query = null;
+                try {
+                    query = (SQLQuery)s.createSQLQuery(fSql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+                    query.setCacheable(false);
+                    return query.list();
+                } catch (HibernateException e) {
+                    throw e;
+                } finally{
+                    if(query != null)   query.setCacheable(false);
+                }
+            }
+        });
+    }
 
 
     /**

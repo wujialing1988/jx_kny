@@ -11,7 +11,7 @@ jx.jxgc.JobProcessDefSelect = Ext.extend(Ext.form.TriggerField, {
         if(this.disabled)   return;
         var trainTypeIdx =  jx.jxgc.JobProcessDefSelect.trainTypeIDX;
 		if(Ext.isEmpty(trainTypeIdx)){
-			MyExt.Msg.alert("请先选择车型！");
+			MyExt.Msg.alert("请先选择型号！");
 			return;
 		}
 		var rcIDX = jx.jxgc.JobProcessDefSelect.rcIDX;

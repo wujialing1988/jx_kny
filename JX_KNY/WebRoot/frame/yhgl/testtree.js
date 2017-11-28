@@ -69,7 +69,7 @@ var tree =
         		{id:'货车检修标准', text:'货车检修标准', leaf:true, funcaction:'/jsp/jx/scdd/jxplanmanage/jxstandard/repair_standard.jsp?vehicleType=10'},
         		{id:'货车修程预警', text:'货车修程预警', leaf:true, funcaction:'/jsp/freight/jx/classwarning/RepairClassWarningHC.jsp'},
         		{id:'货车车辆检修记录单维护', text:'货车车辆检修记录单维护', leaf:true, funcaction:'/jsp/jx/jxgc/repairrequirement/RepairProject.jsp?vehicleType=10'},
-        		{id:'货车车辆检修作业流程维护(新)',text:'货车车辆检修作业流程维护(新)',leaf:true,funcaction:'/jsp/jx/jxgc/processdefnew/JobProcessDefNew.jsp?vehicleType=10'},
+        		{id:'货车检修作业流程维护',text:'货车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=10'},
         		{id:'货车车辆状态跟踪',text:'货车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=10'},
         		{id:'货车车辆档案管理', text:'货车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=10'}
         	]
@@ -81,7 +81,7 @@ var tree =
         		{id:'客车走行公里', text:'客车走行公里', leaf:true, funcaction:'/jsp/passenger/base/runningkm/Runningkm.jsp'},
         		{id:'客车修程预警', text:'客车修程预警', leaf:true, funcaction:'/jsp/freight/jx/classwarning/RepairClassWarning.jsp'},
         		{id:'客车车辆检修记录单维护', text:'客车车辆检修记录单维护', leaf:true, funcaction:'/jsp/jx/jxgc/repairrequirement/RepairProject.jsp?vehicleType=20'},
-        		{id:'客车车辆检修作业流程维护(新)',text:'客车车辆检修作业流程维护(新)',leaf:true,funcaction:'/jsp/jx/jxgc/processdefnew/JobProcessDefNew.jsp?vehicleType=20'},
+        		{id:'客车检修作业流程维护',text:'客车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=20'},
         		{id:'客车车辆状态跟踪',text:'货车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=20'},
         		{id:'客车车辆档案管理', text:'客车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=20'}
         	]},        
@@ -275,6 +275,16 @@ var tree =
     		}	    		
     	]
     },{
+        id:'柴油发电机组管理', text:'柴油发电机组管理', leaf:false, children:[
+              {id:'柴油发电机类型', text:'柴油发电机类型', leaf:true, funcaction:'/jsp/freight/base/vehicle/generator/TrainVehicleType.jsp?vehicleType=30'},
+              {id:'柴油发电机台账信息维护', text:'柴油发电机台账信息维护', leaf:true, funcaction:'/jsp/jx/jczl/generator/JczlTrainService.jsp?vehicleType=30'},
+              {id:'柴油发电机修程对应修次', text:'柴油发电机修程对应修次', leaf:true, funcaction:'/jsp/jxpz/rcrtset/generator/RcRt.jsp?vehicleType=30'},
+              {id:'柴油发电机检修标准', text:'柴油发电机检修标准', leaf:true, funcaction:'/jsp/jx/scdd/jxplanmanage/jxstandard/generator/repair_standard.jsp?vehicleType=30'},
+              {id:'柴油发电机检修记录单维护', text:'柴油发电机检修记录单维护', leaf:true, funcaction:'/jsp/jx/jxgc/repairrequirement/generator/RepairProject.jsp?vehicleType=30'},
+              {id:'柴油发电机检修作业流程维护',text:'柴油发电机检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/generatorProcessdef/JobProcessDef.jsp?vehicleType=30'},
+              {id:'柴油发电机检修作业编辑', text:'柴油发电机检修作业编辑', leaf:true, funcaction:'/jsp/jx/jxgc/workplanmanage/generator/TrainWorkPlanEdit.jsp?vehicleType=30'}
+            ]
+    	},{
         id:'test', text:'测试', leaf:false, children:[
                 {id:'VIS测试', text:'VIS测试', leaf:true, funcaction:'/jsp/vis/vis_demo.jsp'},
                 {id:'VIS测试1', text:'VIS测试1', leaf:true, funcaction:'/jsp/vis/vis_demo2.jsp'},

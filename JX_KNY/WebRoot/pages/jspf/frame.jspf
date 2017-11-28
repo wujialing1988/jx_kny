@@ -48,6 +48,9 @@ String browserLang = request.getLocale().toString().toLowerCase();
 <script src="<%=request.getContextPath() %>/pages/resource/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="<%=request.getContextPath() %>/pages/resource/bootstrap/js/bootstrap.min.js"></script>
+<!-- ChartJS -->
+<script src="<%=request.getContextPath() %>/pages/resource/plugins/chartjs-2.2.7/Chart.min.js"></script>
+<script src="<%=request.getContextPath() %>/pages/resource/plugins/chartjs-2.2.7/utils.js"></script>
 <!-- FastClick -->
 <script src="<%=request.getContextPath() %>/pages/resource/plugins/fastclick/fastclick.js"></script>
 <script src="<%=request.getContextPath() %>/pages/resource/bootstrappageselect/js/selectpage.min.js"></script>

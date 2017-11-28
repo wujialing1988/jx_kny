@@ -25,21 +25,21 @@ ZbFwWidi.grid = new Ext.yunda.RowEditorGrid({
     deleteURL: ctx + '/zbFwWidi!logicDelete.action',            //删除数据的请求URL
     saveFormColNum:2,
     storeAutoLoad: false,
-    title:'数据项',
+    title:i18n.ZbFw.diTitle,
     tbar: ['add', 'delete','->', {
-			text:'置顶', iconCls:'moveTopIcon', handler: function() {
+			text:i18n.common.button.moveTop, iconCls:'moveTopIcon', handler: function() {
 				ZbFwWidi.moveOrder(ZbFwWidi.grid, ORDER_TYPE_TOP);
 			}
 		}, {
-			text:'上移', iconCls:'moveUpIcon', handler: function() {
+			text:i18n.common.button.moveUp, iconCls:'moveUpIcon', handler: function() {
 				ZbFwWidi.moveOrder(ZbFwWidi.grid, ORDER_TYPE_PRE);
 			}
 		}, {
-			text:'下移', iconCls:'moveDownIcon', handler: function() {
+			text:i18n.common.button.moveDown, iconCls:'moveDownIcon', handler: function() {
 				ZbFwWidi.moveOrder(ZbFwWidi.grid, ORDER_TYPE_NEX);
 			}
 		}, {
-			text:'置底', iconCls:'moveBottomIcon', handler: function() {
+			text:i18n.common.button.moveBottom, iconCls:'moveBottomIcon', handler: function() {
 				ZbFwWidi.moveOrder(ZbFwWidi.grid, ORDER_TYPE_BOT);
 			}
 		}],
@@ -48,18 +48,18 @@ ZbFwWidi.grid = new Ext.yunda.RowEditorGrid({
 	},{
 		header:'整备作业项主键', dataIndex:'zbfwwiIDX',hidden:true, editor:{maxLength:50,xtype:'hidden', id:'zbfwwiIDX_z'}
 	},{
-		header:'编号', dataIndex:'dICode',hidden:true, editor:{  maxLength:50 }
+		header:i18n.ZbFw.dICode, dataIndex:'dICode',hidden:true, editor:{  maxLength:50 }
 	},{
-		header:'名称', dataIndex:'dIName', editor:{  maxLength:100,	allowBlank: false }
+		header:i18n.ZbFw.dIName, dataIndex:'dIName', editor:{  maxLength:100,	allowBlank: false }
 	},{
-		header:'标准', dataIndex:'dIStandard', editor:{  maxLength:500 ,	allowBlank: false}
+		header:i18n.ZbFw.dIStandard, dataIndex:'dIStandard', editor:{  maxLength:500 ,	allowBlank: false}
 	},{
-		header:'数据类型', dataIndex:'dIClass', editor:{ 
+		header:i18n.ZbFw.dIClass, dataIndex:'dIClass', editor:{ 
 				id:'dIClass_m',
 				xtype:'combo', 
 				store: new Ext.data.SimpleStore({
 		            fields: ["k", "v"],
-		            data: [[DATA_TYPE_ZF,"字符" ], [DATA_TYPE_SZ, "数字"]]
+		            data: [[DATA_TYPE_ZF,i18n.ZbFw.char ], [DATA_TYPE_SZ, i18n.ZbFw.number]]
 				}),
 				valueField:'k',
 				displayField:'v',
@@ -68,12 +68,12 @@ ZbFwWidi.grid = new Ext.yunda.RowEditorGrid({
  				allowBlank: false 
           }
 	},{
-		header:'是否必填', dataIndex:'isBlank',editor:{ 
+		header:i18n.ZbFw.isBlank, dataIndex:'isBlank',editor:{ 
 				id:'isBlank_m',
 				xtype:'combo', 
 				store: new Ext.data.SimpleStore({
 		            fields: ["k", "v"],
-		            data: [[IS_BLANK_YES, "是"], [IS_BLANK_NO, "否"]]
+		            data: [[IS_BLANK_YES, i18n.common.tip.yes], [IS_BLANK_NO, i18n.common.tip.no]]
 				}),
 				valueField:'k',
 				displayField:'v',
@@ -82,7 +82,7 @@ ZbFwWidi.grid = new Ext.yunda.RowEditorGrid({
  				allowBlank: false 
           } 
 	},{
-		header:'顺序号', dataIndex:'seqNo',width:60,editor:{ xtype:'numberfield',xtype:'hidden'}
+		header:i18n.ZbFw.seqNo, dataIndex:'seqNo',width:60,editor:{ xtype:'numberfield',xtype:'hidden'}
 	}],
 	beforeAddButtonFn: function(){
 		   ZbFwWidi.zbfwwiIDX = ZbFwWi.grid.saveForm.getForm().findField("idx").getValue();

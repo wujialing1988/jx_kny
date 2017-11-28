@@ -20,9 +20,18 @@ i18n.common.button.close = '关闭' ;
 i18n.common.button.save = '保存' ;
 i18n.common.button.edit = '编辑' ;
 i18n.common.button.view = '查看' ;
+i18n.common.button.copy = '复制' ;
+i18n.common.button.confirm = '确认' ;
+i18n.common.button.cancel = '取消' ;
+
+i18n.common.button.moveTop = '置顶' ;
+i18n.common.button.moveUp = '上移' ;
+i18n.common.button.moveDown = '下移' ;
+i18n.common.button.moveBottom = '置底' ;
 
 i18n.common.tip = {} ;
 i18n.common.tip.prompt = '提示';
+i18n.common.tip.Confirm = '确认选择';
 i18n.common.tip.loading = '正在处理，请稍侯...' ;
 i18n.common.tip.disableColumns = 'this.saveForm未创建，不能执行该方法disableColumns' ;
 i18n.common.tip.disableAllColumns = 'this.saveForm未创建，不能执行该方法disableAllColumns' ;
@@ -31,10 +40,17 @@ i18n.common.tip.enableAllColumns = 'this.saveForm未创建，不能执行该方�
 i18n.common.tip.notFindRecords = '没有符合条件的记录' ;
 i18n.common.tip.notSelectRecords = '尚未选择一条记录！' ;
 i18n.common.tip.onlySelectOneRecord = '只能选择一条记录！' ;
+i18n.common.tip.ExceedsSelectRecords = '所选记录超过最大限制！' ;
 i18n.common.tip.dataNotRecover = '该操作将不能恢复，是否继续？' ;
 i18n.common.tip.operateSuccess = '操作成功！' ;
 i18n.common.tip.operateFail = '操作失败！' ;
 i18n.common.tip.operateException = '操作异常！' ;
+i18n.common.tip.RequestFailed = '请求失败，服务器状态代码：\n' ;
+i18n.common.tip.cancelThechange = '请保存或取消更改';
+i18n.common.tip.QuickSearch = '快速检索';
+
+i18n.common.tip.yes = '是';
+i18n.common.tip.no = '否';
 
 /**
  * 验证信息

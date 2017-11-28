@@ -25,7 +25,7 @@ Ext.onReady(function(){
 				layout : 'border',
 				items: [{
 					region: 'north',
-					height: 220,
+					height: 280,
 					items: GztpTicket.saveForm
 				},{
 					region: 'center',
@@ -34,7 +34,7 @@ Ext.onReady(function(){
 				}]
 			}, {
 				region: 'south',
-				height: 400,
+				height: 250,
 				items: GztpTicket.grid
 			}]
 	});

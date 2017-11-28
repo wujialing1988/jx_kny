@@ -11,8 +11,8 @@ Ext.namespace('ZbFw');                       //定义命名空间
 	/* ************* 定义全局变量结束 ************* */
 	
 ZbFw.searchForm = new Ext.form.FormPanel({
-		labelWidth: 60,
-		labelAlign:"left",
+		labelWidth: 80,
+		labelAlign:"right",
 		layout:"column",
 		padding:'10px', 
 		defaults:{
@@ -25,7 +25,7 @@ ZbFw.searchForm = new Ext.form.FormPanel({
 		items:[{
 			items:[{
     		        id:"trainType_combo",	
-    				fieldLabel: "车辆车型",
+    				fieldLabel: i18n.ZbFw.trainType,
     				hiddenName: "trainTypeIDX",
     				xtype: "Base_combo",
     			    business: 'trainVehicleType',
@@ -38,28 +38,28 @@ ZbFw.searchForm = new Ext.form.FormPanel({
         	}]
 		}, {
 			items:[{
-				fieldLabel:"范围名称",
+				fieldLabel:i18n.ZbFw.fwName,
 				width:150,
 				name: 'fwName'
 			}]
 		},{
 
 		  	items:[{
-		  	  	fieldLabel:"范围编码",
+		  	  	fieldLabel:i18n.ZbFw.fwCode,
 		  	  	width: 170,
 				name: 'fwCode'
 		  	}]
 		}], 
 		buttonAlign: 'center',
 		buttons:[{
-			text:'查询', iconCls:'searchIcon', handler: function() {
+			text:i18n.common.button.research, iconCls:'searchIcon', handler: function() {
 			 var form = ZbFw.searchForm.getForm();
 				if (form.isValid()) {
 					ZbFw.grid.store.load();
 				}
 			}
 		},{
-			text:'重置', iconCls:'resetIcon', handler: function() {
+			text:i18n.common.button.reset, iconCls:'resetIcon', handler: function() {
 				    ZbFw.searchForm.getForm().reset();
                     Ext.getCmp('trainType_combo').clearValue();
 				    // 重新加载表格
@@ -71,18 +71,18 @@ ZbFw.searchForm = new Ext.form.FormPanel({
 ZbFw.configNodeFn = function() {
 	var sm = ZbFw.grid.getSelectionModel();
 	if (sm.getCount() <= 0) {
-		MyExt.Msg.alert('尚未选择一条记录！');
+		MyExt.Msg.alert(i18n.common.tip.notSelectRecords);
 		return;
 	}
 	if (sm.getCount() > 1) {
-		MyExt.Msg.alert('请只选择一条记录进行流程节点设置');
+		MyExt.Msg.alert(i18n.common.tip.onlySelectOneRecord);
 		return;
 	}
 	var record = sm.getSelections()[0];
 	ZbglJobProcessNodeDef.zbfwIDX = record.get('idx');
 	ZbglJobProcessNodeDef.processName = record.get('fwName');
 	ZbglJobProcessNodeDef.tree.root.setText(record.get('fwName'));
-	Ext.getCmp('tabpanel_node').setTitle(record.get('fwName') + " - 作业节点");
+	Ext.getCmp('tabpanel_node').setTitle(record.get('fwName') + " - " + i18n.ZbFw.tabpanelNodeTitle);
 	
 	ZbglJobProcessNodeDef.win.show();
 }	
@@ -99,7 +99,7 @@ ZbFw.copyForm = new Ext.form.FormPanel({
 	            items: [
 	        	{
 					id:"fwName_copy",
-					fieldLabel:"范围名称",
+					fieldLabel:i18n.ZbFw.fwName,
 					width:150,allowBlank:false,
 					name: 'fwName'
 				},
@@ -112,12 +112,12 @@ ZbFw.copyForm = new Ext.form.FormPanel({
 	    }]
 	});
 ZbFw.copyWin = new Ext.Window({
-	    title:"复制", maximizable:true, width:400, height:200,
+	    title:i18n.common.button.copy, maximizable:true, width:400, height:200,
 	    plain:true,  layout:"fit", closeAction:"hide",
 	    items: ZbFw.copyForm, 
 		buttonAlign: 'center',
 		buttons:[{
-			text:'复制', iconCls:'saveIcon', handler: function() {
+			text:i18n.common.button.copy, iconCls:'saveIcon', handler: function() {
 					var form = ZbFw.copyForm.getForm(); 
 			        if (!form.isValid()) return;
 			        var data = form.getValues();
@@ -138,7 +138,7 @@ ZbFw.copyWin = new Ext.Window({
 			    	Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
 			}
 		},{
-			text:'关闭', iconCls:'closeIcon', handler: function() {
+			text:i18n.common.button.close, iconCls:'closeIcon', handler: function() {
                     ZbFw.copyWin.hide();
 				    // 重新加载表格
 				    ZbFw.grid.store.load();
@@ -151,17 +151,17 @@ ZbFw.grid = new Ext.yunda.Grid({
     deleteURL: ctx + '/zbFw!logicDelete.action',            //删除数据的请求URL
     saveWinWidth: 600,
     saveWinHeight:300,
-    tbar: ['add',{text:"设置流程节点", iconCls:"editIcon",
+    tbar: ['add',{text:i18n.ZbFw.setProcessBtn, iconCls:"editIcon",
     	    handler: ZbFw.configNodeFn
     	   }, {
-	    	text: '复制', iconCls: 'wrenchIcon', handler: function() {
+	    	text: i18n.common.button.copy, iconCls: 'wrenchIcon', handler: function() {
 	    		var sm = ZbFw.grid.getSelectionModel();
 	    		if (sm.getCount() <= 0) {
-	    			MyExt.Msg.alert('尚未选择任何记录！');
+	    			MyExt.Msg.alert(i18n.common.tip.notSelectRecords);
 	    			return;
 	    		}
 	    		if (sm.getCount() > 1) {
-	    			MyExt.Msg.alert('请只选择一条记录进行复制！');
+	    			MyExt.Msg.alert(i18n.common.tip.onlySelectOneRecord);
 	    			return;
 	    		}
 	    		ZbFw.copyWin.show();
@@ -175,17 +175,17 @@ ZbFw.grid = new Ext.yunda.Grid({
 	    	}
 	    },
     	   'delete','refresh',{
-    	   text:"设置适用机车", iconCls:"queryIcon",hidden:true,
+    	   text:i18n.ZbFw.setApplicableTrainBtn, iconCls:"queryIcon",hidden:true,
 	    	 handler: function(){
 	    	 	if (!$yd.isSelectedRecord(ZbFw.grid)){
-					MyExt.Msg.alert("请选择一条数据!");
+					MyExt.Msg.alert(i18n.common.tip.notSelectRecords);
 					return;
 	    	 	}
 	    	 	
 	    	 	//讲当前选择的行的车型传递到机车选择列表中
 	    	 	var sm = ZbFw.grid.getSelectionModel();
 	    	 	if (sm.getCount() > 1) {
-	    			MyExt.Msg.alert('请只选择一条记录进行复制！');
+	    			MyExt.Msg.alert(i18n.common.tip.onlySelectOneRecord);
 	    			return;
 	    		}
 	    	 	
@@ -202,17 +202,17 @@ ZbFw.grid = new Ext.yunda.Grid({
 	    		ZbfwTrianCenterWin.grid.store.load();
 	    	}
 	    },{
-    	   text:"设置适用车型", iconCls:"queryIcon",
+    	   text:i18n.ZbFw.setApplicableTrainBtn, iconCls:"queryIcon",
 	    	 handler: function(){
 	    	 	if (!$yd.isSelectedRecord(ZbFw.grid)){
-					MyExt.Msg.alert("请选择一条数据!");
+					MyExt.Msg.alert(i18n.common.tip.notSelectRecords);
 					return;
 	    	 	}
 	    	 	
 	    	 	var sm = ZbFw.grid.getSelectionModel();
 
 	    	 	if (sm.getCount() > 1) {
-	    			MyExt.Msg.alert('请只选择一条记录进行设置！');
+	    			MyExt.Msg.alert(i18n.common.tip.onlySelectOneRecord);
 	    			return;
 	    		}
 	    	 	
@@ -235,16 +235,16 @@ ZbFw.grid = new Ext.yunda.Grid({
 	fields: [{
 		header:'idx主键', dataIndex:'idx', hidden:true, editor:{xtype:'hidden'}
 	},{
-		header:'范围编码', dataIndex:'fwCode',editor:{ maxLength:50 ,allowBlank:false},
+		header:i18n.ZbFw.fwCode, dataIndex:'fwCode',editor:{ maxLength:50 ,allowBlank:false},
 		renderer: function(value, metaData, record, rowIndex, colIndex, store){ 
             var html = "";
             html = "<span><a href='#' onclick='ZbFw.configNodeFn()'>"+value+"</a></span>";
             return html;
         }
 	},{
-		header:'车型', dataIndex:'trainTypeShortName',hidden:true, editor:{
+		header:i18n.ZbFw.trainTypeShortName, dataIndex:'trainTypeShortName',hidden:true, editor:{
 				hidden:true,
-				fieldLabel:"车型",
+				fieldLabel:i18n.ZbFw.trainTypeShortName,
 				id:"trainType_combJ", xtype: "Base_combo",
 				hiddenName: "trainTypeShortName",
 				entity:'com.yunda.freight.base.vehicle.entity.TrainVehicleType',
@@ -256,9 +256,9 @@ ZbFw.grid = new Ext.yunda.Grid({
 				fields:["idx", "typeCode", "typeName"]
 			}
 	},{
-		header:'范围名称', dataIndex:'fwName', editor:{maxLength:100,allowBlank:false, width: 400}
+		header:i18n.ZbFw.fwName, dataIndex:'fwName', editor:{maxLength:100,allowBlank:false, width: 400}
 	},{
-		header:'范围描述', dataIndex:'fwDesc', editor:{  maxLength:500,xtype:'textarea', width: 400 }
+		header:i18n.ZbFw.remark, dataIndex:'fwDesc', editor:{  maxLength:500,xtype:'textarea', width: 400 }
 	},{
 	   	header:'适用作业性质编码', dataIndex:'workNatureCode', hidden:true, editor: { xtype:'hidden',id:'workNatureCode' }
 	},
@@ -277,7 +277,7 @@ ZbFw.grid = new Ext.yunda.Grid({
 	},{
 		header:'适用车辆编码', dataIndex:'trainVehicleCode',hidden:true, editor:{xtype:"hidden"}
 	},{
-		header:'适用车型', dataIndex:'trainVehicleName', editor:{xtype:"hidden"}
+		header:i18n.ZbFw.setApplicableTrain, dataIndex:'trainVehicleName', editor:{xtype:"hidden"}
 	},{
 		header:'客货类型', dataIndex:'vehicleType',hidden:true, editor:{xtype:"hidden",value:vehicleType}
 	},{
@@ -330,7 +330,7 @@ TrainType.submit = function(){
 	//未选择记录，直接返回
 	var records = TrainType.grid.getSelectionModel().getSelections();
     if(records.length == 0){
-    	MyExt.Msg.alert("尚未选择适用车辆");
+    	MyExt.Msg.alert(i18n.common.tip.notSelectRecords);
     	return;
     }
     var trianCodes = [];
@@ -340,7 +340,7 @@ TrainType.submit = function(){
     	trianTypes.push(records[i].get("typeName"));
     }
     if(trianCodes.toString().length > 499){
-    	 MyExt.Msg.alert("选择适用车辆超过最大限制,请重新选择");
+    	 MyExt.Msg.alert(i18n.common.tip.ExceedsSelectRecords);
     	 return;
     }
     
@@ -349,7 +349,7 @@ TrainType.submit = function(){
     	idxs.push(fwrecord[j].data.idx);
     }
     
-	 Ext.Msg.confirm("提示","确认选择", function(btn){
+	 Ext.Msg.confirm(i18n.common.tip.prompt,i18n.common.tip.Confirm, function(btn){
 		if(btn == 'yes'){
 			showtip();
 	    	$.ajax({
@@ -385,7 +385,7 @@ TrainType.submit = function(){
 		        //ZbFw.zbFwcode = result.rule;
 			},
 			failure: function(response, options){
-				MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				MyExt.Msg.alert(i18n.common.tip.RequestFailed + response.status + "\n" + response.responseText);
 			}
 		});
   }	
@@ -395,7 +395,7 @@ ZbFw.viewport = new Ext.Viewport({
 		layout: 'border',
 		items:[{
 			// 查询表单区域
-			frame:true, title:'查询',
+			frame:true, title:i18n.common.button.research,
 			region: 'north',
 			height: 143,
 			collapsible: true,

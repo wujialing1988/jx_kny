@@ -14,7 +14,10 @@ Ext.onReady(function(){
 		saveURL: ctx + '/trainInspectRecord!saveOrUpdate.action',
 		loadURL: ctx + '/trainInspectRecord!pageList.action',
 		deleteURL: ctx + '/trainInspectRecord!logicDelete.action',
-		saveFormColNum:1,	searchFormColNum:1, fieldWidth: 100,
+		saveFormColNum:1,	
+		searchFormColNum:1,
+		fieldWidth: 200,
+		viewConfig: {forceFit: true },
 		searchFn: function(searchParam){ 
 			TrainInspectRecord.searchParam = searchParam ;
         	TrainInspectRecord.grid.store.load();
@@ -41,7 +44,7 @@ Ext.onReady(function(){
 		},{
 			header:'责任人ID', dataIndex:'personResponsibleId', hidden:true, editor: {id: 'personResponsibleId', xtype: 'hidden'}
 		},{
-			header:'责任人', dataIndex: 'personResponsible', editor: {
+			header:'责任人', dataIndex: 'personResponsible',width: 120, editor: {
 				  id: 'empname_SelectWin_Id', xtype: 'OmEmployee_SelectWin', fieldLabel: '责任人',
 				  hiddenName: 'personResponsible', displayField:'empname', valueField: 'empname',
 				  returnField :[{widgetId: "personResponsibleId", propertyName: "empid"}],
@@ -50,9 +53,9 @@ Ext.onReady(function(){
 		},{
 			header:'录入人ID', dataIndex: 'recordPersonId', width: 140, hidden:true, editor: {xtype: 'hidden'}
 		},{
-			header:'录入人', dataIndex: 'recordPerson', editor: {xtype: 'hidden'}
+			header:'录入人', dataIndex: 'recordPerson',width: 120, editor: {xtype: 'hidden'}
 		},{
-			header:'录入时间', dataIndex:'recordTime', width: 200, renderer: function(v) {
+			header:'录入时间', dataIndex:'recordTime', width: 120, renderer: function(v) {
 				if (v) return Ext.util.Format.date(new Date(v), 'Y-m-d H:i');
 			}, editor: {xtype:'hidden'}
 		},{
@@ -62,7 +65,7 @@ Ext.onReady(function(){
 			     dicttypeid:'XJLB', width:100
 		   }
 		},{
-			header:'巡检详情', dataIndex:'inspectDetail', width: 200, editor: {xtype: 'textarea', maxLength: 100}
+			header:'巡检详情', dataIndex:'inspectDetail', editor: {xtype: 'textarea', maxLength: 100}
 		},{
 			header:'客车类型', dataIndex:'vehicleType', width: 60, hidden:true, editor: { xtype:"hidden",value:vehicleType }
 		}],

@@ -2,6 +2,7 @@ package com.yunda.zb.rdp.zbbill.manager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,10 @@ import com.yunda.common.BusinessException;
 import com.yunda.frame.common.JXBaseManager;
 import com.yunda.frame.common.Page;
 import com.yunda.frame.util.CommonUtil;
+import com.yunda.frame.util.DateUtil;
 import com.yunda.frame.util.EntityUtil;
 import com.yunda.frame.util.StringUtil;
+import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecord;
 import com.yunda.jxpz.utils.SystemConfigUtil;
 import com.yunda.twt.trainaccessaccount.entity.TrainAccessAccount;
@@ -785,4 +788,5 @@ public class ZbglRdpManager extends JXBaseManager<ZbglRdp, ZbglRdp> {
         hql.append(" from ZbglRdp where 1 = 1 ").append(CommonUtil.buildParamsHql(paramMap)).append(" and recordStatus = 0");
         return daoUtils.find(hql.toString());
     }
+    
 }

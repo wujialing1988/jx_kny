@@ -36,19 +36,19 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 	    singleSelect: true,
 	    tbar:['search','add','delete','->', {
-			text:'置顶', iconCls:'moveTopIcon', handler: function() {
+			text:i18n.common.button.moveTop, iconCls:'moveTopIcon', handler: function() {
 				ZbFwWi.moveOrder(ZbFwWi.grid, ORDER_TYPE_TOP);
 			}
 		}, {
-			text:'上移', iconCls:'moveUpIcon', handler: function() {
+			text:i18n.common.button.moveUp, iconCls:'moveUpIcon', handler: function() {
 				ZbFwWi.moveOrder(ZbFwWi.grid, ORDER_TYPE_PRE);
 			}
 		}, {
-			text:'下移', iconCls:'moveDownIcon', handler: function() {
+			text:i18n.common.button.moveDown, iconCls:'moveDownIcon', handler: function() {
 				ZbFwWi.moveOrder(ZbFwWi.grid, ORDER_TYPE_NEX);
 			}
 		}, {
-			text:'置底', iconCls:'moveBottomIcon', handler: function() {
+			text:i18n.common.button.moveBottom, iconCls:'moveBottomIcon', handler: function() {
 				ZbFwWi.moveOrder(ZbFwWi.grid, ORDER_TYPE_BOT);
 			}
 		}],
@@ -61,16 +61,16 @@ Ext.onReady(function(){
 		},{
 			header:'编号', dataIndex:'wICode',hidden:true,editor:{  maxLength:50, hidden:true }
 		},{
-			header:'顺序号', dataIndex:'seqNo',width:60,editor:{ xtype:'numberfield', maxLength:3, hidden:true }
+			header:i18n.ZbFw.seqNo, dataIndex:'seqNo',width:60,editor:{ xtype:'numberfield', maxLength:3, hidden:true }
 		},{
-			header:'名称', dataIndex:'wIName',width:30,editor:{  maxLength:100, anchor:"50%", allowBlank:false },	
+			header:i18n.ZbFw.wIName, dataIndex:'wIName',width:30,editor:{  maxLength:100, anchor:"50%", allowBlank:false },	
 			renderer: function(value, metaData, record, rowIndex, colIndex, store){ 
 	            var html = "";
 	            html = "<span><a href='#' onclick='ZbFwWi.grid.toEditFn(\""+ ZbFwWi.grid + "\",\""+ rowIndex +"\")'>"+value+"</a></span>";
 	            return html;
 	        }
 		},{
-			header:'描述', dataIndex:'wIDesc',editor:{  maxLength:500, anchor:"90%", xtype:'textarea' }
+			header:i18n.ZbFw.wIDesc, dataIndex:'wIDesc',editor:{  maxLength:500, anchor:"90%", xtype:'textarea' }
 		},{
 			header:'是否需要照相确认', dataIndex:'isCheckPicture',hidden:true,
 			editor:{anchor:"90%", id:"isCheckPicture_edit",xtype:'checkboxgroup', name: "isCheckPicture", fieldLabel: '是否需要照相确认',xtype:'hidden', 
@@ -81,9 +81,9 @@ Ext.onReady(function(){
 			renderer: function(value, metaData, record, rowIndex, colIndex, store){ 
 				var fieldValue;
 				if(value && value == DOCHECK){
-					fieldValue = '是'; 
+					fieldValue = i18n.common.tip.yes; 
 				}else {
-					fieldValue = '否'; 
+					fieldValue = i18n.common.tip.no; 
 				}
 				
 				return fieldValue;
@@ -102,26 +102,26 @@ Ext.onReady(function(){
 	        //计算查询窗体宽度
 	        if(this.saveWinWidth == null)   this.saveWinWidth = (this.labelWidth + this.fieldWidth + 8) * this.saveFormColNum + 60;
 	        this.saveWin = new Ext.Window({
-	            title:"作业项目编辑",width:650, height:450, plain:true, closeAction:"hide",  maximizable:true,
+	            title:i18n.ZbFw.tabpanelProjectEditTitle,width:650, height:450, plain:true, closeAction:"hide",  maximizable:true,
 	            layout:'border',
 	            defaults:{border:false},
 	            items:[{
 	            	region:'north', height: 190, layout:'fit', frame:true, items: this.saveForm ,
 		            buttonAlign:'center',
 		            buttons: [{
-		                text: "保存", iconCls: "saveIcon", scope: this, handler: function() {
+		                text: i18n.common.button.save, iconCls: "saveIcon", scope: this, handler: function() {
 							ZbFwWi.isSaveAndAdd = false;
 							this.saveFn();
 		                }
 		            }, {
-		                text: "保存并新增", iconCls: "addIcon", scope: this, handler: function() {
+		                text: i18n.common.button.add, iconCls: "addIcon", scope: this, handler: function() {
 		                	 // 禁用【整备范围作业项目】表格的工具栏
 		                	ZbFwWidi.grid.getTopToolbar().disable();
 							ZbFwWi.isSaveAndAdd = true;
 							this.saveFn();
 		                }
 		            }, {
-		                text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ 
+		                text: i18n.common.button.close, iconCls: "closeIcon", scope: this, handler: function(){ 
 		                this.saveWin.hide();
 		                 // 启用【整备范围作业项目】表格的工具栏
 		                ZbFwWidi.grid.getTopToolbar().enable();
@@ -138,7 +138,6 @@ Ext.onReady(function(){
 	        });
 	    },
 	    afterShowSaveWin: function(){
-	    	this.saveWin.setTitle('整备范围作业项目新增');
 	    	this.saveForm.find('name', 'zbfwIDX')[0].setValue(ZbFwWi.zbfwIDX);
 	    	this.saveForm.find('name', 'nodeIDX')[0].setValue(ZbFwWi.nodeIDX);
 	    	ZbFwWidi.grid.getTopToolbar().disable();
@@ -159,7 +158,7 @@ Ext.onReady(function(){
 		    	ZbFwWidi.grid.store.removeAll();
 	        }
 	       ZbFwWidi.zbfwwiIDX = result.entity.idx;
-	     
+	      
 	      
 	    },
 	     //取整备作业项中主键赋值到作业项目中关联查询子表数据
@@ -167,7 +166,6 @@ Ext.onReady(function(){
 	     	if(record.get('isCheckPicture') == 1){
 	     		Ext.getCmp("isCheckPicture_item").setValue(true);
 	     	}
-	     	this.saveWin.setTitle('整备范围作业项目编辑');
         	// 启用【整备范围作业项目】表格的工具栏
         	ZbFwWidi.grid.getTopToolbar().enable();
 	     	var record = ZbFwWi.grid.selModel.getSelections();
@@ -181,9 +179,9 @@ Ext.onReady(function(){
         //计算查询窗体宽度
         this.searchWinWidth = (this.labelWidth + this.fieldWidth + 8) * this.searchFormColNum + 60;
         this.searchWin = new Ext.Window({
-            title:"查询", width:this.searchWinWidth, height:this.searchWinHeight, plain:true, closeAction:"hide", buttonAlign:'center', maximizable:true, items:this.searchForm, 
+            title:i18n.common.button.research, width:this.searchWinWidth, height:this.searchWinHeight, plain:true, closeAction:"hide", buttonAlign:'center', maximizable:true, items:this.searchForm, 
             buttons: [{
-                text: "查询", iconCls: "searchIcon", scope: this, handler: function(){ 
+                text: i18n.common.button.research, iconCls: "searchIcon", scope: this, handler: function(){ 
                     var searchParam = this.searchForm.getForm().getValues();
                     searchParam.zbfwIDX = ZbFwWi.zbfwIDX;
                     searchParam.nodeIDX = ZbFwWi.nodeIDX ;
@@ -191,12 +189,12 @@ Ext.onReady(function(){
                     this.searchFn(searchParam) ;
                 }
             }, {
-                text: "重置", iconCls: "resetIcon", scope: this, handler: function(){ 
+                text: i18n.common.button.reset, iconCls: "resetIcon", scope: this, handler: function(){ 
                     this.searchForm.getForm().reset();
                     ZbFwWi.grid.store.load();
                 }
             }, {
-                text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ this.searchWin.hide(); }                
+                text: i18n.common.button.close, iconCls: "closeIcon", scope: this, handler: function(){ this.searchWin.hide(); }                
             }]
         });
        }

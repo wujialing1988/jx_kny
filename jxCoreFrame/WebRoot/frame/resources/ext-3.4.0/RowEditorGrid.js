@@ -46,7 +46,7 @@ Ext.yunda.RowEditorGrid = Ext.extend(Ext.grid.GridPanel, {
     border: false,                                      //表格是否显示边框，默认false不显示边框
     viewConfig: {forceFit: true, markDirty: false},     //随着窗口（父容器）大小自动调整,默认true表示不出现滚动条，列宽会自动压缩
     enableColumnMove: false,                            //默认false不能移动列
-    loadMask: {msg: "正在处理，请稍侯..."},                //表格加载数据时，出现遮罩效果
+    loadMask: {msg: i18n.common.tip.loading},                //表格加载数据时，出现遮罩效果
     stripeRows: true,                                   //默认true，奇偶行变色
     selModel: null,                                     //默认null，表格行选择模式
     tbar: ['search','add','delete','refresh'],          //默认tbar按钮显示及顺序
@@ -134,15 +134,15 @@ Ext.yunda.RowEditorGrid = Ext.extend(Ext.grid.GridPanel, {
         //计算查询窗体宽度
         this.searchWinWidth = this.labelWidth + this.fieldWidth + 50;
         this.searchWin = new Ext.Window({
-            title:"查询", width:this.searchWinWidth, height:this.searchWinHeight, plain:true, closeAction:"hide", buttonAlign:'center', maximizable:true, items:this.searchForm, 
+            title:i18n.common.button.research, width:this.searchWinWidth, height:this.searchWinHeight, plain:true, closeAction:"hide", buttonAlign:'center', maximizable:true, items:this.searchForm, 
             buttons: [{
-                text: "查询", iconCls: "searchIcon", scope: this, handler: function(){ 
+                text: i18n.common.button.research, iconCls: "searchIcon", scope: this, handler: function(){ 
                     var searchParam = this.searchForm.getForm().getValues();
                     searchParam = MyJson.deleteBlankProp(searchParam);
                     this.searchFn(searchParam) ;
                 }
             }, {
-                text: "重置", iconCls: "resetIcon", scope: this, handler: function(){ 
+                text: i18n.common.button.reset, iconCls: "resetIcon", scope: this, handler: function(){ 
                     this.searchForm.getForm().reset();
                     var my97Ary = this.searchWin.findByType('my97date');
                     
@@ -171,7 +171,7 @@ Ext.yunda.RowEditorGrid = Ext.extend(Ext.grid.GridPanel, {
                     this.searchFn(searchParam);                    
                 }
             }, {
-                text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ this.searchWin.hide(); }                
+                text: i18n.common.button.close, iconCls: "closeIcon", scope: this, handler: function(){ this.searchWin.hide(); }                
             }]
         });
     },
@@ -370,7 +370,7 @@ Ext.yunda.RowEditorGrid = Ext.extend(Ext.grid.GridPanel, {
     //private:构造器
     constructor: function(cfg){
         this.viewConfig = {forceFit: true, markDirty: false};   //随着窗口（父容器）大小自动调整,默认true表示不出现滚动条，列宽会自动压缩
-        this.loadMask = {msg: "正在处理，请稍侯..."};              //表格加载数据时，出现遮罩效果，默认显示'正在处理，请稍侯...'
+        this.loadMask = {msg: i18n.common.tip.loading};              //表格加载数据时，出现遮罩效果，默认显示'正在处理，请稍侯...'
         this.tbar = ['search','add','delete','refresh'];        //默认tbar按钮显示及顺序
         this.defaultData = {};                                  //新增时默认Record对象（json）        
         //如果配置项为null，给cfg赋值一个实例化的空JSON
@@ -416,20 +416,20 @@ Ext.yunda.RowEditorGrid = Ext.extend(Ext.grid.GridPanel, {
         if(this.tbar != null){
 	        //新增按钮的配置,配置工具栏按钮,['add','delete','search','refresh']
 	        if (null != this.saveURL && this.saveURL.trim() != "") {
-	            this.tbar = $yd.repalceArrayNode(this.tbar, 'add', { text:"新增", iconCls:"addIcon", scope:this, handler: this.addButtonFn });
+	            this.tbar = $yd.repalceArrayNode(this.tbar, 'add', { text:i18n.common.button.add, iconCls:"addIcon", scope:this, handler: this.addButtonFn });
 	        } else {
 	            this.tbar.remove('add');
 	        }
 	        //删除按钮的配置
 	        if (null != this.deleteURL && this.deleteURL.trim() != "") {
-	            this.tbar = $yd.repalceArrayNode(this.tbar, 'delete', { text:"删除", iconCls:"deleteIcon", scope:this, handler: this.deleteButtonFn });            
+	            this.tbar = $yd.repalceArrayNode(this.tbar, 'delete', { text:i18n.common.button.del, iconCls:"deleteIcon", scope:this, handler: this.deleteButtonFn });            
 	        } else {
 	            this.tbar.remove('delete');   
 	        }
 	        //查询按钮的配置
-	        this.tbar = $yd.repalceArrayNode(this.tbar, 'search', { text:"查询", iconCls:"searchIcon", scope:this, handler: this.searchButtonFn });        
+	        this.tbar = $yd.repalceArrayNode(this.tbar, 'search', { text:i18n.common.button.research, iconCls:"searchIcon", scope:this, handler: this.searchButtonFn });        
 	        //刷新按钮的配置
-	        this.tbar = $yd.repalceArrayNode(this.tbar, 'refresh', { text:"刷新", iconCls:"refreshIcon", handler: this.refreshButtonFn });     
+	        this.tbar = $yd.repalceArrayNode(this.tbar, 'refresh', { text:i18n.common.button.refresh, iconCls:"refreshIcon", handler: this.refreshButtonFn });     
         }
         //行选择模式，singleSelect=true表示单选，默认false多选并在表格中显示多选框
         if(this.selModel == null && this.sm == null){
@@ -494,10 +494,10 @@ Ext.yunda.RowEditorGrid = Ext.extend(Ext.grid.GridPanel, {
         //加入行编辑插件
         if(this.rowEditor == null){
             this.rowEditor = new Ext.ux.grid.RowEditor({
-                saveText: '保存',
-                cancelText: '取消',
-                commitChangesText: '请保存或取消更改',
-                errorText: '提示'
+                saveText: i18n.common.button.save,
+                cancelText: i18n.common.button.cancel,
+                commitChangesText: i18n.common.tip.cancelThechange,
+                errorText: i18n.common.tip.prompt
             });
             this.rowEditor.on({
                 scope: this,

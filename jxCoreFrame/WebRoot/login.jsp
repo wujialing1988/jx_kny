@@ -154,7 +154,8 @@ String pwdErrMsg = request.getParameter("message2");
 		<!-- 页面底部 -->
 		<div id="footer" align="center">
 			 <%--<a href="<%=basePath%>login!changeLanguage.action?local=zh_CN">中文</a> <a href="<%=basePath%>login!changeLanguage.action?local=en_US">English</a><br/>--%>
-			<s:text name="login.copyright"></s:text> <a href="#" onclick="changeLanguage('zh_CN');">中文</a> <a href="#" onclick="changeLanguage('en_US');">English</a>
+			<s:text name="login.copyright"></s:text>
+			 <!-- <a href="#" onclick="changeLanguage('zh_CN');">中文</a> <a href="#" onclick="changeLanguage('en_US');">English</a> -->
 		</div>
 		<script type="text/javascript" language="javascript">
 			document.getElementById('userIdInput').focus();

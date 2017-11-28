@@ -1,8 +1,8 @@
 package com.yunda.jx.scdd.enforceplan.manager;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -639,4 +639,18 @@ public class TrainEnforcePlanDetailManager extends JXBaseManager<TrainEnforcePla
         }
         return reuslt ;
     }
+    
+    /**
+     * <li>说明：月计划兑现情况查看
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-24
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<Map<String, Object>> findMonthRateStatistics(String year){
+        String sql = SqlMapUtil.getSql("zb-tp:findMonthRateStatistics").replaceAll("#year#", year);
+        return this.queryListMap(sql);
+    }  
+    
 }

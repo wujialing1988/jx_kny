@@ -221,4 +221,25 @@ public class ZbglRdpPlanAction extends JXBaseAction<ZbglRdpPlan, ZbglRdpPlan, Zb
         }       
     }    
     
+    /**
+     * <li>说明：系统首页统计内容查询
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-7-5
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws Exception
+     */
+    public void findDefaultStatistics() throws Exception{
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            String year = getRequest().getParameter("year");
+            map = this.manager.findDefaultStatistics(year);
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }       
+    }    
+    
 }

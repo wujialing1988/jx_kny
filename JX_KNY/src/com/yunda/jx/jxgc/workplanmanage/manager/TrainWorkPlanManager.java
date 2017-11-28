@@ -24,6 +24,7 @@ import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.frame.yhgl.entity.AcOperator;
 import com.yunda.frame.yhgl.entity.OmEmployee;
+import com.yunda.freight.zb.plan.entity.ZbglRdpPlan;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
 import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
 import com.yunda.jx.jxgc.common.JxgcConstants;
@@ -744,6 +745,24 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
         }
         return plan;
     }
+    
+    /**
+     * <li>说明：查询正在检修的车辆
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-25
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<TrainWorkPlan> findTrainWorkPlanListByStutas(String vehicleType,String planStutas){
+    	StringBuffer hql = new StringBuffer(" From TrainWorkPlan where recordStatus = 0 and workPlanStatus = ? ");
+    	// 客货类型
+    	if(!StringUtil.isNullOrBlank(vehicleType)){
+    		hql.append(" and vehicleType = '"+vehicleType+"'");
+    	}
+    	return (List<TrainWorkPlan>)this.daoUtils.find(hql.toString(), new Object[]{planStutas});
+    }
+    
     
     
 }

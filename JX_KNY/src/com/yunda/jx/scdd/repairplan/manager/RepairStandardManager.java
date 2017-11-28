@@ -22,7 +22,7 @@ public class RepairStandardManager extends JXBaseManager<RepairStandard, RepairS
 	@Override
 	public String[] validateUpdate(RepairStandard t) {
 		if(isDuplicateData(t)){
-			return new String[]{ "【车型/修程/修次】已存在，请修改后再提交" };
+			return new String[]{ "【修程/修次】已存在，请修改后再提交" };
 		}
 		return super.validateUpdate(t);
 	}

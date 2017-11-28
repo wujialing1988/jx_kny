@@ -4,7 +4,7 @@ Ext.namespace('ZbfwTrianCenterWin');
 ZbfwTrianCenterWin.zbFwIdx = '';//整备范围idx
 ZbfwTrianCenterWin.ZbfwTrianCenterIDX = '';//整备范围和车型中间表idxidx
 //显示处理等待状态的控件，必须在此定义，若在外部定义全局变量会刷新整个页面
-ZbfwTrianCenterWin.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:"正在处理，请等待......"});
+ZbfwTrianCenterWin.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.common.tip.loading});
 ZbfwTrianCenterWin.grid = new Ext.yunda.Grid({
     loadURL: ctx + '/zbfwTrainCenter!findZbfwTrainInfo.action',                 //装载列表数据的请求URL
     deleteURL: ctx + '/zbfwTrainCenter!delete.action',                 //删除操作

@@ -126,7 +126,7 @@ Ext.onReady(function(){
 					baseCls:"x-plain", align:"center", layout:"form", labelWidth:LeafNodeAddWin.labelWidth, columnWidth: 0.5,
 			    	items:[{
 	    				xtype: 'radiogroup',
-			            fieldLabel: '计划启动模式',
+			            fieldLabel: '启动模式',
 			            name: 'planMode',
 			            items: [
 			                { boxLabel: '定时',inputValue: PLANMODE_TIMER, name: 'planMode', checked: true

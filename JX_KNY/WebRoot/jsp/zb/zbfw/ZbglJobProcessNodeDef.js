@@ -16,7 +16,7 @@ Ext.onReady(function(){
 	ZbglJobProcessNodeDef.nodeIDX; //工位节点
 	
 	ZbglJobProcessNodeDef.isSaveAndAdd = false;			// 是否是保存并新增的标识
-	ZbglJobProcessNodeDef.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:"正在处理，请稍候..."});
+	ZbglJobProcessNodeDef.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.common.tip.loading});
 	
 	ZbglJobProcessNodeDef.workstationReturnFn = function(stationObject) {
 		var form = ZbglJobProcessNodeDef.saveForm;
@@ -84,12 +84,12 @@ Ext.onReady(function(){
 			columnWidth:1,
 			defaults: {xtype:"textfield", maxLength:50, allowBlank: false, anchor:"90%"},
 			items:[{
-				name:"nodeName", fieldLabel:"节点名称"
+				name:"nodeName", fieldLabel:i18n.ZbFw.nodeName
 			}]
 		}, {
 			columnWidth:1,
 			items:[{
-				xtype:"textarea", name:"nodeDesc", fieldLabel:"节点描述", maxLength:500, anchor:"97%", height: 55
+				xtype:"textarea", name:"nodeDesc", fieldLabel:i18n.ZbFw.nodeDesc, maxLength:500, anchor:"97%", height: 55
 			}]
 		}, {
 			columnWidth:1,
@@ -113,17 +113,17 @@ Ext.onReady(function(){
 		}],
 		buttonAlign: 'center',
 		buttons: [{
-			text: '保存', iconCls: 'saveIcon', handler: function() {
+			text: i18n.common.button.save, iconCls: 'saveIcon', handler: function() {
 				ZbglJobProcessNodeDef.isSaveAndAdd = false;
 				ZbglJobProcessNodeDef.grid.saveFn();
 			}
 		}, {
-			text: '保存并新增', iconCls: 'addIcon', handler: function() {
+			text: i18n.common.button.add, iconCls: 'addIcon', handler: function() {
 				ZbglJobProcessNodeDef.isSaveAndAdd = true;
 				ZbglJobProcessNodeDef.grid.saveFn();
 			}
 		}, {
-			text: '关闭', iconCls: 'closeIcon', handler: function() {
+			text: i18n.common.button.close, iconCls: 'closeIcon', handler: function() {
 				this.findParentByType('window').hide();
 			}
 		}]
@@ -140,19 +140,19 @@ Ext.onReady(function(){
     	storeAutoLoad: false,
     	viewConfig:null,
 	    tbar:['delete', '->', {
-			text:'置顶', iconCls:'moveTopIcon', handler: function() {
+			text:i18n.common.button.moveTop, iconCls:'moveTopIcon', handler: function() {
 				ZbglJobProcessNodeDef.moveOrder(ZbglJobProcessNodeDef.grid, ORDER_TYPE_TOP);
 			}
 		}, {
-			text:'上移', iconCls:'moveUpIcon', handler: function() {
+			text:i18n.common.button.moveUp, iconCls:'moveUpIcon', handler: function() {
 				ZbglJobProcessNodeDef.moveOrder(ZbglJobProcessNodeDef.grid, ORDER_TYPE_PRE);
 			}
 		}, {
-			text:'下移', iconCls:'moveDownIcon', handler: function() {
+			text:i18n.common.button.moveDown, iconCls:'moveDownIcon', handler: function() {
 				ZbglJobProcessNodeDef.moveOrder(ZbglJobProcessNodeDef.grid, ORDER_TYPE_NEX);
 			}
 		}, {
-			text:'置底', iconCls:'moveBottomIcon', handler: function() {
+			text:i18n.common.button.moveBottom, iconCls:'moveBottomIcon', handler: function() {
 				ZbglJobProcessNodeDef.moveOrder(ZbglJobProcessNodeDef.grid, ORDER_TYPE_BOT);
 			}
 		}],
@@ -163,21 +163,21 @@ Ext.onReady(function(){
 		},{
 			header:'上级主键', dataIndex:'parentIDX', hidden:true, editor:{  maxLength:50 }
 		},{
-			header:'顺序号', dataIndex:'seqNo', width: 60, hidden:false, editor:{ xtype:'numberfield', maxLength:8 }
+			header:i18n.ZbFw.seqNo, dataIndex:'seqNo', width: 60, hidden:false, editor:{ xtype:'numberfield', maxLength:8 }
 		},{
-			header:'节点名称', dataIndex:'nodeName', width: 200, editor:{  maxLength:100 }
+			header:i18n.ZbFw.nodeName, dataIndex:'nodeName', width: 200, editor:{  maxLength:100 }
 		},{
-			header:'节点描述', dataIndex:'nodeDesc', width: 460, editor:{  maxLength:1000 }
+			header:i18n.ZbFw.nodeDesc, dataIndex:'nodeDesc', width: 460, editor:{  maxLength:1000 }
 		},{
 			header:'作业工位', dataIndex:'workStationName', hidden:true, editor:{  xtype:'hidden' }
 		},{
-			header:'是否叶子节点', dataIndex:'isLeaf', hidden:true, editor:{ xtype:'numberfield', maxLength:1 }
+			header:i18n.ZbFw.isLeaf, dataIndex:'isLeaf', hidden:true, editor:{ xtype:'numberfield', maxLength:1 }
 		},{
 			header:'前置节点主键', dataIndex:'preNodeIDX', hidden:true, editor:{ disabled: true }
 		},{
-			header:'前置节点(名称)', dataIndex:'preNodeName', width:70, hidden:true,  editor:{ disabled: true }
+			header:i18n.ZbFw.preNodeName, dataIndex:'preNodeName', width:70, hidden:true,  editor:{ disabled: true }
 		},{
-			header:'前置节点(序号)', dataIndex:'preNodeSeqNo', width:125, hidden:false,  editor:{ disabled: true }
+			header:i18n.ZbFw.preNodeSeqNo, dataIndex:'preNodeSeqNo', width:125, hidden:false,  editor:{ disabled: true }
 		}],
 		
 		// 删除成功后的函数处理
@@ -214,7 +214,7 @@ Ext.onReady(function(){
 	    },
 	    
 	    afterShowEditWin: function(record, rowIndex){
-	    	this.saveWin.setTitle("编辑");
+	    	this.saveWin.setTitle(i18n.common.button.edit);
 	    	
 	    	// 初始化前置节点关系表格数据
 	    	// 重新加载【节点编辑】节点前后置关系表格数据
@@ -226,7 +226,7 @@ Ext.onReady(function(){
 	    	// 启用前后置节点关系表格工具栏
 	    	ZbglJobProcessNodeRelDef.grid.getTopToolbar().enable();
 	    	// 扩展配置选项卡设置不可用
-	    	Ext.getCmp("node_tabs").getItem("extConfigDef_tab").enable();
+//	    	Ext.getCmp("node_tabs").getItem("extConfigDef_tab").enable();
 	    	// 显示扩展配置选项卡
 //	    	this.saveWin.find('xtype', 'tabpanel')[0].unhideTabStripItem(1);
 	    	// 设置扩展配置的节点主键
@@ -250,7 +250,7 @@ Ext.onReady(function(){
 						xtype: 'tabpanel', activeTab:0, 
 						defaults: {layout:'fit'},
 						items: [{
-							title: '基本信息',
+							title: i18n.ZbFw.baseInfoTitle,
 							items: [ZbglJobProcessNodeDef.saveForm]
 						}]
 					}]
@@ -262,7 +262,7 @@ Ext.onReady(function(){
 						id:"node_tabs",xtype: 'tabpanel', activeTab:0, 
 						defaults: {layout:'fit'},
 						items: [{
-							id:"nodeRelDef_tab",title: '前置节点明细',
+							id:"nodeRelDef_tab",title: i18n.ZbFw.preNodeTitle,
 							items: [ZbglJobProcessNodeRelDef.grid]
 						}/*, {
 							id:"extConfigDef_tab",title: '扩展配置',
@@ -313,7 +313,7 @@ Ext.onReady(function(){
 	    	var treeNode = ZbglJobProcessNodeDef.tree.getSelectionModel().getSelectedNode();
 	    	if (treeNode.leaf) {
 	    		if (ZbFwWi.grid.store.getCount() > 0) {
-	    			MyExt.Msg.alert('该作业节点已经关联了作业项目，不能继续添加下级节点！');
+	    			MyExt.Msg.alert(i18n.ZbFw.andNodeTip);
 	    			return false;
 	    		}
 	    	}
@@ -360,7 +360,7 @@ Ext.onReady(function(){
 			ZbFwWi.grid.store.load();
 			
 			// 设置【作业项目】基础信息
-			Ext.getCmp('tabpanel_project').setTitle(node.text.substring(0, node.text.lastIndexOf(".")) + " - 作业项目");
+			Ext.getCmp('tabpanel_project').setTitle(node.text.substring(0, node.text.lastIndexOf(".")) + " - "+i18n.ZbFw.tabpanelProjectTitle);
 			
 		// 如果是树干节点，则仅能编辑下级作业节点信息
     	} else if (!node.leaf) {
@@ -374,9 +374,9 @@ Ext.onReady(function(){
     		
     		// 重命名Tab - 只取序列号
     		if (node.text.lastIndexOf(".") <= 0) {
-        		Ext.getCmp('tabpanel_node').setTitle(node.text + " - 作业节点")
+        		Ext.getCmp('tabpanel_node').setTitle(node.text + " - "+i18n.ZbFw.tabpanelNodeTitle)
     		} else {
-        		Ext.getCmp('tabpanel_node').setTitle(node.text.substring(0, node.text.lastIndexOf(".")) + " - 下级作业节点")
+        		Ext.getCmp('tabpanel_node').setTitle(node.text.substring(0, node.text.lastIndexOf(".")) + " - "+i18n.ZbFw.tabpanelNextNodeTitle)
     		}
     	}
 	}
@@ -437,7 +437,7 @@ Ext.onReady(function(){
 				    //请求失败后的回调函数
 				   	failure: function(response, options){
 				        ZbglJobProcessNodeDef.loadMask.hide();
-				        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				        Ext.Msg.alert(i18n.common.tip.prompt, i18n.common.tip.RequestFailed + response.status + "\n" + response.responseText);
 				    }
 				});
 			}
@@ -453,12 +453,12 @@ Ext.onReady(function(){
 	
 	/** **************** 定义作业流程编辑窗口开始 **************** */
 	ZbglJobProcessNodeDef.win = new Ext.Window({
-		title:"作业流程编辑", maximized:true,
+		title:i18n.ZbFw.nodeEditTitle, maximized:true,
 		layout:"border", closeAction:"hide",
 		items:[{
-			title : '<span style="font-weight:normal">作业节点树</span>',
+			title : '<span style="font-weight:normal">'+i18n.ZbFw.treeNodeTitle+'</span>',
 			tbar: [{
-				text: '新增下级', iconCls: 'addIcon', handler: function() {
+				text: i18n.ZbFw.addLowerNodeBtn, iconCls: 'addIcon', handler: function() {
 					if(ZbglJobProcessNodeDef.grid.beforeAddButtonFn() == false)   return;
 			        //判断新增删除窗体是否为null，如果为null则自动创建后显示
 			        if(ZbglJobProcessNodeDef.grid.saveWin == null)  ZbglJobProcessNodeDef.grid.createSaveWin();
@@ -466,7 +466,7 @@ Ext.onReady(function(){
 			        if(ZbglJobProcessNodeDef.grid.saveWin.isVisible())    ZbglJobProcessNodeDef.grid.saveWin.hide();
 			        if(ZbglJobProcessNodeDef.grid.beforeShowSaveWin() == false)   return;
 			        
-			        ZbglJobProcessNodeDef.grid.saveWin.setTitle('新增');
+			        ZbglJobProcessNodeDef.grid.saveWin.setTitle(i18n.common.button.add);
 			        ZbglJobProcessNodeDef.grid.saveWin.show();
 			        ZbglJobProcessNodeDef.grid.saveForm.getForm().reset();
 			        ZbglJobProcessNodeDef.grid.saveForm.getForm().setValues(this.defaultData);
@@ -474,13 +474,13 @@ Ext.onReady(function(){
 			        ZbglJobProcessNodeDef.grid.afterShowSaveWin();
 				}
 			}, {
-				text: '删除', iconCls: 'deleteIcon', handler: function() {
+				text: i18n.common.button.del, iconCls: 'deleteIcon', handler: function() {
 					var treeNode = ZbglJobProcessNodeDef.tree.getSelectionModel().getSelectedNode();
 					if (null == treeNode) {
-						MyExt.Msg.alert('尚未选一个作业流程节点！');
+						MyExt.Msg.alert(i18n.common.tip.notSelectRecords);
 						return;
 					}
-					Ext.Msg.confirm('提示', '该操作将不能恢复，是否继续？', function(btn){
+					Ext.Msg.confirm(i18n.common.tip.prompt, i18n.common.tip.dataNotRecover, function(btn){
 						if ('yes' == btn) {
 							Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), {
 								url: ctx + '/zbglJobProcessNodeDef!logicDelete.action',
@@ -518,12 +518,12 @@ Ext.onReady(function(){
 			region:"center",
 			items:[{
 				id:"tabpanel_node",
-				title:"流程节点",
+				title:i18n.ZbFw.tabpanelNodeTitle,
 				layout:"fit",
 				items:[ZbglJobProcessNodeDef.grid]
 			}, {
 				id:"tabpanel_project",
-				title:"作业项目",
+				title:i18n.ZbFw.tabpanelProjectTitle,
 				layout:"border",
 				defaults: {layout: 'fit', border: false},
 				items:[{
@@ -542,7 +542,7 @@ Ext.onReady(function(){
 		}],
 		buttonAlign:'center',
 		buttons:[{
-			text:'关闭', iconCls:'closeIcon', handler:function(){
+			text:i18n.common.button.close, iconCls:'closeIcon', handler:function(){
 				this.findParentByType('window').hide();
 			}
 		}], 

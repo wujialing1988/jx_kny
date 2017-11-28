@@ -104,3 +104,13 @@
 .moveRightIcon{background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/move_right.png) !important;}
 .switchIcon2{background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/switch2.png) !important;}
 .backIcon{background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/back.png) !important;}
+
+.groupCheckedIcon {background-image:url(<%=ctx %>/frame/resources/images/toolbar/group-checked.gif) !important;}
+.scddIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/award_star_silver_3.png) !important;}
+.gcglIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/application_go.png) !important;}
+.zlkzIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/award_star_gold_1.png) !important;}
+.pjglIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/config.png) !important;}
+.jsglIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/book.png) !important;}
+.wlglIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/cog_edit.png) !important;}
+.tjfxIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/theme2.png) !important;}
+.helpIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/help.png) !important;}

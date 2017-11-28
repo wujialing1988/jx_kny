@@ -3,6 +3,8 @@ package com.yunda.freight.zb.gztp.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 
 import com.yunda.frame.common.Constants;
@@ -13,7 +15,6 @@ import com.yunda.frame.util.StringUtil;
 import com.yunda.freight.zb.gztp.entity.Gztp;
 import com.yunda.freight.zb.gztp.manager.GztpManager;
 import com.yunda.jx.pjwz.partsBase.entity.MatTypeUse;
-import com.yunda.jx.pjwz.unloadparts.entity.PartsUnloadRegister;
 
 
 /**
@@ -59,6 +60,26 @@ public class GztpAction extends JXBaseAction<Gztp, Gztp, GztpManager> {
         } finally {
             JSONUtil.write(this.getResponse(), map);
         }
+    }
+    
+    /**
+     * <li>说明：故障提票分类统计
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-24
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */ 
+    public void findGzFlStatistics() throws Exception {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            HttpServletRequest req = getRequest();
+            map.put("root",this. manager.findGzFlStatistics());
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }                 
     }
     
     

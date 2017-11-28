@@ -141,6 +141,10 @@ public class VTrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWor
         if (!StringUtil.isNullOrBlank(trainNo)) {
             sb.append(" And trainTypeShortName || trainNo || repairClassName || repairtimeName Like '%").append(trainNo.toUpperCase()).append("%'");
         }
+        // 客货类型 10 货车 20 客车 30 柴油发电机组
+        if (!StringUtil.isNullOrBlank(entity.getVehicleType())) {
+        	sb.append(" And vehicleType = '"+entity.getVehicleType()+"'");
+        }
         // 以“计划开始日期”进行升序排序
         sb.append(" Order By planBeginTime DESC");
         String hql = sb.toString();
@@ -156,8 +160,13 @@ public class VTrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWor
                 for (Object[] obj : timeList) {
                     if (obj[0] == null || obj[1] == null)
                         continue;
-                    plan.setMinRealTime(DateUtil.yyyy_MM_dd_HH_mm_ss.parse(obj[0].toString()));
-                    plan.setMaxRealTime(DateUtil.yyyy_MM_dd_HH_mm_ss.parse(obj[1].toString()));
+                    try {
+                    	plan.setMinRealTime(DateUtil.yyyy_MM_dd_HH_mm_ss.parse(obj[0].toString()));
+                        plan.setMaxRealTime(DateUtil.yyyy_MM_dd_HH_mm_ss.parse(obj[1].toString()));
+					} catch (Exception e) {
+						System.err.println(122);
+					}
+                    
                 }
               
             } catch (Exception e) {

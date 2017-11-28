@@ -2,8 +2,10 @@ package com.yunda.freight.zb.plan.manager;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.yunda.common.BusinessException;
 import com.yunda.frame.common.JXBaseManager;
 import com.yunda.frame.common.Page;
+import com.yunda.frame.util.DateUtil;
 import com.yunda.frame.util.EntityUtil;
 import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.util.sqlmap.SqlMapUtil;
@@ -23,6 +26,9 @@ import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecord;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
 import com.yunda.jx.jczl.attachmanage.manager.JczlTrainManager;
 import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
+import com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlan;
+import com.yunda.jx.jxgc.workplanmanage.manager.TrainWorkPlanManager;
+import com.yunda.jxpz.utils.SystemConfigUtil;
 
 
 /**
@@ -64,6 +70,12 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
      */
     @Resource
     private JczlTrainManager jczlTrainManager ;
+    
+    /**
+     * 机车检修计划
+     */
+    @Resource
+    private TrainWorkPlanManager trainWorkPlanManager ;
     
 
     /**
@@ -287,5 +299,57 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
         return this.queryPageMap(totalSql, sql, 0, 10000, false);
     }
     
+    /**
+     * <li>说明：首页信息统计
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-25
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public Map<String,Object> findDefaultStatistics(String year){
+    	Map<String,Object> result = new HashMap<String, Object>();
+        // 1、安全生产天数
+        int safeDays = 0 ;
+        String startDay = SystemConfigUtil.getValue("knySys.freightSys.SafeStartDay");
+        if(!StringUtil.isNullOrBlank(startDay)){
+        	try {
+				safeDays = DateUtil.getDaysBetween(DateUtil.parse(startDay, "yyyy-MM-dd"), new Date());
+			} catch (ParseException e) {
+				
+			}
+        }
+        result.put("safeDays", safeDays);
+        // 2、累计修车台数/当前年份计划台数/当前年份实际修车台数
+        String sql = SqlMapUtil.getSql("zb-tp:findTrainStatistics").replaceAll("#year#", year);
+        result.put("trainStatisticsList", this.queryListMap(sql));
+        
+        // 3、当日动态：查询正在库检的车辆和正在检修的车辆信息
+        Map<String, Object> jrdt = new HashMap<String, Object>();
+        List<ZbglRdpPlan> zbglPlanList = findZbglRdpPlanListByStutas("20", "ONGOING");
+        jrdt.put("zbglPlanList", zbglPlanList);
+        List<TrainWorkPlan> trainWorkPlans = trainWorkPlanManager.findTrainWorkPlanListByStutas("", "ONGOING");
+        jrdt.put("trainWorkPlans", trainWorkPlans);
+        result.put("jrdt", jrdt);
+        // 4、查询已扣车未检修车辆数量，预警车辆数量
+        Map<String, Object> warning = new HashMap<String, Object>();
+        warning.put("warningHC", this.queryListMap(SqlMapUtil.getSql("kny-base:findHCRepairClassWarningList")));
+        warning.put("warningKC", this.queryListMap(SqlMapUtil.getSql("kny-base:findKCRepairClassWarningList")));
+        result.put("warning", warning);
+        return result;
+    }
+    
+    /**
+     * <li>说明：查询列检计划
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-25
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<ZbglRdpPlan> findZbglRdpPlanListByStutas(String vehicleType,String planStutas){
+    	StringBuffer hql = new StringBuffer(" From ZbglRdpPlan where recordStatus = 0 and vehicleType = ? and rdpPlanStatus = ? ");
+    	return (List<ZbglRdpPlan>)this.daoUtils.find(hql.toString(), new Object[]{vehicleType,planStutas});
+    }
     
 }

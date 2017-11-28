@@ -92,7 +92,7 @@ RepairProject.editTabs = new Ext.TabPanel({
 				}]
             }
         },{
-            title: "机车检修记录卡", layout: "fit", border: false, items: [ TrainQR.grid ]
+            title: "检修记录卡", layout: "fit", border: false, items: [ TrainQR.grid ]
         }
         ]
 });
@@ -101,7 +101,7 @@ RepairProject.editTabs = new Ext.TabPanel({
 var viewport = new Ext.Viewport({ layout:'fit', items: RepairProject.grid });
 //定义工序卡编辑窗口
 RepairProject.saveWin = new Ext.Window({
-	title: "机车检修记录单编辑", maximizable:true, width:750, height:415, layout: "fit", 
+	title: "检修记录单编辑", maximizable:true, width:750, height:415, layout: "fit", 
 	closeAction: "hide", modal: true, buttonAlign:"center",
 	items: [RepairProject.editTabs] 
 });

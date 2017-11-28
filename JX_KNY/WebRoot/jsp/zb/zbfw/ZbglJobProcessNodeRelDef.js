@@ -32,9 +32,9 @@ Ext.onReady(function(){
 		},{
 			header:'顺序号', dataIndex:'preSeqNo', hidden:true
 		},{
-			header:'前置节点名称', dataIndex:'preNodeName',editor:{
+			header:i18n.ZbFw.preNodeName, dataIndex:'preNodeName',editor:{
 				width: ZbglJobProcessNodeRelDef.fieldWidth,
-				fieldLabel:'前置节点名称',
+				fieldLabel:i18n.ZbFw.preNodeName,
 				maxLength:50,
 				hiddenName: 'preNodeIDX',
 				id:"PreWPNode_Combo", 

@@ -96,16 +96,15 @@ Ext.onReady(function(){
 	
 	//页面适应布局
 	ZbglRdpPlanDesign.viewport = new Ext.Viewport({
-		layout:'fit', 
-		items:[{
-			layout: 'border',
-			items: [{
-	        region: 'center', bodyBorder: false,
-	        layout: 'fit', items : [ ZbglRdpPlanDesign.ZbglRdpPlanRecordPanel ]
-	    	},{ 		
-		     	 region: 'west',  title: '列检计划',  bodyBorder: false, split: true, width: 400, layout: 'fit',   minSize: 160, maxSize: 400, 
-		     	 collapsible : true,   items:[ZbglRdpPlanDesign.ZbglRdpPlanPanel]
-			}]
+		layout: 'border',
+		items: [{
+        region: 'center', bodyBorder: false,
+        layout: 'fit', items : [ ZbglRdpPlanDesign.ZbglRdpPlanRecordPanel ]
+    	},{ 		
+	     	 region: 'west',  title: '列检计划1',  bodyBorder: false, split: true, collapseMode: 'mini',
+	     	defaults: {border: false},
+	     	 width: 400, layout: 'fit',   minSize: 160, maxSize: 400, 
+	     	 collapsible : true,   items:[ZbglRdpPlanDesign.ZbglRdpPlanPanel]
 		}]
 	});
 	
