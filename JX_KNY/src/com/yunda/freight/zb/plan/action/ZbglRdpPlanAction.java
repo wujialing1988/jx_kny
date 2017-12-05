@@ -159,7 +159,9 @@ public class ZbglRdpPlanAction extends JXBaseAction<ZbglRdpPlan, ZbglRdpPlan, Zb
         Map<String, Object> map = new HashMap<String, Object>();
         String errMsg = "";
         try {
-            errMsg = this.manager.cmpPlan(id);
+        	String realBeginTime = getRequest().getParameter("realBeginTime");
+        	String realEndTime = getRequest().getParameter("realEndTime");
+            errMsg = this.manager.cmpPlan(id,realBeginTime,realEndTime);
             if (errMsg == null)
                 map.put(Constants.SUCCESS, true);
             else {

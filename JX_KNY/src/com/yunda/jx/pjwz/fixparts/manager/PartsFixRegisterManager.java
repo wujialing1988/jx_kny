@@ -36,7 +36,7 @@ import com.yunda.jx.pjwz.partsmanage.manager.PartsAccountManager;
 import com.yunda.jx.pjwz.partsmanage.manager.PartsManageLogManager;
 import com.yunda.jx.pjwz.turnover.entity.OffPartList;
 import com.yunda.jx.pjwz.unloadparts.entity.PartsUnRegisterVo;
-import com.yunda.jx.pjwz.unloadparts.entity.PartsUnloadRegisterNewBean;
+import com.yunda.jx.pjwz.unloadparts.entity.PartsUnloadRegister;
 import com.yunda.jxpz.utils.SystemConfigUtil;
 
 /**
@@ -883,5 +883,19 @@ public class PartsFixRegisterManager extends JXBaseManager<PartsFixRegister, Par
         for (PartsFixRegister register : registers) {
             savePartsFixRegisterNew(register);
         }
+    }
+    
+    /**
+     * <li>说明：通过作业计划ID查询上车配件清单
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-03
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param workPlanIdx 作业计划ID
+     */
+    public List<PartsFixRegister> findPartsFixRegisterByWorkPlanIdx(String workPlanIdx){
+    	StringBuffer hql = new StringBuffer(" From PartsFixRegister where recordStatus = 0 and rdpIdx = ? ");
+    	return (List<PartsFixRegister>)this.daoUtils.find(hql.toString(), new Object[]{workPlanIdx});
     }
 }

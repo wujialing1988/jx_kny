@@ -18,6 +18,7 @@ import com.yunda.freight.zb.detain.entity.DetainTrain;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
 import com.yunda.jx.jczl.attachmanage.manager.JczlTrainManager;
 import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
+import com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlan;
 
 
 /**
@@ -90,6 +91,10 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
         }
         buildVoToEntity(entity, vehicleType, entitySave);  // 构建数据
         this.saveOrUpdate(entitySave);
+        // 改状态为【扣车】
+        if(entitySave.getDetainStatus().equals(DetainTrain.TRAIN_STATE_NEW)){
+            trainStatusChangeManager.saveChangeRecords(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, entitySave.getIdx(), "扣车");
+        }
     }
     
     /**
@@ -127,6 +132,10 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
         }
         buildVoToEntity(entity, vehicleType, entitySave);  // 构建数据
         this.saveOrUpdate(entitySave);
+        // 改状态为【扣车】
+        if(entitySave.getDetainStatus().equals(DetainTrain.TRAIN_STATE_NEW)){
+            trainStatusChangeManager.saveChangeRecords(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, entitySave.getIdx(), "扣车");
+        }
     }
 
     /**
@@ -147,7 +156,7 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
             entitySave.setProposerName(emp.getEmpname()); // 申请人名称
         }
         entitySave.setProposerDate(new Date()); // 申请时间
-        entitySave.setDetainStatus(DetainTrain.TRAIN_STATE_APPLY);  // 扣车状态
+        entitySave.setDetainStatus(DetainTrain.TRAIN_STATE_NEW);  // 扣车状态
         entitySave.setTrainTypeIdx(vehicleType.getIdx());           // 车型主键
         entitySave.setTrainTypeCode(vehicleType.getTypeCode()) ;    // 车型编码
         entitySave.setTrainTypeName(vehicleType.getTypeName()) ;    // 车型名称
@@ -182,9 +191,9 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
         }
         DetainTrain entity = this.getModelById(idx);
         if(entity == null){
-            throw new BusinessException("未找到需要【撤销】的数据！");
-        }else if(!entity.getDetainStatus().equals(DetainTrain.TRAIN_STATE_APPLY)){
-            throw new BusinessException("扣车申请已审批，不能撤销！");
+            throw new BusinessException("未找到需要【删除】的数据！");
+        }else if(!entity.getDetainStatus().equals(DetainTrain.TRAIN_STATE_NEW)){
+            throw new BusinessException("该车辆已做了检修，不能删除！");
         }
         this.logicDelete(idx);
     }
@@ -201,8 +210,8 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
      * @return
      */
     public DetainTrain getDetainTrainByTypeAndNo(String trainTypeIdx,String trainNo){
-        StringBuffer hql =  new StringBuffer(" From DetainTrain where recordStatus = 0 and detainStatus = ? and trainTypeIdx = ? and trainNo = ? order by updateTime desc ");
-        return (DetainTrain)this.daoUtils.findSingle(hql.toString(), new Object[]{DetainTrain.TRAIN_STATE_APPLY,trainTypeIdx,trainNo});
+        StringBuffer hql =  new StringBuffer(" From DetainTrain where recordStatus = 0 and detainStatus != '30' and trainTypeIdx = ? and trainNo = ? order by updateTime desc ");
+        return (DetainTrain)this.daoUtils.findSingle(hql.toString(), new Object[]{trainTypeIdx,trainNo});
     }
     
     /**
@@ -218,7 +227,7 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
         if(detainTrain == null){
             return new String[]{"数据不存在，请刷新列表重试！"};
         }
-        if (detainTrain.getDetainStatus().equals(DetainTrain.TRAIN_STATE_APPROVED)) {
+        if (detainTrain.getDetainStatus().equals(DetainTrain.TRAIN_STATE_HANDLED)) {
             return new String[]{"该数据已审批完成，请刷新列表重试！"};
         }
         return null;
@@ -239,16 +248,45 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
      */
     public void saveDetainTrain(DetainTrain entity) throws BusinessException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
         DetainTrain entitySave = this.getModelById(entity.getIdx());
-        String msg = trainStatusChangeManager.verificationOperation(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), new Integer[]{JczlTrain.TRAIN_STATE_REPAIR,JczlTrain.TRAIN_STATE_DETAIN}, "扣车审批");
+        String msg = trainStatusChangeManager.verificationOperation(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), new Integer[]{JczlTrain.TRAIN_STATE_REPAIR,JczlTrain.TRAIN_STATE_DETAIN}, "扣车");
         if(!StringUtil.isNullOrBlank(msg)){
             throw new BusinessException(msg);
         }
         buildEntity(entity, entitySave);
         this.saveOrUpdate(entitySave);
-        // 如果审批通过，则修改机车信息，改状态为【扣车】
-        if(entitySave.getDetainStatus().equals(DetainTrain.TRAIN_STATE_APPROVED)){
+        // 改状态为【扣车】
+        if(entitySave.getDetainStatus().equals(DetainTrain.TRAIN_STATE_NEW)){
             trainStatusChangeManager.saveChangeRecords(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, entitySave.getIdx(), "扣车");
         }
+    }
+    
+    
+    /**
+     * <li>说明：更新扣车记录状态
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-30
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param trainTypeIdx 车型ID
+     * @param trainNo 车号
+     * @param detainStatus 状态
+     * @throws NoSuchFieldException 
+     * @throws BusinessException 
+     */
+    public void changeDetainStatus(TrainWorkPlan entity,String detainStatus) throws BusinessException, NoSuchFieldException{
+    	DetainTrain train = getDetainTrainByTypeAndNo(entity.getTrainTypeIDX(), entity.getTrainNo());
+    	if(train != null){
+    		train.setRepairClassIDX(entity.getRepairClassIDX());
+    		train.setRepairClassName(entity.getRepairClassName());
+    		train.setRepairtimeIDX(entity.getRepairtimeIDX());
+    		train.setRepairtimeName(entity.getRepairtimeName());
+    		if(entity.getBeginTime() != null){
+    			train.setJxTime(entity.getBeginTime());
+    		}
+    		train.setDetainStatus(detainStatus);
+    		this.saveOrUpdate(train);
+    	}
     }
 
     /**

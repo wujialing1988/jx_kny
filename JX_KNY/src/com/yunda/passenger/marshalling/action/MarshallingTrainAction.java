@@ -1,25 +1,19 @@
 package com.yunda.passenger.marshalling.action;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.hibernate.type.TypeFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.yunda.common.BusinessException;
 import com.yunda.frame.common.Constants;
 import com.yunda.frame.common.JXBaseAction;
 import com.yunda.frame.util.ExceptionUtil;
 import com.yunda.frame.util.JSONUtil;
-import com.yunda.jx.jxgc.workplanmanage.entity.JobProcessNode;
-import com.yunda.jx.jxgc.workplanmanage.entity.JobProcessNodeRel;
 import com.yunda.passenger.marshalling.entity.MarshallingTrain;
 import com.yunda.passenger.marshalling.manager.MarshallingTrainManager;
 
@@ -61,7 +55,7 @@ public class MarshallingTrainAction extends JXBaseAction<MarshallingTrain, Marsh
 //        	MarshallingTrain[] marshallingTrains = JSONUtil.read(getRequest().getParameter("datas"), MarshallingTrain[].class);
 //        	List<MarshallingTrain> marshallingTrainList = Arrays.asList(marshallingTrains);
         	List<MarshallingTrain> marshallingTrainList = JSONObject.parseObject(getRequest().getParameter("datas"), new TypeReference<List<MarshallingTrain>>(){});
-            this.manager.saveOrUpdate(marshallingTrainList);
+            this.manager.saveOrUpdateTrainList(marshallingTrainList);
             map.put(Constants.SUCCESS, true);
         } catch (Exception e) {
             ExceptionUtil.process(e, logger, map);

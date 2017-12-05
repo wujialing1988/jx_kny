@@ -39,11 +39,27 @@ ClassMaintain.grid = new Ext.yunda.Grid({
 			        minValue:1,
 			        maxValue:99,
 			        allowBlank:false},searcher: { hidden: true }
+	},{
+		header:'类型', dataIndex:'vehicleType',width: 120,editor: {
+			id:'vehicleType_combo',
+			xtype: 'EosDictEntry_combo',
+			hiddenName: 'vehicleType',
+			dicttypeid:'FREIGHT_TYPE',
+			displayField:'dictname',valueField:'dictid',
+			hasEmpty:"false"
+		},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+			var result = '' ;
+			if('10' == value){
+				result = '货车' ;
+			}else if('20' == value){
+				result = '客车' ;
+			}
+			return result;
+		}
 	},
      	{
 		header:'备注', dataIndex:'remark',width: 120,editor: {xtype:'textarea', maxLength:1000 },searcher: { hidden: true }
-	},
-		{
+	},{
 		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	}],
 	searchFn: function(searchParam){ 

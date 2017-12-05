@@ -9,7 +9,7 @@
 	<!-- 定义所有项目原本地址 -->
 	<property name="CoreFrameBase" value="E:/CoreFrame/" />
 	
-	<property name="WorkSpacePath" value="E:/yunda_space/kny_space/" />
+	<property name="WorkSpacePath" value="D:/github/rapid/" />
 	<property name="jxCoreFrame" value="jxCoreFrame" />
 	<property name="jx" value="JX_KNY" />
 	

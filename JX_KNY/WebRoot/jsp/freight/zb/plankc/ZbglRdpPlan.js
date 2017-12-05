@@ -6,7 +6,7 @@ Ext.onReady(function(){
 	Ext.ns('ZbglRdpPlan');
 	
 	/** **************** 定义全局变量开始 **************** */
-	ZbglRdpPlan.labelWidth = 55;
+	ZbglRdpPlan.labelWidth = 80;
 	
 	ZbglRdpPlan.statusArrays = {"UNRELEASED":"未启动","ONGOING":"已启动","INTERRUPT":"中断","DELAY":"延期","COMPLETE":"已完成"} ;
 	ZbglRdpPlan.statusColorArrays = {"UNRELEASED":"#999999","ONGOING":"#00BFFF","INTERRUPT":"red","DELAY":"yellow","COMPLETE":"#008000"} ;
@@ -204,6 +204,86 @@ Ext.onReady(function(){
 	    });
 	}
 	
+	/************** 完成填写实际时间 ****************/
+	ZbglRdpPlan.CompletedForm = new Ext.form.FormPanel({
+	    baseCls: "x-plain", align: "center",	defaultType: "textfield",
+		layout: "form",		border: false,	labelWidth: 120,
+		defaults:{
+			anchor: "99%" ,
+			defaults: {
+				defaults: {				
+					anchor: "95%"
+				}
+			}
+		},
+		items:[{
+			xtype: "panel",	border: false,	baseCls: "x-plain",	layout: "column",	align: "center", 
+	    	items: [
+		        {
+		            baseCls:"x-plain", align:"center", layout:"form", columnWidth: 1,
+			        items: [{				
+						name: "realBeginTime", fieldLabel: "实际开始时间", xtype:"my97date",format: "Y-m-d H:i",
+			        	my97cfg: {dateFmt:"yyyy-MM-dd HH:mm"}, allowBlank:false
+					},{				
+						name: "realEndTime", fieldLabel: "实际完成时间", xtype:"my97date",format: "Y-m-d H:i",
+			        	my97cfg: {dateFmt:"yyyy-MM-dd HH:mm"}, allowBlank:false
+					}]
+				}]
+		}]
+	});
+	
+	
+	ZbglRdpPlan.CompletedWin = new Ext.Window({
+		title:"完成计划", width:400, height:150, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
+		labelWidth: 120,
+		maximizable:false, 
+		items:ZbglRdpPlan.CompletedForm,
+		modal:true,
+		buttons: [{
+			text : "确定",iconCls : "saveIcon", handler: function(){
+				var form = ZbglRdpPlan.CompletedForm.getForm(); 
+		        if (!form.isValid()) return;
+		        var data = form.getValues();
+		        var ids = $yd.getSelectedIdx(ZbglRdpPlan.ZbglRdpPlanGrid);	
+				var cfg = {
+				        url: ctx + "/zbglRdpPlan!cmpPlan.action", 
+						params: {id: ids[0],"realBeginTime":data.realBeginTime,"realEndTime":data.realEndTime},
+				        timeout: 600000,
+				        success: function(response, options){
+				        	if(processTips) hidetip();
+				            var result = Ext.util.JSON.decode(response.responseText);
+				            if (result.errMsg == null && result.success == true) {
+				                alertSuccess();
+				                ZbglRdpPlan.CompletedWin.hide(); 
+				                ZbglRdpPlan.ZbglRdpPlanGrid.store.load();
+				            } else {
+				                alertFail(result.errMsg);
+				            }
+				        },
+			        failure: function(response, options){
+			        	if(processTips) hidetip();
+				        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				    }
+			    };
+			    Ext.Msg.confirm("提示  ", "确定完成列检计划？  ", function(btn){
+			        if(btn != 'yes')    return;
+			        showtip();
+			        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
+			    });
+				
+			}
+		},{
+	        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlan.CompletedWin.hide(); }
+		}],
+		listeners:{
+			"show":function(){
+				
+			}
+		}
+	});
+	
+	/************** 完成填写实际时间 ****************/
+	
 	/**
 	 * 完成计划
 	 */
@@ -226,30 +306,7 @@ Ext.onReady(function(){
 			return;			
 		}
 		
-		var cfg = {
-	        url: ctx + "/zbglRdpPlan!cmpPlan.action", 
-			params: {id: idx},
-	        timeout: 600000,
-	        success: function(response, options){
-	        	if(processTips) hidetip();
-	            var result = Ext.util.JSON.decode(response.responseText);
-	            if (result.errMsg == null && result.success == true) {
-	                alertSuccess();
-	                ZbglRdpPlan.ZbglRdpPlanGrid.store.load();
-	            } else {
-	                alertFail(result.errMsg);
-	            }
-	        },
-	        failure: function(response, options){
-	        	if(processTips) hidetip();
-		        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
-		    }
-	    };
-	    Ext.Msg.confirm("提示  ", "确定完成列检计划？  ", function(btn){
-	        if(btn != 'yes')    return;
-	        showtip();
-	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
-	    });
+		ZbglRdpPlan.CompletedWin.show();
 	}
 	
 	/**
@@ -361,6 +418,7 @@ Ext.onReady(function(){
 	    				xtype: "Base_combo",
 	    			    entity:'com.yunda.freight.base.classMaintain.entity.ClassMaintain',
 						business: 'classMaintain',	
+						queryParams: {'vehicleType':vehicleType}, 
 	                    returnField: [{widgetId:"classNo",propertyName:"classNo"}],
 	                    fields:["classNo","className","idx"],
 	        		    displayField: "className", valueField: "className",
@@ -406,19 +464,12 @@ Ext.onReady(function(){
 			        allowNegative:false,
 			        minValue:1,
 			        maxValue:999,
-			        allowBlank:false,
 					listeners : {   
 				        	"change" : function(me, newValue, oldValue ) {   
 				        		
 				        	}
 					}
 			        }, searcher: {anchor:'98%'}
-			},{
-				header:'计划开始时间', dataIndex:'planStartTime', xtype:'datecolumn', hidden:true, editor:{allowBlank:false, xtype:'my97date',format: 'Y-m-d H:i' }
-			},{
-				header:'计划完成时间', dataIndex:'planEndTime', xtype:'datecolumn',  hidden:true,editor:{hidden:true,xtype:'my97date',format: 'Y-m-d H:i'}
-			},{
-	   			header:'股道名称', dataIndex:'trackName', hidden:true, editor: { xtype:'hidden',id:'trackName' }
 			},{
 				header:'股道', dataIndex:'trackNo',hidden:true, editor:{
 					id:"trackNo_comb",
@@ -439,6 +490,12 @@ Ext.onReady(function(){
 					allowBlank: false,
 					isAll:true
 				}, searcher: {anchor:'98%'}
+			},{
+				header:'计划开始时间', dataIndex:'planStartTime', xtype:'datecolumn', hidden:true, editor:{hidden:true, xtype:'my97date',format: 'Y-m-d H:i' }
+			},{
+				header:'计划完成时间', dataIndex:'planEndTime', xtype:'datecolumn',  hidden:true,editor:{hidden:true,xtype:'my97date',format: 'Y-m-d H:i'}
+			},{
+	   			header:'股道名称', dataIndex:'trackName', hidden:true, editor: { xtype:'hidden',id:'trackName' }
 			},/*{
 	   			header:'白夜班编码', dataIndex:'dayNightTypeNo', hidden:true, editor: { xtype:'hidden',id:'dayNightTypeNo' }
 			},{
@@ -462,7 +519,12 @@ Ext.onReady(function(){
 				header:'站点ID', dataIndex:'siteID',hidden:true, editor: { xtype:"hidden"}
 			},{
 				header:'站点名称', dataIndex:'siteName',hidden:true, editor: { xtype:"hidden" }
-			}],
+			},{
+				header:'实际开始时间', dataIndex:'realStartTime',hidden:true, editor: { xtype:"hidden" }
+			},{
+				header:'实际结束时间', dataIndex:'realEndTime',hidden:true, editor: { xtype:"hidden" }
+			}
+			],
 			afterShowSaveWin: function(){
 				
 			},  
@@ -612,6 +674,10 @@ Ext.onReady(function(){
 				}
 			},{
 				header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
+			},{
+				header:'实际开始时间', dataIndex:'realStartTime',hidden:true, editor: { xtype:"hidden" }
+			},{
+				header:'实际结束时间', dataIndex:'realEndTime',hidden:true, editor: { xtype:"hidden" }
 			}],
 			afterShowSaveWin: function(){
 				 // 设置字段只读
@@ -726,10 +792,14 @@ Ext.onReady(function(){
 			var records = sm.getSelections();
 			var idx = records[0].data.idx;
 			form.reset();
-			// 计划时间
-			var planStartTime = new Date(records[0].data.planStartTime).format('Y-m-d H:i');
-			var planEndTime = new Date(records[0].data.planEndTime).format('Y-m-d H:i');
-			form.findField("planStartTime").setValue(planStartTime + "~ " + planEndTime);
+			// 实际时间
+			var realStartTime = '' ;
+			var realEndTime = '' ;
+			if(realStartTime){
+				realStartTime = new Date(records[0].data.realStartTime).format('Y-m-d H:i');
+				realEndTime = new Date(records[0].data.realEndTime).format('Y-m-d H:i');
+			}
+			form.findField("planStartTime").setValue(realStartTime + "~ " + realEndTime);
 			form.findField("workTeamName").setValue(records[0].data.workTeamName);
 			form.findField("className").setValue(records[0].data.className);
 			
@@ -759,13 +829,15 @@ Ext.onReady(function(){
 			},{
 				columnWidth:1,
 		        items: [
-		        	{ fieldLabel:"计划时间", name:"planStartTime"}
+		        	{ fieldLabel:"实际时间", name:"planStartTime"}
 		        ]
 			},{
+				columnWidth:1,
 		        items: [
 		        	{ fieldLabel:"作业班次", name:"className" }
 		        ]
 			},{
+				columnWidth:1,
 		        items: [
 		        	{ fieldLabel:"作业班组", name:"workTeamName"}
 		        ]

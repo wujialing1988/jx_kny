@@ -1,5 +1,5 @@
 /**
- * 班次交接
+ * 走行公里
  */
 Ext.onReady(function(){
 	

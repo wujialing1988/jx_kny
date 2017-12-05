@@ -148,4 +148,52 @@ public class MarshallingTrainManager extends  JXBaseManager<MarshallingTrain, Ma
 			throw new BusinessException(e.getMessage());
 		}
 	}
+
+	/**
+	 * <li>说明：保存车辆编组
+	 * <li>创建人：伍佳灵
+	 * <li>创建日期：2017-12-05
+	 * <li>修改人： 
+	 * <li>修改日期：
+	 * <li>修改内容：
+	 * @param entityList
+	 * @throws BusinessException
+	 * @throws NoSuchFieldException
+	 */
+	public void saveOrUpdateTrainList(List<MarshallingTrain> entityList) throws BusinessException, NoSuchFieldException {
+		for (MarshallingTrain entity : entityList) {
+			MarshallingTrain marshallingTrain = getMarshallingTrainBySeqNo(entity.getSeqNo());
+			if(marshallingTrain != null){
+				marshallingTrain.setTrainTypeIDX(entity.getTrainTypeIDX());
+				marshallingTrain.setTrainTypeShortName(entity.getTrainTypeShortName());
+				marshallingTrain.setTrainNo(entity.getTrainNo());
+				marshallingTrain.setVehicleKindCode(entity.getVehicleKindCode());
+				marshallingTrain.setVehicleKindName(entity.getVehicleKindName());
+				this.update(marshallingTrain);
+			}else{
+				this.saveOrUpdate(entity);
+			}
+		}
+	}
+	
+	/**
+	 * <li>说明：通过序号查询唯一的编组车辆信息
+	 * <li>创建人：伍佳灵
+	 * <li>创建日期：2017-12-05
+	 * <li>修改人： 
+	 * <li>修改日期：
+	 * <li>修改内容：
+	 * @param seqNo 序号
+	 * @throws BusinessException
+	 * @throws NoSuchFieldException
+	 */
+	@SuppressWarnings("unchecked")
+	public MarshallingTrain getMarshallingTrainBySeqNo(int seqNo){
+		StringBuffer hql = new StringBuffer();
+		Map paramMap = new HashMap<String,String>();
+		paramMap.put("seqNo", seqNo+"");
+		hql.append("from MarshallingTrain where 1 = 1 ").append(CommonUtil.buildParamsHql(paramMap)).append(" and recordStatus = 0");
+		return (MarshallingTrain)this.daoUtils.findSingle(hql.toString());
+	}
 }
+

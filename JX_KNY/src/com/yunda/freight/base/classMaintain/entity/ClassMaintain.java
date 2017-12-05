@@ -84,6 +84,10 @@ public class ClassMaintain implements java.io.Serializable {
     @Column(name = "Update_Time")
     private java.util.Date updateTime;
     
+    /* 客货类型 10 货车 20 客车*/
+    @Column(name = "T_VEHICLE_TYPE")
+    private String vehicleType;
+    
     public String getIdx() {
         return idx;
     }
@@ -174,7 +178,14 @@ public class ClassMaintain implements java.io.Serializable {
     public void setUpdator(Long updator) {
         this.updator = updator;
     }
-    
+
+	public String getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(String vehicleType) {
+		this.vehicleType = vehicleType;
+	}
     
 }
 

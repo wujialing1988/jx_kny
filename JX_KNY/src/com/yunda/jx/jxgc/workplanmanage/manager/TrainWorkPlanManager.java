@@ -24,7 +24,8 @@ import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.frame.yhgl.entity.AcOperator;
 import com.yunda.frame.yhgl.entity.OmEmployee;
-import com.yunda.freight.zb.plan.entity.ZbglRdpPlan;
+import com.yunda.freight.zb.detain.entity.DetainTrain;
+import com.yunda.freight.zb.detain.manager.DetainTrainManager;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
 import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
 import com.yunda.jx.jxgc.common.JxgcConstants;
@@ -108,6 +109,12 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
      */
     @Resource
     private TrainStatusChangeManager trainStatusChangeManager;
+    
+    /**
+     * 车辆扣车登记
+     */
+    @Resource
+    private DetainTrainManager detainTrainManager;
     
     private static final String STATUS = "#status#";
     
@@ -222,9 +229,12 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
             PerformanceMonitor.begin(logger, true, "TrainWorkPlanManager.generateWorkPlan");
             entity.setWorkPlanStatus(TrainWorkPlan.STATUS_NEW);
             entity.setWorkPlanTime(new Date());
+            entity.setFromStatus(0);	// 校验状态 未校验
             entity = generateBizLogicAndWork(entity);                 
             trainWorkPlanQueryManager.updateWorkPlanBeginEndTime(entity);
             PerformanceMonitor.end(logger, "【兑现】", true, "TrainWorkPlanManager.generateWorkPlan");
+            // 更新扣车记录状态
+            detainTrainManager.changeDetainStatus(entity, DetainTrain.TRAIN_STATE_HANDLING);
             // 更改机车状态
             trainStatusChangeManager.saveChangeRecords(entity.getTrainTypeIDX(), entity.getTrainNo(), JczlTrain.TRAIN_STATE_REPAIR, entity.getIdx(), "生成作业计划");            
         } else {
@@ -405,6 +415,8 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
         daoUtils.executeSql(sql);        
         qcResultManager.updateTerminateQCResult(workPlanIDX);//终止质量检验结果
         trainWorkPlanQueryManager.updatePlanStatus(workPlan);
+        // 回滚扣车信息
+        detainTrainManager.changeDetainStatus(workPlan, DetainTrain.TRAIN_STATE_NEW);
         // 回滚车辆状态
         trainStatusChangeManager.robackChangeRecords(workPlan.getTrainTypeIDX(), workPlan.getTrainNo(), workPlanIDX, "终止作业计划");
     }
@@ -742,6 +754,8 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
             saveOrUpdate(plan);
             // 车辆状态改变
             trainStatusChangeManager.saveChangeRecords(plan.getTrainTypeIDX(), plan.getTrainNo(), JczlTrain.TRAIN_STATE_USE, plan.getIdx(), "车辆检修检验");
+            // 更新扣车登记信息
+            detainTrainManager.changeDetainStatus(plan, DetainTrain.TRAIN_STATE_HANDLED);
         }
         return plan;
     }
@@ -761,6 +775,23 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
     		hql.append(" and vehicleType = '"+vehicleType+"'");
     	}
     	return (List<TrainWorkPlan>)this.daoUtils.find(hql.toString(), new Object[]{planStutas});
+    }
+    
+    /**
+     * <li>说明：查询车辆检修列表
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-02
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<TrainWorkPlan> findTrainWorkPlanListByTrain(String trainTypeIDX, String trainNo,String vehicleType){
+    	StringBuffer hql = new StringBuffer(" From TrainWorkPlan where recordStatus = 0 and workPlanStatus in ('ONGOING','COMPLETE') and trainTypeIDX = ? and trainNo = ? ");
+    	// 客货类型
+    	if(!StringUtil.isNullOrBlank(vehicleType)){
+    		hql.append(" and vehicleType = '"+vehicleType+"'");
+    	}
+    	return (List<TrainWorkPlan>)this.daoUtils.find(hql.toString(), new Object[]{trainTypeIDX,trainNo});
     }
     
     

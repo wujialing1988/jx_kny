@@ -200,4 +200,19 @@
 	</sql>	
 	
 	
+	<!-- 通过车辆查询车辆列检记录 -->
+	<sql id="findZbglRdpListByRecord">
+	<![CDATA[
+		 select p.railway_time as "railwayTime",
+		       to_char(p.create_time,'yyyy-MM-dd') as "planStartTime",
+		       p.idx as "rdpIdx",
+		       r.idx as "recordIdx"
+		  from ZB_ZBGL_PLAN p
+		inner join ZB_ZBGL_PLAN_RECORD r on p.idx = r.rdp_plan_idx
+		where p.record_status = 0 and p.rdp_plna_status in ('ONGOING','COMPLETE','INTERRUPT') and r.record_status = 0
+		and r.train_type_idx = '#trainTypeIDX#' and r.train_no = '#trainNo#' and p.t_vehicle_type = '#vehicleType#'
+	]]>
+	</sql>	
+	
+	
 </SqlMap>

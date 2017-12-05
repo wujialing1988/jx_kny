@@ -66,6 +66,10 @@ public class Gztp implements java.io.Serializable {
 	/* 列车车次 */
 	@Column(name = "RAILWAY_TIME")
 	private java.lang.String railwayTime;
+	
+    /* 提票类型（数据字典项：如JT6，JT28等） */
+	@Column(name = "TYPE")
+    private String type;
 
 	/* 车型主键 */
 	@Column(name = "VEHICLE_TYPE_IDX")
@@ -505,7 +509,14 @@ public class Gztp implements java.io.Serializable {
     public void setHandleWayValue(java.lang.String handleWayValue) {
         this.handleWayValue = handleWayValue;
     }
-    
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
     
 
 }

@@ -4,7 +4,7 @@
 Ext.onReady(function(){
 	Ext.namespace('GztpTicket');                       //定义命名空间
 	
-	GztpTicket.labelWidth = 60;                        //表单中的标签名称宽度
+	GztpTicket.labelWidth = 100;                        //表单中的标签名称宽度
 	GztpTicket.fieldWidth = 130;                       //表单中的标签宽度
 	
 	//定义全局变量保存查询条件
@@ -66,7 +66,8 @@ Ext.onReady(function(){
            		xtype: 'fieldset',
            		title: '故障信息',
            		layout: 'column',
-                autoHeight:true,
+//                autoHeight:true,
+           		height:230,
                 defaults: {
                 	columnWidth:.5,
 					layout: 'form',
@@ -81,7 +82,18 @@ Ext.onReady(function(){
 		        	}
                 },
            		items :[{
-                	columnWidth:.32,
+           			items:[{
+           			id: 'gzdj_type',
+					allowBlank:false,
+					xtype: 'EosDictEntry_combo',
+					hiddenName: 'type',
+					dicttypeid:'GZDJ_TYPE',
+					displayField:'dictname',
+					valueField:'dictname',
+					fieldLabel: "登记类型"
+                    }
+                    ]
+	    		},{
                 	items:[{
                 		fieldLabel: '车次',
                         xtype:'displayfield',
@@ -89,7 +101,6 @@ Ext.onReady(function(){
                     }
                     ]
             	}, {
-                	columnWidth:.32,
                 	items:[{
                 		fieldLabel: '车型',
                         xtype:'displayfield',
@@ -97,7 +108,6 @@ Ext.onReady(function(){
                     }
                     ]
             	}, {
-                	columnWidth:.36,
                 	items:[{
                 		fieldLabel: '车号',
                         xtype:'displayfield',
@@ -137,6 +147,7 @@ Ext.onReady(function(){
                    	{
                    		xtype: 'radiogroup',
                    		fieldLabel: '处理类型',
+                   		hidden:true,
                    		//allowBlank:false,
                    		//anchor:"50%",
                    		items: [
@@ -175,7 +186,8 @@ Ext.onReady(function(){
            		xtype: 'fieldset',
            		title: '处理结果',
            		layout: 'column',
-                autoHeight:true,
+//                autoHeight:true,
+           		height:230,
                 defaults: {
                 	columnWidth:.5,
 					layout: 'form',
@@ -219,17 +231,6 @@ Ext.onReady(function(){
 					    	height:26,
 					    	iconCls: 'saveIcon',
 					    	handler:function(){
-					    		if (GztpTicket.currRec && HANDLE_TYPE_REP == GztpTicket.currRec.handleType 
-					            		&& STATUS_OVER == GztpTicket.currRec.faultNoticeStatus) {
-					    			alertFail('上报数据已处理，不能修改！');
-					            	return;
-					            }
-					    		if (GztpTicket.currRec && HANDLE_TYPE_REP == GztpTicket.currRec.handleType 
-					    				&& STATUS_CHECKED == GztpTicket.currRec.faultNoticeStatus) {
-					    			alertFail('质量检验已完成，不能修改！');
-					    			return;
-					    		}
-					    		
 					    		//表单验证是否通过
 					            var form = GztpTicket.saveForm.getForm();
 					            if (!form.isValid()) return;
@@ -239,7 +240,6 @@ Ext.onReady(function(){
 					            // 获取物料数据
 					            var matUses = GztpTicket.getMatUses();
 					            
-					            if(GztpTicket.loadMask)   GztpTicket.loadMask.show();
 					            var cfg = {
 					                scope: this,
 					                url: ctx + '/gztp!saveGztps.action',
@@ -258,7 +258,19 @@ Ext.onReady(function(){
 					                    }
 					                }
 					            };
-					            Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
+					            
+					            // 上报生成扣车记录提醒
+					            if('20' == data.handleWay){
+					        	    Ext.Msg.confirm("提示  ", "将生成扣车记录，是否继续？  ", function(btn){
+					        	        if(btn != 'yes')    return;
+					        	        if(GztpTicket.loadMask)   GztpTicket.loadMask.show();
+					        	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
+					        	    });
+					            }else{
+					            	if(GztpTicket.loadMask)   GztpTicket.loadMask.show();
+					            	Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
+					            }
+					            
 					    	}
 					    }, {
 					    	text: '重置',
@@ -311,6 +323,7 @@ Ext.onReady(function(){
 		Ext.getCmp('vehicle_component').clearValue();
 		Ext.getCmp('fault_type').clearValue();
 		Ext.getCmp('faultDealType').clearValue();
+		Ext.getCmp('gzdj_type').clearValue();
 		if (!skip) {
 			form.setValues(GztpTicket.formValues);
 		}
@@ -323,11 +336,15 @@ Ext.onReady(function(){
 	    deleteURL: ctx + '/gztp!logicDelete.action',            //删除数据的请求URL
 	    //singleSelect: true,
 	    storeAutoLoad: false,
+	    viewConfig: {forceFit: false , markDirty: false },
 	    selModel : new Ext.grid.CheckboxSelectionModel({singleSelect:true}),
 	    tbar : ['refresh', 'delete', '<span style="color:grey;">&nbsp;&nbsp;选中一条登记数据后在“故障登记维护”中进行修改。</span>'],
 		fields: [
 	     	{
 				header:'列检计划主键', dataIndex:'rdpPlanIdx',width: 120,hidden:true
+			},
+	     	{
+				header:'登记类型', dataIndex:'type',width: 120
 			},
 	     	{
 				header:'登记单号', dataIndex:'faultNoticeCode',width: 120
@@ -408,7 +425,7 @@ Ext.onReady(function(){
 				header:'整备任务单ID', dataIndex:'rdpIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'处理类型', dataIndex:'handleType',width: 80,
+				header:'处理类型', dataIndex:'handleType',width: 80,hidden:true,
 				renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if (HANDLE_TYPE_REG == value) {
 						return HANDLE_TYPE_REG_CH;
@@ -417,7 +434,7 @@ Ext.onReady(function(){
 				}
 			},
 	     	{
-				header:'状态', dataIndex:'faultNoticeStatus',width: 80,
+				header:'状态', dataIndex:'faultNoticeStatus',width: 80,hidden:true,
 				renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if (STATUS_INIT == value) {
 						return '<span style="color:red;">' + STATUS_INIT_CH + '</span>';
@@ -462,9 +479,9 @@ Ext.onReady(function(){
 		// 作业范围显示隐藏
 	GztpTicket.grid.addListener('afterrender',function(me){
 		if(vehicleType == '10'){
-			GztpTicket.grid.getColumnModel().setHidden(11,true);
+			GztpTicket.grid.getColumnModel().setHidden(12,true);
 		}else{
-			GztpTicket.grid.getColumnModel().setHidden(11,false);
+			GztpTicket.grid.getColumnModel().setHidden(12,false);
 		}
 	});
 	
@@ -491,6 +508,7 @@ Ext.onReady(function(){
 		Ext.getCmp('vehicle_component').setDisplayValue(rowRec.vehicleComponentFlbm, rowRec.vehicleComponentFullname);
 		Ext.getCmp('fault_type').setDisplayValue(rowRec.faultTypeKey, rowRec.faultTypeValue);
 		Ext.getCmp('faultDealType').setDisplayValue(rowRec.handleWay, rowRec.handleWayValue);
+		Ext.getCmp('gzdj_type').setDisplayValue(rowRec.type, rowRec.type);
 		GztpTicket.currRec = rowRec;
 		MatTypeUseList.gztpIdx = rowRec.idx ;
 		MatTypeUseList.grid.store.reload();

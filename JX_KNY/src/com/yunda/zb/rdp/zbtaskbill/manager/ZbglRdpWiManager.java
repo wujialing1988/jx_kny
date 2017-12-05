@@ -819,6 +819,22 @@ public class ZbglRdpWiManager extends JXBaseManager<ZbglRdpWi, ZbglRdpWi> {
         StringBuffer hql = new StringBuffer(" From ZbglRdpWi where recordStatus = 0 and wiStatus <> '"+ZbglRdpWi.STATUS_HANDLED+"' and rdpIDX = ? and wiIDX = ? ");
         return (ZbglRdpWi)this.daoUtils.findSingle(hql.toString(), new Object[]{rdpIdx,wiIdx});
     }
+
+    /**
+     * <li>说明：通过整备范围生成
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-01
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param rdp 整备单rdp
+     * @return
+     */
+	public void saveZbglRdpWiByRdp(ZbglRdp rdp) {
+		// 1、查询对应范围的专业数据
+		
+		
+	}
     
     
 }

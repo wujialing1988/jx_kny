@@ -12,7 +12,7 @@ Ext.onReady(function(){
 		// 判断是否有子节点
 		if(nodes && nodes.length > 0){
 			for (var i = 0; i < nodes.length; i++){
-				var node = nodes[0];
+				var node = nodes[i];
 				if(!node.leaf){
 					MainFrame.addMeun(MainFrame.tb,node,node.children);
 					MainFrame.tb.addSeparator();

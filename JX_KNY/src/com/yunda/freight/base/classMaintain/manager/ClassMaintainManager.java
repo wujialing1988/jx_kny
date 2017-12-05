@@ -72,6 +72,11 @@ public class ClassMaintainManager extends JXBaseManager<ClassMaintain, ClassMain
             return null ;
         }
         StringBuffer hql = new StringBuffer(" select t From ClassMaintain t Where recordStatus = 0 And workplaceCode =  '"+workplaceCode+"'") ;
+        // 站点客货类型
+        String vehicleType = String.valueOf(queryParamsMap.get("vehicleType"));
+        if(!StringUtil.isNullOrBlank(vehicleType)){
+        	hql.append(" And vehicleType = '"+vehicleType+"'");
+        }
         int beginPos = hql.toString().toLowerCase().indexOf("from");
         StringBuffer totalHql = new StringBuffer(" select count(*)");
         totalHql.append(hql.toString().substring(beginPos));

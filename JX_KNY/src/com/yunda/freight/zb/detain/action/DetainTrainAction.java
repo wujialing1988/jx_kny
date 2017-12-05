@@ -42,7 +42,6 @@ public class DetainTrainAction extends JXBaseAction<DetainTrain, DetainTrain, De
      * <li>修改内容：
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
     public void saveDetainTrain() throws Exception{
         Map<String, Object> map = new HashMap<String,Object>();
         try {
@@ -62,7 +61,27 @@ public class DetainTrainAction extends JXBaseAction<DetainTrain, DetainTrain, De
             JSONUtil.write(this.getResponse(), map);
         }       
     }
+    
+    /**
+     * <li>说明：扣车申请登记
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-4-21
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws Exception
+     */
+    public void applyDetainTrain() throws Exception{
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            DetainTrain entity = (DetainTrain)JSONUtil.read(getRequest(), DetainTrain.class);
+            this.manager.applyDetainTrain(entity);
+            map.put("success", true);
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }       
+    }
    
-    
-    
 }

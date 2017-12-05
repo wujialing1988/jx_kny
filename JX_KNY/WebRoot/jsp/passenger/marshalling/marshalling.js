@@ -14,7 +14,7 @@ Ext.onReady(function(){
 	    labelWidth: 100,                                     //查询表单中的标签宽度
 	    fieldWidth: 180,
 		fields: [{
-			header:'编组编号', dataIndex:'marshallingCode',width: 40,editor: {xtype:"hidden"}
+			header:'编组编号', dataIndex:'marshallingCode',width: 40, hidden: true, editor: {xtype:"hidden"}
 		},{
 			header:'编组名称', dataIndex:'marshallingName', width: 60 ,editor: {allowBlank:false}, searcher: { hidden: true }
 		},{
@@ -37,11 +37,11 @@ Ext.onReady(function(){
 	});
 		// 添加加载结束事件
 	marshalling.grid.getStore().addListener('load',function(me, records, options ){
-		if(records.length > 0){
+		var hadSelected = marshalling.grid.getSelectionModel();
+		if(records.length > 0 && hadSelected.getCount() == 0){
 			marshalling.grid.getSelectionModel().selectFirstRow();
 	       	var sm = marshalling.grid.getSelectionModel();
 	       	var records = sm.getSelections();
-	       	MarshallingTrain.setNetwork(records);
 			MarshallingTrain.grid.getStore().reload();	
 		}else{
 			MarshallingTrain.marshallingCode = "###" ; // 编组编号

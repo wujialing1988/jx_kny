@@ -54,7 +54,7 @@ public class WorkCalendarDetailManager extends JXBaseManager<WorkCalendarDetail,
 	private Object []  _defaultEveryDayWorkTime = null; //默认的每日工作时间,即工作日历主表中的时间参数
 	@SuppressWarnings("unchecked")
     private List _searchScopeList = null; //在工作日历明细表中检索的时间范围,即从Y年M月D日~X年Y月N日的所有工作日期的时间安排
-	private Date _lastOverTime = null; //最终完成日期
+	private Date _lastOverTime = new Date(); //最终完成日期
 	private long _thisWheelEndTime = 0; //本轮工作的结束时间
 	private long _countWrokTime = 0;//总工时
     

@@ -53,13 +53,13 @@ DetainTrainCompleted.saveForm = new Ext.form.FormPanel({
             },
         	{
             	items:[{
-                		fieldLabel: '申请人',
+                		fieldLabel: '登记人',
                         name: "proposerName"
                     }]
             },
         	{
             	items:[{
-                		fieldLabel: '申请时间',
+                		fieldLabel: '登记时间',
                         name: "proposerDate"
                     }]
             },
@@ -76,67 +76,17 @@ DetainTrainCompleted.saveForm = new Ext.form.FormPanel({
                 		fieldLabel: '扣车原因',
                         name: "detainReason"
                     }]
+            },{
+            	items:[{
+            		fieldLabel: '修程',
+                    name: "repairClassName"
+                }]
+            },{
+            	items:[{
+            		fieldLabel: '检修时间',
+                    name: "jxTime"
+                }]
             }            
-        ]
-    },
-		// 交接项
-		{
-        xtype:'fieldset',
-        title: '审批意见',
-        autoHeight:true,
-        layout: 'column',
-        defaults: {
-        	columnWidth:0.9,
-			layout: 'form',
-			border: false,
-			defaults: {
-        		xtype:"displayfield", 
-        		anchor:"98%",
-    		    labelWidth: DetainTrainCompleted.labelWidth, 
-				fieldWidth: DetainTrainCompleted.fieldWidth
-        	}
-        },
-        items :[
-        	{
-            	items:[{
-                		fieldLabel: '命令号',
-                        name: "orderNo",
-                        maxLength:50
-                    }]
-            },  
-        	{
-            	items:[{
-                		fieldLabel: '发布人',
-                        name: "orderUser",
-                        maxLength:50
-                    }]
-            },  
-        	{
-            	items:[{
-                		fieldLabel: '发布时间',
-	                    name: "orderDate"                       
-                    }]
-            },  
-        	{
-            	items:[{
-                		fieldLabel: '审批人',
-	                    name: "approveName"                       
-                    }]
-            },  
-        	{
-            	items:[{
-                		fieldLabel: '审批时间',
-	                    name: "approveDate"                       
-                    }]
-            },              
-        	{
-            	items:[{
-                		fieldLabel: '审批意见',
-                        name: "approveOpinion",
-	 					maxLength:100,
-	 					height: 55                        
-                    }]
-            }              
         ]
     }
 	]
@@ -184,42 +134,31 @@ DetainTrainCompleted.grid = new Ext.yunda.Grid({
      	{
 		header:'扣车类型', dataIndex:'detainTypeName',width: 120,editor: {}
 	},{
-		header:'申请人ID', dataIndex:'proposerIdx',hidden:true,width: 120,editor: {}
+		header:'登记人ID', dataIndex:'proposerIdx',hidden:true,width: 120,editor: {}
 	},
      	{
-		header:'申请人', dataIndex:'proposerName',width: 120,editor: {}
+		header:'登记人', dataIndex:'proposerName',width: 120,editor: {}
 	},
        {
-		header:'申请时间', dataIndex:'proposerDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
+		header:'登记时间', dataIndex:'proposerDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
 	},
      	{
 		header:'扣车原因', dataIndex:'detainReason',width: 120,editor: {}
 	},
-     	{
-		header:'审批人ID', dataIndex:'approveIdx',width: 120,hidden:true,editor: {}
+	{
+		header:'修程', dataIndex:'repairClassName',width: 120,editor: {}
+	},
+	{
+		header:'检修时间时间', dataIndex:'jxTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
 	},
      	{
-		header:'审批人', dataIndex:'approveName',width: 120,editor: {}
-	},{
-		header:'审批时间', dataIndex:'approveDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
-	},{
-		header:'审批意见', dataIndex:'approveOpinion',width: 120,editor: {}
-	},
-     	{
-		header:'命令发布者', dataIndex:'orderUser',width: 120,editor: {}
-	}, {
-		header:'命令发布时间', dataIndex:'orderDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
-	},
-     	{
-		header:'命令号', dataIndex:'orderNo',width: 120,editor: {}
-	},{
 		header:'状态', dataIndex:'detainStatus',width: 120,renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if(value == "10"){
-						return '<span style="color:blue;">申请中</span>';
+						return  '<div style="background:#d2d6de;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">未检修</div>';
 					}else if(value == "20"){
-						return '<span style="color:red;">拒绝</span>';
+						return  '<div style="background:#f39c12;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">检修中</div>';
 					}else if(value == "30"){
-						return '<span style="color:green;">审批完成</span>';
+						return  '<div style="background:#00a65a;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">已检修</div>';
 					}
 				},editor: {}
 	},{
@@ -238,16 +177,16 @@ DetainTrainCompleted.grid = new Ext.yunda.Grid({
 	afterShowEditWin: function(record, rowIndex){
 		this.saveWin.setTitle("扣车信息查看");
 		var proposerDate = Ext.isEmpty(record.data.proposerDate) ? "" :new Date(record.data.proposerDate).format('Y-m-d H:i');
-		var orderDate = Ext.isEmpty(record.data.orderDate) ? "" :new Date(record.data.orderDate).format('Y-m-d H:i');
 		var approveDate = Ext.isEmpty(record.data.approveDate) ? "" :new Date(record.data.approveDate).format('Y-m-d H:i');
+		var jxTime = Ext.isEmpty(record.data.jxTime) ? "" :new Date(record.data.jxTime).format('Y-m-d H:i');
 		DetainTrainCompleted.saveForm.getForm().findField("proposerDate").setValue(proposerDate);
-		DetainTrainCompleted.saveForm.getForm().findField("orderDate").setValue(orderDate);
 		DetainTrainCompleted.saveForm.getForm().findField("approveDate").setValue(approveDate);
+		DetainTrainCompleted.saveForm.getForm().findField("jxTime").setValue(jxTime);
 	},	
 	createSaveWin: function(){
 	        //计算查询窗体宽度
 	        this.saveWin = new Ext.Window({
-	            title:"扣车信息查看", width:800, height: 500, closeAction:"hide",
+	            title:"扣车信息查看", width:800, height: 280, closeAction:"hide",
 	            layout: 'fit',
 	            iconCls: 'searchIcon',
 	            defaults: {layout: 'fit', border: false},

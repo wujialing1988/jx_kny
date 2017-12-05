@@ -32,12 +32,12 @@ public class DetainTrain implements java.io.Serializable {
     /* 使用默认序列版本ID */
     private static final long serialVersionUID = 1L;
     
-    /** 状态 - 申请中 */
-    public static final String TRAIN_STATE_APPLY = "10"; 
-    /** 状态 - 拒绝 */
-    public static final String TRAIN_STATE_REFUSE = "20";
-    /** 状态 - 审批完成 */
-    public static final String TRAIN_STATE_APPROVED = "30";
+    /** 状态 - 待检修 */
+    public static final String TRAIN_STATE_NEW = "10"; 
+    /** 状态 - 检修中 */
+    public static final String TRAIN_STATE_HANDLING = "20";
+    /** 状态 - 检修完成 */
+    public static final String TRAIN_STATE_HANDLED = "30";
     
     /* idx主键 */
     @GenericGenerator(strategy = "uuid", name = "uuid_id_generator")
@@ -62,7 +62,7 @@ public class DetainTrain implements java.io.Serializable {
     @Column(name = "TRAIN_NO")
     private java.lang.String trainNo;            
             
-    /* 扣车状态 10 申请中 20 拒绝 30 已完成 */ 
+    /* 扣车状态 10 待检修 20 检修中  30 完成 */ 
     @Column(name = "DETAIN_STATUS")
     private java.lang.String detainStatus;            
             
@@ -153,6 +153,27 @@ public class DetainTrain implements java.io.Serializable {
     /* 客货类型 10 货车 20 客车*/
     @Column(name = "T_VEHICLE_TYPE")
     private String vehicleType;
+    
+    /* 修程编码 */
+    @Column(name = "Repair_Class_IDX")
+    private String repairClassIDX;
+    
+    /* 修程名称 */
+    @Column(name = "Repair_Class_Name")
+    private String repairClassName;
+    
+    /* 修次 */
+    @Column(name = "Repair_time_IDX")
+    private String repairtimeIDX;
+    
+    /* 修次名称 */
+    @Column(name = "Repair_time_Name")
+    private String repairtimeName;
+    
+    /* 检修时间 */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "jx_Time")
+    private java.util.Date jxTime;
     
     public String getIdx() {
         return idx;
@@ -355,6 +376,46 @@ public class DetainTrain implements java.io.Serializable {
     public void setVehicleType(String vehicleType) {
         this.vehicleType = vehicleType;
     }
+
+	public String getRepairClassIDX() {
+		return repairClassIDX;
+	}
+
+	public void setRepairClassIDX(String repairClassIDX) {
+		this.repairClassIDX = repairClassIDX;
+	}
+
+	public String getRepairClassName() {
+		return repairClassName;
+	}
+
+	public void setRepairClassName(String repairClassName) {
+		this.repairClassName = repairClassName;
+	}
+
+	public String getRepairtimeIDX() {
+		return repairtimeIDX;
+	}
+
+	public void setRepairtimeIDX(String repairtimeIDX) {
+		this.repairtimeIDX = repairtimeIDX;
+	}
+
+	public String getRepairtimeName() {
+		return repairtimeName;
+	}
+
+	public void setRepairtimeName(String repairtimeName) {
+		this.repairtimeName = repairtimeName;
+	}
+
+	public java.util.Date getJxTime() {
+		return jxTime;
+	}
+
+	public void setJxTime(java.util.Date jxTime) {
+		this.jxTime = jxTime;
+	}
     
 }
 

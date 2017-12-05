@@ -19,6 +19,8 @@ import com.yunda.frame.util.EntityUtil;
 import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.frame.yhgl.entity.OmEmployee;
 import com.yunda.frame.yhgl.manager.IOmEmployeeManager;
+import com.yunda.freight.zb.detain.entity.DetainTrain;
+import com.yunda.freight.zb.detain.manager.DetainTrainManager;
 import com.yunda.freight.zb.gztp.entity.Gztp;
 import com.yunda.freight.zb.qualitycontrol.entity.ZbglQualityControl;
 import com.yunda.freight.zb.qualitycontrol.manager.ZbglQualityControlManager;
@@ -51,6 +53,10 @@ public class GztpManager extends JXBaseManager<Gztp, Gztp> {
     /** 物料消耗业务类 */
     @Resource
     private MatTypeUseManager matTypeUseManager ;
+    
+    /** 扣车登记业务类 */
+    @Resource
+    private DetainTrainManager detainTrainManager ;
    
     /**
 	 * <li>说明：判断相同车次、相同车辆、相同范围活、相同构型位置、相同处理类型是否已经登记过
@@ -162,7 +168,8 @@ public class GztpManager extends JXBaseManager<Gztp, Gztp> {
      * <li>修改人： 
      * <li>修改日期：
      * <li>修改内容：
-     * @param t
+     * @param t 故障提票信息
+     * @param isDatailTrain 是否扣车 若true，则生成扣车登记单
      * @return
      * @throws BusinessException
      * @throws NoSuchFieldException
@@ -194,6 +201,22 @@ public class GztpManager extends JXBaseManager<Gztp, Gztp> {
             } catch (Exception e) {
                 throw new BusinessException(e);
             }
+        }
+        
+        // 判断是否扣车，若需要扣车，调用扣车登记方法
+        if("20".equals(t.getHandleWay())){
+        	DetainTrain entity = new DetainTrain();
+        	entity.setVehicleType(t.getVehicleType()); // 客货类型
+        	entity.setDetainReason(t.getFaultDesc()); // 扣车原因
+        	entity.setDetainTypeCode("10");
+        	entity.setDetainTypeName("转临修");
+        	entity.setTrainTypeIdx(t.getVehicleTypeIdx());
+        	entity.setTrainNo(t.getTrainNo());
+        	try {
+				detainTrainManager.applyGztpToDetain(entity);
+			} catch (Exception e) {
+				
+			}
         }
         return t ;
     }
@@ -273,8 +296,9 @@ public class GztpManager extends JXBaseManager<Gztp, Gztp> {
      * <li>修改人： 
      * <li>修改日期：
      * <li>修改内容：
-     * @param gztp
-     * @param matUses
+     * @param gztp 故障登记实体
+     * @param matUses 物料明细
+     * @param isDatailTrain 是否扣车
      * @throws NoSuchFieldException 
      * @throws BusinessException  
      */
@@ -297,5 +321,19 @@ public class GztpManager extends JXBaseManager<Gztp, Gztp> {
         String sql = SqlMapUtil.getSql("zb-tp:findGzFlStatistics");
         return this.queryListMap(sql);
     }  
+    
+    /**
+     * <li>说明：通过车辆查询该车辆本次运用的故障登记信息
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-04
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<Gztp> findGztpListByRecord(String recordIdx){
+    	StringBuffer hql = new StringBuffer(" from Gztp where recordStatus = 0 and rdpRecordPlanIdx = ? ");
+        return this.daoUtils.find(hql.toString(), new Object[]{recordIdx});
+    }  
+    
     
 }

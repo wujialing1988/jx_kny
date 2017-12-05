@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -812,9 +813,15 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
     @SuppressWarnings("unchecked")
     private Map<String, List<ClassOrganizationUser>> getQueueUserMap(ZbglRdpPlan plan) {
            StringBuffer hql = new StringBuffer(" select u From ClassOrganizationUser u,ClassMaintain c where c.recordStatus = 0 ");
-           hql.append(" and u.classOrgIdx = c.idx and u.orgIdx = ? and c.classNo = ? order by u.queueCode ");
+           hql.append(" and u.classOrgIdx = c.idx and u.orgIdx = ? and c.classNo = ? ");
+           // 通过上下行判断 上行正序 下行反序
+           if("10".equals(plan.getToDirectionNo())){
+        	   hql.append(" order by u.queueCode asc");
+           }else{
+        	   hql.append(" order by u.queueCode desc ");
+           }
            List<ClassOrganizationUser> lists = (List<ClassOrganizationUser>)this.daoUtils.find(hql.toString(), new Object[]{plan.getWorkTeamID(),plan.getClassNo()});
-           Map<String, List<ClassOrganizationUser>> map = new HashMap<String, List<ClassOrganizationUser>>();
+           Map<String, List<ClassOrganizationUser>> map = new LinkedHashMap<String, List<ClassOrganizationUser>>();
            for (ClassOrganizationUser user : lists) {
                if(map.containsKey(user.getQueueCode())){
                    map.get(user.getQueueCode()).add(user);

@@ -140,7 +140,7 @@ Ext.onReady(function(){
 	    labelWidth: 100,                                     //查询表单中的标签宽度
 	    fieldWidth: 180,
 		fields: [{
-			header:'编组编号', dataIndex:'marshallingCode',width: 50, searcher: { hidden: true }
+			header:'编组编号', dataIndex:'marshallingCode',width: 50,hidden: true, searcher: { hidden: true }
 		},{
 			header:'顺序号', dataIndex:'seqNo',width: 60
 		},{
@@ -174,6 +174,12 @@ Ext.onReady(function(){
 		searchParam = MyJson.deleteBlankProp(searchParam);
 		this.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
 	});
+	
+	// 添加加载结束事件
+	MarshallingTrain.grid.getStore().addListener('load',function(me, records, options ){
+	       	MarshallingTrain.setNetwork(records);
+	});
+	
 	// 添加network条件项
 	MarshallingTrain.options = {
 		  locale: 'ch',
@@ -207,15 +213,21 @@ Ext.onReady(function(){
 		nodes : MarshallingTrain.nodes,
 		edges : MarshallingTrain.edges
 	};
-	// 
-	MarshallingTrain.setNetwork = function(records) {
+	
+	// 刷新图表
+	MarshallingTrain.setNetwork = function(marshallingTrainList) {
 		// 清空节点
 		MarshallingTrain.nodes.clear();
+		var sm = marshalling.grid.getSelectionModel();
+		if (sm.getCount() == 0) {
+			return ;
+		}		
+		var records = sm.getSelections();
 		var record = records[0];
 		MarshallingTrain.marshallingCode = record.data.marshallingCode;
 		MarshallingTrain.idx = record.data.idx;
 		MarshallingTrain.trainCount = record.data.trainCount;
-		var headImgUrl = getHeadImgUrl(record.data.marshallingCode, getHeadColorByStatus(''));
+		var headImgUrl = getHeadImgUrl('', getHeadColorByStatus(''));
 		// 添加车头
 		MarshallingTrain.nodes.add({
 			id : "id_train_head",
@@ -234,8 +246,6 @@ Ext.onReady(function(){
 				align : 'left'
 			}
 		});
-		// 编组车辆信息
-		var marshallingTrainList = record.json.marshallingTrainList;
 		// 添加车辆
 		for (var k = 0; k < record.data.trainCount; k++) {
 			var heightY =parseInt(k / 10);
@@ -243,9 +253,10 @@ Ext.onReady(function(){
 			var title = '';
 			if(marshallingTrainList.length > 0){
 				for(var i = 0; i< marshallingTrainList.length;i++){
-					if((marshallingTrainList[i].seqNo-1) == k){
-						var vehicleKindName = Ext.isEmpty(marshallingTrainList[i].vehicleKindName) ? "" : marshallingTrainList[i].vehicleKindName ;
-						var trainNo = Ext.isEmpty(marshallingTrainList[i].trainNo) ? "" : marshallingTrainList[i].trainNo ;
+					var trainData = marshallingTrainList[i].data;
+					if((trainData.seqNo-1) == k){
+						var vehicleKindName = Ext.isEmpty(trainData.vehicleKindName) ? "" : trainData.vehicleKindName ;
+						var trainNo = Ext.isEmpty(trainData.trainNo) ? "" : trainData.trainNo ;
 						title = vehicleKindName + trainNo;
 						break;
 					}
@@ -280,8 +291,10 @@ Ext.onReady(function(){
      	MarshallingTrain.network.on("doubleClick", function(params, boolens) {
 	        if (params.nodes.length == 1) {
 	        	  var array = params.nodes[0].split(MarshallingTrain.planSuffixChar);
-	        	   MarshallingTrain.seqNo = array[0];
-	        	   JczlTrainServiceWin.addWin.show();
+	        	  if(array.length == 2){
+	        		  MarshallingTrain.seqNo = array[0];
+	        		  JczlTrainServiceWin.addWin.show();
+	        	  }
 	            }
 		});
 		

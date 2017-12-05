@@ -42,13 +42,13 @@ Ext.onReady(function(){
 		        	}   
 	    	 	}
 	    	}, {
-	    		name: "planBeginTime", xtype: "my97date", format: "Y-m-d", initNow: false, fieldLabel: '起始(计划开始时间)'
+	    		name: "planBeginTime", xtype: "my97date", format: "Y-m-d", initNow: false, fieldLabel: '起始(计划开始)'
 	    	}]
 	    }, {
 	    	items: [{
 	    		xtype:'textfield', fieldLabel:'车号', name:"trainNo"
 	    	}, {
-	    		name: "planBeginTime_end",  xtype: "my97date", format: "Y-m-d", initNow:false, fieldLabel : '截止(计划开始时间)'
+	    		name: "planBeginTime_end",  xtype: "my97date", format: "Y-m-d", initNow:false, fieldLabel : '截止(计划开始)'
 	    	}]
 	    }, {
 	    	items: [{

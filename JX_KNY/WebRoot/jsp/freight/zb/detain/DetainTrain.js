@@ -53,13 +53,13 @@ DetainTrain.saveForm = new Ext.form.FormPanel({
             },
         	{
             	items:[{
-                		fieldLabel: '申请人',
+                		fieldLabel: '登记人',
                         name: "proposerName"
                     }]
             },
         	{
             	items:[{
-                		fieldLabel: '申请时间',
+                		fieldLabel: '登记时间',
                         name: "proposerDate",
                         format: 'Y-m-d H:i'
                     }]
@@ -79,59 +79,6 @@ DetainTrain.saveForm = new Ext.form.FormPanel({
                     }]
             }            
         ]
-    },
-		// 交接项
-		{
-        xtype:'fieldset',
-        title: '审批意见',
-        autoHeight:true,
-        layout: 'column',
-        defaults: {
-        	columnWidth:0.33,
-			layout: 'form',
-			border: false,
-			defaults: {
-        		xtype:"textfield", 
-        		anchor:"98%",
-    		    labelWidth: DetainTrain.labelWidth, 
-				fieldWidth: DetainTrain.fieldWidth
-        	}
-        },
-        items :[
-        	{
-            	items:[{
-                		fieldLabel: '命令号',
-                        name: "orderNo",
-                        maxLength:50
-                    }]
-            },  
-        	{
-            	items:[{
-                		fieldLabel: '发布人',
-                        name: "orderUser",
-                        maxLength:50
-                    }]
-            },  
-        	{
-            	items:[{
-                		fieldLabel: '发布时间',
-	            		xtype:'my97date',
-	            		format: 'Y-m-d H:i',
-	                    name: "orderDate"                       
-                    }]
-            },  
-        	{
-        		columnWidth:1,
-            	items:[{
-                		fieldLabel: '审批意见',
-                        name: "approveOpinion",
-                        allowBlank:false,
-	 					xtype:'textarea',
-	 					maxLength:100,
-	 					height: 55                        
-                    }]
-            }              
-        ]
     }
 	]
 });
@@ -150,7 +97,7 @@ DetainTrain.grid = new Ext.yunda.Grid({
     	xtype:'textfield', id:'query_input', enableKeyEvents:true, emptyText:'输入车号快速检索...', width:200,
     	listeners: {
     		keyup: function(filed, e) {
-    			if (GztpclTicket.queryTimeout) {
+    			if (DetainTrain.queryTimeout) {
     				clearTimeout(DetainTrain.queryTimeout);
     			}
     			
@@ -159,7 +106,7 @@ DetainTrain.grid = new Ext.yunda.Grid({
     			}, 1000);
     		}
 		}
-    },'->','<span style="color:grey;">双击数据进行审批！&nbsp;&nbsp;</span>'],    
+    },'->','<span style="color:grey;">双击数据查看详情！&nbsp;&nbsp;</span>'],    
 	fields: [
      	{
 		header:'车辆车型ID', dataIndex:'trainTypeIdx',hidden:true,width: 120,editor: {}
@@ -178,42 +125,24 @@ DetainTrain.grid = new Ext.yunda.Grid({
      	{
 		header:'扣车类型', dataIndex:'detainTypeName',width: 120,editor: {}
 	},{
-		header:'申请人ID', dataIndex:'proposerIdx',hidden:true,width: 120,editor: {}
+		header:'登记人ID', dataIndex:'proposerIdx',hidden:true,width: 120,editor: {}
 	},
      	{
-		header:'申请人', dataIndex:'proposerName',width: 120,editor: {}
+		header:'登记人', dataIndex:'proposerName',width: 120,editor: {}
 	},
        {
-		header:'申请时间', dataIndex:'proposerDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date',format: 'Y-m-d H:i' }
+		header:'登记时间', dataIndex:'proposerDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date',format: 'Y-m-d H:i' }
 	},
      	{
 		header:'扣车原因', dataIndex:'detainReason',width: 120,editor: {}
-	},
-     	{
-		header:'审批人ID', dataIndex:'approveIdx',width: 120,hidden:true,editor: {}
-	},
-     	{
-		header:'审批人', dataIndex:'approveName',width: 120,editor: {}
-	},{
-		header:'审批时间', dataIndex:'approveDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
-	},{
-		header:'审批意见', dataIndex:'approveOpinion',width: 120,editor: {}
-	},
-     	{
-		header:'命令发布者', dataIndex:'orderUser',width: 120,editor: {}
 	}, {
-		header:'命令发布时间', dataIndex:'orderDate', xtype:' ', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
-	},
-     	{
-		header:'命令号', dataIndex:'orderNo',width: 120,editor: {}
-	},{
 		header:'状态', dataIndex:'detainStatus',width: 120,renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if(value == "10"){
-						return '<span style="color:blue;">申请中</span>';
+						return  '<div style="background:#d2d6de;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">未检修</div>';
 					}else if(value == "20"){
-						return '<span style="color:red;">拒绝</span>';
+						return  '<div style="background:#f39c12;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">检修中</div>';
 					}else if(value == "30"){
-						return '<span style="color:green;">审批完成</span>';
+						return  '<div style="background:#00a65a;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">已检修</div>';
 					}
 				},editor: {}
 	},{
@@ -240,14 +169,14 @@ DetainTrain.grid = new Ext.yunda.Grid({
         
     },
 	afterShowEditWin: function(record, rowIndex){
-		this.saveWin.setTitle("扣车审批");
+		this.saveWin.setTitle("扣车信息查看");
 		var proposerDate = Ext.isEmpty(record.data.proposerDate) ? "" :new Date(record.data.proposerDate).format('Y-m-d H:i');
 		DetainTrain.saveForm.getForm().findField("proposerDate").setValue(proposerDate);
 	},
 	createSaveWin: function(){
 	        //计算查询窗体宽度
 	        this.saveWin = new Ext.Window({
-	            title:"扣车审批", width:800, height: 380, closeAction:"hide",
+	            title:"扣车信息查看", width:800, height: 250, closeAction:"hide",
 	            layout: 'fit',
 	            iconCls: 'editIcon',
 	            defaults: {layout: 'fit', border: false},
@@ -255,34 +184,6 @@ DetainTrain.grid = new Ext.yunda.Grid({
 	            modal:true,
 	            buttonAlign:'center', 
 	            buttons: [{
-	                text: "通过", iconCls: "checkIcon", scope: this,handler:this.saveFn
-	            },{
-	                text: "拒绝", iconCls: "deleteIcon", scope: this, handler: function(){
-	                	// 表单验证是否通过
-			            var form = DetainTrain.saveForm.getForm();
-			            if (!form.isValid()) return;
-			            var data = form.getValues();
-			            data.detainStatus = "20"; // 表示拒绝
-			            if(DetainTrain.loadMask)   DetainTrain.loadMask.show();
-			            var cfg = {
-			                scope: this,
-			                url: ctx + '/detainTrain!saveDetainTrain.action',
-			                jsonData: data,
-			                success: function(response, options){
-			                    if(DetainTrain.loadMask)   DetainTrain.loadMask.hide();
-			                    var result = Ext.util.JSON.decode(response.responseText);
-			                    if (result.errMsg == null) {
-			                        alertSuccess();
-									this.saveWin.hide();
-			                        DetainTrain.grid.store.reload();
-			                    } else {
-			                    	alertFail(result.errMsg);
-			                    }
-			                }
-			            };
-			            Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
-	                }
-	            },{
 	                text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ this.saveWin.hide(); }
 	            }]
 	        });

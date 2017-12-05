@@ -196,6 +196,7 @@ public class GztpServiceImpl implements IGztpService {
             entityJson: {
             },
             operatorId:"操作人ID",
+            isDatailTrain:"是否扣车 true 是 false 否",
             // 物料消耗明细数组
             matUses:[{
             }]
@@ -224,7 +225,7 @@ public class GztpServiceImpl implements IGztpService {
             if (null == entity) {
                 return JSONObject.toJSONString(OperateReturnMessage.newFailsInstance(MSG_ERROR_ARGS_NULL));
             }
-            
+            // 是否扣车
             String[] errMsg = gztpManager.validateUpdate(entity);
             if (errMsg == null || errMsg.length < 1) {
                 Gztp result = gztpManager.saveGztp(entity);

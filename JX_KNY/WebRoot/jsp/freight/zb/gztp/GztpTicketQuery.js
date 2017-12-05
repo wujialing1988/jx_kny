@@ -6,7 +6,7 @@ Ext.onReady(function(){
 	
 	GztpTicketQuery.queryTimeout;
 	
-	GztpTicketQuery.labelWidth = 60;                        //表单中的标签名称宽度
+	GztpTicketQuery.labelWidth = 100;                        //表单中的标签名称宽度
 	GztpTicketQuery.fieldWidth = 130;                       //表单中的标签宽度
 	
 	GztpTicketQuery.grid = new Ext.yunda.Grid({
@@ -14,6 +14,7 @@ Ext.onReady(function(){
 		region: 'center',
 	    loadURL: ctx + '/gztp!pageQuery.action',                 //装载列表数据的请求URL
 	    singleSelect: true,
+	    viewConfig: {forceFit: false , markDirty: false },
 	    tbar : ['refresh','&nbsp;&nbsp;',
 	    {
 	    	xtype:'textfield', id:'query_input', enableKeyEvents:true, emptyText:'快速检索（车次/车型/车号/提报人）', width:200,
@@ -32,6 +33,9 @@ Ext.onReady(function(){
 		fields: [
 	     	{
 				header:'列检计划主键', dataIndex:'rdpPlanIdx',width: 120,hidden:true
+			},
+	     	{
+				header:'登记类型', dataIndex:'type',width: 120
 			},
 	     	{
 				header:'登记单号', dataIndex:'faultNoticeCode',width: 120
@@ -118,7 +122,7 @@ Ext.onReady(function(){
 				}
 			},
 	     	{
-				header:'状态', dataIndex:'faultNoticeStatus',width: 70,
+				header:'状态', dataIndex:'faultNoticeStatus',width: 70,hidden:true,
 				renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if (STATUS_INIT == value) {
 						return '<span style="color:red;">' + STATUS_INIT_CH + '</span>';
@@ -140,9 +144,9 @@ Ext.onReady(function(){
 			// 作业范围显示隐藏
 	GztpTicketQuery.grid.addListener('afterrender',function(me){
 		if(vehicleType == '10'){
-			GztpTicketQuery.grid.getColumnModel().setHidden(10,true);
+			GztpTicketQuery.grid.getColumnModel().setHidden(11,true);
 		}else{
-			GztpTicketQuery.grid.getColumnModel().setHidden(10,false);
+			GztpTicketQuery.grid.getColumnModel().setHidden(11,false);
 		}
 	});
 	
@@ -260,7 +264,7 @@ Ext.onReady(function(){
         collapsible: true, 
 	    items : [{
 					region: 'north',
-					height: 196,
+					height: 210,
 					items: GztpTicketQuery.infoForm
 				},{
 					region: 'center',

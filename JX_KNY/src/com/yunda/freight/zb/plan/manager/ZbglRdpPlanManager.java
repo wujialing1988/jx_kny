@@ -20,6 +20,7 @@ import com.yunda.frame.util.DateUtil;
 import com.yunda.frame.util.EntityUtil;
 import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.util.sqlmap.SqlMapUtil;
+import com.yunda.freight.base.classMaintain.entity.ClassMaintain;
 import com.yunda.freight.base.vehicle.entity.TrainVehicleType;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlan;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecord;
@@ -235,19 +236,29 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
      * <li>修改日期：
      * <li>修改内容：
      * @param id
+     * @param realEndTime  实际结束时间
+     * @param realBeginTime  实际开始时间
      * @return
      * @throws BusinessException
      * @throws NoSuchFieldException
      * @throws InvocationTargetException 
      * @throws IllegalAccessException 
+     * @throws ParseException 
      */
-    public String cmpPlan(String id) throws BusinessException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+    public String cmpPlan(String id, String realBeginTime, String realEndTime) throws BusinessException, NoSuchFieldException, IllegalAccessException, InvocationTargetException, ParseException {
         if(StringUtil.isNullOrBlank(id)){
             return "没有要完成的计划！" ; 
          }
          ZbglRdpPlan plan = this.getModelById(id);
          if(plan == null){
             return "没有要完成的计划！" ; 
+         }
+         // 设置实际开始 完成时间
+         if(!StringUtil.isNullOrBlank(realBeginTime)){
+        	 plan.setRealStartTime(DateUtil.parse(realBeginTime, "yyyy-MM-dd HH:mm"));
+         }
+         if(!StringUtil.isNullOrBlank(realEndTime)){
+        	 plan.setRealEndTime(DateUtil.parse(realEndTime, "yyyy-MM-dd HH:mm"));
          }
          plan.setRdpPlanStatus(ZbglRdpPlan.STATUS_HANDLED); // 状态设置为启动
          plan.setRealEndTime(new Date());
@@ -351,5 +362,39 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
     	StringBuffer hql = new StringBuffer(" From ZbglRdpPlan where recordStatus = 0 and vehicleType = ? and rdpPlanStatus = ? ");
     	return (List<ZbglRdpPlan>)this.daoUtils.find(hql.toString(), new Object[]{vehicleType,planStutas});
     }
+    
+    /**
+     * <li>说明：通过车辆查询车辆列检记录
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-04
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<Map<String, Object>> findZbglRdpListByRecord(String trainTypeIDX, String trainNo,String vehicleType){
+    	String sql = SqlMapUtil.getSql("kny-base:findZbglRdpListByRecord");
+    	sql = sql.replaceAll("#trainTypeIDX#", trainTypeIDX)
+    			 .replaceAll("#trainNo#", trainNo)
+    			 .replaceAll("#vehicleType#", vehicleType);
+    	return this.queryListMap(sql);
+    }
+    
+    /**
+     * 验证是否有同一车次正在进行库检
+     */
+    @Override
+    public String[] validateUpdate(ZbglRdpPlan t) {
+        String[] errorMsg = super.validateUpdate(t);
+        if (null != errorMsg) {
+            return errorMsg;
+        }
+        String hql = "From ZbglRdpPlan Where recordStatus = 0 And rdpPlanStatus != 'COMPLETE' And railwayTime = ? ";
+        ZbglRdpPlan entity = (ZbglRdpPlan) this.daoUtils.findSingle(hql, new Object[]{ t.getRailwayTime()});
+        if (null != entity && !entity.getIdx().equals(t.getIdx())) {
+            return new String[]{"车次：" + t.getRailwayTime() + "已经存在，不能重复添加！"};
+        }
+        return null;
+    }
+    
     
 }

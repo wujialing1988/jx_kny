@@ -14,7 +14,7 @@ Ext.onReady(function(){
         collapsible: true, 
 	    items : [{
 					region: 'north',
-					height: 460,
+					height: 425,
 					items: GztpclTicket.saveForm
 				},{
 					region: 'center',

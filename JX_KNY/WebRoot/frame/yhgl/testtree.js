@@ -33,7 +33,8 @@ var tree =
                 {id:'货车列检计划', text:'货车列检计划', leaf:true, funcaction:'/jsp/freight/zb/planhc/ZbglRdpPlanDesign.jsp?vehicleType=10'},
                 {id:'交接项维护', text:'交接项维护', leaf:true, funcaction:'/jsp/zb/trainhandover/ZbglHoModelItem.jsp'},
                 {id:'班次交接', text:'班次交接', leaf:true, funcaction:'/jsp/freight/base/classtransfer/ClassTransfer.jsp'},
-                {id:'扣车审批', text:'扣车审批', leaf:true, funcaction:'/jsp/freight/zb/detain/DetainTrain.jsp?vehicleType=10'},
+                {id:'扣车登记_货车', text:'扣车登记_货车', leaf:true, funcaction:'/jsp/freight/zb/detain/dj/DetainTrainDj.jsp?vehicleType=10'},
+                {id:'扣车登记汇总_货车', text:'扣车登记汇总_货车', leaf:true, funcaction:'/jsp/freight/zb/detain/DetainTrain.jsp?vehicleType=10'},
               	{id:'故障登记_货车运用', text:'故障登记_货车运用', leaf:true, funcaction:'/jsp/freight/zb/gztp/Gztp.jsp?subSysCode=00&vehicleType=10'},
               	{id:'故障上报处理_货车运用', text:'故障上报处理_货车运用', leaf:true, funcaction:'/jsp/freight/zb/gztp/ddcl/Gztpcl.jsp?subSysCode=00&vehicleType=10'},
               	{id:'故障登记查询_货车运用', text:'故障登记查询_货车运用', leaf:true, funcaction:'/jsp/freight/zb/gztp/GztpQuery.jsp?subSysCode=00&vehicleType=10'},
@@ -53,7 +54,8 @@ var tree =
 			{id:'客车列检计划', text:'客车列检计划', leaf:true, funcaction:'/jsp/freight/zb/plankc/ZbglRdpPlanDesign.jsp?vehicleType=20'},
 			{id:'运行安全信息记录', text:'运行安全信息记录', leaf:true, funcaction:'/jsp/passenger/Operationsafetyrecord/OperationSafetyRecord.jsp'},
 			{id:'人员排班查看', text:'人员排班查看', leaf:true, funcaction:'/jsp/passenger/traindemand/TrainInspectorDemand.jsp'},
-			{id:'扣车审批_客车', text:'扣车审批', leaf:true, funcaction:'/jsp/freight/zb/detain/DetainTrain.jsp?vehicleType=20'},
+			{id:'扣车登记_客车', text:'扣车登记_客车', leaf:true, funcaction:'/jsp/freight/zb/detain/dj/DetainTrainDj.jsp?vehicleType=20'},
+			{id:'扣车登记汇总_客车', text:'扣车登记汇总', leaf:true, funcaction:'/jsp/freight/zb/detain/DetainTrain.jsp?vehicleType=20'},
 			{id:'故障登记_客车运用', text:'故障登记_客车运用', leaf:true, funcaction:'/jsp/freight/zb/gztp/Gztp.jsp?subSysCode=00&vehicleType=20'},
             {id:'故障上报处理_客车运用', text:'故障上报处理_客车运用', leaf:true, funcaction:'/jsp/freight/zb/gztp/ddcl/Gztpcl.jsp?subSysCode=00&vehicleType=20'},
             {id:'故障登记查询_客车运用', text:'故障登记查询_客车运用', leaf:true, funcaction:'/jsp/freight/zb/gztp/GztpQuery.jsp?subSysCode=00&vehicleType=20'},
@@ -71,7 +73,8 @@ var tree =
         		{id:'货车车辆检修记录单维护', text:'货车车辆检修记录单维护', leaf:true, funcaction:'/jsp/jx/jxgc/repairrequirement/RepairProject.jsp?vehicleType=10'},
         		{id:'货车检修作业流程维护',text:'货车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=10'},
         		{id:'货车车辆状态跟踪',text:'货车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=10'},
-        		{id:'货车车辆档案管理', text:'货车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=10'}
+        		{id:'货车车辆档案管理', text:'货车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=10'},
+        		{id:'货车车辆电子履历', text:'货车车辆电子履历', leaf:true, funcaction:'/jsp/freight/dzll/TrainRecord.jsp?vehicleType=10'}
         	]
         	},
         	{
@@ -83,7 +86,8 @@ var tree =
         		{id:'客车车辆检修记录单维护', text:'客车车辆检修记录单维护', leaf:true, funcaction:'/jsp/jx/jxgc/repairrequirement/RepairProject.jsp?vehicleType=20'},
         		{id:'客车检修作业流程维护',text:'客车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=20'},
         		{id:'客车车辆状态跟踪',text:'货车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=20'},
-        		{id:'客车车辆档案管理', text:'客车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=20'}
+        		{id:'客车车辆档案管理', text:'客车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=20'},
+        		{id:'客车车辆电子履历', text:'客车车辆电子履历', leaf:true, funcaction:'/jsp/freight/dzll/TrainRecord.jsp?vehicleType=20'}
         	]},        
             {id:'车辆检修流水线维护', text:'车辆检修流水线维护', leaf:true, funcaction:'/jsp/jx/jxgc/dispatchmanage/RepairLine.jsp'},
             {id:'车辆检修质量检验项维护', text:'车辆检修质量检验项维护', leaf:true, funcaction:'/jsp/jx/jxgc/base/jcqcitemdefine/JCQCItemDefine.jsp'},
@@ -98,8 +102,9 @@ var tree =
              		{id:'货车检修计划查看', text:'货车检修计划查看', leaf:true, funcaction:'/jsp/jx/scdd/enforceplan/TrainEnforcePlanSearch.jsp?vehicleType=10'},
     		 	    {id:'货车车辆出入段', text:'货车车辆出入段', leaf:true, funcaction:'/jsp/twt/trainaccessaccount/TrainAccessAccount.jsp?vehicleType=10'},
              		{id:'货车出入段查询', text:'货车出入段查询', leaf:true, funcaction:'/jsp/twt/trainaccessaccount/TrainAccessAccountSearch.jsp?vehicleType=10'},
-    		 		{id:'货车车辆检修作业编辑（段调度）', text:'货车车辆检修作业编辑（段调度）', leaf:true, funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplannew/TrainWorkPlanForFirstNode.jsp?vehicleType=10'},
+/*    		 		{id:'货车车辆检修作业编辑（段调度）', text:'货车车辆检修作业编辑（段调度）', leaf:true, funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplannew/TrainWorkPlanForFirstNode.jsp?vehicleType=10'},
     		 		{id:'货车生产计划作业编制（车间调度）',text:'货车生产计划作业编制（车间调度）',leaf:true,funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplanLeafnode/TrainWorkPlanForLeafNode.jsp?vehicleType=10'},
+*/    		 		{id:'货车生产计划作业编制', text:'货车生产计划作业编制', leaf:true, funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplan/TrainWorkPlanEdit.jsp?vehicleType=10'},
     		 		{id:'货车生产计划作业流程图',text:'货车生产计划作业流程图',leaf:true,funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplanflowsheet/TrainWorkPlanFlowsheet.jsp?vehicleType=10'}
     		 	]
     		},
@@ -109,8 +114,9 @@ var tree =
 		             {id:'客车检修计划查看', text:'客车检修计划查看', leaf:true, funcaction:'/jsp/jx/scdd/enforceplan/TrainEnforcePlanSearch.jsp?vehicleType=20'},
 		             {id:'客车车辆出入段', text:'客车车辆出入段', leaf:true, funcaction:'/jsp/twt/trainaccessaccount/TrainAccessAccount.jsp?vehicleType=20'},
 		             {id:'客车出入段查询', text:'客车出入段查询', leaf:true, funcaction:'/jsp/twt/trainaccessaccount/TrainAccessAccountSearch.jsp?vehicleType=20'},
-    		 		 {id:'客车车辆检修作业编辑（段调度）', text:'客车车辆检修作业编辑（段调度）', leaf:true, funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplannew/TrainWorkPlanForFirstNode.jsp?vehicleType=20'},
+    		 		/* {id:'客车车辆检修作业编辑（段调度）', text:'客车车辆检修作业编辑（段调度）', leaf:true, funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplannew/TrainWorkPlanForFirstNode.jsp?vehicleType=20'},
     		 		 {id:'客车生产计划作业编制（车间调度）',text:'客车生产计划作业编制（车间调度）',leaf:true,funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplanLeafnode/TrainWorkPlanForLeafNode.jsp?vehicleType=20'},
+*/    		 		 {id:'客车生产计划作业编制', text:'客车生产计划作业编制', leaf:true, funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplan/TrainWorkPlanEdit.jsp?vehicleType=20'},
     		 		 {id:'客车生产计划作业流程图',text:'客车生产计划作业流程图',leaf:true,funcaction:'/jsp/jx/jxgc/workplanmanage/trainworkplanflowsheet/TrainWorkPlanFlowsheet.jsp?vehicleType=20'}
     		 	]
     		},

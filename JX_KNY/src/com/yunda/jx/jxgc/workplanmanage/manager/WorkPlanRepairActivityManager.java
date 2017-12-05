@@ -1,6 +1,7 @@
 package com.yunda.jx.jxgc.workplanmanage.manager;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.persistence.Column;
@@ -265,4 +266,18 @@ public class WorkPlanRepairActivityManager extends JXBaseManager<WorkPlanRepairA
             return this.queryPageList(totalSql, sb.toString(), start, limit, false, WorkPlanRepairRecord.class);       
              
         }
+    
+	    /**
+	     * <li>说明：通过作业计划查询检修记录
+	     * <li>创建人：伍佳灵
+	     * <li>创建日期：2017-12-03
+	     * <li>修改人： 
+	     * <li>修改日期：
+	     * <li>修改内容：
+	     * @param planIdx 作业计划ID
+	     */
+		public List<WorkPlanRepairActivity> findWorkPlanRepairActivityByPlan(String planIdx){
+			StringBuffer hql = new StringBuffer(" From WorkPlanRepairActivity where recordStatus = 0 and workPlanIDX = ? ");
+			return (List<WorkPlanRepairActivity>)this.daoUtils.find(hql.toString(), new Object[]{planIdx});
+		}
 }

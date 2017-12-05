@@ -283,4 +283,23 @@ public class ZbFwWiManager extends AbstractOrderManager<ZbFwWi, ZbFwWi>{
             this.logicDelete(idx);
         }
     }
+    
+    
+	/**
+	 * <li>说明：通过整备范围ID查询 专业
+	 * <li>创建人：王利成
+	 * <li>创建日期：2015-01-20
+	 * <li>修改人： 
+	 * <li>修改日期：
+	 * <li>修改内容：
+	 * 
+	 * @param t 实体对象
+	 * @return  List<ZbFwWi>
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ZbFwWi> findWiByFw(String zbfwIdx) {
+		String hql = "From ZbFwWi Where recordStatus = 0 And zbfwIDX = ? ";
+		return this.daoUtils.find(hql, new Object[]{zbfwIdx});
+	}
 }

@@ -570,15 +570,20 @@ Ext.onReady(function(){
 			region: 'center',
 			border: false, autoScroll : true,
 			tbar: [{
-				text: '新增作业计划', iconCls: 'addIcon', handler: function(){
+				text: '新增作业计划',hidden:true, iconCls: 'addIcon', handler: function(){
 					TrainWorkPlanForm.showWin();
 				}
 			}, '-', {
-				text: '生成作业计划', iconCls: 'addIcon', handler: function(){
+				text: '生成作业计划',hidden:true, iconCls: 'addIcon', handler: function(){
 					TrainPlanSelect.vehicleType = vehicleType ;
 					TrainPlanSelect.showWin();
 				}
-			}, '-', {
+			}, {
+				text: '选择车辆',iconCls: 'addIcon', handler: function(){
+					DetainTrainSelect.vehicleType = vehicleType ;
+					DetainTrainSelect.showWin();
+				}
+			},'-', {
 		    	xtype:"checkbox", id:"status_dx", boxLabel:"待修&nbsp;&nbsp;&nbsp;&nbsp;", checked:true , handler: TrainWorkPlanEdit.checkQueryFn
 		    }, {
 		    	xtype:"checkbox", id:"status_zx", boxLabel:"在修&nbsp;&nbsp;&nbsp;&nbsp;", checked:true , handler: TrainWorkPlanEdit.checkQueryFn

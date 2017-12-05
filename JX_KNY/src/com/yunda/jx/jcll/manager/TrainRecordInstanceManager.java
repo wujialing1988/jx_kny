@@ -1,8 +1,6 @@
 package com.yunda.jx.jcll.manager;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -10,11 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.yunda.common.BusinessException;
 import com.yunda.frame.common.JXBaseManager;
-import com.yunda.frame.util.StringUtil;
 import com.yunda.jx.jcll.entity.TrainRecord;
-import com.yunda.jx.jcll.entity.TrainRecordDefinition;
 import com.yunda.jx.jcll.entity.TrainRecordInstance;
-import com.yunda.util.BeanUtils;
 
 /**
  * <li>标题: 机车检修管理信息系统

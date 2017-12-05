@@ -224,7 +224,7 @@ public class DetainTrainServiceImpl implements IDetainTrainService {
             // 车号
             if(!StringUtil.isNullOrBlank(entity.getTrainNo())){ 
                 con = new Condition("trainNo", Condition.EQ, entity.getTrainNo());
-                con.setStringLike(false);
+                con.setStringLike(true);
                 whereList.add(con);
             }
             

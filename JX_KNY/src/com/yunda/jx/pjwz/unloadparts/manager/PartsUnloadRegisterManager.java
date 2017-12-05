@@ -1132,6 +1132,19 @@ public class PartsUnloadRegisterManager extends JXBaseManager<PartsUnloadRegiste
         }
     }
 
+    /**
+     * <li>说明：通过作业计划ID查询下车配件清单
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-03
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param workPlanIdx 作业计划ID
+     */
+    public List<PartsUnloadRegister> findPartsUnloadRegisterByWorkPlanIdx(String workPlanIdx){
+    	StringBuffer hql = new StringBuffer(" From PartsUnloadRegister where recordStatus = 0 and rdpIdx = ? ");
+    	return (List<PartsUnloadRegister>)this.daoUtils.find(hql.toString(), new Object[]{workPlanIdx});
+    }
  
 
     

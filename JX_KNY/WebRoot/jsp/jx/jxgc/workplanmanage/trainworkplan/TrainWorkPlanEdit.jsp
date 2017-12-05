@@ -169,6 +169,7 @@
 
 <script language="javascript" src="<%= ctx %>/jsp/jx/jxgc/workplanmanage/TrainWorkPlanForm.js"></script>
 <script language="javascript" src="<%= ctx %>/jsp/jx/jxgc/workplanmanage/TrainPlanSelect.js"></script>
+<script language="javascript" src="<%= ctx %>/jsp/jx/jxgc/workplanmanage/DetainTrainSelect.js"></script> <!-- 扣车信息选择 -->
 
 <script type="text/javascript" src="<%=ctx%>/jsp/jx/jxgc/workplanmanage/qcresult/QCResult.js"></script>
 

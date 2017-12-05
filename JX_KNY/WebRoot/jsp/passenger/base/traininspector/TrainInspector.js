@@ -52,7 +52,7 @@ Ext.onReady(function(){
 	var viewport = new Ext.Viewport({
 			layout:'fit',
 			items:[{
-				 region: 'west', layout: 'fit',  title: '编组基础维护',  bodyBorder: false, split: true,width: 600,minSize: 400, maxSize: 800, 
+				 region: 'west', layout: 'fit',  title: '乘务检测人员维护',  bodyBorder: false, split: true,width: 600,minSize: 400, maxSize: 800, 
 		     	 collapsible : true,   items:[TrainInspector.grid]
 			}] 
 	});

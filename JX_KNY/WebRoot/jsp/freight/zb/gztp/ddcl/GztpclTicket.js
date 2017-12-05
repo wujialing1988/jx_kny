@@ -4,7 +4,7 @@
 Ext.onReady(function(){
 	Ext.namespace('GztpclTicket');                       //定义命名空间
 	
-	GztpclTicket.labelWidth = 60;                        //表单中的标签名称宽度
+	GztpclTicket.labelWidth = 100;                        //表单中的标签名称宽度
 	GztpclTicket.fieldWidth = 130;                       //表单中的标签宽度
 	
 	GztpclTicket.loadMask = new Ext.LoadMask(Ext.getBody(), { msg: i18n.common.tip.loading });
@@ -71,7 +71,20 @@ Ext.onReady(function(){
 		        	}
                 },
            		items :[{
-                	columnWidth:.32,
+                	columnWidth:.5,
+                	items:[{
+               			id: 'gzdj_type',
+    					allowBlank:false,
+    					xtype: 'EosDictEntry_combo',
+    					hiddenName: 'type',
+    					dicttypeid:'GZDJ_TYPE',
+    					displayField:'dictname',
+    					valueField:'dictname',
+    					fieldLabel: "登记类型"
+                    }
+                    ]
+            	},{
+                	columnWidth:.5,
                 	items:[{
                 		fieldLabel: '车次',
                         xtype:'displayfield',
@@ -79,7 +92,7 @@ Ext.onReady(function(){
                     }
                     ]
             	}, {
-                	columnWidth:.32,
+                	columnWidth:.5,
                 	items:[{
                 		fieldLabel: '车型',
                         xtype:'displayfield',
@@ -87,7 +100,7 @@ Ext.onReady(function(){
                     }
                     ]
             	}, {
-                	columnWidth:.36,
+                	columnWidth:.5,
                 	items:[{
                 		fieldLabel: '车号',
                         xtype:'displayfield',
@@ -304,8 +317,7 @@ Ext.onReady(function(){
 		border: true,
 		region: 'center',
 	    loadURL: ctx + '/gztp!pageQuery.action',                 //装载列表数据的请求URL
-	    //singleSelect: true,
-	    //storeAutoLoad: false,
+	    viewConfig: {forceFit: false , markDirty: false },
 	    selModel : new Ext.grid.CheckboxSelectionModel({singleSelect:true}),
 	    tbar : ['refresh','&nbsp;&nbsp;',
 	    {
@@ -325,6 +337,9 @@ Ext.onReady(function(){
 		fields: [
 	     	{
 				header:'列检计划主键', dataIndex:'rdpPlanIdx',width: 120,hidden:true
+			},
+	     	{
+				header:'登记类型', dataIndex:'type',width: 120
 			},
 	     	{
 				header:'登记单号', dataIndex:'faultNoticeCode',width: 120
@@ -433,9 +448,9 @@ Ext.onReady(function(){
 	// 作业范围显示隐藏
 	GztpclTicket.grid.addListener('afterrender',function(me){
 		if(vehicleType == '10'){
-			GztpclTicket.grid.getColumnModel().setHidden(11,true);
+			GztpclTicket.grid.getColumnModel().setHidden(12,true);
 		}else{
-			GztpclTicket.grid.getColumnModel().setHidden(11,false);
+			GztpclTicket.grid.getColumnModel().setHidden(12,false);
 		}
 	});
 	
@@ -474,6 +489,7 @@ Ext.onReady(function(){
 		Ext.getCmp('vehicle_component').setDisplayValue(rowRec.vehicleComponentFlbm, rowRec.vehicleComponentFullname);
 		Ext.getCmp('fault_type').setDisplayValue(rowRec.faultTypeKey, rowRec.faultTypeValue);
 		Ext.getCmp('faultDealType').setDisplayValue(rowRec.handleWay, rowRec.handleWayValue);
+		Ext.getCmp('gzdj_type').setDisplayValue(rowRec.type, rowRec.type);
 		Ext.getCmp('saveBtn').setDisabled(false);
 		MatTypeUseList.gztpIdx = rowRec.idx ;
 		MatTypeUseList.grid.store.reload();
