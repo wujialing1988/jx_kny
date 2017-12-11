@@ -40,13 +40,14 @@ ClassMaintain.grid = new Ext.yunda.Grid({
 			        maxValue:99,
 			        allowBlank:false},searcher: { hidden: true }
 	},{
-		header:'类型', dataIndex:'vehicleType',width: 120,editor: {
-			id:'vehicleType_combo',
-			xtype: 'EosDictEntry_combo',
-			hiddenName: 'vehicleType',
-			dicttypeid:'FREIGHT_TYPE',
-			displayField:'dictname',valueField:'dictid',
-			hasEmpty:"false"
+		header:'类型', dataIndex:'vehicleType',hidden: true ,width: 120,editor: {
+//			id:'vehicleType_combo',
+//			xtype: 'EosDictEntry_combo',
+//			hiddenName: 'vehicleType',
+//			dicttypeid:'FREIGHT_TYPE',
+//			displayField:'dictname',valueField:'dictid',
+//			hasEmpty:"false"
+			xtype: 'hidden',
 		},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 			var result = '' ;
 			if('10' == value){
@@ -71,6 +72,7 @@ ClassMaintain.grid = new Ext.yunda.Grid({
 		if(Ext.isEmpty(data.workplaceCode)){
 			data.workplaceCode = ClassMaintain.workplaceCode ;
 			data.workplaceName = ClassMaintain.workplaceName ;
+			data.vehicleType = vehicleType ;
 		}
 		return true; 
 	}
@@ -80,6 +82,7 @@ ClassMaintain.grid = new Ext.yunda.Grid({
 ClassMaintain.grid.store.on('beforeload' , function(){
 		var searchParam = ClassMaintain.searchParam ;
 		searchParam.workplaceCode = ClassMaintain.workplaceCode;
+		searchParam.vehicleType = vehicleType;
 		searchParam = MyJson.deleteBlankProp(searchParam);
 		this.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
 });

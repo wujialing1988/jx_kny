@@ -114,8 +114,9 @@
 .wlglIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/cog_edit.png) !important;}
 .tjfxIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/theme2.png) !important;}
 .helpIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/help.png) !important;}
+.tickIcon{  background-image:url(<%=ctx%>/frame/resources/images/toolbar/tick.png) !important;}
 
 .arrowDownIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/arrow-down.gif) !important;}
-.arrowUpIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/arrow-up.gif) !important;}
+.arrowUpIcon{	background-image:url(<%=ctx %>/frame/ctxresources/images/toolbar/arrow-up.gif) !important;}
 .ticketsIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/tickets.png) !important;}
 .templatesIcon{	background-image:url(<%=ctx %>/frame/resources/images/toolbar/templates.png) !important;}

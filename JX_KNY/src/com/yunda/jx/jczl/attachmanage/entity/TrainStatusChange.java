@@ -32,6 +32,30 @@ public class TrainStatusChange implements java.io.Serializable {
     /* 使用默认序列版本ID */
     private static final long serialVersionUID = 1L;
     
+    /* 启动列检 */
+    public static final String START_LIEJIAN = "START_LIEJIAN" ;
+    
+    /* 终止列检 */
+    public static final String DEL_LIEJIAN = "DEL_LIEJIAN" ;
+    
+    /* 完成列检 */
+    public static final String COM_LIEJIAN = "COM_LIEJIAN" ;
+    
+    /* 扣车登记 */
+    public static final String START_DETAIN = "START_DETAIN" ;
+    
+    /* 删除扣车登记 */
+    public static final String DEL_DETAIN = "DEL_DETAIN" ;
+    
+    /* 启动检修 */
+    public static final String START_JX = "START_JX" ;
+    
+    /* 终止检修 */
+    public static final String DEL_JX = "DEL_JX" ;
+    
+    /* 完成检修 */
+    public static final String COM_JX = "COM_JX" ;
+    
     /* idx主键 */
     @GenericGenerator(strategy = "uuid", name = "uuid_id_generator")
     @Id

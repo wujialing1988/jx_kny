@@ -19,7 +19,8 @@ var tree =
             {id:'业务编码规则配置', text:'业务编码规则配置', leaf:true, funcaction:'/jsp/jx/config/coderule/CodeRuleConfig.jsp'},
             {id: '站点标识维护', text: '站点标识维护', leaf: true, funcaction: '/jsp/jxpz/workplace/WorkPlace.jsp'},
             {id:'物料信息维护', text:'物料信息维护', leaf:true, funcaction:'/jsp/jx/pjwz/partbase/MatTypeList.jsp'},
-            {id:'列车运用基础维护', text:'列车运用基础维护', leaf:true, funcaction:'/jsp/freight/base/classmaintain/ClassMaintainDesign.jsp'},
+            {id:'货车列车运用基础维护', text:'货车列车运用基础维护', leaf:true, funcaction:'/jsp/freight/base/classmaintain/ClassMaintainDesign.jsp?vehicleType=10'},
+            {id:'客车列车运用基础维护', text:'客车列车运用基础维护', leaf:true, funcaction:'/jsp/freight/base/classmaintain/ClassMaintainDesign.jsp?vehicleType=20'},
             {id:'乘务检测人员维护', text:'乘务检测人员维护', leaf:true, funcaction:'/jsp/passenger/base/traininspector/TrainInspector.jsp'},
             {id:'车辆系统分类维护',text:'车辆系统分类维护',leaf:true,funcaction:'/jsp/jcbm/jxctfl/JcxtflBuildWh.jsp?vehicleType=10'},
        		{id:'车辆构型',text:'车辆构型',leaf:true,funcaction:'/jsp/jcbm/TrainGxgl.jsp'}
@@ -85,7 +86,7 @@ var tree =
         		{id:'客车修程预警', text:'客车修程预警', leaf:true, funcaction:'/jsp/freight/jx/classwarning/RepairClassWarning.jsp'},
         		{id:'客车车辆检修记录单维护', text:'客车车辆检修记录单维护', leaf:true, funcaction:'/jsp/jx/jxgc/repairrequirement/RepairProject.jsp?vehicleType=20'},
         		{id:'客车检修作业流程维护',text:'客车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=20'},
-        		{id:'客车车辆状态跟踪',text:'货车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=20'},
+        		{id:'客车车辆状态跟踪',text:'客车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=20'},
         		{id:'客车车辆档案管理', text:'客车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=20'},
         		{id:'客车车辆电子履历', text:'客车车辆电子履历', leaf:true, funcaction:'/jsp/freight/dzll/TrainRecord.jsp?vehicleType=20'}
         	]},        

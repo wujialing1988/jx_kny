@@ -65,6 +65,8 @@ public class I18nPropertiesUtil{
      * <li>修改人： 
      * <li>修改日期：
      * <li>修改内容：
+     * @param key 国际化文件中的key值
+     * @param arguments 占位符替代数组
      * @return 国际化资源
      */
     public static String getMessageFormat(String key,Object ... arguments){

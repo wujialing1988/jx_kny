@@ -1,7 +1,10 @@
 package com.yunda.freight.zb.detain.manager;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -10,12 +13,16 @@ import org.springframework.stereotype.Service;
 import com.yunda.base.context.SystemContext;
 import com.yunda.common.BusinessException;
 import com.yunda.frame.common.JXBaseManager;
+import com.yunda.frame.util.EntityUtil;
 import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.yhgl.entity.OmEmployee;
 import com.yunda.freight.base.vehicle.entity.TrainVehicleType;
 import com.yunda.freight.base.vehicle.manager.TrainVehicleTypeManager;
 import com.yunda.freight.zb.detain.entity.DetainTrain;
+import com.yunda.freight.zb.plan.entity.ZbglRdpPlan;
+import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecord;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
+import com.yunda.jx.jczl.attachmanage.entity.TrainStatusChange;
 import com.yunda.jx.jczl.attachmanage.manager.JczlTrainManager;
 import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
 import com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlan;
@@ -93,7 +100,11 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
         this.saveOrUpdate(entitySave);
         // 改状态为【扣车】
         if(entitySave.getDetainStatus().equals(DetainTrain.TRAIN_STATE_NEW)){
-            trainStatusChangeManager.saveChangeRecords(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, entitySave.getIdx(), "扣车");
+        	JczlTrain trainInfo = jczlTrainManager.getJczlTrainByTypeAndNo(entity.getTrainTypeIdx(), entity.getTrainNo());
+        	if(trainInfo != null){
+        		// 车辆状态改变
+        		trainStatusChangeManager.saveChangeRecords(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, entitySave.getIdx(), TrainStatusChange.START_DETAIN);
+        	}
         }
     }
     
@@ -134,7 +145,11 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
         this.saveOrUpdate(entitySave);
         // 改状态为【扣车】
         if(entitySave.getDetainStatus().equals(DetainTrain.TRAIN_STATE_NEW)){
-            trainStatusChangeManager.saveChangeRecords(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, entitySave.getIdx(), "扣车");
+        	JczlTrain trainInfo = jczlTrainManager.getJczlTrainByTypeAndNo(entity.getTrainTypeIdx(), entity.getTrainNo());
+        	if(trainInfo != null){
+        		// 车辆状态改变
+        		trainStatusChangeManager.saveChangeRecords(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, entitySave.getIdx(), TrainStatusChange.START_DETAIN);
+        	}
         }
     }
 
@@ -184,8 +199,10 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
      * @param idx 扣车主键
      * @throws NoSuchFieldException 
      * @throws BusinessException 
+     * @throws InvocationTargetException 
+     * @throws IllegalAccessException 
      */
-    public void deleteDetainTrain(String idx) throws BusinessException, NoSuchFieldException {
+    public void deleteDetainTrain(String idx) throws BusinessException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
         if(StringUtil.isNullOrBlank(idx)){
            return ; 
         }
@@ -196,6 +213,16 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
             throw new BusinessException("该车辆已做了检修，不能删除！");
         }
         this.logicDelete(idx);
+        
+        // 回滚车辆状态
+        if(!StringUtil.isNullOrBlank(entity.getTrainTypeIdx()) && !StringUtil.isNullOrBlank(entity.getTrainNo())){
+        	JczlTrain train = jczlTrainManager.getJczlTrainByTypeAndNo(entity.getTrainTypeIdx(), entity.getTrainNo());
+        	if(train != null && train.getTrainState() == JczlTrain.TRAIN_STATE_DETAIN){
+                // 删除扣车 直接改车辆未运用状态，可能还在做列检，但是如果列检已经完成，删除以后就还是列检状态，逻辑不正确，直接改为运用
+        		trainStatusChangeManager.saveChangeRecords(entity.getTrainTypeIdx(), entity.getTrainNo(), JczlTrain.TRAIN_STATE_USE, entity.getIdx(), TrainStatusChange.DEL_DETAIN);
+        	}
+        }
+        
     }
     
     /**
@@ -311,6 +338,23 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
         entitySave.setOrderUser(entity.getOrderUser());             // 命令发布者
         entitySave.setOrderDate(entity.getOrderDate());             // 命令发布时间
         entitySave.setDetainStatus(entity.getDetainStatus());       // 数据状态
+    }
+    
+    /**
+     * <li>说明：删除扣车登记
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-3-30
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param id
+     * @return
+     */
+    public void deleteDetain(Serializable... ids) throws BusinessException, NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+        List<DetainTrain> entityList = new ArrayList<DetainTrain>();
+        for (Serializable id : ids) {
+        	this.deleteDetainTrain(id+"");
+        }
     }
     
    

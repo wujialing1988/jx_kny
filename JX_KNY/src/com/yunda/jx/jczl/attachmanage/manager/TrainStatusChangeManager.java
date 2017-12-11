@@ -25,7 +25,7 @@ import com.yunda.jx.jczl.attachmanage.entity.TrainStatusChange;
  * @author 信息系统事业部检修系统项目组
  * @version 1.0
  */
-@SuppressWarnings({"unchecked", "unused"})
+@SuppressWarnings({"unchecked"})
 @Service("trainStatusChangeManager")
 public class TrainStatusChangeManager extends JXBaseManager<TrainStatusChange, TrainStatusChange> {
     

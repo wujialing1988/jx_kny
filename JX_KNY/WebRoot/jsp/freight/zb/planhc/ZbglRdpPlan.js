@@ -616,7 +616,7 @@ Ext.onReady(function(){
 				header:'上下行', dataIndex:'toDirectionName',hidden:true, editor:{
 						id:'toDirection_combo',
 						xtype: 'EosDictEntry_combo',
-						hiddenName: 'dayNightTypeName',
+						hiddenName: 'toDirectionName',
 						dicttypeid:'FREIGHT_DIRECT',
 						displayField:'dictname',valueField:'dictname',
 						hasEmpty:"false",

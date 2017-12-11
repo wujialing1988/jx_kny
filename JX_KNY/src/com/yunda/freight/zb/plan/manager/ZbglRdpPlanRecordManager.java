@@ -34,6 +34,7 @@ import com.yunda.freight.zb.plan.entity.ZbglRdpPlanWiBean;
 import com.yunda.freight.zb.plan.entity.ZbglRdpWorkerVo;
 import com.yunda.jx.component.manager.OmEmployeeSelectManager;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
+import com.yunda.jx.jczl.attachmanage.entity.TrainStatusChange;
 import com.yunda.jx.jczl.attachmanage.manager.JczlTrainManager;
 import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
 import com.yunda.passenger.traindemand.entity.MarshallingTrainDemand;
@@ -349,7 +350,7 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
                 planRecord.setWorkPersonIdx(empids);
                 planRecord.setWorkPersonName(empnames);
                 this.saveOrUpdate(planRecord);
-                zbglRdpPlanWorkerManager.saveWorkPersons(idx,empidArray,empnameArray);
+                //zbglRdpPlanWorkerManager.saveWorkPersons(idx,empidArray,empnameArray);
             }
         }
     }
@@ -659,6 +660,21 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
     }
 
     /**
+     * <li>说明：通过列检计划查询车辆记录
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-07
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param planIdx 列检计划
+     * @return
+     */
+    public List<ZbglRdpPlanRecord> findRecordsByPlan(String planIdx){
+    	StringBuffer hql = new StringBuffer(" From ZbglRdpPlanRecord where recordStatus = 0 and rdpPlanIdx = ? ");
+    	return this.daoUtils.find(hql.toString(), new Object[]{planIdx});
+    }
+    
+    /**
      * <li>说明：启动全部的车辆计划
      * <li>创建人：伍佳灵
      * <li>创建日期：2017-6-20
@@ -681,25 +697,23 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
             int end = 0 ;
             for (String key : map.keySet()) {
                 List<ClassOrganizationUser> users = map.get(key);
-                String empids = "";
-                String empnames = "";
-                for (ClassOrganizationUser user : users) {
-                    empids += user.getWorkPersonIdx() + "," ;
-                    empnames += user.getWorkPersonName() + "," ;
-                }
-                if(!StringUtil.isNullOrBlank(empids)){
-                    empids = empids.substring(0, empids.length() - 1) ;
-                    empnames = empnames.substring(0, empnames.length() - 1) ;
-                }
                 // 最后一次遍历，取最大的
-                if(yn != 0){
-                    end += (rn + 1) ;
-                    yn--;
+//                if(yn != 0){
+//                    end += (rn + 1) ;
+//                    yn--;
+//                }else{
+//                    end += rn ;
+//                }
+                
+                // 将剩余车辆排到最后一个分队
+                if((end + rn + yn) == records.size()){
+                	end += (rn + yn) ;
                 }else{
-                    end += rn ;
+                	end += rn ;
                 }
+                
                 // 自动派人
-                dispatcherQueueForRecords(records, start, end, empids, empnames);
+                dispatcherQueueForRecords(records, start, end, users);
                 System.err.println("分队："+key+"，车辆：从"+start+"到"+end);
                 start = end ;
             }
@@ -721,16 +735,24 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
      * @throws BusinessException
      * @throws NoSuchFieldException
      */
-    private void dispatcherQueueForRecords(List<ZbglRdpPlanRecord> records, int start,int end,String empids,String empnames) throws BusinessException, NoSuchFieldException{
-        String[] empidArray = empids.split(",");
-        String[] empnameArray = empnames.split(",");
+    private void dispatcherQueueForRecords(List<ZbglRdpPlanRecord> records, int start,int end,List<ClassOrganizationUser> users) throws BusinessException, NoSuchFieldException{
+        String empids = "";
+        String empnames = "";
+        for (ClassOrganizationUser user : users) {
+            empids += user.getWorkPersonIdx() + "," ;
+            empnames += user.getWorkPersonName() + "," ;
+        }
+        if(!StringUtil.isNullOrBlank(empids)){
+            empids = empids.substring(0, empids.length() - 1) ;
+            empnames = empnames.substring(0, empnames.length() - 1) ;
+        }
         for (int i = start; i < end; i++) {
             ZbglRdpPlanRecord rec = records.get(i);
             if(rec != null){
                 rec.setWorkPersonIdx(empids);
                 rec.setWorkPersonName(empnames);
                 this.saveOrUpdate(rec);
-                zbglRdpPlanWorkerManager.saveWorkPersons(rec.getIdx(),empidArray,empnameArray);
+                zbglRdpPlanWorkerManager.saveWorkPersons(rec.getIdx(),users);
             }             
         }      
     }
@@ -745,14 +767,23 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
      * @param planIdx
      * @throws BusinessException
      * @throws NoSuchFieldException
+     * @throws Exception 
+     * @throws IllegalAccessException 
      */
-    public void batchStartRecordsForHC(ZbglRdpPlan plan) throws BusinessException, NoSuchFieldException{
+    public void batchStartRecordsForHC(ZbglRdpPlan plan) throws BusinessException, NoSuchFieldException, IllegalAccessException, Exception{
         List<ZbglRdpPlanRecord> records = getZbglRdpPlanRecordListByPlan(plan.getIdx());
         for (ZbglRdpPlanRecord rec : records) {
             // 启动车辆
             rec.setRdpRecordStatus(ZbglRdpPlanRecord.STATUS_HANDLING);
             rec.setRdpStartTime(new Date());
             this.saveOrUpdate(rec);
+            if(!StringUtil.isNullOrBlank(rec.getTrainTypeIdx()) && !StringUtil.isNullOrBlank(rec.getTrainNo())){
+            	JczlTrain train = jczlTrainManager.getJczlTrainByTypeAndNo(rec.getTrainTypeIdx(), rec.getTrainNo());
+            	if(train != null && train.getTrainState() == JczlTrain.TRAIN_STATE_USE){
+            		// 车辆状态改变
+            		trainStatusChangeManager.saveChangeRecords(rec.getTrainTypeIdx(), rec.getTrainNo(), JczlTrain.TRAIN_STATE_LIEJIAN, rec.getIdx(), TrainStatusChange.START_LIEJIAN);
+            	}
+            }
         }
     }
     
@@ -795,6 +826,12 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
             //修改jt6状态
             zbglTpManager.saveZbglTpByProc(paramTp);
             record.setRdpIdx(rdp.getIdx());
+            
+            JczlTrain train = jczlTrainManager.getJczlTrainByTypeAndNo(record.getTrainTypeIdx(), record.getTrainNo());
+            if(train != null && train.getTrainState() == JczlTrain.TRAIN_STATE_USE){
+                // 车辆状态改变
+                trainStatusChangeManager.saveChangeRecords(record.getTrainTypeIdx(), record.getTrainNo(), JczlTrain.TRAIN_STATE_LIEJIAN, record.getIdx(), TrainStatusChange.START_LIEJIAN);
+            }
             this.update(record);            
             
         }

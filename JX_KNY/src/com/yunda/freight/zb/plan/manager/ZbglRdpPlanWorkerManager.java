@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.yunda.common.BusinessException;
 import com.yunda.frame.common.JXBaseManager;
 import com.yunda.frame.util.StringUtil;
+import com.yunda.freight.base.classOrganization.entity.ClassOrganizationUser;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlanWorker;
 
 
@@ -39,19 +40,21 @@ public class ZbglRdpPlanWorkerManager extends JXBaseManager<ZbglRdpPlanWorker, Z
      * @throws NoSuchFieldException 
      * @throws BusinessException 
      */
-    public void saveWorkPersons(String rdpRecordIdx, String[] empidArray, String[] empnameArray) throws BusinessException, NoSuchFieldException {
+    public void saveWorkPersons(String rdpRecordIdx, List<ClassOrganizationUser> users) throws BusinessException, NoSuchFieldException {
         //      删除对应的作业人员
         deleteWorkPersonByRecord(rdpRecordIdx);
         // 保存作业人员
-        for (int i = 0; i < empidArray.length; i++) {
-            String empid = empidArray[i];
-            String empname = empnameArray[i];
-            ZbglRdpPlanWorker worker = new ZbglRdpPlanWorker();
-            worker.setRdpRecordIdx(rdpRecordIdx);
-            worker.setWorkPersonIdx(empid);
-            worker.setWorkPersonName(empname);
-            this.saveOrUpdate(worker);
-        }
+        for (ClassOrganizationUser user : users) {
+        	 ZbglRdpPlanWorker worker = new ZbglRdpPlanWorker();
+             worker.setRdpRecordIdx(rdpRecordIdx);
+             worker.setWorkPersonIdx(user.getWorkPersonIdx());
+             worker.setWorkPersonName(user.getWorkPersonName());
+             worker.setQueueNo(user.getQueueCode());
+             worker.setQueueName(user.getQueueName());
+             worker.setPositionNo(user.getPositionNo());
+             worker.setPositionName(user.getPositionName());
+             this.saveOrUpdate(worker);
+		}
     }
 
     /**

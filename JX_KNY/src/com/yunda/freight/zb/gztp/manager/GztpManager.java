@@ -207,7 +207,8 @@ public class GztpManager extends JXBaseManager<Gztp, Gztp> {
         if("20".equals(t.getHandleWay())){
         	DetainTrain entity = new DetainTrain();
         	entity.setVehicleType(t.getVehicleType()); // 客货类型
-        	entity.setDetainReason(t.getFaultDesc()); // 扣车原因
+        	String detainReason = t.getScopeWorkFullname() + ":" + t.getFaultDesc() + "("+t.getFaultTypeValue()+")" ;
+        	entity.setDetainReason(detainReason); // 扣车原因
         	entity.setDetainTypeCode("10");
         	entity.setDetainTypeName("转临修");
         	entity.setTrainTypeIdx(t.getVehicleTypeIdx());

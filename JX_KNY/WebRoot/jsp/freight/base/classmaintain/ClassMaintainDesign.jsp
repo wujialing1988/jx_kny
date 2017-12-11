@@ -11,8 +11,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
-	STATUS_USE = '<%= Warehouse.STATUS_USE %>'
-	var objList = <%=JSONUtil.write(MatTypeListManager.getMatType())%>
+	STATUS_USE = '<%= Warehouse.STATUS_USE %>';
+	var objList = <%=JSONUtil.write(MatTypeListManager.getMatType())%>;
+	    /** 车辆类型：10货车，20客车 */
+    var vehicleType = '<%=request.getParameter("vehicleType") %>';
 </script>
 <title>班次维护</title>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>

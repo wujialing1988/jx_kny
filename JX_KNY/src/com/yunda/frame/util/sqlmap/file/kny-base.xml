@@ -211,8 +211,61 @@
 		inner join ZB_ZBGL_PLAN_RECORD r on p.idx = r.rdp_plan_idx
 		where p.record_status = 0 and p.rdp_plna_status in ('ONGOING','COMPLETE','INTERRUPT') and r.record_status = 0
 		and r.train_type_idx = '#trainTypeIDX#' and r.train_no = '#trainNo#' and p.t_vehicle_type = '#vehicleType#'
+		order by p.create_time desc 
 	]]>
 	</sql>	
 	
+		<!-- 通过车辆查询车辆基本信息 -->
+	<sql id="getTrainInfo">
+	<![CDATA[
+select t.train_type_idx as "trainTypeIdx" ,
+       t.train_type_shortname as "trainTypeShortname",
+       t.train_no as "trainNo",
+       t.train_state as "trainState",
+       t.make_factory_name as "makeFactoryName",
+       t.leave_date as "leaveDate",
+       t.register_person_name as "registerPersonName",
+       jx.repair_class_name as "jxRepairClassName",
+       jx.plan_begin_time as "jxPlanBeginTime",
+       yy.railway_time as "yyRailwayTime",
+       yy.create_time as "yyCreateTime",
+      ( km.recently_running_km + km.new_running_km ) as "totalKm",
+           trunc(sysdate) - trunc(t.leave_date) as "totalday",
+      s.repair_class_name || ' ' ||s.repair_order_name as "hcNextRepairClassName",
+      to_char(sysdate+(s.max_running_km - (trunc(sysdate) - trunc(t.leave_date))),'yyyy-mm')  as "hcNextDate"
+from JCZL_TRAIN t 
+     left join (
+               SELECT *
+        FROM (
+        SELECT ROW_NUMBER() OVER(PARTITION BY t.train_type_idx,t.train_no,t.t_vehicle_type order by t.plan_begin_time DESC) rn,
+                    t.*
+         FROM
+         JXGC_Train_Work_Plan t where t.record_status = 0 and t.work_plan_status in ('ONGOING','COMPLETE')
+        )
+       WHERE rn = 1
+     ) jx on jx.train_type_idx = t.train_type_idx and jx.train_no = t.train_no and jx.t_vehicle_type = t.t_vehicle_type
+     left join (
+           SELECT *
+      FROM (
+      SELECT ROW_NUMBER() OVER(PARTITION BY t.train_type_idx,t.train_no,t.t_vehicle_type order by t.create_time DESC) rn,
+                  t.*
+       FROM
+       (
+                   select p.railway_time,p.create_time,r.train_type_idx,r.train_no,p.t_vehicle_type from ZB_ZBGL_PLAN_RECORD r
+      inner join ZB_ZBGL_PLAN p on r.rdp_plan_idx = p.idx 
+      where r.record_status = 0 and p.record_status = 0 and p.rdp_plna_status in ('ONGOING','COMPLETE','INTERRUPT')
+      and r.train_no is not null
+       ) t 
+      )
+     WHERE rn = 1
+     ) yy on yy.train_type_idx = t.train_type_idx and yy.train_no = t.train_no and yy.t_vehicle_type = t.t_vehicle_type
+     left join JCJX_RUNNING_KM km on km.train_type_idx = t.train_type_idx and km.train_no = t.train_no
+     left join JCJX_REPAIR_STANDARD s on s.train_type_idx = t.train_type_idx and  (trunc(sysdate) - trunc(t.leave_date)) between s.min_running_km and s.max_running_km
+     where t.record_status = 0 
+     and t.train_type_idx = '#trainTypeIDX#'
+     and t.train_no = '#trainNo#'
+     and t.t_vehicle_type = '#vehicleType#'
+	]]>
+	</sql>
 	
 </SqlMap>

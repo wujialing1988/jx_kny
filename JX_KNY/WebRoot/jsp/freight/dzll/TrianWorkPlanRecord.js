@@ -71,9 +71,14 @@ Ext.onReady(function(){
 						url = "/kny/dzll/zbglRdpPlanRecordInfo.cpt&rdpIdx="+rdpIdx;
 					}else if("60" == type){
 						url = "/kny/dzll/zbglRdpPlanRecordGztp.cpt&rdpIdx="+rdpIdx;
+					}else if("00" == type){
+						var infoUrl = ctx+"/jsp/freight/dzll/trainInfo.jsp?trainTypeIDX="+TrianWorkPlanRecord.trainTypeIDX+"&trainNo="+TrianWorkPlanRecord.trainNo
+						+"&vehicleType="+vehicleType;
+						document.getElementById("report").innerHTML = "<iframe style='width:100%;height:100%;overflow:auto;' frameborder='0' src=" + infoUrl + "></iframe>";
+						
 					}
 					// 刷新报表
-					if(url && '10' != type){
+					if(url && '10' != type && '00' != type){
 						var reportUrl = getReportEffectivePath(url);
 						document.getElementById("report").innerHTML = "<iframe style='width:100%;height:100%;overflow:auto;' frameborder='0' src=" + reportUrl + "></iframe>";
 					}
@@ -82,7 +87,26 @@ Ext.onReady(function(){
 			beforeload:  function(node){
 				TrianWorkPlanRecord.tree.loader.dataUrl = ctx + '/trainRecord!findWorkPlanTree.action?&trainTypeIDX='+TrianWorkPlanRecord.trainTypeIDX+'&trainNo='+TrianWorkPlanRecord.trainNo
 				+'&vehicleType='+vehicleType;
+			},
+			load:function(node){
+				if(node.id == 'ROOT_0' && node.childNodes.length > 0){
+					var path = node.childNodes[0].getPath();
+					TrianWorkPlanRecord.tree.selectPath(path);
+					var infoUrl = ctx+"/jsp/freight/dzll/trainInfo.jsp?trainTypeIDX="+TrianWorkPlanRecord.trainTypeIDX+"&trainNo="+TrianWorkPlanRecord.trainNo
+				+"&vehicleType="+vehicleType;
+					document.getElementById("report").innerHTML = "<iframe style='width:100%;height:100%;overflow:auto;' frameborder='0' src=" + infoUrl + "></iframe>";
+				}
 			}
+		}
+	});
+	
+	TrianWorkPlanRecord.tree.getSelectionModel().on('beforeselect', function(me, newNode, oldNode) {
+		if(!newNode.leaf){
+			return ;
+		}
+		newNode.setIconCls('tickIcon');
+		if (oldNode && oldNode.leaf) {
+			oldNode.setIconCls('groupCheckedIcon');
 		}
 	});
 		

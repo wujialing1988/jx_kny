@@ -182,8 +182,6 @@ public class TrainWorkPlanEditNewManager extends JXBaseManager<TrainWorkPlan, Tr
                 entity = generateBizLogicAndWork(entity);                 
                 trainWorkPlanQueryManager.updateWorkPlanBeginEndTime(entity);
                 PerformanceMonitor.end(logger, "【兑现】", true, "TrainWorkPlanManager.generateWorkPlan");
-                // 更改机车状态
-                trainStatusChangeManager.saveChangeRecords(entity.getTrainTypeIDX(), entity.getTrainNo(), JczlTrain.TRAIN_STATE_REPAIR, entity.getIdx(), "生成作业计划");
             } else {
                 TrainWorkPlan workPlan = getModelById(entity.getIdx());
                 updateRdpForTime(entity, workPlan);

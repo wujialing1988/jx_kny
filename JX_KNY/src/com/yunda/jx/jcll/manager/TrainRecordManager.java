@@ -15,6 +15,7 @@ import com.yunda.frame.common.Page;
 import com.yunda.frame.common.SearchEntity;
 import com.yunda.frame.util.DateUtil;
 import com.yunda.frame.util.StringUtil;
+import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.freight.zb.gztp.entity.Gztp;
 import com.yunda.freight.zb.gztp.manager.GztpManager;
 import com.yunda.freight.zb.plan.manager.ZbglRdpPlanManager;
@@ -143,13 +144,24 @@ public class TrainRecordManager extends JXBaseManager<TrainRecord, TrainRecord> 
     	// 总根目录
     	List<Map> result = new ArrayList<Map>();
     	Map map = null;
+    	
+    	// 车辆信息
+		Map infoMap = new LinkedHashMap();
+		infoMap.put("id", "info");          //车辆信息
+		infoMap.put("type", "00");
+		infoMap.put("leaf", true);
+		infoMap.put("iconCls", "");
+		infoMap.put("text", "基本信息");
+		infoMap.put("children", null);
+        result.add(infoMap);
+    	
     	// 检修
 		List<Map> childrenJx = new ArrayList<Map>();
 		List<TrainWorkPlan> trainWorkPlans = trainWorkPlanManager.findTrainWorkPlanListByTrain(trainTypeIDX, trainNo, vehicleType);
 		for (TrainWorkPlan plan : trainWorkPlans) {
             map = new LinkedHashMap();
             map.put("id", plan.getIdx());          //检修计划ID
-            String displanName = plan.getBeginTime() != null ? DateUtil.date2String(DateUtil.yyyy_MM_dd, plan.getBeginTime()) : "" ;			   //节点显示名称
+            String displanName = plan.getPlanBeginTime() != null ? DateUtil.date2String(DateUtil.yyyy_MM_dd, plan.getPlanBeginTime()) : "" ;			   //节点显示名称
             displanName += " " + plan.getRepairClassName() + " " + plan.getRepairtimeName();
 			map.put("text", "<span style=\"color:#3A5A82;\" title=\"" + displanName + "\">" + displanName + "</span>"); // menulabel 菜单显示名称
 			map.put("leaf", true);
@@ -221,7 +233,7 @@ public class TrainRecordManager extends JXBaseManager<TrainRecord, TrainRecord> 
         		map.put("parentID", workPlanIdx);          // 检修计划主键
         		map.put("text", activity.getActivityName());          // 检修记录单主键
         		map.put("type", "10");					// 类型 10 检修记录 20故障记录 30  下车配件 40 上车配件
-    			map.put("iconCls", "jsglIcon");		
+    			map.put("iconCls", "groupCheckedIcon");		
     			map.put("leaf", true);
     			children.add(map);
     		}
@@ -230,32 +242,32 @@ public class TrainRecordManager extends JXBaseManager<TrainRecord, TrainRecord> 
     	// 查询机车提票信息
     	List<FaultTicket> faultTickets = faultTicketManager.getFaultTicketListByWorkPlanIDX(workPlanIdx);
 		map = new LinkedHashMap();
-		map.put("id", "20");          // 检修记录单主键
+		map.put("id", "20"+workPlanIdx);          // 检修记录单主键
 		map.put("parentID", workPlanIdx);          // 检修计划主键
 		map.put("text", "车辆故障("+faultTickets.size()+")");          // 检修记录单主键
 		map.put("type", "20");					// 类型 10 检修记录 20故障记录 30 下车配件 40 上车配件
-		map.put("iconCls", "pjglIcon");		
+		map.put("iconCls", "groupCheckedIcon");		
 		map.put("leaf", true);
 		children.add(map);
     	
         // 配件下车
     	List<PartsUnloadRegister> registers = partsUnloadRegisterManager.findPartsUnloadRegisterByWorkPlanIdx(workPlanIdx);
 		map = new LinkedHashMap();
-		map.put("id", "30");          // 检修记录单主键
+		map.put("id", "30"+workPlanIdx);          // 检修记录单主键
 		map.put("parentID", workPlanIdx);          // 检修计划主键
 		map.put("text", "下车配件清单("+registers.size()+")");          // 检修记录单主键
 		map.put("type", "30");					// 类型 10 检修记录 20故障记录 30 下车配件 40 上车配件
-		map.put("iconCls", "templatesIcon");		
+		map.put("iconCls", "groupCheckedIcon");		
 		map.put("leaf", true);
 		children.add(map);
     	// 配件上车
     	List<PartsFixRegister> fixregisters = partsFixRegisterManager.findPartsFixRegisterByWorkPlanIdx(workPlanIdx);
 		map = new LinkedHashMap();
-		map.put("id", "40");          // 检修记录单主键
+		map.put("id", "40"+workPlanIdx);          // 检修记录单主键
 		map.put("parentID", workPlanIdx);          // 检修计划主键
 		map.put("text", "上车配件清单("+fixregisters.size()+")");          // 检修记录单主键
 		map.put("type", "40");					// 类型 10 检修记录 20故障记录 30 下车配件  40 上车配件
-		map.put("iconCls", "templatesIcon");		
+		map.put("iconCls", "groupCheckedIcon");		
 		map.put("leaf", true);
 		children.add(map);
     	return children; 
@@ -278,27 +290,43 @@ public class TrainRecordManager extends JXBaseManager<TrainRecord, TrainRecord> 
     	List<Map> children = new ArrayList<Map>();
     	Map map = null;
 		map = new LinkedHashMap();
-		map.put("id", "50");          // 检修记录单主键
+		map.put("id", "50"+recordIdx);          // 检修记录单主键
 		map.put("parentID", recordIdx);          // 检修计划主键
 		map.put("text", "作业情况");          // 检修记录单主键
 		map.put("type", "50");					// 类型 10 检修记录 20故障记录 30  下车配件 40 上车配件 50 运用基本信息 60 运用故障信息
-		map.put("iconCls", "templatesIcon");		
+		map.put("iconCls", "groupCheckedIcon");		
 		map.put("leaf", true);
 		children.add(map);
     
     	// 查询机车提票信息
 		List<Gztp> zgtps = gztpManager.findGztpListByRecord(recordIdx);
 		map = new LinkedHashMap();
-		map.put("id", "60");          // 检修记录单主键
+		map.put("id", "60"+recordIdx);          // 检修记录单主键
 		map.put("parentID", recordIdx);          // 检修计划主键
 		map.put("text", "车辆故障("+zgtps.size()+")");          // 检修记录单主键
 		map.put("type", "60");					// 类型 10 检修记录 20故障记录 30 下车配件 40 上车配件 50 运用基本信息 60 运用故障信息
-		map.put("iconCls", "pjglIcon");		
+		map.put("iconCls", "groupCheckedIcon");		
 		map.put("leaf", true);
 		children.add(map);
     	return children; 
     }
-    
 
+    /**
+     * <li>说明：获取车辆基本信息
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-06
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws Exception
+     */
+	public List<Map<String, Object>> getTrainInfo(String trainTypeIDX,
+			String trainNo, String vehicleType) {
+    	String sql = SqlMapUtil.getSql("kny-base:getTrainInfo");
+    	sql = sql.replaceAll("#trainTypeIDX#", trainTypeIDX)
+    			 .replaceAll("#trainNo#", trainNo)
+    			 .replaceAll("#vehicleType#", vehicleType);
+    	return this.queryListMap(sql);
+	}
     
 }

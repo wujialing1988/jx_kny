@@ -27,6 +27,7 @@ import com.yunda.frame.yhgl.entity.OmEmployee;
 import com.yunda.freight.zb.detain.entity.DetainTrain;
 import com.yunda.freight.zb.detain.manager.DetainTrainManager;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
+import com.yunda.jx.jczl.attachmanage.entity.TrainStatusChange;
 import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
 import com.yunda.jx.jxgc.common.JxgcConstants;
 import com.yunda.jx.jxgc.producttaskmanage.entity.WorkCard;
@@ -233,10 +234,6 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
             entity = generateBizLogicAndWork(entity);                 
             trainWorkPlanQueryManager.updateWorkPlanBeginEndTime(entity);
             PerformanceMonitor.end(logger, "【兑现】", true, "TrainWorkPlanManager.generateWorkPlan");
-            // 更新扣车记录状态
-            detainTrainManager.changeDetainStatus(entity, DetainTrain.TRAIN_STATE_HANDLING);
-            // 更改机车状态
-            trainStatusChangeManager.saveChangeRecords(entity.getTrainTypeIDX(), entity.getTrainNo(), JczlTrain.TRAIN_STATE_REPAIR, entity.getIdx(), "生成作业计划");            
         } else {
             TrainWorkPlan workPlan = getModelById(entity.getIdx());
             updateRdpForTime(entity, workPlan);
@@ -368,6 +365,10 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
         trainWorkPlanQueryManager.updatePlanStatus(workPlan);
         //基线当启动生产的时候，以该时间为基线点
         jobProcessNodeManager.saveBaseTime(workPlanIDX);
+        // 更新扣车记录状态
+        detainTrainManager.changeDetainStatus(workPlan, DetainTrain.TRAIN_STATE_HANDLING);
+        // 更改机车状态
+        trainStatusChangeManager.saveChangeRecords(workPlan.getTrainTypeIDX(), workPlan.getTrainNo(), JczlTrain.TRAIN_STATE_REPAIR, workPlan.getIdx(), TrainStatusChange.START_JX); 
         return null;
     }
     
@@ -418,7 +419,7 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
         // 回滚扣车信息
         detainTrainManager.changeDetainStatus(workPlan, DetainTrain.TRAIN_STATE_NEW);
         // 回滚车辆状态
-        trainStatusChangeManager.robackChangeRecords(workPlan.getTrainTypeIDX(), workPlan.getTrainNo(), workPlanIDX, "终止作业计划");
+        trainStatusChangeManager.robackChangeRecords(workPlan.getTrainTypeIDX(), workPlan.getTrainNo(), workPlanIDX, TrainStatusChange.DEL_JX);
     }
     
     /**
@@ -753,7 +754,7 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
             }
             saveOrUpdate(plan);
             // 车辆状态改变
-            trainStatusChangeManager.saveChangeRecords(plan.getTrainTypeIDX(), plan.getTrainNo(), JczlTrain.TRAIN_STATE_USE, plan.getIdx(), "车辆检修检验");
+            trainStatusChangeManager.saveChangeRecords(plan.getTrainTypeIDX(), plan.getTrainNo(), JczlTrain.TRAIN_STATE_USE, plan.getIdx(), TrainStatusChange.COM_JX);
             // 更新扣车登记信息
             detainTrainManager.changeDetainStatus(plan, DetainTrain.TRAIN_STATE_HANDLED);
         }

@@ -9,7 +9,7 @@ Ext.onReady(function(){
 		loadURL: ctx + "//jczlTrain!pageList.action",
 		singleSelect: true, 
 		tbar:[{	
-			xtype:'textfield', id:'train_type_no', enableKeyEvents:true, emptyText:'输入车型车号快速检索', listeners: {
+			xtype:'textfield', id:'train_type_no', enableKeyEvents:true, emptyText:'输入车号快速检索', listeners: {
 	    		keyup: function(filed, e) {
 					// 如果敲下Enter（回车键），则触发添加按钮的函数处理
 					if (e.getKey() == e.ENTER){

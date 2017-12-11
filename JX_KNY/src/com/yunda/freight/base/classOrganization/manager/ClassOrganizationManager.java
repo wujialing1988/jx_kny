@@ -119,6 +119,8 @@ public class ClassOrganizationManager extends JXBaseManager<ClassOrganization, C
                         vo.setQueueCode(user.getQueueCode());
                         vo.setQueueName(user.getQueueName());
                         vo.setOrgUserIdx(user.getIdx());
+                        vo.setPositionNo(user.getPositionNo());
+                        vo.setPositionName(user.getPositionName());
                     }
                 }
                 list.add(vo);

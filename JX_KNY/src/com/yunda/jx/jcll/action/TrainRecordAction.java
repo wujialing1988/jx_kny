@@ -94,4 +94,29 @@ public class TrainRecordAction extends JXBaseAction<TrainRecord, TrainRecord, Tr
         }   
     }
     
+    /**
+     * <li>说明：获取车辆基本信息
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-06
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws Exception
+     */
+    public void getTrainInfo() throws Exception {
+    	List<Map<String, Object>> children = new ArrayList<Map<String, Object>>();
+        try {
+            String trainTypeIDX = getRequest().getParameter("trainTypeIDX"); // 车型
+            String trainNo = getRequest().getParameter("trainNo"); // 车号
+            String vehicleType = getRequest().getParameter("vehicleType"); // 客货类型
+            children = this.manager.getTrainInfo(trainTypeIDX, trainNo ,vehicleType);
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger);
+        } finally {
+            JSONUtil.write(getResponse(), children);
+        }   
+    }
+    
+    
+    
 }

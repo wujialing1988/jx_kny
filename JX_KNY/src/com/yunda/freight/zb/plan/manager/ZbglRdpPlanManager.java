@@ -25,6 +25,7 @@ import com.yunda.freight.base.vehicle.entity.TrainVehicleType;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlan;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecord;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
+import com.yunda.jx.jczl.attachmanage.entity.TrainStatusChange;
 import com.yunda.jx.jczl.attachmanage.manager.JczlTrainManager;
 import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
 import com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlan;
@@ -267,9 +268,9 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
          List<ZbglRdpPlanRecord> records = zbglRdpPlanRecordManager.getZbglRdpPlanRecordComListByPlan(id);
          for (ZbglRdpPlanRecord record : records) {
              JczlTrain train = jczlTrainManager.getJczlTrainByTypeAndNo(record.getTrainTypeIdx(), record.getTrainNo());
-             if(train == null || train.getTrainState() == JczlTrain.TRAIN_STATE_LIEJIAN){
+             if(train != null && train.getTrainState() == JczlTrain.TRAIN_STATE_LIEJIAN){
                  // 车辆状态改变
-                 trainStatusChangeManager.saveChangeRecords(record.getTrainTypeIdx(), record.getTrainNo(), JczlTrain.TRAIN_STATE_USE, record.getIdx(), "列检计划完成");
+                 trainStatusChangeManager.saveChangeRecords(record.getTrainTypeIdx(), record.getTrainNo(), JczlTrain.TRAIN_STATE_USE, record.getIdx(), TrainStatusChange.COM_LIEJIAN);
              }
          }
          return null;
@@ -299,6 +300,17 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
 //          设置逻辑删除字段状态为已删除
             t = EntityUtil.setDeleted(t);
             entityList.add(t);
+            // 回滚车辆状态
+            List<ZbglRdpPlanRecord> records = zbglRdpPlanRecordManager.findRecordsByPlan(id+"");
+            for (ZbglRdpPlanRecord rec : records) {
+                if(!StringUtil.isNullOrBlank(rec.getTrainTypeIdx()) && !StringUtil.isNullOrBlank(rec.getTrainNo())){
+                	JczlTrain train = jczlTrainManager.getJczlTrainByTypeAndNo(rec.getTrainTypeIdx(), rec.getTrainNo());
+                	if(train != null && train.getTrainState() == JczlTrain.TRAIN_STATE_LIEJIAN){
+                        // 如果该车为列检状态 直接改为运用
+                        trainStatusChangeManager.saveChangeRecords(rec.getTrainTypeIdx(), rec.getTrainNo(), JczlTrain.TRAIN_STATE_USE, rec.getIdx(), TrainStatusChange.DEL_LIEJIAN);
+                	}
+                }
+			}
         }
         this.daoUtils.getHibernateTemplate().saveOrUpdateAll(entityList);
     }

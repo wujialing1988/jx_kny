@@ -46,7 +46,22 @@ public class ZbglRdpPlanWorker implements java.io.Serializable {
     /* 作业人员姓名 */
     @Column(name = "WORK_PERSON_NAME")
     private String workPersonName ;
-
+    
+    /* 队列编码 */
+    @Column(name = "QUEUE_NO")
+    private String queueNo ;
+    
+    /* 队列名称 */
+    @Column(name = "QUEUE_NAME")
+    private String queueName ;
+    
+    /* 左右侧编码 */
+    @Column(name = "POSITION_NO")
+    private String positionNo ;
+    
+    /* 左右侧名称  */
+    @Column(name = "POSITION_NAME")
+    private String positionName ;
     
     public String getIdx() {
         return idx;
@@ -84,5 +99,46 @@ public class ZbglRdpPlanWorker implements java.io.Serializable {
     public void setWorkPersonName(String workPersonName) {
         this.workPersonName = workPersonName;
     }
+
+
+	public String getQueueNo() {
+		return queueNo;
+	}
+
+
+	public void setQueueNo(String queueNo) {
+		this.queueNo = queueNo;
+	}
+
+
+	public String getQueueName() {
+		return queueName;
+	}
+
+
+	public void setQueueName(String queueName) {
+		this.queueName = queueName;
+	}
+
+
+	public String getPositionNo() {
+		return positionNo;
+	}
+
+
+	public void setPositionNo(String positionNo) {
+		this.positionNo = positionNo;
+	}
+
+
+	public String getPositionName() {
+		return positionName;
+	}
+
+
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
+	}
+    
     
 }

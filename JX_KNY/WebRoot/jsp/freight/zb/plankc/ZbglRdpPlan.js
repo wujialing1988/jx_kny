@@ -179,7 +179,7 @@ Ext.onReady(function(){
 		}
 		
 		var cfg = {
-	        url: ctx + "/zbglRdpPlan!logicDelete.action", 
+	        url: ctx + "/zbglRdpPlan!stopPlan.action", 
 			params: {ids: ids},
 	        timeout: 600000,
 	        success: function(response, options){
@@ -720,6 +720,8 @@ Ext.onReady(function(){
 			ZbglRdpPlanRecord.rdpPlanIdx = "###" ;
 			ZbglRdpPlanRecord.rdpPlanStatus = "###";
 			ZbglRdpPlanRecord.railwayTime = "###";
+	       	ZbglRdpPlanRecord.grid.getStore().reload();
+	       	ZbglRdpPlanRecordCL.grid.getStore().reload();
 		}
 	});
 	

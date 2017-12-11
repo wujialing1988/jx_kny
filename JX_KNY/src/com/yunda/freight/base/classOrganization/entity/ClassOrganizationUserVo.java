@@ -1,5 +1,6 @@
 package com.yunda.freight.base.classOrganization.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -48,6 +49,12 @@ public class ClassOrganizationUserVo implements java.io.Serializable {
     
     /* 分队名称 */
     private String queueName ;
+    
+    /* 左右侧编码 */
+    private String positionNo ;
+    
+    /* 左右侧名称 */
+    private String positionName ;
     
     
     /**
@@ -166,7 +173,25 @@ public class ClassOrganizationUserVo implements java.io.Serializable {
     public void setOrgUserIdx(String orgUserIdx) {
         this.orgUserIdx = orgUserIdx;
     }
-    
-    
+
+
+	public String getPositionNo() {
+		return positionNo;
+	}
+
+
+	public void setPositionNo(String positionNo) {
+		this.positionNo = positionNo;
+	}
+
+
+	public String getPositionName() {
+		return positionName;
+	}
+
+
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
+	}
     
 }

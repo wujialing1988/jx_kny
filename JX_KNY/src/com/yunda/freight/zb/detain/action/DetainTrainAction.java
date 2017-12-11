@@ -83,5 +83,32 @@ public class DetainTrainAction extends JXBaseAction<DetainTrain, DetainTrain, De
             JSONUtil.write(this.getResponse(), map);
         }       
     }
+    
+    /**
+     * <li>说明：删除扣车登记
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-5-18
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws Exception
+     */
+    public void deleteDetain() throws Exception{
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            String[] errMsg = this.manager.validateDelete(ids);
+            if (errMsg == null || errMsg.length < 1) {
+                this.manager.deleteDetain(ids);
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+                map.put("errMsg", errMsg);
+            }           
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }       
+    }
    
 }

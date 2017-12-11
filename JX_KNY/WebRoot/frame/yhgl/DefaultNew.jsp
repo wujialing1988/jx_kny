@@ -8,8 +8,8 @@
 	<title>系统主框架页</title>
 	<script language="javascript" src="<%=ctx%>/frame/yhgl/DefaultNew.js"></script>
 </head>
-<body ng-app="mainApp" ng-controller="mainCtrl">
-	<div id="center" class="wrapper" style="background: #ecf0f5;">
+<body class="hold-transition skin-blue layout-top-nav" ng-app="mainApp" ng-controller="mainCtrl">
+	<div id="center" class="content-wrapper">
 	    <section class="content" >
 		   <div class="row">
 		   	  <div class="col-md-3 col-sm-6 col-xs-12">
@@ -65,7 +65,7 @@
 		            <span class="info-box-icon" style="padding-top: 20"><i class="fa fa-exclamation-circle"></i></span>
 		
 		            <div class="info-box-content" ng-cloak>
-		              <span class="info-box-text">预计提醒</span>
+		              <span class="info-box-text">预警提醒</span>
 		              <span class="info-box-number">客车：{{ warning.kcCounts }} 辆</span>
 		              <span class="info-box-number">货车：{{ warning.hcCounts }} 辆</span>
 		            </div>

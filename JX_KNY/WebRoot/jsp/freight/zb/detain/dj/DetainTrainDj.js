@@ -37,7 +37,7 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
     		}
     		
     		var cfg = {
-    	        url: ctx + "/detainTrain!logicDelete.action", 
+    	        url: ctx + "/detainTrain!deleteDetain.action", 
     			params: {ids: ids},
     	        timeout: 600000,
     	        success: function(response, options){
@@ -197,7 +197,8 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
 	},
 	beforeShowEditWin: function(record, rowIndex){
 		return false ;
-	}  
+	}
+	
 });
 // 页面自适应布局
 var viewport = new Ext.Viewport({ layout:'fit', items:DetainTrainDj.grid });

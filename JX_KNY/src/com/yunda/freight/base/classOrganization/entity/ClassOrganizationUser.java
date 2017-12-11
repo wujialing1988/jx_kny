@@ -61,6 +61,15 @@ public class ClassOrganizationUser implements java.io.Serializable {
     private String queueName ;
     
     
+    /* 左右侧编码 */
+    @Column(name = "POSITION_NO")
+    private String positionNo ;
+    
+    /* 左右侧名称 */
+    @Column(name = "POSITION_NAME")
+    private String positionName ;
+    
+    
     /**
      * <li>说明：无参构造函数
      * <li>创建人：伍佳灵
@@ -165,5 +174,27 @@ public class ClassOrganizationUser implements java.io.Serializable {
     public void setQueueName(String queueName) {
         this.queueName = queueName;
     }
+
+
+	public String getPositionNo() {
+		return positionNo;
+	}
+
+
+	public void setPositionNo(String positionNo) {
+		this.positionNo = positionNo;
+	}
+
+
+	public String getPositionName() {
+		return positionName;
+	}
+
+
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
+	}
+    
+    
     
 }
