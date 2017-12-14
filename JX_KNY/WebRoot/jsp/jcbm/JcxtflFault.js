@@ -5,6 +5,7 @@ Ext.onReady(function(){
 	
 	JcxtflFault.faultSelectGrid = new Ext.yunda.Grid({
     	loadURL: ctx + '/equipFault!pageList.action',                 //装载列表数据的请求URL
+    	isEdit:false,
     	tbar: [{
         	xtype:"label", text:"  故障名称：" 
     	},{			
@@ -41,6 +42,8 @@ Ext.onReady(function(){
         			data.flbm = JcgxBuild.flbm;//点击树上的分类编码
         			data.faultId = tempData[i].get("FaultID");
         			data.faultName = tempData[i].get("FaultName");
+        			data.faultTypeID = tempData[i].get("FaultTypeID");
+        			data.faultTypeName = tempData[i].get("FaultTypeName");
         			dataAry.push(data);
         		}
         		Ext.Ajax.request({
@@ -73,7 +76,9 @@ Ext.onReady(function(){
 		},{
 			header:'故障名称', dataIndex:'FaultName', editor:{   }
 		},{
-			header:'故障类别', dataIndex:'FaultTypeID', editor:{ xtype:'hidden'   }
+			header:'故障类别id', dataIndex:'FaultTypeID',hidden:true, editor:{ xtype:'hidden'   }
+		},{
+			header:'故障类别', dataIndex:'FaultTypeName', editor:{ xtype:'hidden'   }
 		}]
 	});
 	

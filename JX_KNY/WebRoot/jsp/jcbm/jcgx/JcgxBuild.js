@@ -435,7 +435,7 @@ Ext.onReady(function() {
 				JcxtflFault.win.show();
 			}
 		},{
-			text: "新增故障现象", iconCls: 'addIcon', handler: function() {
+			text: "新增故障现象", iconCls: 'addIcon',hidden:true, handler: function() {
 				JcxtflFault.formWin.show();
 			}
 		}, 'delete', '->',{
@@ -465,6 +465,8 @@ Ext.onReady(function() {
 			header: '故障现象编码', dataIndex: 'faultId'
 		}, {
 			header: '故障现象名称', dataIndex: 'faultName'
+		}, {
+			header: '故障类型', dataIndex: 'faultTypeName'
 		}],
 		toEditFn: function() {
 		}

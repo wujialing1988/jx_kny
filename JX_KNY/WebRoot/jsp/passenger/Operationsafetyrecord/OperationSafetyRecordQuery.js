@@ -8,11 +8,10 @@ Ext.onReady(function(){
 	OperationSafetyRecord.searchParam = {} ;
 	OperationSafetyRecord.grid = new Ext.yunda.Grid({
 	    loadURL: ctx + '/operationSafetyRecord!pageList.action',                 //装载列表数据的请求URL
-	    saveURL: ctx + '/operationSafetyRecord!saveOrUpdate.action',             //保存数据的请求URL
-	    deleteURL: ctx + '/operationSafetyRecord!logicDelete.action',            //删除数据的请求URL
 	    singleSelect: true, saveFormColNum:1,
 	    labelWidth: 100,                                     //查询表单中的标签宽度
 	    fieldWidth: 180,
+	    isEdit:false,
 		fields: [{
 			header:'计划车次', dataIndex:'strips',width: 60,editor: {
 				fieldLabel: "计划车次", id:"strips_comb", 

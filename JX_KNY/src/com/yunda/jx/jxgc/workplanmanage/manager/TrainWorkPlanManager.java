@@ -40,6 +40,7 @@ import com.yunda.jx.jxgc.workplanmanage.entity.JobProcessNode;
 import com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlan;
 import com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlanDTO;
 import com.yunda.jx.pjwz.common.PjwzConstants;
+import com.yunda.jx.scdd.repairplan.manager.RepairWarningHCManager;
 import com.yunda.jx.third.edo.entity.Result;
 import com.yunda.jx.util.MixedUtils;
 import com.yunda.jx.util.PerformanceMonitor;
@@ -116,6 +117,12 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
      */
     @Resource
     private DetainTrainManager detainTrainManager;
+    
+    /**
+     * 货车修程提醒
+     */
+    @Resource
+    private RepairWarningHCManager repairWarningHCManager ;
     
     private static final String STATUS = "#status#";
     
@@ -757,6 +764,8 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
             trainStatusChangeManager.saveChangeRecords(plan.getTrainTypeIDX(), plan.getTrainNo(), JczlTrain.TRAIN_STATE_USE, plan.getIdx(), TrainStatusChange.COM_JX);
             // 更新扣车登记信息
             detainTrainManager.changeDetainStatus(plan, DetainTrain.TRAIN_STATE_HANDLED);
+            // 清空货车修程提醒
+            repairWarningHCManager.clearHCBeForeDate(plan.getTrainTypeIDX(), plan.getTrainNo(), plan.getRepairClassIDX(),new Date());
         }
         return plan;
     }

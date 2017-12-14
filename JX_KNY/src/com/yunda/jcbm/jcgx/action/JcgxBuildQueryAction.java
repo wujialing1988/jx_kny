@@ -90,7 +90,7 @@ public class JcgxBuildQueryAction extends JXBaseAction<JcgxBuild, JcgxBuild, Jcg
             if (entity != null) {
         	    String flbm = entity.getFlbm();
     		
-                faultList = manager.getFlbmFault(flbm);
+                faultList = manager.getFlbmFault(entity);
             }
         }catch (RuntimeException e) {
             ExceptionUtil.process(e, logger);

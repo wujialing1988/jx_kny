@@ -23,7 +23,8 @@ var tree =
             {id:'客车列车运用基础维护', text:'客车列车运用基础维护', leaf:true, funcaction:'/jsp/freight/base/classmaintain/ClassMaintainDesign.jsp?vehicleType=20'},
             {id:'乘务检测人员维护', text:'乘务检测人员维护', leaf:true, funcaction:'/jsp/passenger/base/traininspector/TrainInspector.jsp'},
             {id:'车辆系统分类维护',text:'车辆系统分类维护',leaf:true,funcaction:'/jsp/jcbm/jxctfl/JcxtflBuildWh.jsp?vehicleType=10'},
-       		{id:'车辆构型',text:'车辆构型',leaf:true,funcaction:'/jsp/jcbm/TrainGxgl.jsp'}
+       		{id:'车辆构型',text:'车辆构型',leaf:true,funcaction:'/jsp/jcbm/TrainGxgl.jsp'},
+       		{id:'故障库维护',text:'故障库维护',leaf:true,funcaction:'/jsp/jx/base/jcgy/EquipFault.jsp'}
         ]
     },{
         id:'货车运用', text:'货车运用', leaf:false, children:[
@@ -50,10 +51,10 @@ var tree =
             {id:'客车编组信息维护', text:'客车编组信息维护', leaf:true, funcaction:'/jsp/passenger/marshalling/marshalling.jsp'},
 			{id:'交路信息维护', text:'交路信息维护', leaf:true, funcaction:'/jsp/passenger/routing/routing.jsp'},
 			{id:'编组需求维护', text:'编组需求维护', leaf:true, funcaction:'/jsp/passenger/traindemand/TrainDemand.jsp'},
-			{id:'运行安全信息记录', text:'运行安全信息记录', leaf:true, funcaction:'/jsp/passenger/Operationsafetyrecord/OperationSafetyRecord.jsp'},
 			{id:'客车车辆列检范围维护', text:'客车车辆列检范围维护', leaf:true, funcaction:'/jsp/zb/zbfw/ZbFw.jsp?vehicleType=20'},
 			{id:'客车列检计划', text:'客车列检计划', leaf:true, funcaction:'/jsp/freight/zb/plankc/ZbglRdpPlanDesign.jsp?vehicleType=20'},
 			{id:'运行安全信息记录', text:'运行安全信息记录', leaf:true, funcaction:'/jsp/passenger/Operationsafetyrecord/OperationSafetyRecord.jsp'},
+			{id:'运行安全信息记录查询', text:'运行安全信息记录查询', leaf:true, funcaction:'/jsp/passenger/Operationsafetyrecord/OperationSafetyRecordQuery.jsp'},
 			{id:'人员排班查看', text:'人员排班查看', leaf:true, funcaction:'/jsp/passenger/traindemand/TrainInspectorDemand.jsp'},
 			{id:'扣车登记_客车', text:'扣车登记_客车', leaf:true, funcaction:'/jsp/freight/zb/detain/dj/DetainTrainDj.jsp?vehicleType=20'},
 			{id:'扣车登记汇总_客车', text:'扣车登记汇总', leaf:true, funcaction:'/jsp/freight/zb/detain/DetainTrain.jsp?vehicleType=20'},
@@ -71,6 +72,7 @@ var tree =
         		{id:'货车修程对应修次', text:'货车修程对应修次', leaf:true, funcaction:'/jsp/jxpz/rcrtset/RcRt.jsp?vehicleType=10'},
         		{id:'货车检修标准', text:'货车检修标准', leaf:true, funcaction:'/jsp/jx/scdd/jxplanmanage/jxstandard/repair_standard.jsp?vehicleType=10'},
         		{id:'货车修程预警', text:'货车修程预警', leaf:true, funcaction:'/jsp/freight/jx/classwarning/RepairClassWarningHC.jsp'},
+        		{id:'货车修程提醒', text:'货车修程提醒', leaf:true, funcaction:'/jsp/freight/jx/classwarning/new/RepairWarningHC.jsp'},
         		{id:'货车车辆检修记录单维护', text:'货车车辆检修记录单维护', leaf:true, funcaction:'/jsp/jx/jxgc/repairrequirement/RepairProject.jsp?vehicleType=10'},
         		{id:'货车检修作业流程维护',text:'货车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=10'},
         		{id:'货车车辆状态跟踪',text:'货车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=10'},

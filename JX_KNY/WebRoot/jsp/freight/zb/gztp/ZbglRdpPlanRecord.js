@@ -46,6 +46,61 @@ Ext.onReady(function() {
 		MatTypeUseList.grid.store.removeAll();
 		
 	};
+	
+	
+	// 填写车号窗口 
+	ZbglRdpPlanRecord.writeTrainNoWin = new Ext.Window({
+		title:"填写车号", width:400, height:250, plain:true, closeAction:"hide", buttonAlign:'center',padding:15,
+    	maximizable:false,  modal:true,
+    	items:[{
+        	xtype: 'form',
+        	defaultType: "textfield",
+        	layout: "form",
+        	baseCls: "x-plain",
+            items: [
+                { 
+                	id:'writeTrainNo',
+                	fieldLabel: '车号',
+                	name:'trainNo',
+                	allowBlank:false,
+                	maxLength:20
+                }
+            ]
+		}],
+    	buttons: [{
+			text : "确定",iconCls : "saveIcon", handler: function(){
+				var idx = $yd.getSelectedIdx(ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid)[0];
+				var writeTrainNo = Ext.getCmp("writeTrainNo").getValue();
+				if(Ext.isEmpty(writeTrainNo)){
+					return ;
+				}
+				var entityJson = {
+					idx:idx,
+					trainNo:writeTrainNo
+				}
+				Ext.Ajax.request({
+					url: ctx + "/zbglRdpPlanRecord!writeTrainNo.action",
+					params: {entityJson:Ext.util.JSON.encode(entityJson)},
+					success: function(response, options){
+				        var result = Ext.util.JSON.decode(response.responseText);
+				        if (result.errMsg == null) {
+							alertSuccess();
+							Ext.getCmp("writeTrainNo").reset();
+							ZbglRdpPlanRecord.writeTrainNoWin.hide();
+							ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.store.reload();
+						}else{
+							alertFail(result.errMsg);
+						}
+					},
+					failure: function(response, options){
+						MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+					}
+				});
+			}
+		},{
+	        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlanRecord.writeTrainNoWin.hide(); }
+		}]
+	});	
 
 	/**
 	 * 列检计划车辆列表
@@ -70,7 +125,7 @@ Ext.onReady(function() {
 					var trainTypeCode = Ext.isEmpty(record.data.trainTypeCode) ? "" : record.data.trainTypeCode ;
 					var trainNo =  Ext.isEmpty(record.data.trainNo)?"":record.data.trainNo;
 					if (Ext.isEmpty(trainTypeCode) && Ext.isEmpty(trainNo)) {
-						return "第"+value+"辆:【未启动】";
+						return "第"+value+"辆:【未录入】";
 					}
 					var trainInfo = trainTypeCode + ' ' +trainNo ;
 					return "第"+value+"辆:【"+trainInfo+"】";
@@ -93,6 +148,9 @@ Ext.onReady(function() {
 		],
 		beforeShowEditWin: function(record, rowIndex){
 			return false;
+		},
+		toEditFn: function(grid, rowIndex, e){
+			ZbglRdpPlanRecord.writeTrainNoWin.show();
 		}
 	});
 	

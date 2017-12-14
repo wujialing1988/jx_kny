@@ -44,7 +44,6 @@ Ext.onReady(function(){
         {xtype: "hidden", name: "vehicleTypeCode"}, // 车型
         {xtype: "hidden", name: "trainNo"}, // 车型
         {xtype: "hidden", name: "rdpNum"}, // 列检车辆数量
-        {id: "faultTypeValue", xtype: "hidden", name: "faultTypeValue"}, // 故障类型字典值
         {id: "handleWayValue", xtype: "hidden", name: "handleWayValue"}, // 处理方式ID
         
         {xtype: "hidden", name: "faultNoticeCode"}, // 提票单号
@@ -59,6 +58,7 @@ Ext.onReady(function(){
         {id: 'scopeWorkFullname', xtype: "hidden", name: "scopeWorkFullname"}, // 作业范围全称
         {id: 'vehicleComponentFullname', xtype: "hidden", name: "vehicleComponentFullname"}, // 故障部件全称
         {id: 'vehicleType', xtype: "hidden", name: "vehicleType",value:vehicleType}, // 客货类型
+        {id: 'faultId', xtype: "hidden", name: "faultId"}, // 故障现象编码
         {
     		columnWidth:.5,
         	items:[
@@ -87,7 +87,7 @@ Ext.onReady(function(){
 					allowBlank:false,
 					xtype: 'EosDictEntry_combo',
 					hiddenName: 'type',
-					dicttypeid:'GZDJ_TYPE',
+					dicttypeid:'GZDJ_TYPE'+vehicleType,
 					displayField:'dictname',
 					valueField:'dictname',
 					fieldLabel: "登记类型"
@@ -115,33 +115,77 @@ Ext.onReady(function(){
                     }
                     ]
             	}, {
+            		columnWidth:1,
 	            	items:[{ id: 'scope_work', xtype: 'Base_comboTree', fieldLabel: '专业类型', rootId:'ROOT_0',hidden:false,
            				  hiddenName: 'scopeWorkIdx', returnField: [{widgetId:"scopeWorkFullname",propertyName:"text"}], selectNodeModel: 'exceptRoot',
            				  business: 'zbglRdpPlanRecord', valueField:'id',displayField:'text',queryParams: {'planIdx':GztpTicket.rdpPlanIdx},
            				  width: GztpTicket.fieldWidth }]
                	}, {
-                   	items:[{ id: 'vehicle_component', xtype: 'Base_comboTree', fieldLabel: '故障部件', rootId:'0',
-           				  hiddenName: 'vehicleComponentFlbm', returnField: [{widgetId:"vehicleComponentFullname",propertyName:"text"}], selectNodeModel: 'exceptRoot',
-           				  business: 'jcgxBuild', valueField:'flbm',displayField:'text',
-           				  width: GztpTicket.fieldWidth }]
-               	}, {
+                   	items:[{ 
+                   			id: 'vehicle_component', 
+                   			xtype: 'Base_comboTree', 
+                   			fieldLabel: '故障部件', 
+                   			rootId:'0',
+                   			allowBlank:false,
+                   			hiddenName: 'vehicleComponentFlbm', 
+                   			returnField: [{widgetId:"vehicleComponentFullname",propertyName:"text"}], 
+                   			selectNodeModel: 'exceptRoot',
+                   			business: 'jcgxBuild', 
+                   			valueField:'flbm',
+                   			displayField:'text',
+                   			width: GztpTicket.fieldWidth,
+        					listeners : { 
+        						"select":function(combo, record, index){
+        							Ext.getCmp('fault_Type_Key').setValue("");
+        							Ext.getCmp('fault_Type_Value').setValue("");
+        							Ext.getCmp('faultId').setValue("");
+        							Ext.getCmp('faultName').setValue("");
+        						 }
+        					}
+                   		}]
+               	},{
+					xtype: 'compositefield', fieldLabel : '故障库', combineErrors: false,
+			        items: [{
+			               		xtype: 'button',
+			               		text: '故障库',
+			               		tooltip:'故障库选择',
+			              		width: 90,
+			              		handler: function(){
+			              			var component = Ext.getCmp('vehicle_component').getValue();
+			              			if(Ext.isEmpty(component)){
+			              				MyExt.Msg.alert("请先选择故障部件！");
+			              				return;
+			              			}
+			              			// 弹出故障库选择窗口
+			              			JcxtflFaultSelect.flbm = component ;
+			              			JcxtflFaultSelect.faultSelectGrid.store.load();
+			              			JcxtflFaultSelect.win.show();
+			           	   		}
+		           		}]
+				}, {
                		columnWidth:1,
                    	items:[
                    	{
-                   		xtype: 'textarea',
-                   		fieldLabel: '故障描述',
-                   		allowBlank:false,
-                   		maxLength:500,
-                   		height: 60,
+                   		id:'faultName',
+                   		fieldLabel: '故障现象',
+                   		xtype:'displayfield',
                    		name: 'faultDesc'
                    	}]
-               	}, {
-                   	items:[{ id: 'fault_type', xtype: 'Base_comboTree',hiddenName: 'faultTypeKey', //isExpandAll: true,
-						fieldLabel:'故障类型',returnField:[{widgetId:"faultTypeValue",propertyName:"text"}],selectNodeModel:'exceptRoot',
-						treeUrl: ctx + '/eosDictEntrySelect!tree.action', queryParams: {'dicttypeid':'FAULT_TYPE'},
-						valueField:'id',displayField:'text',
-						rootId: 'ROOT_0', rootText: '故障类型', width: GztpTicket.fieldWidth
-					}]
+               	},{
+                   	items:[{
+                   		id:'fault_Type_Key',
+                   		fieldLabel: '故障类型id',
+                   		hidden:true,
+                   		xtype:'displayfield',
+                   		name: 'faultTypeKey'
+                   	}]
+             	}, {
+                   	items:[{
+                   		id:'fault_Type_Value',
+                   		fieldLabel: '故障类型',
+                   		xtype:'displayfield',
+                   		name: 'faultTypeValue'
+                   	}]
              	}, {
                    	items:[
                    	{
@@ -235,8 +279,21 @@ Ext.onReady(function(){
 					            var form = GztpTicket.saveForm.getForm();
 					            if (!form.isValid()) return;
 					            
+					            var faultDesc = Ext.getCmp('faultName').getValue();
+					            if(Ext.isEmpty(faultDesc)){
+					        		MyExt.Msg.alert("请先选择故障现象！");
+					        		return;
+					            }
+					            
 					            var data = form.getValues();
 					            
+					            // 故障类型
+					    		var faultTypeKey = Ext.getCmp('fault_Type_Key').getValue();
+					    		var faultTypeValue = Ext.getCmp('fault_Type_Value').getValue();
+
+					    		data.faultTypeKey = faultTypeKey ;
+					    		data.faultTypeValue = faultTypeValue ;
+					    		data.faultDesc = faultDesc ;
 					            // 获取物料数据
 					            var matUses = GztpTicket.getMatUses();
 					            
@@ -321,7 +378,8 @@ Ext.onReady(function(){
 		form.reset();
 		Ext.getCmp('scope_work').clearValue();
 		Ext.getCmp('vehicle_component').clearValue();
-		Ext.getCmp('fault_type').clearValue();
+		Ext.getCmp('fault_Type_Key').setValue("");
+		Ext.getCmp('fault_Type_Value').setValue("");
 		Ext.getCmp('faultDealType').clearValue();
 		Ext.getCmp('gzdj_type').clearValue();
 		if (!skip) {
@@ -380,7 +438,7 @@ Ext.onReady(function(){
 				header:'故障部件', dataIndex:'vehicleComponentFullname',width: 160
 			},
 	     	{
-				header:'故障描述', dataIndex:'faultDesc',width: 160
+				header:'故障现象', dataIndex:'faultDesc',width: 160
 			},
 			{
 				header:'故障类型字典KEY', dataIndex:'faultTypeKey',width: 120,hidden:true
@@ -506,7 +564,8 @@ Ext.onReady(function(){
 		GztpTicket.saveForm.getForm().setValues(rowRec);
 		Ext.getCmp('scope_work').setDisplayValue(rowRec.scopeWorkIdx, rowRec.scopeWorkFullname);
 		Ext.getCmp('vehicle_component').setDisplayValue(rowRec.vehicleComponentFlbm, rowRec.vehicleComponentFullname);
-		Ext.getCmp('fault_type').setDisplayValue(rowRec.faultTypeKey, rowRec.faultTypeValue);
+		Ext.getCmp('fault_Type_Key').setValue(rowRec.faultTypeKey);
+		Ext.getCmp('fault_Type_Value').setValue(rowRec.faultTypeValue);
 		Ext.getCmp('faultDealType').setDisplayValue(rowRec.handleWay, rowRec.handleWayValue);
 		Ext.getCmp('gzdj_type').setDisplayValue(rowRec.type, rowRec.type);
 		GztpTicket.currRec = rowRec;
@@ -523,4 +582,13 @@ Ext.onReady(function(){
 			searchParam = MyJson.deleteBlankProp(searchParam);
 			this.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
 	});
+	
+	// 故障库方法
+	JcxtflFaultSelect.submit = function(data){
+		Ext.getCmp('faultId').setValue(data.faultId);
+		Ext.getCmp('faultName').setValue(data.faultName);
+		Ext.getCmp('fault_Type_Key').setValue(data.faultTypeID);
+		Ext.getCmp('fault_Type_Value').setValue(data.faultTypeName);
+		JcxtflFaultSelect.win.hide();
+	};
 });

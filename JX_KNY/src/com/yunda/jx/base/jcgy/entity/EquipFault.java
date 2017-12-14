@@ -38,6 +38,10 @@ public class EquipFault implements java.io.Serializable{
 	/* 故障类别 */
 	@Column(name="FAULT_TYPE_ID")
 	private String FaultTypeID;
+	
+	/* 故障类别 */
+	@Column(name="FAULT_TYPE_NAME")
+	private String FaultTypeName;
 
 	/**
 	 * EquipFault空构造
@@ -89,4 +93,14 @@ public class EquipFault implements java.io.Serializable{
 	public void setFaultTypeID(String FaultTypeID) {
 		this.FaultTypeID = FaultTypeID;
 	}
+
+	public String getFaultTypeName() {
+		return FaultTypeName;
+	}
+
+	public void setFaultTypeName(String faultTypeName) {
+		FaultTypeName = faultTypeName;
+	}
+	
+	
 }

@@ -66,7 +66,7 @@ public class ZbglRdpPlanWorkerManager extends JXBaseManager<ZbglRdpPlanWorker, Z
      * <li>修改内容：
      * @param rdpRecordIdx 列检车辆ID
      */
-    private void deleteWorkPersonByRecord(String rdpRecordIdx) {
+    public void deleteWorkPersonByRecord(String rdpRecordIdx) {
         StringBuffer hql = new StringBuffer(" delete From ZbglRdpPlanWorker where rdpRecordIdx = ? ");
         this.daoUtils.execute(hql.toString(), new Object[]{rdpRecordIdx});
     }

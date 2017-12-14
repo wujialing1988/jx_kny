@@ -62,6 +62,7 @@
 <title>列检_故障提票</title>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/BaseComboTree.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jcbm/JcxtflFaultSelect.js"></script> <!-- 故障库 -->
 <script language="javascript" src="<%=ctx%>/jsp/jx/pjjx/base/wpdefine/MatInforList.js"></script> <!-- 物料选择 -->
 <script language="javascript" src="<%=ctx%>/jsp/freight/zb/gztp/MatTypeUseList.js"></script> <!-- 物料消耗 -->
 <script language="javascript" src="<%=ctx%>/jsp/freight/zb/gztp/GztpTicket.js"></script> <!-- 故障提票列表 -->

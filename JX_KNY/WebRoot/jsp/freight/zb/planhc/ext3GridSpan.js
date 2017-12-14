@@ -49,7 +49,7 @@ function gridSpan(grid, rowOrCol, cols, sepCol){
             }
              
             if(allRecs[index1].get(colName) == preValue && (colName == sepCol || seqOldValue == seqCurValue)){
-//                 alert(colName + "======" + seqOldValue + "======" + seqCurValue);
+                 //alert(colName + "======" + seqOldValue + "======" + seqCurValue);
                  allRecs[index1].set(colName, "");
                  array1[i].push(j);
                  if(j == count2 - 1){

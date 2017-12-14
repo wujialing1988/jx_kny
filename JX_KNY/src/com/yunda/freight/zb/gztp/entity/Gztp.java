@@ -205,6 +205,10 @@ public class Gztp implements java.io.Serializable {
     /* 客货类型 10 货车 20 客车*/
     @Column(name = "T_VEHICLE_TYPE")
     private String vehicleType;
+    
+	/* 故障编号 */
+	@Column(name="FAULT_ID")
+	private String faultId;
 
 	/* 质量检验任务状态 */
 	@Transient
@@ -517,6 +521,16 @@ public class Gztp implements java.io.Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public String getFaultId() {
+		return faultId;
+	}
+
+	public void setFaultId(String faultId) {
+		this.faultId = faultId;
+	}
+	
+	
     
 
 }

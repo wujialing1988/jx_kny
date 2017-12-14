@@ -372,7 +372,15 @@ Ext.onReady(function(){
 		fields: [{
 	   			header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'车次', dataIndex:'railwayTime', editor:{  maxLength:50,allowBlank:false }, searcher: {anchor:'98%'}
+				header:'车次', dataIndex:'railwayTime', editor:{  
+					maxLength:50,
+					allowBlank:false,
+					listeners : { 
+						"change":function(me,newValue, oldValue){
+
+						 }
+					}
+				}, searcher: {anchor:'98%'}
 			},{
 				header:'<div>股道<span style="color:green;">【车辆数】</span></div>', dataIndex:'rdpNum', editor:{    
 					fieldLabel:'车辆数',
@@ -464,7 +472,7 @@ Ext.onReady(function(){
 						dicttypeid:'FREIGHT_DIRECT',
 						displayField:'dictname',valueField:'dictname',
 						hasEmpty:"false",
-						allowBlank: false,
+						hidden:true,
 						returnField: [{widgetId:"toDirectionNo",propertyName:"dictid"}]
 			        }, searcher: {anchor:'98%'}
 			},{
@@ -535,6 +543,27 @@ Ext.onReady(function(){
 				if(Ext.isEmpty(data.vehicleType)){
 					data.vehicleType = vehicleType ;
 				}
+				var newValue = data.railwayTime ;
+				if(newValue.length != 0){
+					var lastChar = '' ;
+					for(i = newValue.length - 1 ;  i >= 0 ;i--){
+						lastChar = newValue.charAt(i)
+						if(/^\d+$/.test(lastChar))  
+						{  
+							if(lastChar % 2 == 0){
+								// 偶数
+								data.toDirectionNo = 20  ;
+								data.toDirectionName = '下行'  ;
+							}else{
+								// 奇数
+								data.toDirectionNo = 10  ;
+								data.toDirectionName = '上行'  ;
+							}
+							break ;
+						} 
+					}
+				}
+				
 				return true; 
 			},
 			beforeShowEditWin: function(record, rowIndex){  
@@ -716,14 +745,12 @@ Ext.onReady(function(){
 	       	var sm = ZbglRdpPlan.ZbglRdpPlanGrid.getSelectionModel();
 	       	ZbglRdpPlan.setInfoForm(sm);
 			ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.getStore().reload();	
-			ZbglRdpPlanRecord.ZbglRdpPlanPersonGrid.getStore().reload();
 		}else{
 			ZbglRdpPlan.infoForm.getForm().reset();
 			ZbglRdpPlanRecord.rdpPlanIdx = "###" ;
 			ZbglRdpPlanRecord.rdpPlanStatus = "###";
 			ZbglRdpPlanRecord.railwayTime = "###";
 			ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.getStore().reload();
-			ZbglRdpPlanRecord.ZbglRdpPlanPersonGrid.getStore().reload();
 		}
 	});
 	
@@ -734,7 +761,6 @@ Ext.onReady(function(){
 			var sm = ZbglRdpPlan.ZbglRdpPlanGrid.getSelectionModel();
 	       	ZbglRdpPlan.setInfoForm(sm);
 			ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.getStore().reload();
-			ZbglRdpPlanRecord.ZbglRdpPlanPersonGrid.getStore().reload();
 	});
 	
 	
@@ -758,14 +784,12 @@ Ext.onReady(function(){
 	       	var sm = ZbglRdpPlan.ZbglRdpPlanCompletedGrid.getSelectionModel();
 	       	ZbglRdpPlan.setInfoForm(sm);
 			ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.getStore().reload();	
-			ZbglRdpPlanRecord.ZbglRdpPlanPersonGrid.getStore().reload();
 		}else{
 			ZbglRdpPlan.infoForm.getForm().reset();
 			ZbglRdpPlanRecord.rdpPlanIdx = "###" ;
 			ZbglRdpPlanRecord.rdpPlanStatus = "###";
 			ZbglRdpPlanRecord.railwayTime = "###" ;
 			ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.getStore().reload();	
-			ZbglRdpPlanRecord.ZbglRdpPlanPersonGrid.getStore().reload();
 		}
 	});
 	
@@ -776,7 +800,6 @@ Ext.onReady(function(){
 	       	var sm = ZbglRdpPlan.ZbglRdpPlanCompletedGrid.getSelectionModel();
 	       	ZbglRdpPlan.setInfoForm(sm);
 			ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.getStore().reload();
-			ZbglRdpPlanRecord.ZbglRdpPlanPersonGrid.getStore().reload();
 	});
 	
 	/** 完成tab页面 end **/

@@ -144,6 +144,7 @@ public class EquipFaultManager extends JXBaseManager<EquipFault, EquipFault>{
         }
         entity.setFaultName(t.getFaultName());
         entity.setFaultTypeID(t.getFaultTypeID());
+        entity.setFaultTypeName(t.getFaultTypeName());
         super.saveOrUpdate(entity);
     }
     

@@ -142,12 +142,20 @@ public class JcgxBuildQueryManager extends JXBaseManager<JcgxBuild, JcgxBuild> {
      * @return 取故障现象数据
      */
     @SuppressWarnings("unchecked")
-    public List<Map<String, Object>> getFlbmFault(String flbm) {
+    public List<Map<String, Object>> getFlbmFault(JcxtflFault entity) {
         List<Map<String, Object>> faultList = new ArrayList<Map<String, Object>>();
         
+        String flbm = entity.getFlbm();
         // 判断分类编码，不为空则加入查询条件
         if (StringUtils.isNotBlank(flbm)) {
             String hql = "From JcxtflFault Where flbm = ?";
+            
+            // 按照故障编码和故障名称进行模糊查询
+            if(!StringUtil.isNullOrBlank(entity.getFaultName())){
+            	hql += " and (faultId like '%"+ entity.getFaultName() + "%' or faultName like '%"+entity.getFaultName()+"%')";
+            }
+            
+            hql += " order by seqNo " ;
             
             // 查询数据
             List<JcxtflFault> list = (List<JcxtflFault>) this.daoUtils.find(hql, new Object[] { flbm });
@@ -155,8 +163,11 @@ public class JcgxBuildQueryManager extends JXBaseManager<JcgxBuild, JcgxBuild> {
             Map<String, Object> nodeMap = null;
             for (JcxtflFault fault : list) {
                 nodeMap = new HashMap<String, Object>();
+                nodeMap.put("seqNo", fault.getSeqNo());     // 顺序号
                 nodeMap.put("faultId", fault.getFaultId());     // 故障编号
                 nodeMap.put("faultName", fault.getFaultName()); // 故障名称
+                nodeMap.put("faultTypeID", fault.getFaultTypeID());     // 故障类别编码
+                nodeMap.put("faultTypeName", fault.getFaultTypeName()); // 故障类别名称
                 faultList.add(nodeMap);
             }
         }

@@ -268,4 +268,84 @@ from JCZL_TRAIN t
 	]]>
 	</sql>
 	
+	<!-- 查询货车车辆派工分队信息 -->
+	<sql id="findZbglRecordAndQueue">
+	<![CDATA[
+		      select distinct r.idx as "idx",
+           w.queue_no as "queueNo",
+           w.queue_name as "queueName",
+           r.work_person_name as "workPersonName",
+           r.seq_num as "seqNum",
+           r.train_type_idx as "trainTypeIdx",
+           r.train_no as "trainNo",
+           r.complete_person_name as "completePersonName",
+           to_char(r.rdp_end_time,'yyyy-MM-dd HH24:mi') as "rdpEndTime",
+           r.rdp_record_status as "rdpRecordStatus",
+           r.start_person_name as "startPersonName"
+		 from ZB_ZBGL_PLAN_RECORD r
+		left join ZB_ZBGL_PLAN_WORKER w on r.idx = w.rdp_record_idx
+		where r.rdp_plan_idx = '#RDP_IDX#' 
+		order by w.queue_no , r.seq_num 
+	]]>
+	</sql>	
+	
+	<!-- 更新人员派工表左右关系 -->
+	<sql id="updateWorkerQuene">
+	<![CDATA[
+		update ZB_ZBGL_PLAN_WORKER w set 
+		       w.position_no = decode(w.position_no,'10','20','20','10'),
+		       w.position_name = decode(w.position_no,'10','右','20','左')
+		where w.queue_no = '#QUEUE_NO#' and EXISTS (
+		      select 1 from ZB_ZBGL_PLAN_RECORD r 
+		      inner join ZB_ZBGL_PLAN p on r.rdp_plan_idx = p.idx and  p.idx = '#RDP_IDX#'
+		      where r.idx = w.rdp_record_idx and r.record_status = 0 and p.record_status = 0
+		)
+	]]>
+	</sql>	
+	
+		<!-- 更新机车表左右关系 -->
+	<sql id="updateRecordQuene">
+	<![CDATA[
+		update ZB_ZBGL_PLAN_RECORD r set r.work_person_name = translate(r.work_person_name,'(左)(右)','(右)(左)')
+		where r.rdp_plan_idx = '#RDP_IDX#' 
+		and r.record_status = 0 
+		and EXISTS (
+		    select 1 from ZB_ZBGL_PLAN_WORKER w 
+		    where w.queue_no = '#QUEUE_NO#' and w.rdp_record_idx = r.idx
+		)
+	]]>
+	</sql>	
+	
+	<!-- 查询队列选择列表 -->
+	<sql id="findSelectQueneList">
+	<![CDATA[
+		select distinct 
+       ou.queue_code as "queueNo",
+       ou.queue_name as "queueName"
+        from K_CLASS_ORGANIZATION_USER ou 
+       inner join K_CLASS_MAINTAIN cm on cm.idx = ou.class_org_idx 
+       where 
+       ou.org_idx = '#ORG_IDX#' and cm.class_no = '#CLASS_NO#' 
+order by ou.queue_code
+	]]>
+	</sql>	
+	
+		<!-- 查询队列对应的已有的数据 -->
+	<sql id="findUserQueneList">
+	<![CDATA[
+		 select distinct w.work_person_idx as "workPersonIdx", 
+		                w.work_person_name as "workPersonName",
+		                w.position_no as "positionNo", 
+		                w.position_name as "positionName",
+		                w.queue_no as "queueNo",
+		                w.queue_name as "queueName",
+		                r.work_person_idx as "recordPersonIdx" ,
+		                r.work_person_name as "recordPersonName"
+		 from ZB_ZBGL_PLAN_WORKER w 
+		 inner join ZB_ZBGL_PLAN_RECORD r on w.rdp_record_idx = r.idx
+		 where r.record_status = 0 
+		 and w.queue_no = '#QUEUE_NO#'
+	]]>
+	</sql>			
+	
 </SqlMap>

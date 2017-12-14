@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.map.JsonMappingException;
 import org.springframework.stereotype.Service;
 
 import com.yunda.base.context.SystemContext;
@@ -31,6 +32,7 @@ import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecord;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecordBean;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecordListBean;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlanWiBean;
+import com.yunda.freight.zb.plan.entity.ZbglRdpPlanWorker;
 import com.yunda.freight.zb.plan.entity.ZbglRdpWorkerVo;
 import com.yunda.jx.component.manager.OmEmployeeSelectManager;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
@@ -740,7 +742,7 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
         String empnames = "";
         for (ClassOrganizationUser user : users) {
             empids += user.getWorkPersonIdx() + "," ;
-            empnames += user.getWorkPersonName() + "," ;
+            empnames += user.getWorkPersonName() + "("+user.getPositionName()+")," ;
         }
         if(!StringUtil.isNullOrBlank(empids)){
             empids = empids.substring(0, empids.length() - 1) ;
@@ -1029,4 +1031,142 @@ public class ZbglRdpPlanRecordManager extends JXBaseManager<ZbglRdpPlanRecord, Z
         String totalSql = "Select count(*) as rowcount "+ sql.substring(sql.indexOf("from"));
         return this.queryPageList(totalSql, sql, 0, 10000, false, ZbglRdpPlanRecordListBean.class);
     }
+    
+    
+    /**
+     * <li>说明：查询货车车辆派工分队信息
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-11
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param planIdx
+     * @return
+     */
+    public List<Map<String, Object>> findZbglRecordAndQueue(String planIdx) {
+        String sql = SqlMapUtil.getSql("kny-base:findZbglRecordAndQueue")
+        .replace("#RDP_IDX#", planIdx);
+        return this.queryListMap(sql);
+    }
+
+    /**
+     * <li>说明：切换人员左右位
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-4-12
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws JsonMappingException
+     * @throws IOException
+     */
+	public void setDirect(String rdpPlanIdx, String queueNo) {
+        String updateWorkerQueneSql = SqlMapUtil.getSql("kny-base:updateWorkerQuene").replace("#RDP_IDX#", rdpPlanIdx).replace("#QUEUE_NO#", queueNo);
+        daoUtils.executeSql(updateWorkerQueneSql);
+        String updateRecordQueneSql = SqlMapUtil.getSql("kny-base:updateRecordQuene").replace("#RDP_IDX#", rdpPlanIdx).replace("#QUEUE_NO#", queueNo);
+        daoUtils.executeSql(updateRecordQueneSql);
+	}
+
+    /**
+     * <li>说明：查询队列选择列表
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-11
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws JsonMappingException
+     * @throws IOException
+     */
+	public List<Map<String, Object>> findSelectQueneList(String classNo,
+			String orgIdx) {
+        String sql = SqlMapUtil.getSql("kny-base:findSelectQueneList")
+        .replace("#CLASS_NO#", classNo)
+        .replace("#ORG_IDX#", orgIdx);
+        return this.queryListMap(sql);
+	}
+
+    /**
+     * <li>说明：修改车辆对应的队列
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-11
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws NoSuchFieldException 
+     * @throws BusinessException 
+     * @throws JsonMappingException
+     * @throws IOException
+     */
+	public void changeRecordQueue(String queueNo, String[] recordIds) throws BusinessException, NoSuchFieldException {
+		for (String recordId : recordIds) {
+			ZbglRdpPlanRecord record = this.getModelById(recordId);
+	        StringBuffer hql = new StringBuffer(" From ZbglRdpPlanWorker where rdpRecordIdx = ? ");
+	        List<ZbglRdpPlanWorker> list = this.daoUtils.find(hql.toString(), new Object[]{recordId});
+	        // 如果没有更换队列，不做任何操作
+	        if(list != null && list.size() > 0){
+	        	ZbglRdpPlanWorker worker = list.get(0);
+	        	if(worker.getQueueNo().equals(queueNo)){
+	        		continue ;
+	        	}
+	        	// 删除已有数据
+	        	zbglRdpPlanWorkerManager.deleteWorkPersonByRecord(recordId);
+	        	// 先通过已有数据查询
+	        	List<Map<String, Object>> userQuene = findUserQueneList(queueNo);
+	        	if(userQuene != null && userQuene.size() > 0){
+	        		Map<String, Object> fisrtMap = userQuene.get(0);
+	        		record.setWorkPersonIdx(fisrtMap.get("recordPersonIdx")+"");
+	        		record.setWorkPersonName(fisrtMap.get("recordPersonName")+"");
+	        		this.saveOrUpdate(record);
+	        		for (Map<String, Object> map : userQuene) {
+	        			ZbglRdpPlanWorker workerNew = new ZbglRdpPlanWorker();
+	        			workerNew.setRdpRecordIdx(recordId);
+	        			workerNew.setWorkPersonIdx(map.get("workPersonIdx")+"");
+	        			workerNew.setWorkPersonName(map.get("workPersonName")+"");
+	        			workerNew.setPositionNo(map.get("positionNo")+"");
+	        			workerNew.setPositionName(map.get("positionName")+"");
+	        			workerNew.setQueueNo(map.get("queueNo")+"");
+	        			workerNew.setQueueName(map.get("queueName")+"");
+	        			zbglRdpPlanWorkerManager.save(workerNew);
+					}
+	        	}else{
+	        		ZbglRdpPlan plan = zbglRdpPlanManager.getModelById(record.getRdpPlanIdx());
+	        		Map<String, List<ClassOrganizationUser>> userMaps = getQueueUserMap(plan);
+	        		List<ClassOrganizationUser> users = userMaps.get(queueNo);
+	        		
+	                String empids = "";
+	                String empnames = "";
+	                for (ClassOrganizationUser user : users) {
+	                    empids += user.getWorkPersonIdx() + "," ;
+	                    empnames += user.getWorkPersonName() + "("+user.getPositionName()+")," ;
+	                }
+	                if(!StringUtil.isNullOrBlank(empids)){
+	                    empids = empids.substring(0, empids.length() - 1) ;
+	                    empnames = empnames.substring(0, empnames.length() - 1) ;
+	                }
+	                
+                	record.setWorkPersonIdx(empids);
+                	record.setWorkPersonName(empnames);
+                    this.saveOrUpdate(record);
+                    zbglRdpPlanWorkerManager.saveWorkPersons(record.getIdx(),users);
+	        	}
+	        }
+		}
+	}
+	
+	
+	  /**
+     * <li>说明：查询队列对应的已有的数据
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-11
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws JsonMappingException
+     * @throws IOException
+     */
+	public List<Map<String, Object>> findUserQueneList(String queueNo) {
+        String sql = SqlMapUtil.getSql("kny-base:findUserQueneList")
+        .replace("#QUEUE_NO#", queueNo);
+        return this.queryListMap(sql);
+	} 
+    
 }

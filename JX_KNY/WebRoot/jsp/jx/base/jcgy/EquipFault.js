@@ -12,7 +12,18 @@ Ext.onReady(function(){
 		},{
 			header:'故障名称', dataIndex:'FaultName', editor:{ allowBlank:false }
 		},{
-			header:'故障类别', dataIndex:'FaultTypeID', editor:{   }
+			header:'故障类别id', dataIndex:'FaultTypeID',hidden:true, editor:{ xtype:'hidden',id:'FaultTypeID'  }
+		},{
+			header:'故障类别', dataIndex:'FaultTypeName',hidden:false, editor:{
+				id:'FaultTypeName_combo',
+				xtype: 'EosDictEntry_combo',
+				hiddenName: 'FaultTypeName',
+				dicttypeid:'FAULT_TYPE',
+				displayField:'dictname',valueField:'dictname',
+				hasEmpty:"false",
+				allowBlank: false,
+				returnField: [{widgetId:"FaultTypeID",propertyName:"dictid"}]
+	        }, searcher: {anchor:'98%'}
 		}],
 		storeId:'FaultID'
 	});

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 肯尼亚项目修程提醒  -->
+<SqlMap>
+
+	<!-- 查询货车修程提醒 -->
+	<sql id="findHCRepairWarningList">
+	<![CDATA[
+select t.idx as "idx",
+       t.trainTypeIdx as "trainTypeIdx",
+       t.trainType as "trainType",
+       t.trainNo as "trainNo",
+       t.beforeFxDate as "beforeFxDate",
+       t.nextFxDate as "nextFxDate",
+       t.beforeDxDate as "beforeDxDate",
+       t.nextDxDate as "nextDxDate",
+       t.beforeCxDate as "beforeCxDate",
+       t.nextCxDate as "nextCxDate",
+       t.leaveDate as "leaveDate" from (
+select 
+  hc.idx as idx,
+  hc.train_type_idx as trainTypeIdx,
+  hc.train_type as trainType,
+  hc.train_no as trainNo,
+  hc.before_fx_date as beforeFxDate,
+  case when fx.max_running_km is not null then to_char((hc.before_fx_date + fx.max_running_km),'yyyy-MM') else '' end nextFxDate,
+  hc.before_dx_date as beforeDxDate,
+  case when dx.max_running_km is not null then to_char((hc.before_dx_date + dx.max_running_km),'yyyy-MM') else '' end nextDxDate,
+  hc.before_cx_date as beforeCxDate,
+  case when cx.max_running_km is not null then to_char((hc.before_cx_date + cx.max_running_km),'yyyy-MM') else '' end nextCxDate,
+  to_char(info.leave_date,'yyyy-MM-dd') as leaveDate
+ from K_REPAIR_WARNING_HC hc
+inner join JCZL_TRAIN info on info.train_type_idx = hc.train_type_idx and info.train_no = hc.train_no
+left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '30' and rs.repair_order = '10'
+) fx on fx.train_type_idx = hc.train_type_idx
+left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '20' and rs.repair_order = '10'
+) dx on dx.train_type_idx = hc.train_type_idx
+left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '10' and rs.repair_order = '10'
+) cx on cx.train_type_idx = hc.train_type_idx
+) t  where 1=1 
+	]]>
+	</sql>			
+	
+</SqlMap>

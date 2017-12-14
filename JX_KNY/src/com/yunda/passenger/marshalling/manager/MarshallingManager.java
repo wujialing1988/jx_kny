@@ -64,7 +64,7 @@ public class MarshallingManager extends JXBaseManager<Marshalling, Marshalling> 
 	@Override
 	public void saveOrUpdate(Marshalling entity) throws BusinessException, NoSuchFieldException {
 		int trainCount = marshallingTrainManager.findTrainCountByCode(entity.getMarshallingCode());
-		if(trainCount > entity.getTrainCount()){
+		if(!StringUtil.isNullOrBlank(entity.getIdx()) && trainCount > entity.getTrainCount()){
 			throw new BusinessException("额定总数小于已编组的车辆数！");
 		}
 		 // 根据业务编码规则自动生成“编组号”

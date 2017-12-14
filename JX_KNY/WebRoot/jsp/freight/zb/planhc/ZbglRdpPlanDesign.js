@@ -49,62 +49,17 @@ Ext.onReady(function(){
 	    }]
 	});
 	
-	/**
-	 * 车辆tab
-	 */
-	ZbglRdpPlanDesign.recordTabs = new Ext.TabPanel({
-	    activeTab: 0,
-	    frame:true,
-	    items:[{
-	            title: "作业车辆", border: false, xtype: "panel", layout: "fit", 
-	            items: [
-	            	ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid
-	            ],
-	           	listeners:{
-	        		activate:function(){
-	        			ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.getStore().reload();
-	        		}	        	
-	        	}
-	        },{
-	            title: "作业人员", border: false, xtype: "panel", layout: "fit", 
-	            items:[
-	            	ZbglRdpPlanRecord.ZbglRdpPlanPersonGrid
-	            ],
-		        listeners:{
-	        		activate:function(){
-	        			ZbglRdpPlanRecord.ZbglRdpPlanPersonGrid.getStore().reload();
-	        		}	        	
-	        	}
-	        }]
-	});
-	
-	
-	
-	/**
-	 * 车辆计划
-	 */
-	ZbglRdpPlanDesign.ZbglRdpPlanRecordPanel =  new Ext.Panel( {
-	    layout : 'border',frame:true,
-	    items : [ {
-	        region: 'center', bodyBorder: false,
-	        layout: 'fit', items : [ ZbglRdpPlanRecord.ZbglRdpPlanRecordVis ]
-	    }, {
-	         region : 'south', title: '作业情况查看', collapsible:true,  height: 350,  layout: 'fit', bodyBorder: false, items: [ZbglRdpPlanDesign.recordTabs]
-	    }]
-	});
-	
-	
 	//页面适应布局
 	ZbglRdpPlanDesign.viewport = new Ext.Viewport({
 		layout: 'border',
 		items: [{
         region: 'center', bodyBorder: false,
-        layout: 'fit', items : [ ZbglRdpPlanDesign.ZbglRdpPlanRecordPanel ]
+        layout: 'fit', items : ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid
     	},{ 		
 	     	 region: 'west',  title: '列检计划',  bodyBorder: false, split: true, collapseMode: 'mini',
 	     	defaults: {border: false},
 	     	 width: 400, layout: 'fit',   minSize: 160, maxSize: 400, 
-	     	 collapsible : true,   items:[ZbglRdpPlanDesign.ZbglRdpPlanPanel]
+	     	 collapsible : true,   items:ZbglRdpPlanDesign.ZbglRdpPlanPanel
 		}]
 	});
 	

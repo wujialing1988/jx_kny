@@ -162,7 +162,7 @@ public class MarshallingTrainManager extends  JXBaseManager<MarshallingTrain, Ma
 	 */
 	public void saveOrUpdateTrainList(List<MarshallingTrain> entityList) throws BusinessException, NoSuchFieldException {
 		for (MarshallingTrain entity : entityList) {
-			MarshallingTrain marshallingTrain = getMarshallingTrainBySeqNo(entity.getSeqNo());
+			MarshallingTrain marshallingTrain = getMarshallingTrainBySeqNo(entity.getSeqNo(),entity.getMarshallingCode());
 			if(marshallingTrain != null){
 				marshallingTrain.setTrainTypeIDX(entity.getTrainTypeIDX());
 				marshallingTrain.setTrainTypeShortName(entity.getTrainTypeShortName());
@@ -184,14 +184,16 @@ public class MarshallingTrainManager extends  JXBaseManager<MarshallingTrain, Ma
 	 * <li>修改日期：
 	 * <li>修改内容：
 	 * @param seqNo 序号
+	 * @param marshallingCode 编组编号
 	 * @throws BusinessException
 	 * @throws NoSuchFieldException
 	 */
 	@SuppressWarnings("unchecked")
-	public MarshallingTrain getMarshallingTrainBySeqNo(int seqNo){
+	public MarshallingTrain getMarshallingTrainBySeqNo(int seqNo,String marshallingCode){
 		StringBuffer hql = new StringBuffer();
 		Map paramMap = new HashMap<String,String>();
 		paramMap.put("seqNo", seqNo+"");
+		paramMap.put("marshallingCode", marshallingCode);
 		hql.append("from MarshallingTrain where 1 = 1 ").append(CommonUtil.buildParamsHql(paramMap)).append(" and recordStatus = 0");
 		return (MarshallingTrain)this.daoUtils.findSingle(hql.toString());
 	}

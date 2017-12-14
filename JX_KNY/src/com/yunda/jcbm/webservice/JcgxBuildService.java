@@ -63,9 +63,7 @@ public class JcgxBuildService implements IJcgxBuildService {
             JcxtflFault entity = JSONUtil.read(searchJson, JcxtflFault.class);
           
             if (entity != null) {
-        	    String flbm = entity.getFlbm();
-    		
-                faultList = jcgxBuildQueryManager.getFlbmFault(flbm);
+                faultList = jcgxBuildQueryManager.getFlbmFault(entity);
             }
         }catch (RuntimeException e) {
             ExceptionUtil.process(e, logger);

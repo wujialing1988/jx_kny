@@ -44,6 +44,15 @@ public class JcxtflFault implements java.io.Serializable{
 	/* 故障名称 */
 	@Column(name="FAULT_NAME")
 	private String faultName;
+	
+	/* 故障类别编码 */
+	@Column(name="FAULT_TYPE_ID")
+	private String faultTypeID;
+	
+	/* 故障类别名称 */
+	@Column(name="FAULT_TYPE_NAME")
+	private String faultTypeName;
+	
       /* 顺序号 */
     @Column(name="Seq_No")
     private Integer seqNo;
@@ -89,4 +98,27 @@ public class JcxtflFault implements java.io.Serializable{
 	public void setIdx(String idx) {
 		this.idx = idx;
 	}
+
+
+	public String getFaultTypeID() {
+		return faultTypeID;
+	}
+
+
+	public void setFaultTypeID(String faultTypeID) {
+		this.faultTypeID = faultTypeID;
+	}
+
+
+	public String getFaultTypeName() {
+		return faultTypeName;
+	}
+
+
+	public void setFaultTypeName(String faultTypeName) {
+		this.faultTypeName = faultTypeName;
+	}
+	
+	
+	
 }

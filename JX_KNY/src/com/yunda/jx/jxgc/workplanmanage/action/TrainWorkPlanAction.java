@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
@@ -24,6 +25,7 @@ import com.yunda.frame.util.StringUtil;
 import com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlan;
 import com.yunda.jx.jxgc.workplanmanage.entity.TrainWorkPlanDTO;
 import com.yunda.jx.jxgc.workplanmanage.manager.TrainWorkPlanManager;
+import com.yunda.jx.scdd.repairplan.manager.RepairWarningHCManager;
 import com.yunda.jx.third.edo.entity.ProjectData;
 import com.yunda.jx.third.edo.entity.Result;
 import com.yunda.third.poi.excel.ColumnPattern;
@@ -47,6 +49,7 @@ public class TrainWorkPlanAction extends JXBaseAction<TrainWorkPlan, TrainWorkPl
     
     /** 日志工具 */
     private Logger logger = Logger.getLogger(getClass().getName());
+    
     
     /**
      * <li>说明：机车检修作业计划甘特图展示
