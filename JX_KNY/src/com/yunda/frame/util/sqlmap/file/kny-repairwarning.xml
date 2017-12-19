@@ -41,6 +41,89 @@ left join (
 ) cx on cx.train_type_idx = hc.train_type_idx
 ) t  where 1=1 
 	]]>
-	</sql>			
+	</sql>
+	
+	
+		<!-- 查询客车修程提醒 -->
+	<sql id="findKCRepairWarningList">
+	<![CDATA[
+  select kc.idx as "idx", 
+         kc.train_type_idx as "trainTypeIdx",
+         kc.train_type as "trainType",
+         kc.train_no as "trainNo",
+         kc.a1_km as "a1km",
+         kc.a2_km as "a2km",
+         kc.a3_km as "a3km",
+         kc.a4_km as "a4km",
+         kc.a5_km as "a5km",
+         to_char(kc.before_a1_date,'yyyy-MM-dd') as "beforeA1Date",
+         to_char(kc.before_a2_date,'yyyy-MM-dd') as "beforeA2Date",
+         to_char(kc.before_a3_date,'yyyy-MM-dd') as "beforeA3Date",
+         to_char(kc.before_a4_date,'yyyy-MM-dd') as "beforeA4Date",
+         to_char(kc.before_a5_date,'yyyy-MM-dd') as "beforeA5Date",
+         kc.repair_class as "repairClass",
+         kc.repair_class_name as "repairClassName",
+         kc.total_km as "totalkm",
+         kc.remark as "remark",
+         to_char(info.leave_date,'yyyy-MM-dd') as "leaveDate"
+         from K_REPAIR_WARNING_KC kc 
+  inner join JCZL_TRAIN info on info.train_type_idx = kc.train_type_idx and info.train_no = kc.train_no
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '50' and rs.repair_order = '10'
+  ) a1 on a1.train_type_idx = kc.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '60' and rs.repair_order = '10'
+  ) a2 on a2.train_type_idx = kc.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '70' and rs.repair_order = '10'
+  ) a3 on a3.train_type_idx = kc.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '80' and rs.repair_order = '10'
+  ) a4 on a4.train_type_idx = kc.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '90' and rs.repair_order = '10'
+  ) a5 on a5.train_type_idx = kc.train_type_idx
+  where 1=1 
+	]]>
+	</sql>	
+	
+	
+	<!-- 查询货车月计划 -->
+	<sql id="findTrainEnforcePlanDetailHcList">
+	<![CDATA[
+		select d.idx as "idx",
+       d.plan_idx as "planIdx",
+       d.train_type_idx as "trainTypeIdx",
+       d.train_type_shortname as "trainTypeShortName",
+       d.plan_count as "planCount",
+       zx.zxcounts as "zxcounts",
+       xj.xjcounts as "xjcounts" from SCDD_TRAIN_ENFORCE_PLAN_HC p
+left join SCDD_TRAIN_ENFORCE_DETAIL_HC d on p.idx = d.plan_idx
+left join (
+     select wp.train_type_idx , 
+       wp.train_type_shortname , 
+       to_char(wp.begin_time,'yyyy') as wpYear,
+       to_number(to_char(wp.begin_time,'MM')) as wpMonth,
+       count(1) as zxcounts
+        from JXGC_Train_Work_Plan wp where wp.record_status = 0 
+    and wp.t_vehicle_type = '10'
+    and wp.work_plan_status = 'ONGOING'
+    group by wp.train_type_idx , wp.train_type_shortname , to_char(wp.begin_time,'yyyy'),to_number(to_char(wp.begin_time,'MM'))
+) zx on zx.wpYear = p.plan_year and zx.wpMonth = p.plan_morth and zx.train_type_idx = d.train_type_idx
+left join (
+     select wp.train_type_idx , 
+       wp.train_type_shortname , 
+       to_char(wp.begin_time,'yyyy') as wpYear,
+       to_number(to_char(wp.begin_time,'MM')) as wpMonth,
+       count(1) as xjcounts
+        from JXGC_Train_Work_Plan wp where wp.record_status = 0 
+    and wp.t_vehicle_type = '10'
+    and wp.work_plan_status = 'COMPLETE'
+    group by wp.train_type_idx , wp.train_type_shortname , to_char(wp.begin_time,'yyyy'),to_number(to_char(wp.begin_time,'MM'))
+) xj on xj.wpYear = p.plan_year and xj.wpMonth = p.plan_morth and xj.train_type_idx = d.train_type_idx
+where p.record_status = 0 and d.record_status = 0
+	]]>
+	</sql>	
+				
 	
 </SqlMap>

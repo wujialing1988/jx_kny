@@ -86,6 +86,7 @@ var tree =
         		{id:'客车检修标准', text:'客车检修标准', leaf:true, funcaction:'/jsp/jx/scdd/jxplanmanage/jxstandard/repair_standard.jsp?vehicleType=20'},
         		{id:'客车走行公里', text:'客车走行公里', leaf:true, funcaction:'/jsp/passenger/base/runningkm/Runningkm.jsp'},
         		{id:'客车修程预警', text:'客车修程预警', leaf:true, funcaction:'/jsp/freight/jx/classwarning/RepairClassWarning.jsp'},
+        		{id:'客车修程提醒', text:'客车修程提醒', leaf:true, funcaction:'/jsp/freight/jx/classwarning/new/RepairWarningKC.jsp'},
         		{id:'客车车辆检修记录单维护', text:'客车车辆检修记录单维护', leaf:true, funcaction:'/jsp/jx/jxgc/repairrequirement/RepairProject.jsp?vehicleType=20'},
         		{id:'客车检修作业流程维护',text:'客车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=20'},
         		{id:'客车车辆状态跟踪',text:'客车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=20'},
@@ -102,6 +103,7 @@ var tree =
          	{
     		 	id: 'scdd货车', text: '货车', leaf: false, children: [
     				{id:'货车检修计划编制', text:'货车检修计划编制', leaf:true, funcaction:'/jsp/jx/scdd/enforceplan/TrainEnforcePlan.jsp?vehicleType=10'},
+    				{id:'货车检修计划编制（新）', text:'货车检修计划编制（新）', leaf:true, funcaction:'/jsp/jx/scdd/enforceplanHc/TrainEnforcePlanHc.jsp'},
              		{id:'货车检修计划查看', text:'货车检修计划查看', leaf:true, funcaction:'/jsp/jx/scdd/enforceplan/TrainEnforcePlanSearch.jsp?vehicleType=10'},
     		 	    {id:'货车车辆出入段', text:'货车车辆出入段', leaf:true, funcaction:'/jsp/twt/trainaccessaccount/TrainAccessAccount.jsp?vehicleType=10'},
              		{id:'货车出入段查询', text:'货车出入段查询', leaf:true, funcaction:'/jsp/twt/trainaccessaccount/TrainAccessAccountSearch.jsp?vehicleType=10'},

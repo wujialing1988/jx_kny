@@ -12,6 +12,7 @@ import com.yunda.frame.common.IbaseCombo;
 import com.yunda.frame.common.JXBaseManager;
 import com.yunda.frame.util.CommonUtil;
 import com.yunda.frame.util.StringUtil;
+import com.yunda.jx.scdd.repairplan.manager.RepairWarningKCManager;
 import com.yunda.passenger.marshalling.entity.MarshallingTrain;
 import com.yunda.passenger.marshalling.manager.MarshallingTrainManager;
 import com.yunda.passenger.traindemand.entity.TrainDemand;
@@ -38,6 +39,9 @@ public class TrainDemandManager extends JXBaseManager<TrainDemand, TrainDemand> 
     private MarshallingTrainDemandManager marshallingTrainDemandManager;
 	@Resource
 	private TrainInspectorDemandManager trainInspectorDemandManager;
+	
+	@Resource
+	private RepairWarningKCManager repairWarningKCManager ;
 	/**
 	 * <li>说明：通过idx查询实体
 	 * <li>创建人：张迪
@@ -75,6 +79,7 @@ public class TrainDemandManager extends JXBaseManager<TrainDemand, TrainDemand> 
 			daoUtils.flush();
 			marshallingTrainDemandManager.updateTrainListByDemandIDX(entity.getIdx(), trainList, true);
 			trainInspectorDemandManager.updateInspectorListByDemand(entity, true);
+			repairWarningKCManager.updateKm(trainList, entity.getKilometers());
 	    }else{  // 编辑
 	    	TrainDemand  oldEntity = this.getModelById(entity.getIdx());
 	    	if(null != oldEntity && !oldEntity.getMarshallingCode().equals(entity.getMarshallingCode())){
