@@ -1,7 +1,6 @@
 package com.yunda.passenger.marshalling.manager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,16 +8,10 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.yunda.common.BusinessException;
-import com.yunda.frame.common.Constants;
 import com.yunda.frame.common.IbaseCombo;
 import com.yunda.frame.common.JXBaseManager;
-import com.yunda.frame.order.AbstractOrderManager;
 import com.yunda.frame.util.CommonUtil;
-import com.yunda.frame.util.EntityUtil;
-import com.yunda.jx.jxgc.processdef.entity.JobProcessNodeDef;
 import com.yunda.passenger.marshalling.entity.MarshallingTrain;
-import com.yunda.passenger.traindemand.entity.MarshallingTrainDemand;
-import com.yunda.util.BeanUtils;
 
 
 /**

@@ -599,11 +599,31 @@ public final class DateUtil {
         return startTime + timeInterval;
     }
     
+    /**
+     * <li>说明：指定一个时间相加
+     * <li>创建人：程锐
+     * <li>创建日期：2016-3-14
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param startTime 开始时间
+     * @param timeInterval 时长
+     * @return 完成时间
+     */
+    public static Date plusDay(Date SourceDate,int day){
+    	Calendar cal = Calendar.getInstance();  
+        cal.setTime(SourceDate);  
+        cal.add(Calendar.DATE, day);  
+        return cal.getTime();
+    }
+    
     public static void main(String[] args){
     	String beginDate = "2013-1-2";
     	String endDate = "2012-12-30";
     	System.out.println("beginDate:");
     	System.out.println("endDate:");
+    	
+    	
     	try {
 			System.out.println(getDaysBetween(beginDate, endDate));
 		} catch (Exception e) {

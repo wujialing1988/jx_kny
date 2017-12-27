@@ -140,6 +140,9 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
      * @param plan
      */
     private void setPlanEndTime(ZbglRdpPlan plan) {
+    	if(plan.getCheckTime() == null){
+    		plan.setCheckTime(0);
+    	}
         if(plan != null && plan.getCheckTime() != null && plan.getPlanStartTime() != null){
             plan.setPlanEndTime(new Date(plan.getPlanStartTime().getTime() + 60 * 1000 * plan.getCheckTime()));
         }

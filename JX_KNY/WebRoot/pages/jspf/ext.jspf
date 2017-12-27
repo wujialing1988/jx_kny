@@ -1,0 +1,24 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%
+
+%>
+<script language="javascript">
+</script>
+<link href="<%=ctx%>/frame/resources/css/iconExt.jsp" rel="stylesheet" type="text/css">
+<link href="<%=ctx%>/frame/resources/ext-3.4.0/resources/css/ext-all.css" rel="stylesheet" type="text/css">
+<!-- 设备系统通用样式 -->
+<link href="<%=ctx%>/jsp/sb/base/css/common.css" rel="stylesheet" type="text/css">
+<style>
+</style>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ext-base-debug.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ext-all-debug.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-<%=browserLang %>.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/i18n-lang-<%=browserLang %>.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/MyExt.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/js/MyJson.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-yunda.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/js/JX-Common.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/My97DatePicker/4.8/WdatePicker.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/My97DatePicker/Ext-My97-DateField.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Grid.js"></script>
+<script language="javascript" src="<%=ctx%>/jsp/jx/js/Report.js"></script>

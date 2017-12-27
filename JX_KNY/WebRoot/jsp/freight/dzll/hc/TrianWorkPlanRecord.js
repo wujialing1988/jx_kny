@@ -72,7 +72,7 @@ Ext.onReady(function(){
 					}else if("60" == type){
 						url = "/kny/dzll/zbglRdpPlanRecordGztp.cpt&rdpIdx="+rdpIdx;
 					}else if("00" == type){
-						var infoUrl = ctx+"/jsp/freight/dzll/trainInfo.jsp?trainTypeIDX="+TrianWorkPlanRecord.trainTypeIDX+"&trainNo="+TrianWorkPlanRecord.trainNo
+						var infoUrl = ctx+"/jsp/freight/dzll/hc/trainInfo.jsp?trainTypeIDX="+TrianWorkPlanRecord.trainTypeIDX+"&trainNo="+TrianWorkPlanRecord.trainNo
 						+"&vehicleType="+vehicleType;
 						document.getElementById("report").innerHTML = "<iframe style='width:100%;height:100%;overflow:auto;' frameborder='0' src=" + infoUrl + "></iframe>";
 						
@@ -92,7 +92,7 @@ Ext.onReady(function(){
 				if(node.id == 'ROOT_0' && node.childNodes.length > 0){
 					var path = node.childNodes[0].getPath();
 					TrianWorkPlanRecord.tree.selectPath(path);
-					var infoUrl = ctx+"/jsp/freight/dzll/trainInfo.jsp?trainTypeIDX="+TrianWorkPlanRecord.trainTypeIDX+"&trainNo="+TrianWorkPlanRecord.trainNo
+					var infoUrl = ctx+"/jsp/freight/dzll/hc/trainInfo.jsp?trainTypeIDX="+TrianWorkPlanRecord.trainTypeIDX+"&trainNo="+TrianWorkPlanRecord.trainNo
 				+"&vehicleType="+vehicleType;
 					document.getElementById("report").innerHTML = "<iframe style='width:100%;height:100%;overflow:auto;' frameborder='0' src=" + infoUrl + "></iframe>";
 				}
@@ -134,6 +134,22 @@ Ext.onReady(function(){
 			render : function() {
 				
 			}
+		}
+	});
+	
+	
+	TrianWorkPlanRecord.win = new Ext.Window({
+		title:'车辆电子履历', maximized:true,
+		layout:"fit", closeAction:"hide",
+		items:TrianWorkPlanRecord.mainPanel,
+		buttonAlign:'center',
+		buttons:[{
+			text:'关闭', iconCls:'closeIcon', handler:function(){
+				this.findParentByType('window').hide();
+			}
+		}], 
+		listeners : {
+			
 		}
 	});
 	

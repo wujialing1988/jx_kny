@@ -63,7 +63,10 @@ var tree =
             {id:'故障登记查询_客车运用', text:'故障登记查询_客车运用', leaf:true, funcaction:'/jsp/freight/zb/gztp/GztpQuery.jsp?subSysCode=00&vehicleType=20'},
             {id:'质量检验配置_客车运用', text:'质量检验配置_客车运用', leaf:true, funcaction:'/jsp/freight/zb/qualitycontrol/qualitycontrol.jsp?subSysCode=00&vehicleType=20'},
             {id:'客车巡检信息录入', text:'客车巡检信息录入', leaf:true, funcaction:'/jsp/freight/zb/inspectrecord/TrainInspectRecord.jsp?vehicleType=20'},
-            {id:'客车巡检信息查询', text:'客车巡检信息查询', leaf:true, funcaction:'/jsp/freight/zb/inspectrecord/query/TrainInspectRecord.jsp?vehicleType=20'}
+            {id:'客车巡检信息查询', text:'客车巡检信息查询', leaf:true, funcaction:'/jsp/freight/zb/inspectrecord/query/TrainInspectRecord.jsp?vehicleType=20'},
+            {id:'客车编组查询', text:'客车编组查询', leaf:true, funcaction:'/pages/view/kcyy/bzxx/kcyyBzInfo.jsp'},
+            {id:'客车故障登记统计打印', text:'客车故障登记统计打印', leaf:true, funcaction:'/jsp/report/kc/GztpAnasysKC.jsp'},
+            
         ]
     }, {
         id:'技术管理', text:'技术管理', leaf:false, children:[
@@ -77,13 +80,13 @@ var tree =
         		{id:'货车检修作业流程维护',text:'货车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=10'},
         		{id:'货车车辆状态跟踪',text:'货车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=10'},
         		{id:'货车车辆档案管理', text:'货车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=10'},
-        		{id:'货车车辆电子履历', text:'货车车辆电子履历', leaf:true, funcaction:'/jsp/freight/dzll/TrainRecord.jsp?vehicleType=10'}
+        		{id:'货车车辆电子履历', text:'货车车辆电子履历', leaf:true, funcaction:'/jsp/freight/dzll/hc/TrainRecord.jsp'}
         	]
         	},
         	{
         	id: 'jsgl客车', text: '客车', leaf: false, children: [
         		{id:'客车修程对应修次', text:'客车修程对应修次', leaf:true, funcaction:'/jsp/jxpz/rcrtset/RcRt.jsp?vehicleType=20'},
-        		{id:'客车检修标准', text:'客车检修标准', leaf:true, funcaction:'/jsp/jx/scdd/jxplanmanage/jxstandard/repair_standard.jsp?vehicleType=20'},
+        		{id:'客车检修标准', text:'客车检修标准', leaf:true, funcaction:'/jsp/jx/scdd/jxplanmanage/jxstandard/repair_standard_KC.jsp?vehicleType=20'},
         		{id:'客车走行公里', text:'客车走行公里', leaf:true, funcaction:'/jsp/passenger/base/runningkm/Runningkm.jsp'},
         		{id:'客车修程预警', text:'客车修程预警', leaf:true, funcaction:'/jsp/freight/jx/classwarning/RepairClassWarning.jsp'},
         		{id:'客车修程提醒', text:'客车修程提醒', leaf:true, funcaction:'/jsp/freight/jx/classwarning/new/RepairWarningKC.jsp'},
@@ -91,7 +94,7 @@ var tree =
         		{id:'客车检修作业流程维护',text:'客车检修作业流程维护',leaf:true,funcaction:'/jsp/jx/jxgc/processdef/JobProcessDef.jsp?vehicleType=20'},
         		{id:'客车车辆状态跟踪',text:'客车车辆状态跟踪',leaf:true,funcaction:'/jsp/freight/base/ztgz/ZtgzDesign.jsp?vehicleType=20'},
         		{id:'客车车辆档案管理', text:'客车车辆档案管理', leaf:true, funcaction:'/jsp/jx/jcll/TrainRecord.jsp?vehicleType=20'},
-        		{id:'客车车辆电子履历', text:'客车车辆电子履历', leaf:true, funcaction:'/jsp/freight/dzll/TrainRecord.jsp?vehicleType=20'}
+        		{id:'客车车辆电子履历', text:'客车车辆电子履历', leaf:true, funcaction:'/jsp/freight/dzll/kc/TrainRecord.jsp'}
         	]},        
             {id:'车辆检修流水线维护', text:'车辆检修流水线维护', leaf:true, funcaction:'/jsp/jx/jxgc/dispatchmanage/RepairLine.jsp'},
             {id:'车辆检修质量检验项维护', text:'车辆检修质量检验项维护', leaf:true, funcaction:'/jsp/jx/jxgc/base/jcqcitemdefine/JCQCItemDefine.jsp'},

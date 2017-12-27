@@ -8,40 +8,23 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 	
-	<!-- 同步客车修程报警信息 start -->
+	<!-- 同步客车修程报警信息  start -->
 	<bean id="repairClassWarningTask"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<!-- 调用的类 -->
-		<property name="targetObject" ref="repairClassWarningManager" />
+		<property name="targetObject" ref="repairWarningKCManager" />
 		<!-- 调用类中的方法 -->
-		<property name="targetMethod" value="synchronizeKCWarningData" />
+		<property name="targetMethod" value="updateComputeNextRepair" />
 	</bean>
 	
 	<bean id="repairClassWarningTime"
 		class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="repairClassWarningTask" />
-		<!-- cron表达式 每隔30分钟 -->
+		<!-- cron表达式 每隔2分钟 -->
 		<property name="cronExpression" value="0 0/2 * * * ?" />
 	</bean>	
-	<!-- 同步客车修程报警信息 end -->	
+	<!-- 同步客车修程报警信息 end -->		
 
-	<!-- 同步货车修程报警信息 start -->
-	<bean id="repairClassWarningHCTask"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<!-- 调用的类 -->
-		<property name="targetObject" ref="repairClassWarningManager" />
-		<!-- 调用类中的方法 -->
-		<property name="targetMethod" value="synchronizeHCWarningData" />
-	</bean>
-	
-	<bean id="repairClassWarningHCTime"
-		class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<property name="jobDetail" ref="repairClassWarningHCTask" />
-		<!-- cron表达式 每隔30分钟 -->
-		<property name="cronExpression" value="0 0/2 * * * ?" />
-	</bean>	
-	<!-- 同步货车修程报警信息 end -->
-	
 	<!-- 设备巡检计划生成 start -->
 	<bean id="inspectPlanTask"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -81,10 +64,9 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-			
-				<ref bean="repairClassWarningTime" />
-				<ref bean="repairClassWarningHCTime" />
 			<!--
+				<ref bean="repairClassWarningTime" />
+			
 				<ref bean="inspectPlanTime" />
 				<ref bean="pointCheckOmitTime"/>
 				-->

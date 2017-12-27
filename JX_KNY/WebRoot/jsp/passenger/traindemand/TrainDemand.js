@@ -64,7 +64,7 @@ Ext.onReady(function(){
 	            fields:['idx','marshallingCode','marshallingTrainCountStr'],
 			    displayField: "marshallingTrainCountStr", valueField: "idx",
 			    returnField: [{widgetId:"marshallingCodeID",propertyName:"marshallingCode"},
-			    			{widgetId:"marshallingIdx",propertyName:"marshallingIdx"}],
+			    			{widgetId:"marshallingIdx",propertyName:"idx"}],
 	            pageSize: 0, minListWidth: 150,
 	            editable:true,
 				listeners : { 

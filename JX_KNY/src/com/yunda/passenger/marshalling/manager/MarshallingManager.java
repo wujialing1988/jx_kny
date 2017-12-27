@@ -1,5 +1,6 @@
 package com.yunda.passenger.marshalling.manager;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +19,14 @@ import com.yunda.frame.common.SearchEntity;
 import com.yunda.frame.util.DateUtil;
 import com.yunda.frame.util.JSONUtil;
 import com.yunda.frame.util.StringUtil;
+import com.yunda.frame.util.sqlmap.SqlMapUtil;
+import com.yunda.jx.scdd.repairplan.manager.RepairWarningKCManager;
 import com.yunda.jxpz.coderule.manager.CodeRuleConfigManager;
 import com.yunda.passenger.marshalling.entity.Marshalling;
 import com.yunda.passenger.marshalling.entity.MarshallingTrain;
 import com.yunda.passenger.routing.entity.Routing;
 import com.yunda.passenger.routing.manager.RoutingManager;
+import com.yunda.passenger.traindemand.manager.TrainDemandManager;
 /**
  * <li>标题: 肯尼亚综合管理信息系统
  * <li>说明: 编组基础信息业务类
@@ -46,6 +50,11 @@ public class MarshallingManager extends JXBaseManager<Marshalling, Marshalling> 
     private MarshallingTrainCountViewManager marshallingTrainCountViewManager;
     @Resource
     private RoutingManager routingManager;
+    @Resource
+    private RepairWarningKCManager repairWarningKCManager;    
+    
+    @Resource
+    private TrainDemandManager trainDemandManager ;
     
    // 业务字典配置的 编组编号生产规则 名称
     private static final String K_P_MARSHALLING_CODE = "K_P_MARSHALLING_CODE";
@@ -183,5 +192,127 @@ public class MarshallingManager extends JXBaseManager<Marshalling, Marshalling> 
 		super.saveOrUpdate(oldMarshalling);
 		
 	}
+	
+	
+	/**
+     * <li>说明：查询客车编组主表
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-20
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param params 查询条件
+     * @return
+     */  
+	 public List<Map<String, Object>> findMarshallingList(Map<String, String> params){
+	        String sql = SqlMapUtil.getSql("kny-repairwarning:findMarshallingList");
+	        List<Map<String, Object>> result = this.queryListMap(sql); 
+	        List<Map<String, Object>> list = null ;
+	        for (Map<String, Object> map : result) {
+	        	list = new ArrayList<Map<String,Object>>();
+	        	String marshallingCode = map.get("marshallingCode")+"";
+	        	int trainCounts = Integer.parseInt(map.get("trainCount") + "") ;
+	        	String demandIdx = map.get("demandIdx")+""; // 编组任务
+	        	List<MarshallingTrain> trains = marshallingTrainManager.findTrainListByCode(marshallingCode);
+	        	Map<String, Object> trainMap = null ;
+	        	for (int i = 0; i < trainCounts; i++) {
+	        		trainMap = new HashMap<String, Object>();
+	        		MarshallingTrain train = getMarshallingTrainBySeqNo(i+1,trains);
+	        		if(train != null){
+	        			trainMap.put("trainNo", train.getTrainNo());
+	        			trainMap.put("trainTypeIdx", train.getTrainTypeIDX());
+	        			trainMap.put("trainTypeShortname", train.getTrainTypeShortName());
+	        			trainMap.put("seqNo", train.getSeqNo());
+	        			trainMap.put("status", "30");	// 10 运用中（正在运行的车辆） 20（预留车位）  30（空闲编组） 40（未编组车辆） 50（检修车辆）
+	        			if(!StringUtil.isNullOrBlank(demandIdx)){
+	        				trainMap.put("status", "10");
+	        			}
+	        			// 查询走行及修程数据
+	        			List<Map<String, Object>> warninglist = repairWarningKCManager.findTrainRepairInfosForKC(train.getTrainTypeIDX(), train.getTrainNo(),false,false);
+	        			if(warninglist != null){
+	        				Map<String, Object> warning = warninglist.get(0);
+	        				trainMap.put("a1km", warning.get("a1km")+"");
+	        				trainMap.put("a2km", warning.get("a2km")+"");
+	        				trainMap.put("a3km", warning.get("a3km")+"");
+	        				trainMap.put("a4km", warning.get("a4km")+"");
+	        				trainMap.put("a5km", warning.get("a5km")+"");
+	        				
+	        				trainMap.put("beforeA1Date", warning.get("beforeA1Date") == null ? "" : warning.get("beforeA1Date")+"");
+	        				trainMap.put("beforeA2Date", warning.get("beforeA2Date") == null ? "" : warning.get("beforeA2Date")+"");
+	        				trainMap.put("beforeA3Date", warning.get("beforeA3Date") == null ? "" : warning.get("beforeA3Date")+"");
+	        				trainMap.put("beforeA4Date", warning.get("beforeA4Date") == null ? "" : warning.get("beforeA4Date")+"");
+	        				trainMap.put("beforeA5Date", warning.get("beforeA5Date") == null ? "" : warning.get("beforeA5Date")+"");
+	        				
+	        				trainMap.put("nextA1Date", warning.get("nextA1Date") == null ? "" : warning.get("nextA1Date")+"");
+	        				trainMap.put("nextA2Date", warning.get("nextA2Date") == null ? "" : warning.get("nextA2Date")+"");
+	        				trainMap.put("nextA3Date", warning.get("nextA3Date") == null ? "" : warning.get("nextA3Date")+"");
+	        				trainMap.put("nextA4Date", warning.get("nextA4Date") == null ? "" : warning.get("nextA4Date")+"");
+	        				trainMap.put("nextA5Date", warning.get("nextA5Date") == null ? "" : warning.get("nextA5Date")+"");
+	        				
+	        			}
+	        		}else{
+	        			trainMap.put("trainNo", "-");
+	        			trainMap.put("trainTypeIdx", "");
+	        			trainMap.put("trainTypeShortname", "-");
+	        			trainMap.put("seqNo", i+1);
+	        			trainMap.put("status", "20");	// 欠编
+	        		}
+	        		list.add(trainMap);
+				}
+	        	map.put("trains", list);
+	        }
+	        return result;
+	 }
+	 
+	 
+	 	/**
+	     * <li>说明：查询客车备用车列表
+	     * <li>创建人：伍佳灵
+	     * <li>创建日期：2017-12-20
+	     * <li>修改人： 
+	     * <li>修改日期：
+	     * <li>修改内容：
+	     * @param params 查询条件
+	     * @return
+	     */  
+		 public List<Map<String, Object>> findNotMarshallingList(Map<String, String> params){
+			 return repairWarningKCManager.findTrainRepairInfosForKC(null,null,true,false);
+		 }
+		 
+	 	/**
+	     * <li>说明：查询客车检修车车列表
+	     * <li>创建人：伍佳灵
+	     * <li>创建日期：2017-12-20
+	     * <li>修改人： 
+	     * <li>修改日期：
+	     * <li>修改内容：
+	     * @param params 查询条件
+	     * @return
+	     */  
+		 public List<Map<String, Object>> findJxMarshallingList(Map<String, String> params){
+			 return repairWarningKCManager.findTrainRepairInfosForKC(null,null,false,true);
+		 }		 
+	 
+		/**
+	     * <li>说明：通过序号查询车辆
+	     * <li>创建人：伍佳灵
+	     * <li>创建日期：2017-12-20
+	     * <li>修改人： 
+	     * <li>修改日期：
+	     * <li>修改内容：
+	     * @param seqNo 序号
+	     * @param trains 车辆
+	     * @return
+	     */  
+	 private MarshallingTrain getMarshallingTrainBySeqNo(int seqNo,List<MarshallingTrain> trains){
+		 MarshallingTrain result = null ;
+		 for (MarshallingTrain marshallingTrain : trains) {
+			if(marshallingTrain.getSeqNo().intValue() == seqNo){
+				result = marshallingTrain ;
+				break ;
+			}
+		}
+		 return result ;
+	 }
 
 }

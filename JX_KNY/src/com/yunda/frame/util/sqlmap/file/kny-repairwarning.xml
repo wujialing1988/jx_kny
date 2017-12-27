@@ -61,8 +61,14 @@ left join (
          to_char(kc.before_a3_date,'yyyy-MM-dd') as "beforeA3Date",
          to_char(kc.before_a4_date,'yyyy-MM-dd') as "beforeA4Date",
          to_char(kc.before_a5_date,'yyyy-MM-dd') as "beforeA5Date",
+         nvl(to_char(kc.next_a1_date,'yyyy-MM-dd'),'') as "nextA1Date",
+         nvl(to_char(kc.next_a2_date,'yyyy-MM'),'') as "nextA2Date",
+         nvl(to_char(kc.next_a3_date,'yyyy-MM'),'') as "nextA3Date",
+         nvl(to_char(kc.next_a4_date,'yyyy-MM'),'') as "nextA4Date",
+         nvl(to_char(kc.next_a5_date,'yyyy-MM'),'') as "nextA5Date",  
          kc.repair_class as "repairClass",
          kc.repair_class_name as "repairClassName",
+         kc.repair_warning_type as "repairWarningType",
          kc.total_km as "totalkm",
          kc.remark as "remark",
          to_char(info.leave_date,'yyyy-MM-dd') as "leaveDate"
@@ -124,6 +130,126 @@ left join (
 where p.record_status = 0 and d.record_status = 0
 	]]>
 	</sql>	
-				
+	
+	
+	<!-- 查询客车编组主表 -->
+	<sql id="findMarshallingList">
+	<![CDATA[
+ select t.idx as "idx",
+       t.marshalling_code as "marshallingCode",
+       t.marshalling_name as "marshallingName",
+       t.train_count as "trainCount",
+       d.idx as "demandIdx",
+       d.strips as "strips",
+       d.back_strips as "backStrips",
+       d.strips || '/' || d.back_strips as "stripsAll",
+       d.starting_station as "startingStation",
+       d.leave_off_station as "leaveOffStation",
+       d.starting_station || '-' || d.leave_off_station as "stationAll",
+       d.departure_time as "departureTime", 
+       d.arrival_time as "arrivalTime" ,
+       d.departure_time || '~' || d.arrival_time as "toTimeAll",
+       d.departure_back_time as "departureBackTime",
+       d.arrival_back_time as "arrivalBackTime",
+       d.departure_back_time || '~' || d.arrival_back_time as "arrivalTimeAll",
+       d.train_inspector_name as "trainInspectorName",
+       to_char(d.running_date,'yyyy-MM-dd') as "runningDate"
+        from 
+       K_MARSHALLING t 
+       left join K_TRAIN_DEMAND d on d.record_status = 0 and d.marshalling_idx = t.idx and to_char(d.running_date,'yyyy-MM-dd') = to_char(sysdate,'yyyy-MM-dd')
+       where t.record_status = 0
+	]]>
+	</sql>
+	
+	<!-- 查询客车基本及修程信息 -->
+	<sql id="findTrainRepairInfosForKC">
+	<![CDATA[
+ select info.idx as "idx", 
+         info.train_type_idx as "trainTypeIdx",
+         info.train_type_shortname as "trainTypeShortname",
+         info.train_no as "trainNo",
+         info.make_factory_name as "makeFactoryName",
+         info.register_person_name as "registerPersonName",
+         info.train_state as "trainState",
+         kc.a1_km as "a1km",
+         kc.a2_km as "a2km",
+         kc.a3_km as "a3km",
+         kc.a4_km as "a4km",
+         kc.a5_km as "a5km",
+         nvl(to_char(kc.before_a1_date,'yyyy-MM-dd'),'') as "beforeA1Date",
+         nvl(to_char(kc.before_a2_date,'yyyy-MM'),'') as "beforeA2Date",
+         nvl(to_char(kc.before_a3_date,'yyyy-MM'),'') as "beforeA3Date",
+         nvl(to_char(kc.before_a4_date,'yyyy-MM'),'') as "beforeA4Date",
+         nvl(to_char(kc.before_a5_date,'yyyy-MM'),'') as "beforeA5Date",
+         nvl(to_char(kc.next_a1_date,'yyyy-MM-dd'),'') as "nextA1Date",
+         nvl(to_char(kc.next_a2_date,'yyyy-MM'),'') as "nextA2Date",
+         nvl(to_char(kc.next_a3_date,'yyyy-MM'),'') as "nextA3Date",
+         nvl(to_char(kc.next_a4_date,'yyyy-MM'),'') as "nextA4Date",
+         nvl(to_char(kc.next_a5_date,'yyyy-MM'),'') as "nextA5Date",         
+         kc.repair_class as "repairClass",
+         kc.repair_class_name as "repairClassName",
+         kc.total_km as "totalkm",
+         kc.remark as "remark",
+         to_char(info.leave_date,'yyyy-MM-dd') as "leaveDate",
+         mt.idx as "mtIdx",
+         wp.idx as "workPlanIdx",
+         case when wp.idx is not null then '50' when mt.idx is null then '40' end as "status"
+         
+         from JCZL_TRAIN info 
+  left join K_REPAIR_WARNING_KC kc  on info.train_type_idx = kc.train_type_idx and info.train_no = kc.train_no
+  left join K_MARSHALLING_TRAIN mt on mt.train_type_idx = info.train_type_idx and mt.train_no = info.train_no and mt.record_status = 0  
+  left join JXGC_Train_Work_Plan wp on wp.record_status = 0 and wp.t_vehicle_type = '20' and wp.work_plan_status = 'ONGOING' and wp.train_type_idx = info.train_type_idx and wp.train_no = info.train_no
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '50' and rs.repair_order = '10'
+  ) a1 on a1.train_type_idx = kc.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '60' and rs.repair_order = '10'
+  ) a2 on a2.train_type_idx = kc.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '70' and rs.repair_order = '10'
+  ) a3 on a3.train_type_idx = kc.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '80' and rs.repair_order = '10'
+  ) a4 on a4.train_type_idx = kc.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '90' and rs.repair_order = '10'
+  ) a5 on a5.train_type_idx = kc.train_type_idx
+  where 1=1 and info.record_status = 0 and info.t_vehicle_type = '20' 
+	]]>
+	</sql>	
+		
+		
+	<!-- 查询货车基本及修程信息 -->
+	<sql id="findTrainRepairInfosForHC">
+	<![CDATA[
+select info.idx as "idx", 
+         info.train_type_idx as "trainTypeIdx",
+         info.train_type_shortname as "trainTypeShortname",
+         info.train_no as "trainNo",
+         info.make_factory_name as "makeFactoryName",
+         info.register_person_name as "registerPersonName",
+         info.train_state as "trainState",
+         to_char(info.leave_date,'yyyy-MM-dd') as "leaveDate",
+         trunc(sysdate) - trunc(info.leave_date) as "totalday",
+         hc.before_fx_date as "beforeFxDate",
+         case when fx.max_running_km is not null then to_char((hc.before_fx_date + fx.max_running_km),'yyyy-MM') else '' end "nextFxDate",
+         hc.before_dx_date as "beforeDxDate",
+         case when dx.max_running_km is not null then to_char((hc.before_dx_date + dx.max_running_km),'yyyy-MM') else '' end "nextDxDate",
+         hc.before_cx_date as "beforeCxDate",
+         case when cx.max_running_km is not null then to_char((hc.before_cx_date + cx.max_running_km),'yyyy-MM') else '' end "nextCxDate"
+         from JCZL_TRAIN info 
+  left join K_REPAIR_WARNING_HC hc  on info.train_type_idx = hc.train_type_idx and info.train_no = hc.train_no
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '30' and rs.repair_order = '10'
+  ) fx on fx.train_type_idx = info.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '20' and rs.repair_order = '10'
+  ) dx on dx.train_type_idx = info.train_type_idx
+  left join (
+     select * from JCJX_REPAIR_STANDARD rs where rs.repair_class = '10' and rs.repair_order = '10'
+  ) cx on cx.train_type_idx = info.train_type_idx
+  where 1=1 and info.record_status = 0 and info.t_vehicle_type = '10'  
+	]]>
+	</sql>					
 	
 </SqlMap>

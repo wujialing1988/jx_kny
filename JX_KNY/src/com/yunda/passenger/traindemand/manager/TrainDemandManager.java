@@ -11,6 +11,7 @@ import com.yunda.common.BusinessException;
 import com.yunda.frame.common.IbaseCombo;
 import com.yunda.frame.common.JXBaseManager;
 import com.yunda.frame.util.CommonUtil;
+import com.yunda.frame.util.DateUtil;
 import com.yunda.frame.util.StringUtil;
 import com.yunda.jx.scdd.repairplan.manager.RepairWarningKCManager;
 import com.yunda.passenger.marshalling.entity.MarshallingTrain;
@@ -108,6 +109,23 @@ public class TrainDemandManager extends JXBaseManager<TrainDemand, TrainDemand> 
         return (TrainDemand)this.daoUtils.findSingle(hql.toString(), new Object[]{trainTypeIDX,trainNo});
     }
     
+    /**
+     * <li>说明：查询某一天编组所担当的任务
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-5-22
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param day 日期（yyyy-MM-dd）
+     * @param marshallingIdx 编组需求
+     * @return
+     */
+    public TrainDemand findTrainDemandByDay(String day,String marshallingIdx){
+    	StringBuffer hql = new StringBuffer("select t From TrainDemand t where t.recordStatus = 0 and t.marshallingIdx = ? ");
+    	hql.append(" and to_char(t.runningDate,'yyyy-MM-dd') = '"+day+"' ");
+    	return (TrainDemand)this.daoUtils.findSingle(hql.toString(), new Object[]{marshallingIdx});
+    }
+    
 	/**
 	 * <li>说明：编组下拉控件
 	 * <li>创建人：张迪
@@ -132,4 +150,24 @@ public class TrainDemandManager extends JXBaseManager<TrainDemand, TrainDemand> 
 //        String routingIdx = String.valueOf(queryParamsMap.get("str"));
 //	    return null;
 //	}
+    
+    
+    /**
+     * 验证列检所编码唯一
+     */
+    @Override
+    public String[] validateUpdate(TrainDemand t) {
+        String[] errorMsg = super.validateUpdate(t);
+        if (null != errorMsg) {
+            return errorMsg;
+        }
+        StringBuffer hql = new StringBuffer("From TrainDemand Where recordStatus = 0 And marshallingIdx = ? ");
+        hql.append(" and to_char(runningDate,'yyyy-MM-dd') = '"+DateUtil.date2String(DateUtil.yyyy_MM_dd, t.getRunningDate())+"' ");
+        TrainDemand entity = (TrainDemand) this.daoUtils.findSingle(hql.toString(), new Object[]{ t.getMarshallingIdx() });
+        if (null != entity && !entity.getIdx().equals(t.getIdx())) {
+            return new String[]{"客车编组：" + t.getMarshallingTrainCountStr() + "该天需求已经存在，不能重复添加！"};
+        }
+        return null;
+    }
+    
 }

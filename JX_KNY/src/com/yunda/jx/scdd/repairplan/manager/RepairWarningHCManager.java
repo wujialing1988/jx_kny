@@ -150,5 +150,30 @@ public class RepairWarningHCManager extends JXBaseManager<RepairWarningHC, Repai
     	StringBuffer hql = new StringBuffer(" From RepairWarningHC where trainTypeIdx = ? and trainNo = ? ");
     	return (RepairWarningHC)this.daoUtils.findSingle(hql.toString(), new Object[]{trainTypeIdx,trainNo});
     }
+    
+    /**
+     * <li>说明：查询货车基本及修程信息
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-13
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param trainTypeIdx 车型
+     * @param trainNo 车号
+     * @return
+     */
+    public List<Map<String, Object>> findTrainRepairInfosForHC(String trainTypeIdx,String trainNo){
+        String sql = SqlMapUtil.getSql("kny-repairwarning:findTrainRepairInfosForHC");
+        // 车型
+        if(!StringUtil.isNullOrBlank(trainTypeIdx)){
+        	sql += " and info.train_type_idx = '" + trainTypeIdx + "'" ;
+        }
+        // 车号
+        if(!StringUtil.isNullOrBlank(trainNo)){
+        	sql += " and info.train_no = '" + trainNo + "'" ;
+        }
+        sql += " order by info.train_type_shortname , info.train_no " ;
+        return this.queryListMap(sql);
+    }
 	
 }

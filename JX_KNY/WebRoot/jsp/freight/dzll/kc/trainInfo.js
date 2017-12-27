@@ -9,11 +9,10 @@ app.controller('trianInfoCtrl', function($http,$scope,$filter) {
 		$http({
 		    method: 'POST',
 		    params:{
-		    	"vehicleType":vehicleType,
 		    	"trainTypeIDX":trainTypeIDX,
 		    	"trainNo":trainNo
 		    },
-		    url: ctx + '/trainRecord!getTrainInfo.action'
+		    url: ctx + '/trainRecord!getTrainInfoForKC.action'
 		}).then(function successCallback(response) {
 			$scope.trainInfoObj = response.data[0];
 		    }, function errorCallback(response) {

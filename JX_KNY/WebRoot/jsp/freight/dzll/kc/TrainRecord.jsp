@@ -8,10 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>车辆电子履历</title>
 <script type="text/javascript">
-	var vehicleType="<%=(null==request.getParameter("vehicleType"))?"":request.getParameter("vehicleType")%>"; // 10 货车 20 客车    
+	var vehicleType="20"; // 10 货车 20 客车    
 </script>
-<script language="javascript" src="<%=ctx%>/jsp/freight/dzll/TrianWorkPlanRecord.js"></script>
-<script language="javascript" src="<%=ctx%>/jsp/freight/dzll/TrainRecord.js"></script>
+<script language="javascript" src="TrianWorkPlanRecord.js"></script>
+<script language="javascript" src="TrainRecord.js"></script>
 </head>
 <body>
 </body>

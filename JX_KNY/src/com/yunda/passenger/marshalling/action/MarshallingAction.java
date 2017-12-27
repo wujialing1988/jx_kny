@@ -5,17 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.JsonMappingException;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.yunda.frame.common.Constants;
 import com.yunda.frame.common.JXBaseAction;
 import com.yunda.frame.util.ExceptionUtil;
 import com.yunda.frame.util.JSONUtil;
 import com.yunda.passenger.marshalling.entity.Marshalling;
-import com.yunda.passenger.marshalling.entity.MarshallingTrain;
 import com.yunda.passenger.marshalling.manager.MarshallingManager;
 
 /**
@@ -64,6 +63,77 @@ public class MarshallingAction extends JXBaseAction<Marshalling, Marshalling, Ma
         }
     }
    
+	/**
+     * <li>说明：查询客车编组主表
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-20
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param params 查询条件
+     * @return
+     */  
+    public void findMarshallingList() throws Exception {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            HttpServletRequest req = getRequest();
+            Map<String, String> params = new HashMap<String, String>();
+            List<Map<String, Object>> list = this. manager.findMarshallingList(params);
+            map.put("list", list);
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }                 
+    }
+    
+	/**
+     * <li>说明：查询客车备用车列表
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-20
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param params 查询条件
+     * @return
+     */  
+    public void findNotMarshallingList() throws Exception {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            HttpServletRequest req = getRequest();
+            Map<String, String> params = new HashMap<String, String>();
+            List<Map<String, Object>> list = this. manager.findNotMarshallingList(params);
+            map.put("list", list);
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }                 
+    }
+    
+	/**
+     * <li>说明：查询客车检修车车列表
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-20
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param params 查询条件
+     * @return
+     */  
+    public void findJxMarshallingList() throws Exception {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            HttpServletRequest req = getRequest();
+            Map<String, String> params = new HashMap<String, String>();
+            List<Map<String, Object>> list = this. manager.findJxMarshallingList(params);
+            map.put("list", list);
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }                 
+    }
     
     
 }

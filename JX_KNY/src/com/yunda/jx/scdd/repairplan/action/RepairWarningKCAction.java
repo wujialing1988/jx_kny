@@ -76,12 +76,13 @@ public class RepairWarningKCAction extends JXBaseAction<RepairWarningKC, RepairW
      * @param planDayDx 段修年月
      * @return
      */   
-    public void findHCRepairWarningList() throws Exception {
+    public void findKCRepairWarningList() throws Exception {
         Map<String, Object> map = new HashMap<String,Object>();
         try {
             HttpServletRequest req = getRequest();
             String queryInput = req.getParameter("queryInput");
             Map<String, String> otherParams = new HashMap<String, String>();
+            otherParams.put("repairType", req.getParameter("repairType"));
             map = this. manager.findKCRepairWarningList(getStart(),getLimit(),queryInput,otherParams).extjsStore();
         } catch (Exception e) {
             ExceptionUtil.process(e, logger, map);

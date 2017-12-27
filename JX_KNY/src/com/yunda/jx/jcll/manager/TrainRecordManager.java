@@ -30,6 +30,8 @@ import com.yunda.jx.pjwz.fixparts.entity.PartsFixRegister;
 import com.yunda.jx.pjwz.fixparts.manager.PartsFixRegisterManager;
 import com.yunda.jx.pjwz.unloadparts.entity.PartsUnloadRegister;
 import com.yunda.jx.pjwz.unloadparts.manager.PartsUnloadRegisterManager;
+import com.yunda.jx.scdd.repairplan.manager.RepairWarningHCManager;
+import com.yunda.jx.scdd.repairplan.manager.RepairWarningKCManager;
 
 /**
  * <li>标题: 机车检修管理信息系统
@@ -87,6 +89,20 @@ public class TrainRecordManager extends JXBaseManager<TrainRecord, TrainRecord> 
 	 */
 	@Resource
 	private GztpManager gztpManager ;
+	
+	/**
+	 * 客车修程预警业务类
+	 */
+	@Resource
+	private RepairWarningKCManager repairWarningKCManager ;
+	
+	
+	/**
+	 * 货车修程预警业务类
+	 */
+	@Resource
+	private RepairWarningHCManager repairWarningHCManager ;
+	
 	
 	
     /**
@@ -320,13 +336,26 @@ public class TrainRecordManager extends JXBaseManager<TrainRecord, TrainRecord> 
      * <li>修改内容：
      * @throws Exception
      */
-	public List<Map<String, Object>> getTrainInfo(String trainTypeIDX,
-			String trainNo, String vehicleType) {
-    	String sql = SqlMapUtil.getSql("kny-base:getTrainInfo");
-    	sql = sql.replaceAll("#trainTypeIDX#", trainTypeIDX)
-    			 .replaceAll("#trainNo#", trainNo)
-    			 .replaceAll("#vehicleType#", vehicleType);
-    	return this.queryListMap(sql);
+	public List<Map<String, Object>> getTrainInfoForKC(String trainTypeIDX,
+			String trainNo) {
+		return repairWarningKCManager.findTrainRepairInfosForKC(trainTypeIDX, trainNo,false,false);
 	}
+	
+	
+    /**
+     * <li>说明：获取车辆基本信息
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-12-06
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @throws Exception
+     */
+	public List<Map<String, Object>> getTrainInfoForHC(String trainTypeIDX,
+			String trainNo) {
+		return repairWarningHCManager.findTrainRepairInfosForHC(trainTypeIDX, trainNo);
+	}
+	
+	
     
 }

@@ -44,34 +44,34 @@
 								</tr>
 								
 								<tr>
-									<td style="width: 10%;font-weight: bold;">最近库检：</td>
-									<td>{{ trainInfoObj.yyRailwayTime }}</td>
-									<td style="width: 10%;font-weight: bold;">库检日期：</td>
-									<td>{{ trainInfoObj.yyCreateTime }}</td>
 									<td style="width: 10%;font-weight: bold;">运行天数：</td>
-									<td>{{ trainInfoObj.totalday }}</td>
+									<td colspan="5">{{ trainInfoObj.totalday }}</td>
 								</tr>
-								
-								<tr>
-									<td style="width: 10%;font-weight: bold;">最近检修：</td>
-									<td>{{ trainInfoObj.jxRepairClassName }}</td>
-									<td style="width: 10%;font-weight: bold;">检修日期：</td>
-									<td>{{ trainInfoObj.jxPlanBeginTime }}</td>
-									<td style="width: 10%;font-weight: bold;"></td>
-									<td></td>									
-								</tr>
-								
-								<tr>
-									<td style="width: 10%;font-weight: bold;">下次检修：</td>
-									<td>{{ trainInfoObj.hcNextRepairClassName }}</td>
-									<td style="width: 10%;font-weight: bold;">预计时间：</td>
-									<td>{{ trainInfoObj.hcNextDate }}</td>
-									<td style="width: 10%;font-weight: bold;"></td>
-									<td></td>									
-								</tr>
-								
 							</tbody>
 						</table>
+						
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<td style="width: 25%;font-weight: bold;">修程</td>
+									<td style="width: 25%;font-weight: bold;">检修</td>
+									<td style="width: 25%;font-weight: bold;">到期</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td style="width: 25%;font-weight: bold;">辅修</td>
+									<td style="width: 25%;">{{ trainInfoObj.beforeFxDate }}</td>
+									<td style="width: 25%;">{{ trainInfoObj.nextFxDate }}</td>
+								</tr>
+								<tr>
+									<td style="width: 25%;font-weight: bold;">段修</td>
+									<td style="width: 25%;">{{ trainInfoObj.beforeDxDate }}</td>
+									<td style="width: 25%;">{{ trainInfoObj.nextDxDate }}</td>
+								</tr>																														
+							</tbody>
+						</table>						
+						
 			        </div>
           		</div>
 	      	</div>

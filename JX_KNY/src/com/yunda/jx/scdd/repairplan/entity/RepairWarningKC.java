@@ -70,6 +70,31 @@ public class RepairWarningKC implements java.io.Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date beforeA5Date;
     
+    /* 下次A1时间 */
+    @Column(name = "NEXT_A1_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date nextA1Date;
+    
+    /* 下次A2时间 */
+    @Column(name = "NEXT_A2_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date nextA2Date;
+    
+    /* 下次A3时间 */
+    @Column(name = "NEXT_A3_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date nextA3Date;
+    
+    /* 下次A4时间 */
+    @Column(name = "NEXT_A4_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date nextA4Date;
+    
+    /* 下次A5时间 */
+    @Column(name = "NEXT_A5_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date nextA5Date;
+    
     /* A1累计走行公里 */
     @Column(name = "A1_KM")
     private Float a1Km;
@@ -101,6 +126,10 @@ public class RepairWarningKC implements java.io.Serializable {
     /* 下一修程名称 */
     @Column(name = "REPAIR_CLASS_NAME")
     private String repairClassName;
+    
+    /* 修程预警类型 10 走行判断 20 时间判断 */
+    @Column(name = "REPAIR_WARNING_TYPE")
+    private String repairWarningType;
     
     /* 备注 */
     @Column(name = "REMARK")
@@ -262,6 +291,54 @@ public class RepairWarningKC implements java.io.Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public java.util.Date getNextA1Date() {
+		return nextA1Date;
+	}
+
+	public void setNextA1Date(java.util.Date nextA1Date) {
+		this.nextA1Date = nextA1Date;
+	}
+
+	public java.util.Date getNextA2Date() {
+		return nextA2Date;
+	}
+
+	public void setNextA2Date(java.util.Date nextA2Date) {
+		this.nextA2Date = nextA2Date;
+	}
+
+	public java.util.Date getNextA3Date() {
+		return nextA3Date;
+	}
+
+	public void setNextA3Date(java.util.Date nextA3Date) {
+		this.nextA3Date = nextA3Date;
+	}
+
+	public java.util.Date getNextA4Date() {
+		return nextA4Date;
+	}
+
+	public void setNextA4Date(java.util.Date nextA4Date) {
+		this.nextA4Date = nextA4Date;
+	}
+
+	public java.util.Date getNextA5Date() {
+		return nextA5Date;
+	}
+
+	public void setNextA5Date(java.util.Date nextA5Date) {
+		this.nextA5Date = nextA5Date;
+	}
+
+	public String getRepairWarningType() {
+		return repairWarningType;
+	}
+
+	public void setRepairWarningType(String repairWarningType) {
+		this.repairWarningType = repairWarningType;
 	}
 	
 	
