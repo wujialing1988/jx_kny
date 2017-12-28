@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>机车交接项模板—交接项</title>
+<link href="<%= ctx %>/jsp/jx/jxgc/workplanmanage/vis_common.css" rel="stylesheet" type="text/css">
 <script language="javascript">
 	var objList = [];
 	var statusFields = [];
@@ -41,6 +42,7 @@
 	    };
 	    Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
 </script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-TrainHandoverItem.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/zb/trainhandover/ZbglHoModelItemResult.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/zb/trainhandover/ZbglHoModelItem.js"></script>
 </head>

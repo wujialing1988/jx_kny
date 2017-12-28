@@ -28,7 +28,7 @@ ClassTransfer.saveForm = new Ext.form.FormPanel({
 	{
         xtype:'fieldset',
         id:'id_base',
-        title: '交接信息',
+        title: i18n.ClassTransfer.transferInfo,
         autoHeight:true,
         layout: 'column',
         defaults: {
@@ -50,21 +50,21 @@ ClassTransfer.saveForm = new Ext.form.FormPanel({
         	{xtype: "hidden", name: "transferClassNo",id:'transferClassNo'},
  			{
             	items:[{
-                    id: 'empname_SelectWin_Id',xtype: 'OmEmployee_SelectWin', fieldLabel: '当前值班员',
+                    id: 'empname_SelectWin_Id',xtype: 'OmEmployee_SelectWin', fieldLabel: i18n.ClassTransfer.empname,
 						  hiddenName: 'empname', displayField:'empname', valueField: 'empname',
 						  returnField :[{widgetId: "empid", propertyName: "empid"}],
 						  allowBlank:false,editable: false
                 }]
             },{
             	items:[{
-                    id: 'transferName_SelectWin_Id',xtype: 'OmEmployee_SelectWin', fieldLabel: '交接值班员',
+                    id: 'transferName_SelectWin_Id',xtype: 'OmEmployee_SelectWin', fieldLabel: i18n.ClassTransfer.transferName,
 						  hiddenName: 'transferName', displayField:'empname', valueField: 'empname',
 						  returnField :[{widgetId: "transferEmpid", propertyName: "empid"}],
 						  allowBlank:false,editable: false
                 }]
             },{
             	items:[{
-            		fieldLabel: '当前班次',
+            		fieldLabel: i18n.ClassTransfer.className,
                 	id:"className_combo",	
     				hiddenName: "className",
     				xtype: "Base_combo",
@@ -78,7 +78,7 @@ ClassTransfer.saveForm = new Ext.form.FormPanel({
                 }]
             },{
             	items:[{
-            		fieldLabel: '交接班次',
+            		fieldLabel: i18n.ClassTransfer.transferClass,
                		id:"transferClassName_combo",	
     				hiddenName: "transferClassName",
     				xtype: "Base_combo",
@@ -92,7 +92,7 @@ ClassTransfer.saveForm = new Ext.form.FormPanel({
                 }]
             },{
             	items:[{
-            		fieldLabel: '交接时间',
+            		fieldLabel: i18n.ClassTransfer.transferDate,
             		xtype:'my97date',
             		format: 'Y-m-d H:i',
                     name: "transferDate",
@@ -104,7 +104,7 @@ ClassTransfer.saveForm = new Ext.form.FormPanel({
 		// 交接项
 		{
         xtype:'fieldset',
-        title: '交接项',
+        title: i18n.ClassTransfer.transferItem,
         id:'id_item',
         autoHeight:true,
         layout: 'column',
@@ -139,7 +139,7 @@ ClassTransfer.addItem = function(){
 		Ext.Ajax.request({
 			url: ctx + "/zbglHoModelItem!findItemList.action",
 			async:false,
-			params: {parentName: "肯尼亚货车运用"},
+			params: {parentName: i18n.ClassTransfer.knyTruckUse},
 			success: function(response, options){
 				var result = Ext.util.JSON.decode(response.responseText);
 				if(result.list){

@@ -13,7 +13,7 @@ Ext.onReady(function(){
 	    activeTab: 0,
 	    frame:true,
 	    items:[{
-	            title: "未检修", border: false, xtype: "panel", layout: "fit", 
+	            title: i18n.TruckDetainRegSumm.unrepaired, border: false, xtype: "panel", layout: "fit", 
 	            items: [
 	            	DetainTrain.grid
 	            ],
@@ -23,7 +23,7 @@ Ext.onReady(function(){
 	        		}	        	
 	        	}
 	        },{
-	            title: "已检修", border: false, xtype: "panel", layout: "fit", 
+	            title: i18n.TruckDetainRegSumm.repaired, border: false, xtype: "panel", layout: "fit", 
 	            items:[
 	            	DetainTrainCompleted.grid
 	            ],

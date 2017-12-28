@@ -15,7 +15,7 @@ Ext.onReady(function() {
 	
 	// 填写车号窗口 
 	ZbglRdpPlanRecord.writeTrainNoWin = new Ext.Window({
-		title:"填写车号", width:400, height:250, plain:true, closeAction:"hide", buttonAlign:'center',padding:15,
+		title:i18n.TrainInspectionPlan.enterTrainNum, width:400, height:250, plain:true, closeAction:"hide", buttonAlign:'center',padding:15,
     	maximizable:false,  modal:true,
     	items:[{
         	xtype: 'form',
@@ -25,7 +25,7 @@ Ext.onReady(function() {
             items: [
                 { 
                 	id:'writeTrainNo',
-                	fieldLabel: '车号',
+                	fieldLabel: i18n.TrainInspectionPlan.trainNum,
                 	name:'trainNo',
                 	allowBlank:false,
                 	maxLength:20
@@ -33,7 +33,7 @@ Ext.onReady(function() {
             ]
 		}],
     	buttons: [{
-			text : "确定",iconCls : "saveIcon", handler: function(){
+			text : i18n.TrainInspectionPlan.buttSave,iconCls : "saveIcon", handler: function(){
 				var idx = $yd.getSelectedIdx(ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid)[0];
 				var writeTrainNo = Ext.getCmp("writeTrainNo").getValue();
 				if(Ext.isEmpty(writeTrainNo)){
@@ -58,12 +58,12 @@ Ext.onReady(function() {
 						}
 					},
 					failure: function(response, options){
-						MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+						MyExt.Msg.alert(i18n.TrainInspectionPlan.alertRemaindMes+"\n" + response.status + "\n" + response.responseText);
 					}
 				});
 			}
 		},{
-	        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlanRecord.writeTrainNoWin.hide(); }
+	        text: i18n.TrainInspectionPlan.textClose, iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlanRecord.writeTrainNoWin.hide(); }
 		}]
 	});	
 	
@@ -86,7 +86,7 @@ Ext.onReady(function() {
 				}
 			},
 			failure: function(response, options){
-				MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				MyExt.Msg.alert(i18n.TrainInspectionPlan.alertRemaindMes+"\n" + response.status + "\n" + response.responseText);
 			}
 		});
 	}
@@ -101,14 +101,14 @@ Ext.onReady(function() {
 		page: false,
 		tbar : [
 		        '-',
-		        '<div><span style="color:green;">*双击选择队列</span></div>'
+		        '<div><span style="color:green;">' + i18n.TrainInspectionPlan.doubleSelectQueue + '</span></div>'
 		],
 		fields : [{
-					header : '分队id',
+					header : i18n.TrainInspectionPlan.queueID,   //分队id
 					dataIndex : 'queueNo',
 					hidden : true
 				},{
-					header : '分队',
+					header : i18n.TrainInspectionPlan.queueName,   //分队
 					dataIndex : 'queueName',
 					renderer: function(value, metaData, record) {
 			      		return value;
@@ -143,7 +143,7 @@ Ext.onReady(function() {
 				}
 			},
 			failure: function(response, options){
-				MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				MyExt.Msg.alert(i18n.TrainInspectionPlan.alertRemaindMes + "\n" + response.status + "\n" + response.responseText);
 			}
 		});
 	});
@@ -159,7 +159,7 @@ Ext.onReady(function() {
 	
 	// 设置队列窗口
 	ZbglRdpPlanRecord.selectQueueWin = new Ext.Window({
-		title:"队列", width:400, height:250, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
+		title:i18n.TrainInspectionPlan.queue, width:400, height:250, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
     	maximizable:false, items:[ ZbglRdpPlanRecord.SelectQueueGrid ], modal:true,    	
     	buttons: [{
 	        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlanRecord.selectQueueWin.hide(); }
@@ -182,41 +182,41 @@ Ext.onReady(function() {
 				page: false,
 				tbar : [
 				{
-					text : '指派分队',		
+					text : i18n.TrainInspectionPlan.designateTeam,		
 					disabled:ZbglRdpPlanRecord.rdpPlanStatus == STATUS_HANDLED,
 					iconCls:"chart_organisationIcon",
 			    	handler: function(){
 			    		if(ZbglRdpPlanRecord.rdpPlanStatus == STATUS_HANDLED){
-			    			MyExt.Msg.alert("计划已完成！");
+			    			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertFinished);   //计划已完成
 			    			return;
 			    		}
 			    		var smplan = ZbglRdpPlan.ZbglRdpPlanGrid.getSelectionModel().getSelections();
 			    		var smrecord = ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid.getSelectionModel().getSelections();
 			    		if(smplan.length == 0){
-			    			MyExt.Msg.alert("列检计划未选择！");
+			    			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertUnselected);   //列检计划未选择
 			    			return;
 			    		}
 			    		if(smrecord.length == 0){
-			    			MyExt.Msg.alert("作业车辆未选择！");
+			    			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertWorkUnselected);   //作业车辆未选择
 			    			return;		
 			    		}
 			    		ZbglRdpPlanRecord.selectQueueWin.show();
 			    	}
-		    	},'-','<div><span style="color:green;">*双击填写车号</span></div>'
+		    	},'-','<div><span style="color:green;">'+i18n.TrainInspectionPlan.doubleEnNum+'</span></div>'
 				],
 				fields : [{
-							header : 'idx主键',
+							header : i18n.TrainInspectionPlan.idx,   //idx主键
 							dataIndex : 'idx',
 							hidden : true,
 							editor : {
 								xtype : 'hidden'
 							}
 						},{
-							header : '分队id',
+							header : i18n.TrainInspectionPlan.queueID,   //分队id
 							dataIndex : 'queueNo',
 							hidden : true
 						},{
-							header : '分队',
+							header : i18n.TrainInspectionPlan.queueName,   //分队
 							dataIndex : 'queueName',
 							renderer: function(value, metaData, record) {
 					     		var html = "";
@@ -224,7 +224,7 @@ Ext.onReady(function() {
 					      		return html;
 							}
 						},  {
-							header : '作业人员',
+							header : i18n.TrainInspectionPlan.operator,   //作业人员
 							dataIndex : 'workPersonName',
 							renderer: function(value, metaData, record, rowIndex) {
 								var queueNo = record.get('queueNo');
@@ -234,10 +234,10 @@ Ext.onReady(function() {
 								
 							}
 						},{
-							header : '<div>编号<span style="color:green;">【车型车号】</span></div>',
+							header : '<div>'+i18n.TrainInspectionPlan.Number +'<span style="color:green;">'+i18n.TrainInspectionPlan.trainTypeNumber+'</span><div>',
 							dataIndex : 'seqNum',
 							editor : {
-								fieldLabel:'编号',
+								fieldLabel:i18n.TrainInspectionPlan.Number,   //编号
 								maxLength : 50
 							},
 							renderer: function(value, metaData, record, rowIndex, colIndex, store) {
@@ -250,7 +250,7 @@ Ext.onReady(function() {
 								anchor : '98%'
 							}
 						}, {
-							header : '车辆车型',
+							header : i18n.TrainInspectionPlan.trainTypeName,   //车辆车型
 							dataIndex : 'trainTypeName',
 							hidden : true,
 							editor : {
@@ -260,10 +260,10 @@ Ext.onReady(function() {
 								anchor : '98%'
 							}
 						},
-						{header : '车辆编码',dataIndex : 'trainTypeCode',hidden : true,editor : { xtype:"hidden" }},
-						{header : '车辆列检实例ID',dataIndex : 'rdpIdx',hidden : true,editor : { xtype:"hidden" }},
+						{header : i18n.TrainInspectionPlan.trainCode,dataIndex : 'trainTypeCode',hidden : true,editor : { xtype:"hidden" }},   //车辆编码
+						{header : i18n.TrainInspectionPlan.trainIspectionID,dataIndex : 'rdpIdx',hidden : true,editor : { xtype:"hidden" }},   //车辆列检实例ID
 							{
-							header : '车辆车号',
+							header : i18n.TrainInspectionPlan.trainNumber,   //车辆车号
 							dataIndex : 'trainNo',
 							hidden : true,
 							editor : {
@@ -273,7 +273,7 @@ Ext.onReady(function() {
 								anchor : '98%'
 							}
 						},{
-							header : '确认人',
+							header : i18n.TrainInspectionPlan.confirmor,   //确认人
 							dataIndex : 'startPersonName',
 							editor : {
 								maxLength : 50
@@ -283,9 +283,9 @@ Ext.onReady(function() {
 							}							
 						},
 						{
-							header:'确认时间', dataIndex:'rdpEndTime',editor:{}
+							header:i18n.TrainInspectionPlan.confirmTime, dataIndex:'rdpEndTime',editor:{}   //确认时间
 						},
-						{header : '车辆状态',dataIndex : 'rdpRecordStatus',
+						{header : i18n.TrainInspectionPlan.trainStatus,dataIndex : 'rdpRecordStatus',   //车辆状态
 						renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 								return '<div style="background:'+ ZbglRdpPlanRecord.statusColorArrays[value] +';color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">' + ZbglRdpPlanRecord.statusArrays[value] + '</div>';
 						},

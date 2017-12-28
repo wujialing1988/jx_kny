@@ -25,17 +25,17 @@ ZbglRdpPlanRecordWin.grid = new Ext.yunda.Grid({
     pageSize: 999,
     tbar:[],
 	fields: [{
-				header : 'idx主键',
+				header : i18n.TrainInspectionPlan.idx,
 				dataIndex : 'idx',
 				hidden : true,
 				editor : {
 					xtype : 'hidden'
 				}
 			}, {
-				header : '<div>编号<span style="color:green;">【车型车号】</span></div>',
+				header : '<div>'+i18n.TrainInspectionPlan.Number+'<span style="color:green;">'+i18n.TrainInspectionPlan.trainTypeNumber+'</span></div>',
 				dataIndex : 'seqNum',
 				editor : {
-					fieldLabel:'编号',
+					fieldLabel:i18n.TrainInspectionPlan.Number,
 					maxLength : 50
 				},
 				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
@@ -48,7 +48,7 @@ ZbglRdpPlanRecordWin.grid = new Ext.yunda.Grid({
 					anchor : '98%'
 				}
 			}, {
-				header : '车辆车型',
+				header : i18n.TrainInspectionPlan.trainTypeName,
 				dataIndex : 'trainTypeName',
 				hidden : true,
 				editor : {
@@ -58,11 +58,11 @@ ZbglRdpPlanRecordWin.grid = new Ext.yunda.Grid({
 					anchor : '98%'
 				}
 			},
-			{header : '车辆编码',dataIndex : 'trainTypeCode',hidden : true,editor : { xtype:"hidden" }},
-			{header : '车辆状态',dataIndex : 'rdpRecordStatus',hidden : true,editor : { xtype:"hidden" }},
-			{header : '车辆列检实例ID',dataIndex : 'rdpIdx',hidden : true,editor : { xtype:"hidden" }},
+			{header : i18n.TrainInspectionPlan.trainCode,dataIndex : 'trainTypeCode',hidden : true,editor : { xtype:"hidden" }},
+			{header : i18n.TrainInspectionPlan.trainStatus,dataIndex : 'rdpRecordStatus',hidden : true,editor : { xtype:"hidden" }},
+			{header : i18n.TrainInspectionPlan.trainIspectionID,dataIndex : 'rdpIdx',hidden : true,editor : { xtype:"hidden" }},
 				{
-				header : '车辆车号',
+				header : i18n.TrainInspectionPlan.trainNumber,
 				dataIndex : 'trainNo',
 				hidden : true,
 				editor : {
@@ -88,14 +88,14 @@ ZbglRdpPlanRecordWin.submit = function(){
 
 //定义选择窗口
 ZbglRdpPlanRecordWin.selectWin = new Ext.Window({
-	title:"作业车辆选择", width:800, height:400, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
+	title:i18n.TrainInspectionPlan.workTrainSelect, width:800, height:400, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
 	maximizable:false, items:[ZbglRdpPlanRecordWin.grid],modal:true,
 	buttons: [{
-		text : "确定",iconCls : "saveIcon", handler: function(){
+		text : i18n.TrainInspectionPlan.buttSave,iconCls : "saveIcon", handler: function(){
 			ZbglRdpPlanRecordWin.submit(); 
 		}
 	},{
-        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlanRecordWin.selectWin.hide(); }
+        text: i18n.TrainInspectionPlan.textClose, iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlanRecordWin.selectWin.hide(); }
 	}],
 	listeners:{
 		"show":function(){

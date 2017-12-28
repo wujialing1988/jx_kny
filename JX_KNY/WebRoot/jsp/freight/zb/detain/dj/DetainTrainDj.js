@@ -19,11 +19,11 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
     saveFormColNum:1,
     saveForm:DetainTrainDj.saveForm,
     tbar : ['add',{
-    	text: "删除" ,iconCls:"deleteIcon", handler: function(){
+    	text: i18n.VehicleDetainReg.deletebutt ,iconCls:"deleteIcon", handler: function(){
     		//判断是否选择了数据
     		var grid = DetainTrainDj.grid;
     		if(!$yd.isSelectedRecord(grid)) {
-    			MyExt.Msg.alert("请选择一条记录！");
+    			MyExt.Msg.alert(i18n.VehicleDetainReg.msg1);
     			return;
     		}
     		var ids = $yd.getSelectedIdx(grid);	
@@ -32,7 +32,7 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
     		
     		var detainStatus = record.get("detainStatus");
     		if(detainStatus != '10'){
-    			MyExt.Msg.alert("不能删除已经兑现的扣车登记");
+    			MyExt.Msg.alert(i18n.VehicleDetainReg.msg2);
     			return;			
     		}
     		
@@ -51,17 +51,17 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
     	        },
     	        failure: function(response, options){
     	        	if(processTips) hidetip();
-    		        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+    		        Ext.Msg.alert(i18n.VehicleDetainReg.msg3, i18n.VehicleDetainReg.msg4 + "\n" + response.status + "\n" + response.responseText);
     		    }
     	    };
-    	    Ext.Msg.confirm("提示  ", "确认删除？", function(btn){
+    	    Ext.Msg.confirm(i18n.VehicleDetainReg.msg3, i18n.VehicleDetainReg.msg5, function(btn){
     	        if(btn != 'yes')    return;
     	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
     	    });
     		}
     	},'refresh','&nbsp;&nbsp;',
     {
-    	xtype:'textfield', id:'query_input', enableKeyEvents:true, emptyText:'输入车号快速检索...', width:200,
+    	xtype:'textfield', id:'query_input', enableKeyEvents:true, emptyText:i18n.VehicleDetainReg.msg6, width:200,
     	listeners: {
     		keyup: function(filed, e) {
     			if (DetainTrainDj.queryTimeout) {
@@ -76,8 +76,8 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
     }],    
 	fields: [
      	{
-		header:'车辆车型ID', dataIndex:'trainTypeIdx',hidden:true,width: 120,editor: {
-			fieldLabel: "车型",
+		header:i18n.VehicleDetainReg.trainTypeID, dataIndex:'trainTypeIdx',hidden:true,width: 120,editor: {
+			fieldLabel: i18n.VehicleDetainReg.trainType,
 			xtype: "Base_combo",
 			hiddenName: "trainTypeIdx",
 		    business: 'trainVehicleType',
@@ -104,19 +104,19 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
 		}
 	},
      	{
-		header:'车型', dataIndex:'trainTypeCode',width: 120,editor: {
+		header:i18n.VehicleDetainReg.trainType, dataIndex:'trainTypeCode',width: 120,editor: {
 			id:'trainTypeShortNameId',xtype:'hidden',name: 'trainTypeCode'
 		}
 	},
      	{
-		header:'车辆车型名称', dataIndex:'trainTypeName',hidden:true,width: 120,editor: {
+		header:i18n.VehicleDetainReg.trainTypeName, dataIndex:'trainTypeName',hidden:true,width: 120,editor: {
 			xtype:'hidden'
 		}
 	},
      	{
-		header:'车号', dataIndex:'trainNo',width: 120,editor: {
+		header:i18n.VehicleDetainReg.trainNum, dataIndex:'trainNo',width: 120,editor: {
 			id:'trainNo',
-			fieldLabel: "车号",
+			fieldLabel: i18n.VehicleDetainReg.trainNum,
 			width:DetainTrainDj.fieldWidth,
 			xtype: "Base_combo",
 			name:'trainNo',
@@ -132,12 +132,12 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
             editable:true	
 		}
 	}, {
-		header:'扣车类型编码', dataIndex:'detainTypeCode',width: 120,hidden:true,editor: {
+		header:i18n.VehicleDetainReg.detainTypeCode, dataIndex:'detainTypeCode',width: 120,hidden:true,editor: {
 			id:'detainTypeCode',xtype:'hidden',name: 'detainTypeCode'
 		}
 	},
      	{
-		header:'扣车类型', dataIndex:'detainTypeName',width: 120,editor: {
+		header:i18n.VehicleDetainReg.detainType, dataIndex:'detainTypeName',width: 120,editor: {
 			id:'detainTypeName_combo',
 			xtype: 'EosDictEntry_combo',
 			hiddenName: 'detainTypeName',
@@ -148,27 +148,27 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
 			returnField: [{widgetId:"detainTypeCode",propertyName:"dictid"}]
 		}
 	},{
-		header:'登记人ID', dataIndex:'proposerIdx',hidden:true,width: 120,editor: {
+		header:i18n.VehicleDetainReg.registrantId, dataIndex:'proposerIdx',hidden:true,width: 120,editor: {
 			xtype:'hidden'
 		}
 	},
      	{
-		header:'登记人', dataIndex:'proposerName',width: 120,editor: {xtype:'hidden'}
+		header:i18n.VehicleDetainReg.registrantName, dataIndex:'proposerName',width: 120,editor: {xtype:'hidden'}
 	},
        {
-		header:'登记时间', dataIndex:'proposerDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{hidden:true, xtype:'my97date',format: 'Y-m-d H:i' }
+		header:i18n.VehicleDetainReg.registrantDate, dataIndex:'proposerDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{hidden:true, xtype:'my97date',format: 'Y-m-d H:i' }
 	},
      	{
-		header:'扣车原因', dataIndex:'detainReason',width: 120,editor: {
+		header:i18n.VehicleDetainReg.detainReason, dataIndex:'detainReason',width: 120,editor: {
        		xtype: 'textarea',
-       		fieldLabel: '扣车原因',
+       		fieldLabel: i18n.VehicleDetainReg.detainReason,
        		allowBlank:false,
        		maxLength:500,
        		height: 60,
        		name: 'detainReason'
 		}
 	}, {
-		header:'状态', dataIndex:'detainStatus',width: 120,renderer:function(value, metaData, record, rowIndex, colIndex, store){
+		header:i18n.VehicleDetainReg.status, dataIndex:'detainStatus',width: 120,renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if(value == "10"){
 						return  '<div style="background:#d2d6de;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">未检修</div>';
 					}else if(value == "20"){
@@ -178,18 +178,18 @@ DetainTrainDj.grid = new Ext.yunda.Grid({
 					}
 				},editor: {xtype:'hidden'}
 	},{
-		header:'站点ID', dataIndex:'siteID',width: 120,hidden:true ,editor: {
+		header:i18n.VehicleDetainReg.stationID, dataIndex:'siteID',width: 120,hidden:true ,editor: {
 			xtype:'hidden'
 		}
 	},
      	{
-		header:'站点名称', dataIndex:'siteName',width: 120,hidden:true , editor: {
+		header:i18n.VehicleDetainReg.stationName, dataIndex:'siteName',width: 120,hidden:true , editor: {
 			xtype:'hidden'
 		}
 	},{
-		header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
+		header:i18n.VehicleDetainReg.vehicleType, dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
 	},{
-		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
+		header:i18n.VehicleDetainReg.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	}],
 	searchFn: function(searchParam){ 
 		DetainTrainDj.searchParam = searchParam ;

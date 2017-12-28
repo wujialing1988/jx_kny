@@ -90,7 +90,7 @@
 <%--<script language="javascript" src="<%=ctx %>/jsp/jx/jczl/baseselect/TrainWin.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/jczl/baseselect/TrainTypeWin.js"></script>
 --%>
-<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/i18n-lang-ZbFw.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ZbFw.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ux/layout/TableFormLayout.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/BaseMultyComboTree.js"></script>

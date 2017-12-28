@@ -19,7 +19,7 @@ Ext.onReady(function(){
 		//判断是否选择了数据
 		var grid = ZbglRdpPlan.ZbglRdpPlanGrid;
 		if(!$yd.isSelectedRecord(grid)) {
-			MyExt.Msg.alert("请选择一条计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes1);
 			return;
 		}
 		var ids = $yd.getSelectedIdx(grid);	
@@ -29,7 +29,7 @@ Ext.onReady(function(){
 		
 		var rdpPlanStatus = record.get("rdpPlanStatus");
 		if(rdpPlanStatus != STATUS_UNRELEASED){
-			MyExt.Msg.alert("请选择【未启动】状态的计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes4);
 			return;			
 		}
 		
@@ -49,10 +49,10 @@ Ext.onReady(function(){
 	        },
 	        failure: function(response, options){
 	        	if(processTips) hidetip();
-		        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+		        Ext.Msg.alert(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.alertRemaindMes + "\n" + response.status + "\n" + response.responseText);
 		    }
 	    };
-	    Ext.Msg.confirm("提示  ", "确定启动列检计划？  ", function(btn){
+	    Ext.Msg.confirm(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.confirmMes2, function(btn){
 	        if(btn != 'yes')    return;
 	        showtip();
 	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
@@ -68,7 +68,7 @@ Ext.onReady(function(){
 		//判断是否选择了数据
 		var grid = ZbglRdpPlan.ZbglRdpPlanGrid;
 		if(!$yd.isSelectedRecord(grid)) {
-			MyExt.Msg.alert("请选择一条计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes1);
 			return;
 		}
 		var ids = $yd.getSelectedIdx(grid);	
@@ -78,7 +78,7 @@ Ext.onReady(function(){
 		
 		var rdpPlanStatus = record.get("rdpPlanStatus");
 		if(rdpPlanStatus != STATUS_HANDLING){
-			MyExt.Msg.alert("请选择【已启动】状态的计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes2);
 			return;			
 		}
 		
@@ -98,10 +98,10 @@ Ext.onReady(function(){
 	        },
 	        failure: function(response, options){
 	        	if(processTips) hidetip();
-		        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+		        Ext.Msg.alert(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.alertRemaindMes + "\n" + response.status + "\n" + response.responseText);
 		    }
 	    };
-	    Ext.Msg.confirm("提示  ", "确定中断列检计划？  ", function(btn){
+	    Ext.Msg.confirm(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.confirmMes3, function(btn){
 	        if(btn != 'yes')    return;
 	        showtip();
 	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
@@ -116,7 +116,7 @@ Ext.onReady(function(){
 		//判断是否选择了数据
 		var grid = ZbglRdpPlan.ZbglRdpPlanGrid;
 		if(!$yd.isSelectedRecord(grid)) {
-			MyExt.Msg.alert("请选择一条计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes1);
 			return;
 		}
 		var ids = $yd.getSelectedIdx(grid);	
@@ -126,7 +126,7 @@ Ext.onReady(function(){
 		
 		var rdpPlanStatus = record.get("rdpPlanStatus");
 		if(rdpPlanStatus != STATUS_INTERRUPT){
-			MyExt.Msg.alert("请选择【中断】状态的计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes5);
 			return;			
 		}
 		
@@ -146,10 +146,10 @@ Ext.onReady(function(){
 	        },
 	        failure: function(response, options){
 	        	if(processTips) hidetip();
-		        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+		        Ext.Msg.alert(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.alertRemaindMes + "\n" + response.status + "\n" + response.responseText);
 		    }
 	    };
-	    Ext.Msg.confirm("提示  ", "确定恢复列检计划？  ", function(btn){
+	    Ext.Msg.confirm(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.confirmMes4, function(btn){
 	        if(btn != 'yes')    return;
 	        showtip();
 	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
@@ -165,7 +165,7 @@ Ext.onReady(function(){
 		//判断是否选择了数据
 		var grid = ZbglRdpPlan.ZbglRdpPlanGrid;
 		if(!$yd.isSelectedRecord(grid)) {
-			MyExt.Msg.alert("请选择一条计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes1);
 			return;
 		}
 		var ids = $yd.getSelectedIdx(grid);	
@@ -174,7 +174,7 @@ Ext.onReady(function(){
 		
 		var rdpPlanStatus = record.get("rdpPlanStatus");
 		if(rdpPlanStatus == STATUS_HANDLED){
-			MyExt.Msg.alert("请选择非【完成】状态的计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes3);
 			return;			
 		}
 		
@@ -194,10 +194,10 @@ Ext.onReady(function(){
 	        },
 	        failure: function(response, options){
 	        	if(processTips) hidetip();
-		        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+		        Ext.Msg.alert(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.alertRemaindMes + "\n" + response.status + "\n" + response.responseText);
 		    }
 	    };
-	    Ext.Msg.confirm("提示  ", "终止计划后不可恢复，确定终止列检计划？  ", function(btn){
+	    Ext.Msg.confirm(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.confirmMes1, function(btn){
 	        if(btn != 'yes')    return;
 	        showtip();
 	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
@@ -222,10 +222,10 @@ Ext.onReady(function(){
 		        {
 		            baseCls:"x-plain", align:"center", layout:"form", columnWidth: 1,
 			        items: [{				
-						name: "realBeginTime", fieldLabel: "实际开始时间", xtype:"my97date",format: "Y-m-d H:i",
+						name: "realBeginTime", fieldLabel: i18n.TrainInspectionPlan.actualStartTime, xtype:"my97date",format: "Y-m-d H:i",   //实际开始时间
 			        	my97cfg: {dateFmt:"yyyy-MM-dd HH:mm"}, allowBlank:false
 					},{				
-						name: "realEndTime", fieldLabel: "实际完成时间", xtype:"my97date",format: "Y-m-d H:i",
+						name: "realEndTime", fieldLabel: i18n.TrainInspectionPlan.actualEndTime, xtype:"my97date",format: "Y-m-d H:i",   //实际完成时间
 			        	my97cfg: {dateFmt:"yyyy-MM-dd HH:mm"}, allowBlank:false
 					}]
 				}]
@@ -234,13 +234,13 @@ Ext.onReady(function(){
 	
 	
 	ZbglRdpPlan.CompletedWin = new Ext.Window({
-		title:"完成计划", width:400, height:150, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
+		title:i18n.TrainInspectionPlan.titleFinPlan, width:400, height:150, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
 		labelWidth: 120,
 		maximizable:false, 
 		items:ZbglRdpPlan.CompletedForm,
 		modal:true,
 		buttons: [{
-			text : "确定",iconCls : "saveIcon", handler: function(){
+			text : i18n.TrainInspectionPlan.buttSave,iconCls : "saveIcon", handler: function(){
 				var form = ZbglRdpPlan.CompletedForm.getForm(); 
 		        if (!form.isValid()) return;
 		        var data = form.getValues();
@@ -262,10 +262,10 @@ Ext.onReady(function(){
 				        },
 			        failure: function(response, options){
 			        	if(processTips) hidetip();
-				        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				        Ext.Msg.alert(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.alertRemaindMes + "\n" + response.status + "\n" + response.responseText);
 				    }
 			    };
-			    Ext.Msg.confirm("提示  ", "确定完成列检计划？  ", function(btn){
+			    Ext.Msg.confirm(i18n.TrainInspectionPlan.alertRemaind, i18n.TrainInspectionPlan.confirmMes, function(btn){
 			        if(btn != 'yes')    return;
 			        showtip();
 			        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
@@ -273,7 +273,7 @@ Ext.onReady(function(){
 				
 			}
 		},{
-	        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlan.CompletedWin.hide(); }
+	        text: i18n.TrainInspectionPlan.textClose, iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlan.CompletedWin.hide(); }
 		}],
 		listeners:{
 			"show":function(){
@@ -292,7 +292,7 @@ Ext.onReady(function(){
 		//判断是否选择了数据
 		var grid = ZbglRdpPlan.ZbglRdpPlanGrid;
 		if(!$yd.isSelectedRecord(grid)) {
-			MyExt.Msg.alert("请选择一条计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes1);
 			return;
 		}
 		var ids = $yd.getSelectedIdx(grid);	
@@ -302,7 +302,7 @@ Ext.onReady(function(){
 		
 		var rdpPlanStatus = record.get("rdpPlanStatus");
 		if(rdpPlanStatus != STATUS_HANDLING){
-			MyExt.Msg.alert("请选择【已启动】状态的计划！");
+			MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes2);
 			return;			
 		}
 		
@@ -315,32 +315,32 @@ Ext.onReady(function(){
 	ZbglRdpPlan.oneBar = new Ext.Toolbar({
 		items: [
 		{
-    	text: "新增" ,iconCls:"addIcon", handler: function(){
+    	text: i18n.TrainInspectionPlan.add ,iconCls:"addIcon", handler: function(){   //新增
     		ZbglRdpPlan.ZbglRdpPlanGrid.addButtonFn();
     		}
     	},
 		{
-    	text: "启动" ,iconCls:"beginIcon", handler: function(){
+    	text: i18n.TrainInspectionPlan.start ,iconCls:"beginIcon", handler: function(){   //启动
     		ZbglRdpPlan.startPlan();
     		}
     	},
     	{
-    	text: "终止" ,iconCls:"deleteIcon", handler: function(){
+    	text: i18n.TrainInspectionPlan.stop ,iconCls:"deleteIcon", handler: function(){   //终止
     		ZbglRdpPlan.stopPlan();
     		}
     	},
     	{
-    	text: "完成" ,iconCls:"cmpIcon", handler: function(){
+    	text: i18n.TrainInspectionPlan.finish ,iconCls:"cmpIcon", handler: function(){   //完成
     		ZbglRdpPlan.cmpPlan();
     		}
     	},
 		{
-    	text: "中断" ,iconCls:"cancelIcon", handler: function(){
+    	text: i18n.TrainInspectionPlan.interrupt ,iconCls:"cancelIcon", handler: function(){   //中断
     		ZbglRdpPlan.interruptPlan();
     		}
 	    },
 		{
-    	text: "恢复" ,iconCls:"yesIcon", handler: function(){
+    	text: i18n.TrainInspectionPlan.recover ,iconCls:"yesIcon", handler: function(){   //恢复
     		ZbglRdpPlan.regainPlan();
     		}
 	    }	    
@@ -359,7 +359,7 @@ Ext.onReady(function(){
 		labelWidth:120,
 	    tbar:[
 	    	{	
-				xtype:'textfield', id:'rail_way_Time', enableKeyEvents:true, emptyText:'输入车次快速检索', listeners: {
+				xtype:'textfield', id:'rail_way_Time', enableKeyEvents:true, emptyText:i18n.TrainInspectionPlan.quickSearch, listeners: {   //输入车次快速检索
 		    		keyup: function(filed, e) {
 							ZbglRdpPlan.ZbglRdpPlanGrid.store.load();
 		    		},
@@ -367,12 +367,12 @@ Ext.onReady(function(){
 						ZbglRdpPlan.oneBar.render(ZbglRdpPlan.ZbglRdpPlanGrid.tbar);
 					}
 				}	
-			},'-','<div><span style="color:green;">*双击编辑【未启动】的计划</span></div>'
+			},'-','<div><span style="color:green;">'+ i18n.TrainInspectionPlan.remaind +'</span></div>'   //双击编辑【未启动】的计划
 	    ],
 		fields: [{
-	   			header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+	   			header:i18n.TrainInspectionPlan.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'车次', dataIndex:'railwayTime', editor:{  
+				header:i18n.TrainInspectionPlan.train, dataIndex:'railwayTime', editor:{  
 					maxLength:50,
 					allowBlank:false,
 					listeners : { 
@@ -382,8 +382,8 @@ Ext.onReady(function(){
 					}
 				}, searcher: {anchor:'98%'}
 			},{
-				header:'<div>股道<span style="color:green;">【车辆数】</span></div>', dataIndex:'rdpNum', editor:{    
-					fieldLabel:'车辆数',
+				header:'<div>' + i18n.TrainInspectionPlan.track + '<span style="color:green;">' + i18n.TrainInspectionPlan.VehicleNumber + '</span></div>', dataIndex:'rdpNum', editor:{    
+					fieldLabel:i18n.TrainInspectionPlan.VehicleNumber2,
 			        xtype:'numberfield',
 			        allowDecimals:false,
 			        allowNegative:false,
@@ -397,9 +397,9 @@ Ext.onReady(function(){
 					},
 			        searcher: {anchor:'98%'}
 			},{
-	   			header:'班次编码', dataIndex:'classNo', hidden:true, editor: { xtype:'hidden',id:'classNo' }
+	   			header:i18n.TrainInspectionPlan.classCode, dataIndex:'classNo', hidden:true, editor: { xtype:'hidden',id:'classNo' }   //班次编码
 			},{
-				header:'作业班次', dataIndex:'className',hidden:true, editor:{
+				header:i18n.TrainInspectionPlan.workClass, dataIndex:'className',hidden:true, editor:{   //作业班次
 	    		        id:"class_combo",	
 	    				hiddenName: "className",
 	    				xtype: "Base_combo",
@@ -425,7 +425,7 @@ Ext.onReady(function(){
 			            }
 			        }, searcher: {anchor:'98%'}
 			},{
-				header:'作业班组', dataIndex:'workTeamID',hidden:true, editor:{ 
+				header:i18n.TrainInspectionPlan.workGroup, dataIndex:'workTeamID',hidden:true, editor:{  //作业班组
 					id:"workTeam_comb",	
     				hiddenName: "workTeamID",
     				xtype: "Base_combo",
@@ -441,11 +441,11 @@ Ext.onReady(function(){
                     allowBlank:false,editable:false
 				}, searcher: {anchor:'98%'}
 			},{
-	   			header:'作业班组名称', dataIndex:'workTeamName', hidden:true, editor: {id:'workTeamName', xtype:'hidden' }
+	   			header:i18n.TrainInspectionPlan.workGroupName, dataIndex:'workTeamName', hidden:true, editor: {id:'workTeamName', xtype:'hidden' }  //作业班组名称
 			},{
-	   			header:'作业班组序列', dataIndex:'workTeamSeq', hidden:true, editor: {id:'workTeamSeq', xtype:'hidden' }
+	   			header:i18n.TrainInspectionPlan.workGroupSequence, dataIndex:'workTeamSeq', hidden:true, editor: {id:'workTeamSeq', xtype:'hidden' }   //作业班组序列
 			},{
-				header:'技检时间(分钟)', dataIndex:'checkTime',hidden:true, editor:{    
+				header:i18n.TrainInspectionPlan.checkTimeMin, dataIndex:'checkTime',hidden:true, editor:{    //技检时间
 			        xtype:'numberfield',
 			        allowDecimals:false,
 			        allowNegative:false,
@@ -459,13 +459,13 @@ Ext.onReady(function(){
 					}
 			        }, searcher: {anchor:'98%'}
 			},{
-				header:'计划开始时间', dataIndex:'planStartTime', xtype:'datecolumn', hidden:true, editor:{allowBlank:false, xtype:'my97date',format: 'Y-m-d H:i' }
+				header:i18n.TrainInspectionPlan.plannedStartTime, dataIndex:'planStartTime', xtype:'datecolumn', hidden:true, editor:{allowBlank:false, xtype:'my97date',format: 'Y-m-d H:i' }
 			},{
-				header:'计划完成时间', dataIndex:'planEndTime', xtype:'datecolumn',  hidden:true,editor:{hidden:true,xtype:'my97date',format: 'Y-m-d H:i'}
+				header:i18n.TrainInspectionPlan.plannedEndTime, dataIndex:'planEndTime', xtype:'datecolumn',  hidden:true,editor:{hidden:true,xtype:'my97date',format: 'Y-m-d H:i'}
 			},{
-	   			header:'上下行编码', dataIndex:'toDirectionNo', hidden:true, editor: { xtype:'hidden',id:'toDirectionNo' }
+	   			header:i18n.TrainInspectionPlan.upDownStreamCode, dataIndex:'toDirectionNo', hidden:true, editor: { xtype:'hidden',id:'toDirectionNo' }
 			},{
-				header:'上下行', dataIndex:'toDirectionName',hidden:true, editor:{
+				header:i18n.TrainInspectionPlan.upstream_downstream, dataIndex:'toDirectionName',hidden:true, editor:{
 						id:'toDirection_combo',
 						xtype: 'EosDictEntry_combo',
 						hiddenName: 'toDirectionName',
@@ -476,12 +476,12 @@ Ext.onReady(function(){
 						returnField: [{widgetId:"toDirectionNo",propertyName:"dictid"}]
 			        }, searcher: {anchor:'98%'}
 			},{
-	   			header:'股道名称', dataIndex:'trackName', hidden:true, editor: { xtype:'hidden',id:'trackName' }
+	   			header:i18n.TrainInspectionPlan.trackName, dataIndex:'trackName', hidden:true, editor: { xtype:'hidden',id:'trackName' }
 			},{
-				header:'股道', dataIndex:'trackNo',hidden:true, editor:{
+				header:i18n.TrainInspectionPlan.track2, dataIndex:'trackNo',hidden:true, editor:{
 					id:"trackNo_comb",
 		        	xtype: "Base_combo",
-		        	fieldLabel: "股道",
+		        	fieldLabel: i18n.TrainInspectionPlan.track2,
 					fields:['idx','trackCode','trackName'],
 					hiddenName: "trackNo",
 					business: 'stationTrack',
@@ -511,19 +511,19 @@ Ext.onReady(function(){
 			        }, searcher: {anchor:'98%'}
 			},*/
 				{
-				header:'状态', dataIndex:'rdpPlanStatus',editor:{ xtype:'hidden'},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+				header:i18n.TrainInspectionPlan.status, dataIndex:'rdpPlanStatus',editor:{ xtype:'hidden'},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 					return '<div style="background:'+ ZbglRdpPlan.statusColorArrays[value] +';color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">' + ZbglRdpPlan.statusArrays[value] + '</div>';
 				}
 			},{
-				header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
+				header:i18n.TrainInspectionPlan.trainType, dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
 			},{
-				header:'站点ID', dataIndex:'siteID',hidden:true, editor: { xtype:"hidden"}
+				header:i18n.TrainInspectionPlan.stationID, dataIndex:'siteID',hidden:true, editor: { xtype:"hidden"}
 			},{
-				header:'站点名称', dataIndex:'siteName',hidden:true, editor: { xtype:"hidden" }
+				header:i18n.TrainInspectionPlan.stationName, dataIndex:'siteName',hidden:true, editor: { xtype:"hidden" }
 			},{
-				header:'实际开始时间', dataIndex:'realStartTime',hidden:true, editor: { xtype:"hidden" }
+				header:i18n.TrainInspectionPlan.actualStartTime, dataIndex:'realStartTime',hidden:true, editor: { xtype:"hidden" }
 			},{
-				header:'实际结束时间', dataIndex:'realEndTime',hidden:true, editor: { xtype:"hidden" }
+				header:i18n.TrainInspectionPlan.actualEndTime, dataIndex:'realEndTime',hidden:true, editor: { xtype:"hidden" }
 			}],
 			afterShowSaveWin: function(){
 				 // 设置字段只读
@@ -569,7 +569,7 @@ Ext.onReady(function(){
 			beforeShowEditWin: function(record, rowIndex){  
 				var rdpPlanStatus = record.get('rdpPlanStatus');
 				if(rdpPlanStatus != STATUS_UNRELEASED){
-					MyExt.Msg.alert("只有【未启动】状态的计划能编辑！");
+					MyExt.Msg.alert(i18n.TrainInspectionPlan.alertMes6);
 					return false;
 				}else{
 					return true;
@@ -592,19 +592,19 @@ Ext.onReady(function(){
 		saveFormColNum:2,
 		labelWidth:120,
 		tbar:[{	
-			xtype:'textfield', id:'rail_way_Time_Completed', enableKeyEvents:true, emptyText:'输入车次快速检索', listeners: {
+			xtype:'textfield', id:'rail_way_Time_Completed', enableKeyEvents:true, emptyText:i18n.TrainInspectionPlan.quickSearch, listeners: {
 	    		keyup: function(filed, e) {
 						ZbglRdpPlan.ZbglRdpPlanCompletedGrid.store.load();
 	    		}
 			}	
 		}],
 		fields: [{
-	   			header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+	   			header:i18n.TrainInspectionPlan.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'车次', dataIndex:'railwayTime', editor:{  maxLength:50,allowBlank:false }, searcher: {anchor:'98%'}
+				header:i18n.TrainInspectionPlan.train, dataIndex:'railwayTime', editor:{  maxLength:50,allowBlank:false }, searcher: {anchor:'98%'}
 			},{
-				header:'<div>股道<span style="color:green;">【车辆数】</span></div>', dataIndex:'rdpNum', editor:{  
-					fieldLabel:'车辆数',
+				header:'<div>' + i18n.TrainInspectionPlan.track + '<span style="color:green;">' + i18n.TrainInspectionPlan.VehicleNumber + '</span></div>', dataIndex:'rdpNum', editor:{  
+					fieldLabel:i18n.TrainInspectionPlan.VehicleNumber2,
 			        xtype:'numberfield',
 			        allowDecimals:false,
 			        allowNegative:false,
@@ -618,10 +618,10 @@ Ext.onReady(function(){
 					},
 			        searcher: {anchor:'98%'}
 			},{
-				header:'作业班组', dataIndex:'workTeamID',hidden:true, editor:{ 
+				header:i18n.TrainInspectionPlan.workGroup, dataIndex:'workTeamID',hidden:true, editor:{ 
 					id:"workTeam_comb",
 		        	xtype: "Base_combo",
-		        	fieldLabel: "作业班组",
+		        	fieldLabel: i18n.TrainInspectionPlan.workGroup,
 					fields:['orgid','orgSeq','orgName'],
 					hiddenName: "workTeamID",
 					business: 'orgDicItem',
@@ -640,9 +640,9 @@ Ext.onReady(function(){
 					isAll:true
 				}, searcher: {anchor:'98%'}
 			},{
-	   			header:'上下行编码', dataIndex:'toDirectionNo', hidden:true, editor: { xtype:'hidden',id:'toDirectionNo' }
+	   			header:i18n.TrainInspectionPlan.upDownStreamCode, dataIndex:'toDirectionNo', hidden:true, editor: { xtype:'hidden',id:'toDirectionNo' }
 			},{
-				header:'上下行', dataIndex:'toDirectionName',hidden:true, editor:{
+				header:i18n.TrainInspectionPlan.upstream_downstream, dataIndex:'toDirectionName',hidden:true, editor:{
 						id:'toDirection_combo',
 						xtype: 'EosDictEntry_combo',
 						hiddenName: 'toDirectionName',
@@ -653,10 +653,10 @@ Ext.onReady(function(){
 						returnField: [{widgetId:"toDirectionNo",propertyName:"dictid"}]
 			        }, searcher: {anchor:'98%'}
 			},{
-				header:'股道', dataIndex:'trackNo',hidden:true, editor:{
+				header:i18n.TrainInspectionPlan.track2, dataIndex:'trackNo',hidden:true, editor:{
 					id:"trackNo_comb",
 		        	xtype: "Base_combo",
-		        	fieldLabel: "股道",
+		        	fieldLabel: i18n.TrainInspectionPlan.track2,
 					fields:['idx','trackCode','trackName'],
 					hiddenName: "trackNo",
 					business: 'stationTrack',
@@ -673,9 +673,9 @@ Ext.onReady(function(){
 					isAll:true
 				}, searcher: {anchor:'98%'}
 			},{
-	   			header:'股道名称', dataIndex:'trackName', hidden:true, editor: { xtype:'hidden',id:'trackName' }
+	   			header:i18n.TrainInspectionPlan.trackName, dataIndex:'trackName', hidden:true, editor: { xtype:'hidden',id:'trackName' }
 			},{
-				header:'技检时间(分钟)', dataIndex:'checkTime',hidden:true, editor:{    
+				header:i18n.TrainInspectionPlan.checkTimeMin, dataIndex:'checkTime',hidden:true, editor:{    
 			        xtype:'numberfield',
 			        allowDecimals:false,
 			        allowNegative:false,
@@ -684,13 +684,13 @@ Ext.onReady(function(){
 			        allowBlank:false
 			        }, searcher: {anchor:'98%'}
 			},{
-				header:'计划开始时间', dataIndex:'planStartTime', xtype:'datecolumn', hidden:true, editor:{allowBlank:false, xtype:'my97date',format: 'Y-m-d H:i' }
+				header:i18n.TrainInspectionPlan.plannedStartTime, dataIndex:'planStartTime', xtype:'datecolumn', hidden:true, editor:{allowBlank:false, xtype:'my97date',format: 'Y-m-d H:i' }
 			},{
-				header:'计划完成时间', dataIndex:'planEndTime', xtype:'datecolumn',  hidden:true,editor:{hidden:true ,xtype:'my97date',format: 'Y-m-d H:i' }
+				header:i18n.TrainInspectionPlan.plannedEndTime, dataIndex:'planEndTime', xtype:'datecolumn',  hidden:true,editor:{hidden:true ,xtype:'my97date',format: 'Y-m-d H:i' }
 			},{
-	   			header:'班次编码', dataIndex:'classNo', hidden:true, editor: { xtype:'hidden',id:'classNo' }
+	   			header:i18n.TrainInspectionPlan.classCode, dataIndex:'classNo', hidden:true, editor: { xtype:'hidden',id:'classNo' }
 			},{
-				header:'班次', dataIndex:'className',hidden:true, editor:{
+				header:i18n.TrainInspectionPlan.className, dataIndex:'className',hidden:true, editor:{
 						id:'class_combo',
 						xtype: 'EosDictEntry_combo',
 						hiddenName: 'className',
@@ -700,15 +700,15 @@ Ext.onReady(function(){
 						returnField: [{widgetId:"classNo",propertyName:"dictid"}]
 			        }, searcher: {anchor:'98%'}
 			},{
-				header:'状态', dataIndex:'rdpPlanStatus',editor:{ xtype:'hidden'},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+				header:i18n.TrainInspectionPlan.status, dataIndex:'rdpPlanStatus',editor:{ xtype:'hidden'},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 					return '<div style="background:'+ ZbglRdpPlan.statusColorArrays[value] +';color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">' + ZbglRdpPlan.statusArrays[value] + '</div>';
 				}
 			},{
-				header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
+				header:i18n.TrainInspectionPlan.trainType, dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
 			},{
-				header:'实际开始时间', dataIndex:'realStartTime',hidden:true, editor: { xtype:"hidden" }
+				header:i18n.TrainInspectionPlan.actualStartTime, dataIndex:'realStartTime',hidden:true, editor: { xtype:"hidden" }
 			},{
-				header:'实际结束时间', dataIndex:'realEndTime',hidden:true, editor: { xtype:"hidden" }
+				header:i18n.TrainInspectionPlan.actualEndTime, dataIndex:'realEndTime',hidden:true, editor: { xtype:"hidden" }
 			}],
 			afterShowSaveWin: function(){
 				 // 设置字段只读
@@ -853,27 +853,27 @@ Ext.onReady(function(){
 			items:[{
 				columnWidth:1,
 		        items: [
-		        	{ fieldLabel:"技检时间", name:"checkTime"}
+		        	{ fieldLabel:i18n.TrainInspectionPlan.checkTime, name:"checkTime"}
 		        ]
 			},{
 				columnWidth:1,
 		        items: [
-		        	{ fieldLabel:"实际时间", name:"planStartTime"}
+		        	{ fieldLabel:i18n.TrainInspectionPlan.realTime, name:"planStartTime"}
 		        ]
 			},{
 				columnWidth:1,
 		        items: [
-		        	{ fieldLabel:"作业班次", name:"className" }
+		        	{ fieldLabel:i18n.TrainInspectionPlan.workClass, name:"className" }
 		        ]
 			},{
 				columnWidth:1,
 		        items: [
-		        	{ fieldLabel:"作业班组", name:"workTeamName"}
+		        	{ fieldLabel:i18n.TrainInspectionPlan.workGroup, name:"workTeamName"}
 		        ]
 			},{
 				columnWidth:1,
 		        items: [
-			        	{ fieldLabel:"上下行", name:"toDirectionName"}
+			        	{ fieldLabel:i18n.TrainInspectionPlan.upstream_downstream, name:"toDirectionName"}
 			        ]
 			}]
 		});

@@ -96,13 +96,13 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : true
 			},
-			loadMask: {msg: "正在处理，请稍侯..."},
+			loadMask: {msg: i18n.ClassTransfer.msg},
 			// 偶数行变色
 			stripeRows : true,	
 			// 工具栏
 			tbar : [{
 					xtype:"label",
-					text:"人员姓名："
+					text:i18n.ClassTransfer.empName
 				},{	            
 	                xtype:"textfield",								                
 	                name : "empName",
@@ -119,7 +119,7 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 			        	}
 			        }
 				},'->',{
-					text : "搜索",
+					text : i18n.ClassTransfer.search,
 					iconCls : "searchIcon",
 					handler : function(){
 						var empname = this.getTopToolbar().get(1).getValue();
@@ -129,7 +129,7 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					},
 					scope : this
 				},{
-					text : "重置",
+					text : i18n.ClassTransfer.reset,
 					iconCls : "resetIcon",
 					handler : function(){
 						this.store.baseParams.emp = "";
@@ -146,14 +146,14 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 			colModel : new Ext.grid.ColumnModel([
 				new Ext.grid.RowNumberer(), {
 					sortable : true,
-					header : "名称",
-					title : "双击该行记录选择人员",
+					header : i18n.ClassTransfer.name,
+					title : i18n.ClassTransfer.doubleClick,
 					dataIndex : "empname",
 					width:50
 				}, {
 					sortable : true,
-					header : "人员代码",
-					title : "双击该行记录选择人员",
+					header : i18n.ClassTransfer.empCode,
+					title : i18n.ClassTransfer.doubleClick,
 					dataIndex : "empcode",
 					width:60
 				}, {
@@ -168,9 +168,9 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					hidden : true
 				}, {
 					sortable : true,
-					header : "所属班组",
+					header : i18n.ClassTransfer.orgName,
 					dataIndex : "orgname",
-					title : "双击该行记录选择人员",
+					title : i18n.ClassTransfer.doubleClick,
 					width:100
 				}, {
 					sortable : true,
@@ -239,7 +239,7 @@ omEmployeeSelect.UserSelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		omEmployeeSelect.UserSelectWin.superclass.constructor.call(this, {
-			title : "选择人员",
+			title : i18n.ClassTransfer.selectEmp,
 			width : 535,
 			height : 325,			
 			plain : true,

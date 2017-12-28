@@ -14,7 +14,7 @@ Ext.onReady(function(){
 	    activeTab: 0,
 	    frame:true,
 	    items:[{
-	            title: "未完成", border: false, xtype: "panel", layout: "fit", 
+	            title: i18n.TrainInspectionPlan.unfinished, border: false, xtype: "panel", layout: "fit", 
 	            items: [
 	            	ZbglRdpPlan.ZbglRdpPlanGrid
 	            ],
@@ -24,7 +24,7 @@ Ext.onReady(function(){
 	        		}	        	
 	        	}
 	        },{
-	            title: "已完成", border: false, xtype: "panel", layout: "fit", 
+	            title: i18n.TrainInspectionPlan.finished, border: false, xtype: "panel", layout: "fit", 
 	            items:[
 	            	ZbglRdpPlan.ZbglRdpPlanCompletedGrid
 	            ],
@@ -56,7 +56,7 @@ Ext.onReady(function(){
         region: 'center', bodyBorder: false,
         layout: 'fit', items : ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid
     	},{ 		
-	     	 region: 'west',  title: '列检计划',  bodyBorder: false, split: true, collapseMode: 'mini',
+	     	 region: 'west',  title: i18n.TrainInspectionPlan.inspectionPlanTitle,  bodyBorder: false, split: true, collapseMode: 'mini',
 	     	defaults: {border: false},
 	     	 width: 400, layout: 'fit',   minSize: 160, maxSize: 400, 
 	     	 collapsible : true,   items:ZbglRdpPlanDesign.ZbglRdpPlanPanel

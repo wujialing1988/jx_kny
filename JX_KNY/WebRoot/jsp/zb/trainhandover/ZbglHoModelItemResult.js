@@ -10,11 +10,11 @@ ZbglHoModelItemResult.grid = new Ext.yunda.RowEditorGrid({
     deleteURL: ctx + '/zbglHoModelItemResult!logicDelete.action',            //删除数据的请求URL
     saveFormColNum:1,	searchFormColNum:1,
 	fields: [{
-		header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+		header:i18n.TrainHandoverItem.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 	},{
-		header:'机车交接项ID', dataIndex:'handOverItemIDX',hidden: true, editor:{ xtype:'hidden' }
+		header:i18n.TrainHandoverItem.handoverItemID, dataIndex:'handOverItemIDX',hidden: true, editor:{ xtype:'hidden' }
 	},{
-		header:'机车交接情况', dataIndex:'handOverResultDesc', editor:{  maxLength:100 }
+		header:i18n.TrainHandoverItem.handoverDetail, dataIndex:'handOverResultDesc', editor:{  maxLength:100 }
 	}],
 	beforeSaveFn: function(rowEditor, changes, record, rowIndex){
 		record.data.handOverItemIDX = ZbglHoModelItem.idx;

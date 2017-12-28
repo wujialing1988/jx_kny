@@ -22,7 +22,7 @@ DetainTrainCompleted.saveForm = new Ext.form.FormPanel({
 	items:[
 	{
         xtype:'fieldset',
-        title: '扣车信息',
+        title: i18n.TruckDetainRegSumm.detainInformation,
         autoHeight:true,
         layout: 'column',
         defaults: {
@@ -41,49 +41,49 @@ DetainTrainCompleted.saveForm = new Ext.form.FormPanel({
         	{xtype: "hidden", name: "detainStatus"},
         	{
             	items:[{
-                		fieldLabel: '车型',
+                		fieldLabel: i18n.TruckDetainRegSumm.trainType,
                         name: "trainTypeCode"
                     }]
             },
         	{
             	items:[{
-                		fieldLabel: '车号',
+                		fieldLabel: i18n.TruckDetainRegSumm.trainNum,
                         name: "trainNo"
                     }]
             },
         	{
             	items:[{
-                		fieldLabel: '登记人',
+                		fieldLabel: i18n.TruckDetainRegSumm.registerName,
                         name: "proposerName"
                     }]
             },
         	{
             	items:[{
-                		fieldLabel: '登记时间',
+                		fieldLabel: i18n.TruckDetainRegSumm.registerDate,
                         name: "proposerDate"
                     }]
             },
         	{
         		columnWidth:1,
             	items:[{
-                		fieldLabel: '扣车类型',
+                		fieldLabel: i18n.TruckDetainRegSumm.detainType,
                         name: "detainTypeName"
                     }]
             },
         	{
         		columnWidth:1,
             	items:[{
-                		fieldLabel: '扣车原因',
+                		fieldLabel: i18n.TruckDetainRegSumm.detainReason,
                         name: "detainReason"
                     }]
             },{
             	items:[{
-            		fieldLabel: '修程',
+            		fieldLabel: i18n.TruckDetainRegSumm.repairClassName,
                     name: "repairClassName"
                 }]
             },{
             	items:[{
-            		fieldLabel: '检修时间',
+            		fieldLabel: i18n.TruckDetainRegSumm.overhualDate,
                     name: "jxTime"
                 }]
             }            
@@ -103,7 +103,7 @@ DetainTrainCompleted.grid = new Ext.yunda.Grid({
     saveForm:DetainTrainCompleted.saveForm,
     tbar : ['refresh','&nbsp;&nbsp;',
     {
-    	xtype:'textfield', id:'query_input_completed', enableKeyEvents:true, emptyText:'输入车号快速检索...', width:200,
+    	xtype:'textfield', id:'query_input_completed', enableKeyEvents:true, emptyText:i18n.TruckDetainRegSumm.search, width:200,
     	listeners: {
     		keyup: function(filed, e) {
     			if (DetainTrainCompleted.queryTimeout) {
@@ -115,67 +115,67 @@ DetainTrainCompleted.grid = new Ext.yunda.Grid({
     			}, 1000);
     		}
 		}
-    },'->','<span style="color:grey;">双击数据查看详情!&nbsp;&nbsp;</span>'],    
+    },'->','<span style="color:grey;">' + i18n.TruckDetainRegSumm.doubleRem + '&nbsp;&nbsp;</span>'],    
 	fields: [
      	{
-		header:'车辆车型ID', dataIndex:'trainTypeIdx',hidden:true,width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.trainTypeID, dataIndex:'trainTypeIdx',hidden:true,width: 120,editor: {}
 	},
      	{
-		header:'车型', dataIndex:'trainTypeCode',width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.trainType, dataIndex:'trainTypeCode',width: 120,editor: {}
 	},
      	{
-		header:'车辆车型名称', dataIndex:'trainTypeName',hidden:true,width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.trainTypeName, dataIndex:'trainTypeName',hidden:true,width: 120,editor: {}
 	},
      	{
-		header:'车号', dataIndex:'trainNo',width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.trainNum, dataIndex:'trainNo',width: 120,editor: {}
 	}, {
-		header:'扣车类型编码', dataIndex:'detainTypeCode',width: 120,hidden:true,editor: {}
+		header:i18n.TruckDetainRegSumm.detainTypeCode, dataIndex:'detainTypeCode',width: 120,hidden:true,editor: {}
 	},
      	{
-		header:'扣车类型', dataIndex:'detainTypeName',width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.detainType, dataIndex:'detainTypeName',width: 120,editor: {}
 	},{
-		header:'登记人ID', dataIndex:'proposerIdx',hidden:true,width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.registerID, dataIndex:'proposerIdx',hidden:true,width: 120,editor: {}
 	},
      	{
-		header:'登记人', dataIndex:'proposerName',width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.registerName, dataIndex:'proposerName',width: 120,editor: {}
 	},
        {
-		header:'登记时间', dataIndex:'proposerDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
+		header:i18n.TruckDetainRegSumm.registerDate, dataIndex:'proposerDate', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
 	},
      	{
-		header:'扣车原因', dataIndex:'detainReason',width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.detainReason, dataIndex:'detainReason',width: 120,editor: {}
 	},
 	{
-		header:'修程', dataIndex:'repairClassName',width: 120,editor: {}
+		header:i18n.TruckDetainRegSumm.repairClassName, dataIndex:'repairClassName',width: 120,editor: {}
 	},
 	{
-		header:'检修时间时间', dataIndex:'jxTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
+		header:i18n.TruckDetainRegSumm.overhualDate, dataIndex:'jxTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', editor:{ xtype:'my97date' }
 	},
      	{
-		header:'状态', dataIndex:'detainStatus',width: 120,renderer:function(value, metaData, record, rowIndex, colIndex, store){
+		header:i18n.TruckDetainRegSumm.status, dataIndex:'detainStatus',width: 120,renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if(value == "10"){
-						return  '<div style="background:#d2d6de;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">未检修</div>';
+						return  '<div style="background:#d2d6de;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">' + i18n.TruckDetainRegSumm.unrepaired + '</div>';
 					}else if(value == "20"){
-						return  '<div style="background:#f39c12;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">检修中</div>';
+						return  '<div style="background:#f39c12;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">' + i18n.TruckDetainRegSumm.repairing + '</div>';
 					}else if(value == "30"){
-						return  '<div style="background:#00a65a;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">已检修</div>';
+						return  '<div style="background:#00a65a;color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">' + i18n.TruckDetainRegSumm.repaired + '</div>';
 					}
 				},editor: {}
 	},{
-		header:'站点ID', dataIndex:'siteID',width: 120,hidden:true ,editor: {}
+		header:i18n.TruckDetainRegSumm.stationID, dataIndex:'siteID',width: 120,hidden:true ,editor: {}
 	},
      	{
-		header:'站点名称', dataIndex:'siteName',width: 120,hidden:true , editor: {}
+		header:i18n.TruckDetainRegSumm.stationName, dataIndex:'siteName',width: 120,hidden:true , editor: {}
 	},
 		{
-		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
+		header:i18n.TruckDetainRegSumm.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	}],
 	searchFn: function(searchParam){ 
 		DetainTrainCompleted.searchParam = searchParam ;
         DetainTrainCompleted.grid.store.load();
 	},
 	afterShowEditWin: function(record, rowIndex){
-		this.saveWin.setTitle("扣车信息查看");
+		this.saveWin.setTitle(i18n.TruckDetainRegSumm.readDetainInfo);
 		var proposerDate = Ext.isEmpty(record.data.proposerDate) ? "" :new Date(record.data.proposerDate).format('Y-m-d H:i');
 		var approveDate = Ext.isEmpty(record.data.approveDate) ? "" :new Date(record.data.approveDate).format('Y-m-d H:i');
 		var jxTime = Ext.isEmpty(record.data.jxTime) ? "" :new Date(record.data.jxTime).format('Y-m-d H:i');
@@ -186,7 +186,7 @@ DetainTrainCompleted.grid = new Ext.yunda.Grid({
 	createSaveWin: function(){
 	        //计算查询窗体宽度
 	        this.saveWin = new Ext.Window({
-	            title:"扣车信息查看", width:800, height: 280, closeAction:"hide",
+	            title:i18n.TruckDetainRegSumm.readDetainInfo, width:800, height: 280, closeAction:"hide",
 	            layout: 'fit',
 	            iconCls: 'searchIcon',
 	            defaults: {layout: 'fit', border: false},
@@ -194,7 +194,7 @@ DetainTrainCompleted.grid = new Ext.yunda.Grid({
 	            modal:true,
 	            buttonAlign:'center', 
 	            buttons: [{
-	                text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ this.saveWin.hide(); }
+	                text: i18n.TruckDetainRegSumm.close, iconCls: "closeIcon", scope: this, handler: function(){ this.saveWin.hide(); }
 	            }]
 	        });
 	}    

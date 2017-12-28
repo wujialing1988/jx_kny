@@ -133,7 +133,7 @@
 </script>
 
 <link href="<%=ctx%>/jsp/freight/zb/planhc/ext3-rowspan.css" rel="stylesheet" type="text/css">
-
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-TrainInspectionPlan.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/jquery/jquery.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/freight/zb/planhc/ext3GridSpan.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/freight/zb/planhc/WorkStationEmpSelect.js"></script>

@@ -22,7 +22,7 @@
 	var orgRoot = '<%=com.yunda.frame.common.Constants.ORG_ROOT_NAME%>';
 	var vehicleType="<%=(null==request.getParameter("vehicleType"))?"":request.getParameter("vehicleType")%>";
 </script>
-<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/i18n-lang-JczlTrainServiceNew.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-JczlTrainServiceNew.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/GyjcFactorySelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/js/component/EosDictEntry.js"></script>

@@ -12,15 +12,15 @@ ZbglHoModelItem.grid = new Ext.yunda.Grid({
     saveFormColNum:1,	searchFormColNum:1,
     fieldWidth: 300,
 	fields: [{
-		header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+		header:i18n.TrainHandoverItem.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 	},{
-		header:'交接项名称', dataIndex:'handOverItemName', editor:{  maxLength:100, allowBlank: false }
+		header:i18n.TrainHandoverItem.handoverItemName, dataIndex:'handOverItemName', editor:{  maxLength:100, allowBlank: false }
 	},{
-		header:'交接状态', dataIndex:'handOverItemStatus', 
-		editor:{ id:"handOverItemStatus_edit",xtype:'checkboxgroup', name: "handOverItemStatus", fieldLabel: '交接状态', items: statusFields },
-		searcher:{ id:"handOverItemStatus_search",xtype:'checkboxgroup', name: "handOverItemStatus", fieldLabel: '交接状态', items: searchStatusFields }
+		header:i18n.TrainHandoverItem.handoverStatus, dataIndex:'handOverItemStatus', 
+		editor:{ id:"handOverItemStatus_edit",xtype:'checkboxgroup', name: "handOverItemStatus", fieldLabel: i18n.TrainHandoverItem.handoverStatus, items: statusFields },
+		searcher:{ id:"handOverItemStatus_search",xtype:'checkboxgroup', name: "handOverItemStatus", fieldLabel: i18n.TrainHandoverItem.handoverStatus, items: searchStatusFields }
 	},{
-		header:'排序', dataIndex:'seqNo', editor:{    
+		header:i18n.TrainHandoverItem.sort, dataIndex:'seqNo', editor:{    
 			        xtype:'numberfield',
 			        allowDecimals:false,
 			        allowNegative:false,
@@ -30,7 +30,7 @@ ZbglHoModelItem.grid = new Ext.yunda.Grid({
 			        }, 
 			        searcher: {anchor:'98%'}
 			},{
-		header:'父级ID', dataIndex:'parentIDX', hidden: true, editor:{  xtype: "hidden"}
+		header:i18n.TrainHandoverItem.parentID, dataIndex:'parentIDX', hidden: true, editor:{  xtype: "hidden"}
 	}],
 	afterShowSaveWin: function(){
 		ZbglHoModelItem.grid.saveForm.getForm().findField("parentIDX").setValue(ZbglHoModelItem.idx);
@@ -99,7 +99,7 @@ ZbglHoModelItem.tree =  new Ext.tree.TreePanel( {
         dataUrl : ctx + "/trainHandOverItemModel!getTree.action"
     }),
     root: new Ext.tree.AsyncTreeNode({
-        text: "交接项",
+        text: i18n.TrainHandoverItem.handoverItem,
         id: "0",
         leaf: false,
         expanded :true
@@ -128,7 +128,7 @@ ZbglHoModelItem.tree =  new Ext.tree.TreePanel( {
 ZbglHoModelItem.tabs = new Ext.TabPanel({
     activeTab: 0,
     items:[{
-        id: "itemModel", title: "交接项", layout: "fit", border: false, items:[ ZbglHoModelItem.grid ]
+        id: "itemModel", title: i18n.TrainHandoverItem.handoverItem, layout: "fit", border: false, items:[ ZbglHoModelItem.grid ]
     }/*,{
     	id: "itemResult", title: "交接情况", layout: "fit", border: false, items:[ ZbglHoModelItemResult.grid ], disabled : true
     }*/]
@@ -144,7 +144,7 @@ ZbglHoModelItem.panel = new Ext.Panel({
         split : true,
         autoScroll: true,
 	    region : 'west',
-	    title : '<span style="font-weight:normal">交接项</span>',
+	    title : '<span style="font-weight:normal">' + i18n.TrainHandoverItem.handoverItem + '</span>',
         iconCls : 'chart_organisationIcon',
         tools : [ {
         	id : 'refresh',
