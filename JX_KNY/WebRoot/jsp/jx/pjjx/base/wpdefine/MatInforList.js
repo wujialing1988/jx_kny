@@ -12,13 +12,13 @@ Ext.onReady(function() {
 	    loadURL: ctx + '/matTypeList!pageQuery.action',                 //装载列表数据的请求URL	  
 	    tbar:null,
 		fields: [{
-			header:'物料编码', dataIndex:'matCode'
+			header:i18n.TruckFaultReg.materialCode, dataIndex:'matCode'
 		},{
-			header:'物料描述', dataIndex:'matDesc', width: 200
+			header:i18n.TruckFaultReg.materialDescription, dataIndex:'matDesc', width: 200
 		},{
-			header:'计量单位', dataIndex:'unit', width: 60			
+			header:i18n.TruckFaultReg.MeasureUnit, dataIndex:'unit', width: 60			
 		},{
-			header:'计划单价', dataIndex:'price', width: 60	
+			header:i18n.TruckFaultReg.expectUnitPrice, dataIndex:'price', width: 60	
 		}],
 		storeId: 'matCode',
 		storeAutoLoad: true
@@ -26,7 +26,7 @@ Ext.onReady(function() {
 	MatInforList.grid.un('rowdblclick', MatInforList.grid.toEditFn, MatInforList.grid);
 	
 	MatInforList.batchWin = new Ext.Window({
-		title:"物料选择",
+		title:i18n.TruckFaultReg.addMaterial,
 		width:605, height:350,
 		layout:"border",
 		closeAction:"hide",
@@ -52,7 +52,7 @@ Ext.onReady(function() {
 						layout:"form", baseCls:"x-plain",
 						items:[
 							{
-								xtype:"textfield", width:120, fieldLabel:"物料编码", id:"matCode"
+								xtype:"textfield", width:120, fieldLabel:i18n.TruckFaultReg.materialCode, id:"matCode"
 							}
 						]
 					},
@@ -60,7 +60,7 @@ Ext.onReady(function() {
 						columnWidth:0.355,
 						layout:"form", baseCls:"x-plain",
 						items:[{
-								xtype:"textfield", width:120, fieldLabel:"物料描述", id:"matDesc"
+								xtype:"textfield", width:120, fieldLabel:i18n.TruckFaultReg.materialDescription, id:"matDesc"
 							}]
 					},
 					{
@@ -73,7 +73,7 @@ Ext.onReady(function() {
 						bodyStyle:"",
 						items:[{
 							xtype:"button", width:40,
-							text:"查询", iconCls:"searchIcon", handler: function() {
+							text:i18n.TruckFaultReg.search, iconCls:"searchIcon", handler: function() {
 								var form = Ext.getCmp('searchForm').getForm();
 								var searchParams = form.getValues();
 								MatInforList.searchParam = MyJson.deleteBlankProp(searchParams);
@@ -87,7 +87,7 @@ Ext.onReady(function() {
 						layout:"form",
 						items:[{
 								xtype:"button", width:40,
-								text:"重置", iconCls:"resetIcon", handler: function() {
+								text:i18n.TruckFaultReg.reset, iconCls:"resetIcon", handler: function() {
 									Ext.getCmp('searchForm').getForm().reset();
 									// 重新加载 【物料选择】 窗口表格数据
 									MatInforList.searchParam = {};
@@ -99,11 +99,11 @@ Ext.onReady(function() {
 			}],
 		buttonAlign: 'center',
 		buttons: [{
-			text:'添加', iconCls:'addIcon', handler: function() {
+			text:i18n.TruckFaultReg.add, iconCls:'addIcon', handler: function() {
 				MatInforList.submit();
 			}	
 		}, {
-			text:'关闭', iconCls:'closeIcon', handler: function() {
+			text:i18n.TruckFaultReg.close, iconCls:'closeIcon', handler: function() {
 				MatInforList.batchWin.hide();
 			}
 		}]

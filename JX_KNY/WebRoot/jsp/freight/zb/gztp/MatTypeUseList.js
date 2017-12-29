@@ -6,7 +6,7 @@ Ext.onReady(function(){
 	
 	/** **************** 定义全局变量开始 **************** */
 	MatTypeUseList.gztpIdx = "";
-	MatTypeUseList.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:"正在处理，请等待......"});
+	MatTypeUseList.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.TruckFaultReg.Msg1});
 	/** **************** 定义全局变量结束 **************** */
 	
 	/** **************** 定义全局函数开始 **************** */
@@ -14,7 +14,7 @@ Ext.onReady(function(){
 	MatTypeUseList.deleteFn = function() {
         var data = MatTypeUseList.grid.selModel.getSelections();
         if(data.length == 0 ){
-        	MyExt.Msg.alert("尚未选择一条记录！");
+        	MyExt.Msg.alert(i18n.TruckFaultReg.Msg2);
             return;
         }		
 		MatTypeUseList.grid.store.remove(data[0]);
@@ -23,7 +23,7 @@ Ext.onReady(function(){
 	MatInforList.submit = function(){
 		var sm = MatInforList.grid.getSelectionModel();
 		if (sm.getCount() <= 0) {
-			MyExt.Msg.alert("尚未选择一条记录");
+			MyExt.Msg.alert(i18n.TruckFaultReg.Msg2);
 			return;
 		}
 		// 已选择的待添加的物料信息
@@ -35,7 +35,7 @@ Ext.onReady(function(){
 				var record = MatTypeUseList.grid.store.getAt(i);
 				for (var j = 0; j < selectedRecrods.length; j++) {
 					if (record.get('matCode') == selectedRecrods[j].get('matCode')) {
-						MyExt.Msg.alert("物料编码<font color='red'>【" + record.get('matCode') + "】</font>已存在列表中，请不要重复添加");
+						MyExt.Msg.alert(i18n.TruckFaultReg.materialCode + "<font color='red'>【" + record.get('matCode') + "】</font>" + i18n.TruckFaultReg.Msg3);
    	          			return ;
 					}
 				}
@@ -69,7 +69,7 @@ Ext.onReady(function(){
 	});
 	
 	// 操作掩码
-    MatTypeUseList.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:"正在处理，请等待......"});
+    MatTypeUseList.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.TruckFaultReg.Msg1});
 	// 行选择模式
     MatTypeUseList.sm = new Ext.grid.CheckboxSelectionModel({singleSelect:false});
     //材料规格型号，分页工具
@@ -82,11 +82,11 @@ Ext.onReady(function(){
 		colModel:new Ext.grid.ColumnModel([ new Ext.grid.RowNumberer(),{
 			sortable:false, dataIndex:'idx', hidden:true, header:'idx'
 		},{
-			header:'物料编码', dataIndex:'matCode', width: 200, editor: { readOnly: true }
+			header:i18n.TruckFaultReg.materialCode, dataIndex:'matCode', width: 200, editor: { readOnly: true }
 		},{
-			header:'物料描述', dataIndex:'matDesc', width: 200, editor: { readOnly: true }
+			header:i18n.TruckFaultReg.materialDescription, dataIndex:'matDesc', width: 200, editor: { readOnly: true }
 		},{
-			sortable:false, dataIndex:'matCount', header:'数量', 
+			sortable:false, dataIndex:'matCount', header:i18n.TruckFaultReg.count, 
 					renderer: function(v,m){
      	   	   	 		m.css = 'x-grid-col';
      	   	   	 		return v;
@@ -97,18 +97,18 @@ Ext.onReady(function(){
 		        		allowBlank: false
 					}
 		},{
-			header:'单位', dataIndex:'unit', width: 100, editor: { readOnly: true }
+			header:i18n.TruckFaultReg.unit, dataIndex:'unit', width: 100, editor: { readOnly: true }
 		},{
-			header:'单价', dataIndex:'price', width: 100,hidden:true
+			header:i18n.TruckFaultReg.price, dataIndex:'price', width: 100,hidden:true
 		},{
-			header:'操作', dataIndex:'idx', align:'center', width: 60, renderer: function(value, metaData, record, rowIndex, colIndex, store){
-				return "<img src='" + deleteIcon + "' alt='删除' style='cursor:pointer' onclick='MatTypeUseList.deleteFn();'/>";
+			header:i18n.TruckFaultReg.operate, dataIndex:'idx', align:'center', width: 60, renderer: function(value, metaData, record, rowIndex, colIndex, store){
+				return "<img src='" + deleteIcon + "' alt=i18n.TruckFaultReg.altDelete style='cursor:pointer' onclick='MatTypeUseList.deleteFn();'/>";
 			}
 		},{
-			header:'故障登记ID', dataIndex:'gztpIdx', hidden:true, editor: { readOnly: true }
+			header:i18n.TruckFaultReg.faultRegisterID, dataIndex:'gztpIdx', hidden:true, editor: { readOnly: true }
 		}]),
 		tbar:[{
-	    	text:'选择物料', iconCls: 'addIcon', handler:function(){
+	    	text:i18n.TruckFaultReg.addMaterial, iconCls: 'addIcon', handler:function(){
 	    		MatInforList.batchWin.show();
 	    	}
 	    }],

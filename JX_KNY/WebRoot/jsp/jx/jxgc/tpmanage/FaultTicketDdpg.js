@@ -5,23 +5,22 @@ Ext.onReady(function(){
 Ext.namespace('FaultTicketDdpg');                       //定义命名空间
 FaultTicketDdpg.searchParam = {};
 /*** 查询表单 start ***/
-FaultTicketDdpg.searchLabelWidth = 90;
-FaultTicketDdpg.searchAnchor = '95%';
+FaultTicketDdpg.searchLabelWidth = 100;
+FaultTicketDdpg.searchAnchor = '50%';
 FaultTicketDdpg.searchFieldWidth = 270;
 FaultTicketDdpg.searchForm = new Ext.form.FormPanel({
-	layout:"form", border:false, style:"padding:10px" ,
-	labelWidth: FaultTicketDdpg.searchLabelWidth, align:'center',baseCls: "x-plain",
-	defaults:{anchor:"98%"}, buttonAlign:'center',
+	style:"padding:10px;margin:10px" ,
+	labelWidth: FaultTicketDdpg.searchLabelWidth,
+	defaults:{type:'textfield'}, buttonAlign:'center',
 	items:[{
-		xtype: 'panel',	border:false,  layout:'column',	align:'center', baseCls: "x-plain",
+		layout:'column',	align:'center',
 		items:[{
-			align:'center',	layout:'form', defaultType:'textfield', baseCls: "x-plain", columnWidth:0.5,
-			fieldWidth: FaultTicketDdpg.searchFieldWidth, labelWidth: FaultTicketDdpg.searchLabelWidth, defaults:{anchor:FaultTicketDdpg.searchAnchor},
+			align:'center',	layout:'form',columnWidth:0.33,
+			defaults:{anchor:FaultTicketDdpg.searchAnchor},
 			items:[{ 
 				fieldLabel: "车型",
 				hiddenName: "trainTypeIDX",
 				displayField: "shortName", valueField: "typeID",
-				pageSize: 0, minListWidth: 200,
 				editable:true,
 				forceSelection: true,
 				xtype: "Base_combo",
@@ -39,10 +38,10 @@ FaultTicketDdpg.searchForm = new Ext.form.FormPanel({
 		                trainNo_comb.cascadeStore();	
 		        	}   
 		    	}
-			},{ fieldLabel: "提票单号", name: 'ticketCode', xtype: 'textfield'}]
+			}]
 		},{
-			align:'center',	layout:'form', defaultType:'textfield', baseCls: "x-plain", columnWidth:0.5,
-			fieldWidth: FaultTicketDdpg.searchFieldWidth, labelWidth: FaultTicketDdpg.searchLabelWidth, defaults:{anchor:FaultTicketDdpg.searchAnchor},
+			align:'center',	layout:'form',columnWidth:0.33,
+			defaults:{anchor:FaultTicketDdpg.searchAnchor},
 			items:[{
 				id: "trainNo_comb_search",
 				fieldLabel: "车号",
@@ -53,7 +52,6 @@ FaultTicketDdpg.searchForm = new Ext.form.FormPanel({
 //				minLength : 4, 
 				maxLength : 5,
 //				vtype: "numberInt",
-				anchor: "95%", 				
 				xtype: "Base_combo",
 				business: 'trainNo',
 				entity:'com.yunda.jx.jczl.attachmanage.entity.jczlTrain',
@@ -65,10 +63,17 @@ FaultTicketDdpg.searchForm = new Ext.form.FormPanel({
 				isAll: 'yes',
 				editable:true
 			}]
+		},{
+			align:'center',	layout:'form',columnWidth:0.33,
+			defaults:{anchor:FaultTicketDdpg.searchAnchor},
+			items:[{
+				fieldLabel: "提票单号", name: 'ticketCode', xtype: 'textfield'
+			}]
 		}]
 	}],
 	buttons:[{
-			text:'查询', iconCls:'searchIcon', 
+			text:'查询', iconCls:'searchIcon',
+			style:'margin-left:-150px',
 			handler: function(){ 
 				var form = FaultTicketDdpg.searchForm.getForm();	
 		        var searchParam = form.getValues();
@@ -339,7 +344,7 @@ FaultTicketDdpg.panel = {
     xtype: "panel", layout: "border", 
     items: [{
         region: 'north', layout: "fit",bodyStyle:'padding-left:20px;',
-        collapsible:true, collapsed: true,  height: 150, bodyBorder: false,
+        collapsible:true, collapsed: false,  height: 150, bodyBorder: false,
         items:[FaultTicketDdpg.searchForm], frame: true, title: "查询"
     },{
         region : 'center', layout : 'fit', bodyBorder: false, items : [ FaultTicketDdpg.grid ]

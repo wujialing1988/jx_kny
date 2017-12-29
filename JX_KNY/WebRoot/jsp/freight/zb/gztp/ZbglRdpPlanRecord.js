@@ -50,7 +50,7 @@ Ext.onReady(function() {
 	
 	// 填写车号窗口 
 	ZbglRdpPlanRecord.writeTrainNoWin = new Ext.Window({
-		title:"填写车号", width:400, height:250, plain:true, closeAction:"hide", buttonAlign:'center',padding:15,
+		title:i18n.TruckFaultReg.enterTrainNum, width:400, height:250, plain:true, closeAction:"hide", buttonAlign:'center',padding:15,
     	maximizable:false,  modal:true,
     	items:[{
         	xtype: 'form',
@@ -68,7 +68,7 @@ Ext.onReady(function() {
             ]
 		}],
     	buttons: [{
-			text : "确定",iconCls : "saveIcon", handler: function(){
+			text : i18n.TruckFaultReg.ok,iconCls : "saveIcon", handler: function(){
 				var idx = $yd.getSelectedIdx(ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid)[0];
 				var writeTrainNo = Ext.getCmp("writeTrainNo").getValue();
 				if(Ext.isEmpty(writeTrainNo)){
@@ -93,12 +93,12 @@ Ext.onReady(function() {
 						}
 					},
 					failure: function(response, options){
-						MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+						MyExt.Msg.alert(i18n.TruckFaultReg.alertRemaindMes + "\n" + response.status + "\n" + response.responseText);
 					}
 				});
 			}
 		},{
-	        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlanRecord.writeTrainNoWin.hide(); }
+	        text: i18n.TruckFaultReg.close, iconCls: "closeIcon", scope: this, handler: function(){ ZbglRdpPlanRecord.writeTrainNoWin.hide(); }
 		}]
 	});	
 
@@ -106,7 +106,7 @@ Ext.onReady(function() {
 	 * 列检计划车辆列表
 	 */
 	ZbglRdpPlanRecord.ZbglRdpPlanRecordGrid = new Ext.yunda.Grid({
-		title : "车辆列表",
+		title : i18n.TruckFaultReg.trainList,
 		region : 'center',
 		loadURL : ctx + "/zbglRdpPlanRecord!pageList.action",
 		singleSelect : true,
@@ -115,33 +115,33 @@ Ext.onReady(function() {
 		pageSize: 100,
 		storeAutoLoad: false,
 		fields : [{
-				header : 'idx主键',
+				header : i18n.TruckFaultReg.id,
 				dataIndex : 'idx',
 				hidden : true
 			}, {
-				header : '<div>编号<span style="color:green;">【车型车号】</span></div>',
+				header : '<div>' + i18n.TruckFaultReg.number + '<span style="color:green;">' + i18n.TruckFaultReg.trainTypeNumber + '</span></div>',
 				dataIndex : 'seqNum',
 				renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 					var trainTypeCode = Ext.isEmpty(record.data.trainTypeCode) ? "" : record.data.trainTypeCode ;
 					var trainNo =  Ext.isEmpty(record.data.trainNo)?"":record.data.trainNo;
 					if (Ext.isEmpty(trainTypeCode) && Ext.isEmpty(trainNo)) {
-						return "第"+value+"辆:【未录入】";
+						return i18n.TruckFaultReg.the + value + i18n.TruckFaultReg.unrecorded;
 					}
 					var trainInfo = trainTypeCode + ' ' +trainNo ;
-					return "第"+value+"辆:【"+trainInfo+"】";
+					return i18n.TruckFaultReg.the + value + i18n.TruckFaultReg.is + trainInfo+"】";
 				}
 			}, {
-				header : '车辆车型',
+				header : i18n.TruckFaultReg.trainTypeName,
 				dataIndex : 'trainTypeName',
 				hidden : true
 			},
-			{header : '车辆编码',dataIndex : 'trainTypeCode',hidden : true},
-			{header : '车辆状态',dataIndex : 'rdpRecordStatus',hidden : true},
-			{header : '车辆列检实例ID',dataIndex : 'rdpIdx',hidden : true},
-			{header : '车辆车型ID',dataIndex : 'trainTypeIdx',hidden : true},
-			{header : '整备单IDX',dataIndex : 'rdpIdx',hidden : true},
+			{header : i18n.TruckFaultReg.trainCode2,dataIndex : 'trainTypeCode',hidden : true},
+			{header : i18n.TruckFaultReg.trainStatus,dataIndex : 'rdpRecordStatus',hidden : true},
+			{header : i18n.TruckFaultReg.trainIspectionID,dataIndex : 'rdpIdx',hidden : true},
+			{header : i18n.TruckFaultReg.trainTypeID,dataIndex : 'trainTypeIdx',hidden : true},
+			{header : i18n.TruckFaultReg.setupIdx,dataIndex : 'rdpIdx',hidden : true},
 			{
-				header : '车辆车号',
+				header : i18n.TruckFaultReg.trainNumber1,
 				dataIndex : 'trainNo',
 				hidden : true
 			}

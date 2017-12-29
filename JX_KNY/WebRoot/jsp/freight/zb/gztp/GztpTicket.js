@@ -18,7 +18,7 @@ Ext.onReady(function(){
 	
 	// 故障登记表单
 	GztpTicket.saveForm = new Ext.form.FormPanel({
-		title : '故障登记维护',
+		title : i18n.TruckFaultReg.faultReMaintain,
 		region : 'north',
 		labelAlign:"right",
 		align: "center",
@@ -64,7 +64,7 @@ Ext.onReady(function(){
         	items:[
            	{
            		xtype: 'fieldset',
-           		title: '故障信息',
+           		title: i18n.TruckFaultReg.faultInformation,
            		layout: 'column',
 //                autoHeight:true,
            		height:230,
@@ -90,33 +90,33 @@ Ext.onReady(function(){
 					dicttypeid:'GZDJ_TYPE'+vehicleType,
 					displayField:'dictname',
 					valueField:'dictname',
-					fieldLabel: "登记类型"
+					fieldLabel: i18n.TruckFaultReg.registerType
                     }
                     ]
 	    		},{
                 	items:[{
-                		fieldLabel: '车次',
+                		fieldLabel: i18n.TruckFaultReg.trainName,
                         xtype:'displayfield',
                         name: "railwayTimeShow"
                     }
                     ]
             	}, {
                 	items:[{
-                		fieldLabel: '车型',
+                		fieldLabel: i18n.TruckFaultReg.trainType,
                         xtype:'displayfield',
                         name: "vehicleTypeCodeShow"
                     }
                     ]
             	}, {
                 	items:[{
-                		fieldLabel: '车号',
+                		fieldLabel: i18n.TruckFaultReg.trainNum,
                         xtype:'displayfield',
                         name: "trainNoShow"
                     }
                     ]
             	}, {
             		columnWidth:1,
-	            	items:[{ id: 'scope_work', xtype: 'Base_comboTree', fieldLabel: '专业类型', rootId:'ROOT_0',hidden:false,
+	            	items:[{ id: 'scope_work', xtype: 'Base_comboTree', fieldLabel: i18n.TruckFaultReg.professionType, rootId:'ROOT_0',hidden:false,
            				  hiddenName: 'scopeWorkIdx', returnField: [{widgetId:"scopeWorkFullname",propertyName:"text"}], selectNodeModel: 'exceptRoot',
            				  business: 'zbglRdpPlanRecord', valueField:'id',displayField:'text',queryParams: {'planIdx':GztpTicket.rdpPlanIdx},
            				  width: GztpTicket.fieldWidth }]
@@ -124,7 +124,7 @@ Ext.onReady(function(){
                    	items:[{ 
                    			id: 'vehicle_component', 
                    			xtype: 'Base_comboTree', 
-                   			fieldLabel: '故障部件', 
+                   			fieldLabel: i18n.TruckFaultReg.faultPart, 
                    			rootId:'0',
                    			allowBlank:false,
                    			hiddenName: 'vehicleComponentFlbm', 
@@ -144,16 +144,16 @@ Ext.onReady(function(){
         					}
                    		}]
                	},{
-					xtype: 'compositefield', fieldLabel : '故障库', combineErrors: false,
+					xtype: 'compositefield', fieldLabel : i18n.TruckFaultReg.faultLibrary, combineErrors: false,
 			        items: [{
 			               		xtype: 'button',
-			               		text: '故障库',
-			               		tooltip:'故障库选择',
+			               		text: i18n.TruckFaultReg.faultLibrary,
+			               		tooltip:i18n.TruckFaultReg.selectFaultLibrary,
 			              		width: 90,
 			              		handler: function(){
 			              			var component = Ext.getCmp('vehicle_component').getValue();
 			              			if(Ext.isEmpty(component)){
-			              				MyExt.Msg.alert("请先选择故障部件！");
+			              				MyExt.Msg.alert(i18n.TruckFaultReg.Msg4);
 			              				return;
 			              			}
 			              			// 弹出故障库选择窗口
@@ -167,14 +167,14 @@ Ext.onReady(function(){
                    	items:[
                    	{
                    		id:'faultName',
-                   		fieldLabel: '故障现象',
+                   		fieldLabel: i18n.TruckFaultReg.faultPhenomenon,
                    		xtype:'displayfield',
                    		name: 'faultDesc'
                    	}]
                	},{
                    	items:[{
                    		id:'fault_Type_Key',
-                   		fieldLabel: '故障类型id',
+                   		fieldLabel: i18n.TruckFaultReg.faultId,
                    		hidden:true,
                    		xtype:'displayfield',
                    		name: 'faultTypeKey'
@@ -182,7 +182,7 @@ Ext.onReady(function(){
              	}, {
                    	items:[{
                    		id:'fault_Type_Value',
-                   		fieldLabel: '故障类型',
+                   		fieldLabel: i18n.TruckFaultReg.faultType,
                    		xtype:'displayfield',
                    		name: 'faultTypeValue'
                    	}]
@@ -190,21 +190,21 @@ Ext.onReady(function(){
                    	items:[
                    	{
                    		xtype: 'radiogroup',
-                   		fieldLabel: '处理类型',
+                   		fieldLabel: i18n.TruckFaultReg.handleType,
                    		hidden:true,
                    		//allowBlank:false,
                    		//anchor:"50%",
                    		items: [
                    		    {
                    		    	xtype: 'radio',
-                   		    	boxLabel: '登记',
+                   		    	boxLabel: i18n.TruckFaultReg.registe,
                    		    	name: 'handleType',
                    		    	checked: true,
                    		    	inputValue: HANDLE_TYPE_REG
                    		    },
                    		    {
                    		    	xtype: 'radio',
-                   		    	boxLabel: '上报',
+                   		    	boxLabel: i18n.TruckFaultReg.report,
                    		    	name: 'handleType',
                    		    	inputValue: HANDLE_TYPE_REP
                    		    }
@@ -228,7 +228,7 @@ Ext.onReady(function(){
         	items:[
            	{
            		xtype: 'fieldset',
-           		title: '处理结果',
+           		title: i18n.TruckFaultReg.handleResult,
            		layout: 'column',
 //                autoHeight:true,
            		height:230,
@@ -249,7 +249,7 @@ Ext.onReady(function(){
 					columnWidth:1,
 					items:[
 					{   id:'faultDealType',xtype: 'Base_comboTree',hiddenName: 'handleWay',
-						fieldLabel:'处理方式',returnField:[{widgetId:"handleWayValue",propertyName:"text"}],selectNodeModel:'exceptRoot',
+						fieldLabel:i18n.TruckFaultReg.handleMethod,returnField:[{widgetId:"handleWayValue",propertyName:"text"}],selectNodeModel:'exceptRoot',
 						treeUrl: ctx + '/eosDictEntrySelect!tree.action', queryParams: {'dicttypeid':'FAULT_DEAL_TYPE'},
 						valueField:'id',displayField:'text',
 						rootId: 'ROOT_0', rootText: '处理方式', width: GztpTicket.fieldWidth
@@ -259,7 +259,7 @@ Ext.onReady(function(){
            			columnWidth:1,
 					items:[{
 				   		xtype: 'textarea',
-				   		fieldLabel: '处理地点',
+				   		fieldLabel: i18n.TruckFaultReg.handleSite,
 				   		maxLength:500,
 				   		height: 40,
 				   		name: 'handleSite'
@@ -271,7 +271,7 @@ Ext.onReady(function(){
 					buttonAlign: 'center',
 					buttons:[
 					    {
-					    	text: '保存',
+					    	text: i18n.TruckFaultReg.save,
 					    	height:26,
 					    	iconCls: 'saveIcon',
 					    	handler:function(){
@@ -281,7 +281,7 @@ Ext.onReady(function(){
 					            
 					            var faultDesc = Ext.getCmp('faultName').getValue();
 					            if(Ext.isEmpty(faultDesc)){
-					        		MyExt.Msg.alert("请先选择故障现象！");
+					        		MyExt.Msg.alert(i18n.TruckFaultReg.Msg5);
 					        		return;
 					            }
 					            
@@ -318,7 +318,7 @@ Ext.onReady(function(){
 					            
 					            // 上报生成扣车记录提醒
 					            if('20' == data.handleWay){
-					        	    Ext.Msg.confirm("提示  ", "将生成扣车记录，是否继续？  ", function(btn){
+					        	    Ext.Msg.confirm(i18n.TruckFaultReg.Msg6, i18n.TruckFaultReg.Msg7, function(btn){
 					        	        if(btn != 'yes')    return;
 					        	        if(GztpTicket.loadMask)   GztpTicket.loadMask.show();
 					        	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
@@ -330,7 +330,7 @@ Ext.onReady(function(){
 					            
 					    	}
 					    }, {
-					    	text: '重置',
+					    	text: i18n.TruckFaultReg.reset,
 					    	height:26,
 					    	iconCls: 'resetIcon',
 					    	handler:function(){
@@ -388,7 +388,7 @@ Ext.onReady(function(){
 	}
 	
 	GztpTicket.grid = new Ext.yunda.Grid({
-		title : '故障登记列表',
+		title : i18n.TruckFaultReg.faultReList,
 		region : 'center',
 	    loadURL: ctx + '/gztp!pageList.action',                 //装载列表数据的请求URL
 	    deleteURL: ctx + '/gztp!logicDelete.action',            //删除数据的请求URL
@@ -396,94 +396,94 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 	    viewConfig: {forceFit: false , markDirty: false },
 	    selModel : new Ext.grid.CheckboxSelectionModel({singleSelect:true}),
-	    tbar : ['refresh', 'delete', '<span style="color:grey;">&nbsp;&nbsp;选中一条登记数据后在“故障登记维护”中进行修改。</span>'],
+	    tbar : ['refresh', 'delete', '<span style="color:grey;">&nbsp;&nbsp;' + i18n.TruckFaultReg.Pro + '</span>'],
 		fields: [
 	     	{
-				header:'列检计划主键', dataIndex:'rdpPlanIdx',width: 120,hidden:true
+				header:i18n.TruckFaultReg.inspectionPlanId, dataIndex:'rdpPlanIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'登记类型', dataIndex:'type',width: 120
+				header:i18n.TruckFaultReg.registerType, dataIndex:'type',width: 120
 			},
 	     	{
-				header:'登记单号', dataIndex:'faultNoticeCode',width: 120
+				header:i18n.TruckFaultReg.registerNumber, dataIndex:'faultNoticeCode',width: 120
 			},
 	     	{
-				header:'列车车次', dataIndex:'railwayTime',width: 100
+				header:i18n.TruckFaultReg.trainNumber, dataIndex:'railwayTime',width: 100
 			},
 	     	{
-				header:'车型主键', dataIndex:'vehicleTypeIdx',width: 120,hidden:true
+				header:i18n.TruckFaultReg.trainTypeIdx, dataIndex:'vehicleTypeIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'车型代码', dataIndex:'vehicleTypeCode',width: 100
+				header:i18n.TruckFaultReg.trainCode, dataIndex:'vehicleTypeCode',width: 100
 			},
 	     	{
-				header:'车辆计划主键', dataIndex:'rdpRecordPlanIdx',width: 120,hidden:true
+				header:i18n.TruckFaultReg.trainPlanIdx, dataIndex:'rdpRecordPlanIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'车号', dataIndex:'trainNo',width: 100
+				header:i18n.TruckFaultReg.trainNum, dataIndex:'trainNo',width: 100
 			},
 	     	{
-				header:'列检车辆数量', dataIndex:'rdpNum',width: 120,hidden:true
+				header:i18n.TruckFaultReg.inspectionNumber, dataIndex:'rdpNum',width: 120,hidden:true
 			},
 	     	{
-				header:'作业范围主键', dataIndex:'scopeWorkIdx',width: 120,hidden:true
+				header:i18n.TruckFaultReg.workRangeIdx, dataIndex:'scopeWorkIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'专业类型', dataIndex:'scopeWorkFullname',width: 160,hidden:false
+				header:i18n.TruckFaultReg.professionType, dataIndex:'scopeWorkFullname',width: 160,hidden:false
 			},
 	     	{
-				header:'故障部件分类编码', dataIndex:'vehicleComponentFlbm',width: 120,hidden:true
+				header:i18n.TruckFaultReg.faultPartCode, dataIndex:'vehicleComponentFlbm',width: 120,hidden:true
 			},
 	     	{
-				header:'故障部件', dataIndex:'vehicleComponentFullname',width: 160
+				header:i18n.TruckFaultReg.faultPart, dataIndex:'vehicleComponentFullname',width: 160
 			},
 	     	{
-				header:'故障现象', dataIndex:'faultDesc',width: 160
+				header:i18n.TruckFaultReg.faultPhenomenon, dataIndex:'faultDesc',width: 160
 			},
 			{
-				header:'故障类型字典KEY', dataIndex:'faultTypeKey',width: 120,hidden:true
+				header:i18n.TruckFaultReg.faultTypeKey, dataIndex:'faultTypeKey',width: 120,hidden:true
 			},
 	     	{
-				header:'故障类型', dataIndex:'faultTypeValue',width: 100
+				header:i18n.TruckFaultReg.faultType, dataIndex:'faultTypeValue',width: 100
 			},
 	     	{
-				header:'提票人ID', dataIndex:'noticePersonId',width: 120,hidden:true
+				header:i18n.TruckFaultReg.noticePersonId, dataIndex:'noticePersonId',width: 120,hidden:true
 			},
 	     	{
-				header:'提票人名称', dataIndex:'noticePersonName',width: 100
+				header:i18n.TruckFaultReg.noticePersonName, dataIndex:'noticePersonName',width: 100
 			},
 	        {
-				header:'故障登记时间', dataIndex:'noticeTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn',width: 160
+				header:i18n.TruckFaultReg.faultReDate, dataIndex:'noticeTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn',width: 160
 			},
 	     	{
-				header:'提票站场', dataIndex:'siteId',width: 120,hidden:true
+				header:i18n.TruckFaultReg.noticeSite, dataIndex:'siteId',width: 120,hidden:true
 			},
 	     	{
-				header:'提票站场名称', dataIndex:'siteName',width: 120,hidden:true
+				header:i18n.TruckFaultReg.siteName, dataIndex:'siteName',width: 120,hidden:true
 			},
 	     	{
-				header:'销票人ID', dataIndex:'handlePersonId',width: 120,hidden:true
+				header:i18n.TruckFaultReg.handlePersonId, dataIndex:'handlePersonId',width: 120,hidden:true
 			},
 	     	{
-				header:'销票人名称', dataIndex:'handlePersonName',width: 120,hidden:true
+				header:i18n.TruckFaultReg.handlePersonName, dataIndex:'handlePersonName',width: 120,hidden:true
 			},
 	        {
-				header:'销票时间', dataIndex:'handleTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', hidden:true
+				header:i18n.TruckFaultReg.handleDate, dataIndex:'handleTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', hidden:true
 			},
 	     	{
-				header:'处理地点', dataIndex:'handleSite',width: 120
+				header:i18n.TruckFaultReg.handleSite, dataIndex:'handleSite',width: 120
 			},
 	     	{
-				header:'处理方式值', dataIndex:'handleWay',width: 120,hidden:true
+				header:i18n.TruckFaultReg.handleMethodValue, dataIndex:'handleWay',width: 120,hidden:true
 			},
 	     	{
-				header:'处理方式', dataIndex:'handleWayValue',width: 120
+				header:i18n.TruckFaultReg.handleMethod, dataIndex:'handleWayValue',width: 120
 			},			
 	     	{
-				header:'整备任务单ID', dataIndex:'rdpIdx',width: 120,hidden:true
+				header:i18n.TruckFaultReg.taskListId, dataIndex:'rdpIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'处理类型', dataIndex:'handleType',width: 80,hidden:true,
+				header:i18n.TruckFaultReg.handleType, dataIndex:'handleType',width: 80,hidden:true,
 				renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if (HANDLE_TYPE_REG == value) {
 						return HANDLE_TYPE_REG_CH;
@@ -492,7 +492,7 @@ Ext.onReady(function(){
 				}
 			},
 	     	{
-				header:'状态', dataIndex:'faultNoticeStatus',width: 80,hidden:true,
+				header:i18n.TruckFaultReg.status, dataIndex:'faultNoticeStatus',width: 80,hidden:true,
 				renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if (STATUS_INIT == value) {
 						return '<span style="color:red;">' + STATUS_INIT_CH + '</span>';
@@ -504,7 +504,7 @@ Ext.onReady(function(){
 				}
 			},
 			{
-				header:'主键ID', dataIndex:'idx',hidden:true
+				header:i18n.TruckFaultReg.idx, dataIndex:'idx',hidden:true
 			}],
 			searchFn: function(searchParam){
 				GztpTicket.searchParam = searchParam ;
@@ -520,11 +520,11 @@ Ext.onReady(function(){
 					for (var i = 0; i < sm.length; i++) {
 						rec = sm[i].data;
 						if (HANDLE_TYPE_REP == rec.handleType && STATUS_OVER == rec.faultNoticeStatus) {
-			    			alertFail('上报数据已处理，不能删除！');
+			    			alertFail(i18n.TruckFaultReg.alertFail1);
 			            	return false;
 			            }
 			    		if (HANDLE_TYPE_REP == rec.handleType && STATUS_CHECKED == rec.faultNoticeStatus) {
-			    			alertFail('质量检验已完成，不能删除！');
+			    			alertFail(i18n.TruckFaultReg.alertFail2);
 			    			return false;
 			    		}
 					}

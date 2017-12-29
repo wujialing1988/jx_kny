@@ -8,20 +8,20 @@ Ext.onReady(function(){
     	isEdit:false,
     	singleSelect: true,  
     	tbar: [{
-        	xtype:"label", text:"  检索：" 
+        	xtype:"label", text:i18n.TruckFaultReg.searching 
     	},{			
             xtype: "textfield",    
             id: "fault_searchId",
-            emptyText:'故障编码，名称检索'
+            emptyText:i18n.TruckFaultReg.enText
 		},{
-			text : "搜索",
+			text : i18n.TruckFaultReg.search1,
 			iconCls : "searchIcon",
 			handler : function(){
 				JcxtflFaultSelect.faultSelectGrid.getStore().load();
 			},			
 			width : 40
 		},{
-			text : "确定",
+			text : i18n.TruckFaultReg.ok,
 			iconCls : "saveIcon",
 			handler : function(){
         		if(!$yd.isSelectedRecord(JcxtflFaultSelect.faultSelectGrid)) return;
@@ -30,19 +30,19 @@ Ext.onReady(function(){
 			}
 		}],
 		fields: [{
-			header: '主键', dataIndex: 'idx', hidden: true
+			header: i18n.TruckFaultReg.idx1, dataIndex: 'idx', hidden: true
 		}, {
-			header: '顺序号', dataIndex: 'seqNo',editor: { readOnly: true }
+			header: i18n.TruckFaultReg.oderNumber, dataIndex: 'seqNo',editor: { readOnly: true }
 		}, {
-			header: '分类编码', dataIndex: 'flbm', hidden: true
+			header: i18n.TruckFaultReg.typeCode, dataIndex: 'flbm', hidden: true
 		}, {
-			header: '故障现象编码', dataIndex: 'faultId'
+			header: i18n.TruckFaultReg.faultDesCode, dataIndex: 'faultId'
 		}, {
-			header: '故障现象名称', dataIndex: 'faultName'
+			header: i18n.TruckFaultReg.faultDesName, dataIndex: 'faultName'
 		}, {
-			header: '故障类型编码',hidden: true, dataIndex: 'faultTypeID'
+			header: i18n.TruckFaultReg.faultTypeCode,hidden: true, dataIndex: 'faultTypeID'
 		}, {
-			header: '故障类型', dataIndex: 'faultTypeName'
+			header: i18n.TruckFaultReg.faultType, dataIndex: 'faultTypeName'
 		}],
 		toEditFn: function(grid, rowIndex, e){
 			return false;
@@ -74,10 +74,10 @@ Ext.onReady(function(){
 	
 	// 故障选择窗口
 	JcxtflFaultSelect.win = new Ext.Window({
-	    title: "故障库选择", width: 600, height:400, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center', modal:true,
+	    title: i18n.TruckFaultReg.selectFaultLibrary, width: 600, height:400, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center', modal:true,
 	    items: [JcxtflFaultSelect.faultSelectGrid],
 	    buttons: [{
-            text: "关闭", iconCls: "closeIcon", 
+            text: i18n.TruckFaultReg.close, iconCls: "closeIcon", 
             handler: function(){ 
             	JcxtflFaultSelect.win.hide();
             }

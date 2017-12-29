@@ -21,14 +21,14 @@ Ext.onReady(function(){
 	 * 列检计划列表
 	 */
 	ZbglRdpPlan.ZbglRdpPlanGrid = new Ext.yunda.Grid({
-		title : '列检计划列表',
+		title : i18n.TruckFaultReg.inspectionPlanList,
 		region : 'north',
 		height : 300,
 		loadURL: ctx + "/zbglRdpPlan!pageQuery.action",
 		singleSelect: true,
 	    tbar:[
 	    	{	
-				xtype:'textfield', id:'rail_way_Time', enableKeyEvents:true, emptyText:'输入车次快速检索', listeners: {
+				xtype:'textfield', id:'rail_way_Time', enableKeyEvents:true, emptyText:i18n.TruckFaultReg.quickSearch, listeners: {
 		    		keyup: function(filed, e) {
 						if (ZbglRdpPlan.queryTimeout) {
 		    				clearTimeout(ZbglRdpPlan.queryTimeout);
@@ -42,57 +42,57 @@ Ext.onReady(function(){
 			}
 	    ],
 		fields: [{
-	   			header:'idx主键', dataIndex:'idx', hidden:true
+	   			header:i18n.TruckFaultReg.id, dataIndex:'idx', hidden:true
 			},{
-				header:'车次', dataIndex:'railwayTime', width:150
+				header:i18n.TruckFaultReg.train, dataIndex:'railwayTime', width:150
 			},{
-				header:'<div>股道<span style="color:green;">【车辆数】</span></div>', dataIndex:'rdpNum', width:150,
+				header:'<div>' + i18n.TruckFaultReg.track + '<span style="color:green;">' + i18n.TruckFaultReg.VehicleNumber + '</span></div>', dataIndex:'rdpNum', width:150,
 			        renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 						var trackName = Ext.isEmpty(record.get('trackName'))?'':record.get('trackName');
 						return trackName+":【"+value+"】";
 					}
 			},{
-				header:'作业班组', dataIndex:'workTeamID',hidden:true
+				header:i18n.TruckFaultReg.workGroup, dataIndex:'workTeamID',hidden:true
 			},{
-	   			header:'作业班组名称', dataIndex:'workTeamName', hidden:true
+	   			header:i18n.TruckFaultReg.workGroupName, dataIndex:'workTeamName', hidden:true
 			},{
-	   			header:'作业班组序列', dataIndex:'workTeamSeq', hidden:true
+	   			header:i18n.TruckFaultReg.workGroupSequence, dataIndex:'workTeamSeq', hidden:true
 			},{
-				header:'股道', dataIndex:'trackNo',hidden:true
+				header:i18n.TruckFaultReg.track, dataIndex:'trackNo',hidden:true
 			},{
-	   			header:'股道名称', dataIndex:'trackName', hidden:true
+	   			header:i18n.TruckFaultReg.trackName, dataIndex:'trackName', hidden:true
 			},{
-	   			header:'作业方式编码', dataIndex:'workTypeCode', hidden:true
+	   			header:i18n.TruckFaultReg.workWayCode, dataIndex:'workTypeCode', hidden:true
 			},{
-				header:'作业方式', dataIndex:'workType',hidden:true
+				header:i18n.TruckFaultReg.workWay, dataIndex:'workType',hidden:true
 			},{
-	   			header:'作业性质编码', dataIndex:'workNatureCode', hidden:true
+	   			header:i18n.TruckFaultReg.workPropertyCode, dataIndex:'workNatureCode', hidden:true
 			},{
-				header:'作业性质', dataIndex:'workNature',hidden:true
+				header:i18n.TruckFaultReg.workProperty, dataIndex:'workNature',hidden:true
 			},{
-				header:'技检时间(分钟)', dataIndex:'checkTime',hidden:true
+				header:i18n.TruckFaultReg.checkTimeMin, dataIndex:'checkTime',hidden:true
 			},{
-				header:'计划开始时间', dataIndex:'planStartTime', xtype:'datecolumn', hidden:true
+				header:i18n.TruckFaultReg.plannedStartTime, dataIndex:'planStartTime', xtype:'datecolumn', hidden:true
 			},{
-				header:'计划完成时间', dataIndex:'planEndTime', xtype:'datecolumn',  hidden:true
+				header:i18n.TruckFaultReg.plannedEndTime, dataIndex:'planEndTime', xtype:'datecolumn',  hidden:true
 			},{
-				header:'接入方向', dataIndex:'comeDirectionNo',hidden:true
+				header:i18n.TruckFaultReg.inDirection, dataIndex:'comeDirectionNo',hidden:true
 			},{
-	   			header:'接入方向名称', dataIndex:'comeDirectionName', hidden:true
+	   			header:i18n.TruckFaultReg.inDirectionName, dataIndex:'comeDirectionName', hidden:true
 			},{
-				header:'发出方向', dataIndex:'toDirectionNo',hidden:true
+				header:i18n.TruckFaultReg.outDirection, dataIndex:'toDirectionNo',hidden:true
 			},{
-	   			header:'发出方向名称', dataIndex:'toDirectionName', hidden:true
+	   			header:i18n.TruckFaultReg.outDirectionName, dataIndex:'toDirectionName', hidden:true
 			},{
-	   			header:'白夜班编码', dataIndex:'dayNightTypeNo', hidden:true
+	   			header:i18n.TruckFaultReg.dayNightCode, dataIndex:'dayNightTypeNo', hidden:true
 			},{
-				header:'白夜班', dataIndex:'dayNightTypeName',hidden:true
+				header:i18n.TruckFaultReg.dayNightName, dataIndex:'dayNightTypeName',hidden:true
 			},{
-	   			header:'班次编码', dataIndex:'classNo', hidden:true
+	   			header:i18n.TruckFaultReg.classCode, dataIndex:'classNo', hidden:true
 			},{
-				header:'班次', dataIndex:'className',hidden:true
+				header:i18n.TruckFaultReg.className, dataIndex:'className',hidden:true
 			},{
-				header:'状态', dataIndex:'rdpPlanStatus',hidden:true
+				header:i18n.TruckFaultReg.status, dataIndex:'rdpPlanStatus',hidden:true
 			}],
 			beforeShowEditWin: function(record, rowIndex){
 				return false;
