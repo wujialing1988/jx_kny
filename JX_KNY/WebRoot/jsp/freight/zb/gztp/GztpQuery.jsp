@@ -52,7 +52,7 @@
 	
 </script>
 <title>列检_故障提票查看</title>
-
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-FaultRegQuery.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/freight/zb/gztp/MatTypeUseListQuery.js"></script> <!-- 物料列表 -->
 <script language="javascript" src="<%=ctx%>/jsp/freight/zb/gztp/GztpTicketQuery.js"></script> <!-- 故障提票列表 -->
 </head>

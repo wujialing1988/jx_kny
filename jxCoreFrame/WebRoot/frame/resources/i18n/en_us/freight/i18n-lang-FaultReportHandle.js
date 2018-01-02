@@ -1,0 +1,46 @@
+/**
+ * 故障上报处理-货车运用
+ */
+i18n.FaultReportHandle = {} ;
+i18n.FaultReportHandle.faultReHandle = 'faultReportHandle' ;
+i18n.FaultReportHandle.faultInformation = 'faultInformation' ;
+i18n.FaultReportHandle.registerType = 'registerType' ;
+i18n.FaultReportHandle.trainName = 'trainName' ;
+i18n.FaultReportHandle.trainType = 'trainType' ;
+i18n.FaultReportHandle.trainNum = 'trainNum' ;
+i18n.FaultReportHandle.professionType = 'professionType' ;
+i18n.FaultReportHandle.faultPart = 'faultPart' ;
+i18n.FaultReportHandle.faultDes = 'faultDescription' ;
+i18n.FaultReportHandle.faultType = 'faultType' ;
+i18n.FaultReportHandle.handleType = 'handleType' ;
+i18n.FaultReportHandle.register = 'register' ;
+i18n.FaultReportHandle.report = 'report' ;
+i18n.FaultReportHandle.handleResult = 'handleResult' ;
+i18n.FaultReportHandle.handleMethod = 'handleMethod' ;
+i18n.FaultReportHandle.handleSite = 'handleSite' ;
+i18n.FaultReportHandle.save = 'save' ;
+i18n.FaultReportHandle.alertFault = 'quality inspection has been completed, can not be deleted!' ;
+i18n.FaultReportHandle.faultReportList = 'faultReportList' ;
+i18n.FaultReportHandle.quickSearch = 'quick search（trainName/trainType/TrainNumber/noticePersonName）' ;
+i18n.FaultReportHandle.Pro = 'after a registration of data is selected to be modified in "fault registration maintenance"' ;
+i18n.FaultReportHandle.inspectionPlanId = 'inspectionPlanIdx' ;
+i18n.FaultReportHandle.registerNumber = 'registerNumber' ;
+i18n.FaultReportHandle.trainNumber = 'trainNumber' ;
+i18n.FaultReportHandle.trainTypeIdx = 'trainTypeIdx' ;
+i18n.FaultReportHandle.trainCode = 'trainCode' ;
+i18n.FaultReportHandle.trainPlanIdx = 'trainPlanIdx' ;
+i18n.FaultReportHandle.inspectionNumber = 'inspectionNumber' ;
+i18n.FaultReportHandle.workRangeIdx = 'workRangeIdx' ;
+i18n.FaultReportHandle.faultPartCode = 'faultPartCode' ;
+i18n.FaultReportHandle.faultTypeKey = 'faultTypeKey' ;
+i18n.FaultReportHandle.noticePersonId = 'noticePersonId' ;
+i18n.FaultReportHandle.noticePersonName = 'noticePersonName' ;
+i18n.FaultReportHandle.faultReDate = 'faultRegisterDate' ;
+i18n.FaultReportHandle.noticeSite = 'noticeSite' ;
+i18n.FaultReportHandle.siteName = 'siteName' ;
+i18n.FaultReportHandle.handlePersonId = 'handlePersonId' ;
+i18n.FaultReportHandle.handlePersonName = 'handlePersonName' ;
+i18n.FaultReportHandle.handleDate = 'handleDate' ;
+i18n.FaultReportHandle.taskListId = 'taskListId' ;
+i18n.FaultReportHandle.status = 'status' ;
+i18n.FaultReportHandle.idx = 'idx' ;

@@ -10,14 +10,14 @@ Ext.onReady(function(){
 	GztpTicketQuery.fieldWidth = 130;                       //表单中的标签宽度
 	
 	GztpTicketQuery.grid = new Ext.yunda.Grid({
-		title : '故障登记列表',
+		title : i18n.FaultRegQuery.faultRegList,
 		region: 'center',
 	    loadURL: ctx + '/gztp!pageQuery.action',                 //装载列表数据的请求URL
 	    singleSelect: true,
 	    viewConfig: {forceFit: false , markDirty: false },
 	    tbar : ['refresh','&nbsp;&nbsp;',
 	    {
-	    	xtype:'textfield', id:'query_input', enableKeyEvents:true, emptyText:'快速检索（车次/车型/车号/提报人）', width:200,
+	    	xtype:'textfield', id:'query_input', enableKeyEvents:true, emptyText:i18n.FaultRegQuery.quickSearch, width:200,
 	    	listeners: {
 	    		keyup: function(filed, e) {
 	    			if (GztpTicketQuery.queryTimeout) {
@@ -32,22 +32,22 @@ Ext.onReady(function(){
 	    }],
 		fields: [
 	     	{
-				header:'列检计划主键', dataIndex:'rdpPlanIdx',width: 120,hidden:true
+				header:i18n.FaultRegQuery.inspectionPlanId, dataIndex:'rdpPlanIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'登记类型', dataIndex:'type',width: 120
+				header:i18n.FaultRegQuery.registerType, dataIndex:'type',width: 120
 			},
 	     	{
-				header:'登记单号', dataIndex:'faultNoticeCode',width: 120
+				header:i18n.FaultRegQuery.registerNumber, dataIndex:'faultNoticeCode',width: 120
 			},
 	     	{
-				header:'列车车次', dataIndex:'railwayTime',width: 80
+				header:i18n.FaultRegQuery.trainNumber, dataIndex:'railwayTime',width: 80
 			},
 	     	{
-				header:'车型主键', dataIndex:'vehicleTypeIdx',width: 120,hidden:true
+				header:i18n.FaultRegQuery.trainTypeIdx, dataIndex:'vehicleTypeIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'车型代码', dataIndex:'vehicleTypeCode',width: 100
+				header:i18n.FaultRegQuery.trainCode, dataIndex:'vehicleTypeCode',width: 100
 			},
 	     	{
 				header:'车辆计划主键', dataIndex:'rdpRecordPlanIdx',width: 120,hidden:true

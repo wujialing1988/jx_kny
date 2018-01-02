@@ -8,7 +8,7 @@ Ext.onReady(function(){
 		region : 'east',
 	    layout : 'border',
 		width:800,
-		title : '故障上报处理',
+		title : i18n.FaultReportHandle.faultReHandle,
 		collapsed: true,
         animCollapse: true,
         collapsible: true, 
