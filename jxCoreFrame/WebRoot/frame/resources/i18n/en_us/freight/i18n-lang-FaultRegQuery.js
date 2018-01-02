@@ -45,6 +45,7 @@ i18n.FaultRegQuery.handleDate = 'handleDate' ;
 i18n.FaultRegQuery.handleMethod = 'handleMethod' ;
 i18n.FaultRegQuery.handleSite = 'handleSite' ;
 i18n.FaultRegQuery.taskListId = 'taskListId' ;
+i18n.FaultRegQuery.handleType = 'handleType' ;
 i18n.FaultRegQuery.status = 'status' ;
 i18n.FaultRegQuery.idx = 'idx' ;
 i18n.FaultRegQuery.registerDate = 'registerDate' ;

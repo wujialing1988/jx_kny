@@ -45,6 +45,7 @@ i18n.FaultRegQuery.handleDate = '销票时间' ;
 i18n.FaultRegQuery.handleMethod = '处理方式' ;
 i18n.FaultRegQuery.handleSite = '处理地点' ;
 i18n.FaultRegQuery.taskListId = '整备任务单ID' ;
+i18n.FaultRegQuery.handleType = '处理类型' ;
 i18n.FaultRegQuery.status = '状态' ;
 i18n.FaultRegQuery.idx = '主键ID' ;
 i18n.FaultRegQuery.registerDate = '登记时间' ;

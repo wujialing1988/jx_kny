@@ -50,70 +50,70 @@ Ext.onReady(function(){
 				header:i18n.FaultRegQuery.trainCode, dataIndex:'vehicleTypeCode',width: 100
 			},
 	     	{
-				header:'车辆计划主键', dataIndex:'rdpRecordPlanIdx',width: 120,hidden:true
+				header:i18n.FaultRegQuery.trainPlanIdx, dataIndex:'rdpRecordPlanIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'车号', dataIndex:'trainNo',width: 100
+				header:i18n.FaultRegQuery.trainNum, dataIndex:'trainNo',width: 100
 			},
 	     	{
-				header:'列检车辆数量', dataIndex:'rdpNum',width: 120,hidden:true
+				header:i18n.FaultRegQuery.inspectionNumber, dataIndex:'rdpNum',width: 120,hidden:true
 			},
 	     	{
-				header:'作业范围主键', dataIndex:'scopeWorkIdx',width: 120,hidden:true
+				header:i18n.FaultRegQuery.workRangeIdx, dataIndex:'scopeWorkIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'专业类型', dataIndex:'scopeWorkFullname',width: 160
+				header:i18n.FaultRegQuery.professionType, dataIndex:'scopeWorkFullname',width: 160
 			},
 	     	{
-				header:'故障部件分类编码', dataIndex:'vehicleComponentFlbm',hidden:true
+				header:i18n.FaultRegQuery.faultPartCode, dataIndex:'vehicleComponentFlbm',hidden:true
 			},
 	     	{
-				header:'故障部件', dataIndex:'vehicleComponentFullname',width: 160
+				header:i18n.FaultRegQuery.faultPart, dataIndex:'vehicleComponentFullname',width: 160
 			},
 	     	{
-				header:'故障描述', dataIndex:'faultDesc',width: 160
+				header:i18n.FaultRegQuery.faultDes, dataIndex:'faultDesc',width: 160
 			},
 			{
-				header:'故障类型字典KEY', dataIndex:'faultTypeKey',width: 120,hidden:true
+				header:i18n.FaultRegQuery.faultTypeKey, dataIndex:'faultTypeKey',width: 120,hidden:true
 			},
 	     	{
-				header:'故障类型', dataIndex:'faultTypeValue',width: 100
+				header:i18n.FaultRegQuery.faultType, dataIndex:'faultTypeValue',width: 100
 			},
 	     	{
-				header:'提报人ID', dataIndex:'noticePersonId',hidden:true
+				header:i18n.FaultRegQuery.noticePersonId, dataIndex:'noticePersonId',hidden:true
 			},
 	     	{
-				header:'提报人', dataIndex:'noticePersonName',width: 80
+				header:i18n.FaultRegQuery.noticePersonName, dataIndex:'noticePersonName',width: 80
 			},
 	        {
-				header:'故障登记时间', dataIndex:'noticeTime', xtype:'datecolumn', format:'Y-m-d H:i:s', width:100, xtype:'datecolumn',width: 170
+				header:i18n.FaultRegQuery.faultReDate, dataIndex:'noticeTime', xtype:'datecolumn', format:'Y-m-d H:i:s', width:100, xtype:'datecolumn',width: 170
 			},
 	     	{
-				header:'提票站场', dataIndex:'siteId',width: 120,hidden:true
+				header:i18n.FaultRegQuery.noticeSite, dataIndex:'siteId',width: 120,hidden:true
 			},
 	     	{
-				header:'提票站场名称', dataIndex:'siteName',width: 120,hidden:true
+				header:i18n.FaultRegQuery.siteName, dataIndex:'siteName',width: 120,hidden:true
 			},
 	     	{
-				header:'销票人ID', dataIndex:'handlePersonId',width: 120,hidden:true
+				header:i18n.FaultRegQuery.handlePersonId, dataIndex:'handlePersonId',width: 120,hidden:true
 			},
 	     	{
-				header:'销票人名称', dataIndex:'handlePersonName',width: 120,hidden:true
+				header:i18n.FaultRegQuery.handlePersonName, dataIndex:'handlePersonName',width: 120,hidden:true
 			},
 	        {
-				header:'销票时间', dataIndex:'handleTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', hidden:true
+				header:i18n.FaultRegQuery.handleDate, dataIndex:'handleTime', xtype:'datecolumn', format:'Y-m-d H:i', width:100, xtype:'datecolumn', hidden:true
 			},
 	     	{
-				header:'处理地点', dataIndex:'handleSite',width: 120
+				header:i18n.FaultRegQuery.handleSite, dataIndex:'handleSite',width: 120
 			},
 	     	{
-				header:'处理方式', dataIndex:'handleWayValue',width: 120
+				header:i18n.FaultRegQuery.handleMethod, dataIndex:'handleWayValue',width: 120
 			},
 	     	{
-				header:'整备任务单ID', dataIndex:'rdpIdx',width: 120,hidden:true
+				header:i18n.FaultRegQuery.taskListId, dataIndex:'rdpIdx',width: 120,hidden:true
 			},
 	     	{
-				header:'处理类型', dataIndex:'handleType',width: 70,hidden:true,
+				header:i18n.FaultRegQuery.handleType, dataIndex:'handleType',width: 70,hidden:true,
 				renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if (HANDLE_TYPE_REG == value) {
 						return HANDLE_TYPE_REG_CH;
@@ -122,7 +122,7 @@ Ext.onReady(function(){
 				}
 			},
 	     	{
-				header:'状态', dataIndex:'faultNoticeStatus',width: 70,hidden:true,
+				header:i18n.FaultRegQuery.status, dataIndex:'faultNoticeStatus',width: 70,hidden:true,
 				renderer:function(value, metaData, record, rowIndex, colIndex, store){
 					if (STATUS_INIT == value) {
 						return '<span style="color:red;">' + STATUS_INIT_CH + '</span>';
@@ -134,7 +134,7 @@ Ext.onReady(function(){
 				}
 			},
 			{
-				header:'主键ID', dataIndex:'idx',hidden:true
+				header:i18n.FaultRegQuery.idx, dataIndex:'idx',hidden:true
 			}],
 			beforeShowEditWin: function(){
 				return false;
@@ -221,33 +221,33 @@ Ext.onReady(function(){
 			},
 			items:[{
 		        items: [
-		        	{ fieldLabel:"故障部件", name:"vehicleComponentFullname"}
+		        	{ fieldLabel:i18n.FaultRegQuery.faultPart, name:"vehicleComponentFullname"}
 		        ]
 			},{
 		        items: [
-		        	{ fieldLabel:"故障类型", name:"faultTypeValue"}
+		        	{ fieldLabel:i18n.FaultRegQuery.faultType, name:"faultTypeValue"}
 		        ]
 			},{
 		        items: [
-		        	{ fieldLabel:"故障描述", name:"faultDesc"}
+		        	{ fieldLabel:i18n.FaultRegQuery.faultDes, name:"faultDesc"}
 		        ]
 			},{
 		        items: [
-		        	{ fieldLabel:"处理方式", name:"handleWayValue"}
+		        	{ fieldLabel:i18n.FaultRegQuery.handleMethod, name:"handleWayValue"}
 		        ]
 			},{
 		        items: [
-		        	{ fieldLabel:"处理地点", name:"handleSite"}
+		        	{ fieldLabel:i18n.FaultRegQuery.handleSite, name:"handleSite"}
 		        ]
 			},
 			{
 		        items: [
-		        	{ fieldLabel:"提报人", name:"noticePersonName"}
+		        	{ fieldLabel:i18n.FaultRegQuery.noticePersonName, name:"noticePersonName"}
 		        ]
 			},
 			{
 		        items: [
-		        	{ fieldLabel:"登记时间", name:"noticeTime"}
+		        	{ fieldLabel:i18n.FaultRegQuery.registerDate, name:"noticeTime"}
 		        ]
 			}
 			]
@@ -258,7 +258,7 @@ Ext.onReady(function(){
 		region : 'east',
 	    layout : 'border',
 		width:800,
-		title : '基本信息',
+		title : i18n.FaultRegQuery.basicInformation,
 		collapsed: true,
         animCollapse: true,
         collapsible: true, 

@@ -19,7 +19,7 @@
    	/** 车辆类型：10货车，20客车 */
 	var vehicleType = '<%=request.getParameter("vehicleType") %>';
 </script>
-
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-FaultRegQuery.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/freight/zb/qualitycontrol/zbglItemEmpDefine.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/freight/zb/qualitycontrol/qualityControlItemEmpDefine.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/freight/zb/qualitycontrol/qualityControlItemDefine.js"></script>
