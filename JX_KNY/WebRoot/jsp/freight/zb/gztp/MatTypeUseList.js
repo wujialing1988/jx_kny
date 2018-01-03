@@ -35,7 +35,7 @@ Ext.onReady(function(){
 				var record = MatTypeUseList.grid.store.getAt(i);
 				for (var j = 0; j < selectedRecrods.length; j++) {
 					if (record.get('matCode') == selectedRecrods[j].get('matCode')) {
-						MyExt.Msg.alert(i18n.TruckFaultReg.materialCode + "<font color='red'>【" + record.get('matCode') + "】</font>" + i18n.TruckFaultReg.Msg3);
+						MyExt.Msg.alert(i18n.TruckFaultReg.materialCode+ "<font color='red'>【" + record.get('matCode') + "】</font>" + i18n.TruckFaultReg.Msg3);
    	          			return ;
 					}
 				}

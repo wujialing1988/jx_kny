@@ -30,20 +30,20 @@ Ext.onReady(function(){
 	    //loadURL: ctx + '/zbglQualityControlItemEmpDefine!queryPageList.action',                 //装载列表数据的请求URL
 	    deleteURL: ctx + '/zbglQualityControlItemEmpDefine!delete.action',                 //删除列表数据的请求URL
 	    storeAutoLoad: false,
-	    title: '质量检查人员',
+	    title: i18n.QualityInspectionConfig.qualityInsPerson,
 	    tbar:[{
-	    	text:'设置人员', iconCls:'configIcon', handler: QualityControlItemEmpDefine.configEmpFn
+	    	text:i18n.QualityInspectionConfig.setPerson, iconCls:'configIcon', handler: QualityControlItemEmpDefine.configEmpFn
     	},'delete'],
 		fields: [{
-			header:'idx主键', dataIndex:'idx', hidden:true
+			header:i18n.QualityInspectionConfig.idx, dataIndex:'idx', hidden:true
 		},{
-			header:'质量检查项主键', dataIndex:'qcItemIDX', hidden: true
+			header:i18n.QualityInspectionConfig.qualityCtrIdx, dataIndex:'qcItemIDX', hidden: true
 		},{
-			header:'检查人员', dataIndex:'checkEmpID', hidden: true
+			header:i18n.QualityInspectionConfig.checkPerson, dataIndex:'checkEmpID', hidden: true
 		},{
-			header:'检查人员名称', dataIndex:'checkEmpName', width:20, editor:{  maxLength:25 }
+			header:i18n.QualityInspectionConfig.checkEmpName, dataIndex:'checkEmpName', width:20, editor:{  maxLength:25 }
 		},{
-			header:'站场标示', dataIndex:'siteID', hidden: true
+			header:i18n.QualityInspectionConfig.siteID, dataIndex:'siteID', hidden: true
 		}]
 	});
 	// 默认以“检查人员名称”进行升序排序

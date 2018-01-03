@@ -29,28 +29,28 @@ Ext.onReady(function(){
 	    saveURL: ctx + '/zbglQualityControlItemDefine!saveOrUpdate.action',             //保存数据的请求URL
 	    deleteURL: ctx + '/zbglQualityControlItemDefine!delete.action',            //删除数据的请求URL
 	    tbar: ['add', 'delete', 'refresh'],
-	    title: '质量检查项',
+	    title: i18n.QualityInspectionConfig.qualityCheckItem,
 	    singleSelect: true,
 		fields: [{
-			header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+			header:i18n.QualityInspectionConfig.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 		},{
-			header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
+			header:i18n.QualityInspectionConfig.vehicleType, dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
 		},{
-			header:'顺序号', dataIndex:'seqNo', hidden:true, editor:{ disabled: false }
+			header:i18n.QualityInspectionConfig.seqNum, dataIndex:'seqNo', hidden:true, editor:{ disabled: false }
 		},{
-			header:'检查项编码', dataIndex:'qcItemNo', editor:{ allowBlank: false, maxLength: 50 }
+			header:i18n.QualityInspectionConfig.checkItemCode, dataIndex:'qcItemNo', editor:{ allowBlank: false, maxLength: 50 }
 		},{
-			header:'检查项名称', dataIndex:'qcItemName', editor:{ allowBlank: false, maxLength: 50 }
+			header:i18n.QualityInspectionConfig.checkItemName, dataIndex:'qcItemName', editor:{ allowBlank: false, maxLength: 50 }
 		},{
-			header:'站点标示', dataIndex:'siteID', hidden:true, editor: { xtype:'hidden' }
+			header:i18n.QualityInspectionConfig.siteID, dataIndex:'siteID', hidden:true, editor: { xtype:'hidden' }
 		},{
-			header:'业务编码', dataIndex:'businessCode', hidden:true, editor: { xtype:'hidden' }
+			header:i18n.QualityInspectionConfig.businessCode, dataIndex:'businessCode', hidden:true, editor: { xtype:'hidden' }
 		},{
-			header:'是否默认', dataIndex:'isDefault', editor:{ 
+			header:i18n.QualityInspectionConfig.isDefault, dataIndex:'isDefault', editor:{ 
 				xtype:'combo', 
 				store: new Ext.data.SimpleStore({
 		            fields: ["k", "v"],
-		            data: [[IS_DEFAULT_NO, "否"], [IS_DEFAULT_YES, "是"]]
+		            data: [[IS_DEFAULT_NO, i18n.QualityInspectionConfig.no], [IS_DEFAULT_YES, i18n.QualityInspectionConfig.yes]]
 				}),
 				valueField:'k',
 				displayField:'v',
@@ -59,15 +59,15 @@ Ext.onReady(function(){
 				value:IS_DEFAULT_NO,
  				allowBlank: false 
         	}, renderer: function(v) {
-        		if (v == IS_DEFAULT_NO) return "否";
-        		if (v == IS_DEFAULT_YES) return "是";
+        		if (v == IS_DEFAULT_NO) return i18n.QualityInspectionConfig.no;
+        		if (v == IS_DEFAULT_YES) return i18n.QualityInspectionConfig.yes;
         	}
 		}], 
 	    saveFn: function(rowEditor, changes, record, rowIndex){
 	    
 	    	//判断业务编码是否选择，如果没有默认赋值为提票
 			if(!record.data.businessCode){
-				record.data.businessCode = '质量检验';
+				record.data.businessCode = i18n.QualityInspectionConfig.qualityInspection;
 			}
 			record.data.siteID = siteID;//站点标示
 	    	record.data.vehicleType = vehicleType; //客货类型
