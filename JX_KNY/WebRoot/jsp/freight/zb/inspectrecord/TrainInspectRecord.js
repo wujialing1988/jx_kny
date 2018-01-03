@@ -23,12 +23,12 @@ Ext.onReady(function(){
         	TrainInspectRecord.grid.store.load();
 		},
 		fields: [{
-			header:'idx主键', dataIndex:'idx', hidden:true, editor: {xtype: 'hidden'}
+			header:i18n.InspectionInfoInput.idx, dataIndex:'idx', hidden:true, editor: {xtype: 'hidden'}
 		},{
-			header:'列车主键', dataIndex:'trainIdx', hidden:true, editor: {xtype: 'hidden'}
+			header:i18n.InspectionInfoInput.trainIdx , dataIndex:'trainIdx', hidden:true, editor: {xtype: 'hidden'}
 		},{
-			header:'车号', dataIndex:'trainNo', editor: {
-				fieldLabel: "车号",
+			header:i18n.InspectionInfoInput.trainNum, dataIndex:'trainNo', editor: {
+				fieldLabel: i18n.InspectionInfoInput.trainNum,
 				xtype: "Base_combo",
 				name:'trainNo',
 				hiddenName: "trainNo",
@@ -42,32 +42,32 @@ Ext.onReady(function(){
                 editable:true
 			}
 		},{
-			header:'责任人ID', dataIndex:'personResponsibleId', hidden:true, editor: {id: 'personResponsibleId', xtype: 'hidden'}
+			header:i18n.InspectionInfoInput.responsibleId, dataIndex:'personResponsibleId', hidden:true, editor: {id: 'personResponsibleId', xtype: 'hidden'}
 		},{
-			header:'责任人', dataIndex: 'personResponsible',width: 120, editor: {
-				  id: 'empname_SelectWin_Id', xtype: 'OmEmployee_SelectWin', fieldLabel: '责任人',
+			header:i18n.InspectionInfoInput.responsibleName, dataIndex: 'personResponsible',width: 120, editor: {
+				  id: 'empname_SelectWin_Id', xtype: 'OmEmployee_SelectWin', fieldLabel: i18n.InspectionInfoInput.responsibleName,
 				  hiddenName: 'personResponsible', displayField:'empname', valueField: 'empname',
 				  returnField :[{widgetId: "personResponsibleId", propertyName: "empid"}],
 				  editable: false, width: 100
 			}
 		},{
-			header:'录入人ID', dataIndex: 'recordPersonId', width: 140, hidden:true, editor: {xtype: 'hidden'}
+			header:i18n.InspectionInfoInput.recordPersonId, dataIndex: 'recordPersonId', width: 140, hidden:true, editor: {xtype: 'hidden'}
 		},{
-			header:'录入人', dataIndex: 'recordPerson',width: 120, editor: {xtype: 'hidden'}
+			header:i18n.InspectionInfoInput.recordPersonName, dataIndex: 'recordPerson',width: 120, editor: {xtype: 'hidden'}
 		},{
-			header:'录入时间', dataIndex:'recordTime', width: 120, renderer: function(v) {
+			header:i18n.InspectionInfoInput.recordTime, dataIndex:'recordTime', width: 120, renderer: function(v) {
 				if (v) return Ext.util.Format.date(new Date(v), 'Y-m-d H:i');
 			}, editor: {xtype:'hidden'}
 		},{
-			header:'巡检类别', dataIndex: 'inspectType', editor: { 
-		  	     xtype: 'EosDictEntry_combo', fieldLabel: '巡检类别',
+			header:i18n.InspectionInfoInput.inspectType, dataIndex: 'inspectType', editor: { 
+		  	     xtype: 'EosDictEntry_combo', fieldLabel: i18n.InspectionInfoInput.inspectType,
 			     hiddenName: 'inspectType', displayField: 'dictname', valueField: 'dictname',
 			     dicttypeid:'XJLB', width:100
 		   }
 		},{
-			header:'巡检详情', dataIndex:'inspectDetail', editor: {xtype: 'textarea', maxLength: 100}
+			header:i18n.InspectionInfoInput.inspectDetail, dataIndex:'inspectDetail', editor: {xtype: 'textarea', maxLength: 100}
 		},{
-			header:'客车类型', dataIndex:'vehicleType', width: 60, hidden:true, editor: { xtype:"hidden",value:vehicleType }
+			header:i18n.InspectionInfoInput.vehicleType, dataIndex:'vehicleType', width: 60, hidden:true, editor: { xtype:"hidden",value:vehicleType }
 		}],
 		
 		beforeSaveFn: function(data){
