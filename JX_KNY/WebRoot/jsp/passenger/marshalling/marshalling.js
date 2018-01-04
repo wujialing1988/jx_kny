@@ -14,15 +14,15 @@ Ext.onReady(function(){
 	    labelWidth: 100,                                     //查询表单中的标签宽度
 	    fieldWidth: 180,
 		fields: [{
-			header:'编组编号', dataIndex:'marshallingCode',width: 40, hidden: true, editor: {xtype:"hidden"}
+			header:i18n.MarshallingInfoMaintain.marshallingCode, dataIndex:'marshallingCode',width: 40, hidden: true, editor: {xtype:"hidden"}
 		},{
-			header:'编组名称', dataIndex:'marshallingName', width: 60 ,editor: {allowBlank:false}, searcher: { hidden: true }
+			header:i18n.MarshallingInfoMaintain.marshallingName, dataIndex:'marshallingName', width: 60 ,editor: {allowBlank:false}, searcher: { hidden: true }
 		},{
-			header:'车辆总数', dataIndex:'trainCount', width: 30, editor: {allowBlank:false, maxLength:20 },searcher: { hidden: true }
+			header:i18n.MarshallingInfoMaintain.trainCount, dataIndex:'trainCount', width: 30, editor: {allowBlank:false, maxLength:20 },searcher: { hidden: true }
 		},{
-			header:'备注', dataIndex:'remark',width: 120,editor:{ xtype:'textarea', maxLength:1000 },searcher: { hidden: true }
+			header:i18n.MarshallingInfoMaintain.remark, dataIndex:'remark',width: 120,editor:{ xtype:'textarea', maxLength:1000 },searcher: { hidden: true }
 		},{
-			header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
+			header:i18n.MarshallingInfoMaintain.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
 		}],
 		searchFn: function(searchParam){ 
 			marshalling.searchParam = searchParam ;
@@ -62,10 +62,10 @@ Ext.onReady(function(){
 				items:[{
 				layout: 'border',
 				items: [{
-					 region: 'west', layout: 'fit',  title: '编组基础维护',  bodyBorder: false, split: true,width: 500,minSize: 400, maxSize: 800, 
+					 region: 'west', layout: 'fit',  title: i18n.MarshallingInfoMaintain.marBaseMaintain,  bodyBorder: false, split: true,width: 500,minSize: 400, maxSize: 800, 
 			     	 collapsible : true,   items:[marshalling.grid]
 		    	},{ 		
-			     	 region: 'center', bodyBorder: false,title: '编组车辆',
+			     	 region: 'center', bodyBorder: false,title: i18n.MarshallingInfoMaintain.marVehicle,
 		       		 layout: 'fit', items : [MarshallingTrain.panel]
 				}]
 			}] 

@@ -9,8 +9,10 @@ i18n.JczlTrainService.leaveDate = '出厂日期' ;
 i18n.JczlTrainService.registerPersonName = '登记人' ;
 i18n.JczlTrainService.registerTime = '登记时间' ;
 i18n.JczlTrainService.trainState = '车辆状态' ;
-i18n.JczlTrainService.remarks = '备注' ;
-
+i18n.JczlTrainService.idx = 'idx主键' ;
+i18n.JczlTrainService.TrainTypeIdx = '车型主键' ;
+i18n.JczlTrainService.makeFactoryIdx = '制造厂家主键' ;
+i18n.JczlTrainService.vehicleType = '客货类型' ;
 /**
  * 状态
  */

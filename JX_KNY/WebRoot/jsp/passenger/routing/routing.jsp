@@ -10,6 +10,7 @@
 <title>交路信息维护</title>
 <script type="text/javascript">
 </script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/PassengerTransport/i18n-lang-routing.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/vis/util/DateUtil.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/passenger/routing/routing.js"></script><!-- 交路基本信息 -->
 </head>
