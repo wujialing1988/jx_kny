@@ -5,7 +5,7 @@ WorkDutySelect_comboTree = function(){
 	        dataUrl : ctx + '/workDuty!tree.action'
 	    }),
 //	    root : new Ext.tree.AsyncTreeNode({id:this.orgid,text:this.orgname}),
-	    root : new Ext.tree.AsyncTreeNode({id:'ROOT_0',text:'职务'}),
+	    root : new Ext.tree.AsyncTreeNode({id:'ROOT_0',text:i18n.WorkDutyWidget.Position}),
 	    autoScroll : true,
 	    rootVisible: true,
 	    listeners: {
@@ -20,7 +20,7 @@ WorkDutySelect_comboTree = function(){
 	        scope:this
 	    }
 	});
-	this.fieldLabel = '职务';
+	this.fieldLabel =i18n.WorkDutyWidget.Position;
     this.treeId = Ext.id()+'-tree';
     this.maxHeight = arguments[0].maxHeight || arguments[0].height || this.maxHeight;
     this.tpl = new Ext.Template('<tpl for="."><div style="height:'+this.maxHeight+'px"><div id="'+this.treeId+'"></div></div></tpl>');

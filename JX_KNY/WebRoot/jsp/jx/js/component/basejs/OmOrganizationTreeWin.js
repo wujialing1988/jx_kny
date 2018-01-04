@@ -30,7 +30,7 @@ Ext.onReady(function() {
 		}
 	});	
 	OmOrganizationTreeWin.win = new Ext.Window({
-        title:"机构选择", 
+        title:i18n.OmOrganizationTreeWin.institutionalChoice, 
         width:300, 
         height:400, 
         plain:true, 
@@ -40,11 +40,11 @@ Ext.onReady(function() {
         maximizable:false, 
         items:[OmOrganizationTreeWin.tree], 
         buttons: [{
-               text: "确定", iconCls: "saveIcon", id: "btnOrgSubmit", scope: this, handler: function(){               	
+               text: i18n.OmOrganizationTreeWin.confirm, iconCls: "saveIcon", id: "btnOrgSubmit", scope: this, handler: function(){               	
                	OmOrganizationTreeWin.submit();
             }
         }]
 	});
 	//确认提交方法，后面可覆盖此方法完成查询
-	OmOrganizationTreeWin.submit = function(){alert("请覆盖，OmOrganizationTreeWin.submit 方法完成自己操作业务！");};
+	OmOrganizationTreeWin.submit = function(){alert(i18n.OmOrganizationTreeWin.text);};
 });

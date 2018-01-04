@@ -37,7 +37,7 @@ TrainType.grid = new Ext.yunda.Grid({
 		}
     }],
 	fields: [{
-		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
+		header:i18n.TrainVehicleTypeWin.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	},{
 		header:i18n.ZbFw.typeCode, dataIndex:'typeCode',editor:{ allowBlank:false ,maxLength:20  }
 	},{
@@ -45,13 +45,13 @@ TrainType.grid = new Ext.yunda.Grid({
 	},{
 		header:i18n.ZbFw.trainTypeShortName, dataIndex:'shortName', editor:{ maxLength:20  },searcher: { hidden: true }
 	},{
-   		header:'车型种类编码', dataIndex:'vehicleKindCode', hidden:true, editor: { xtype:'hidden',id:'vehicleKindCode' }
+   		header:i18n.TrainVehicleTypeWin.vehicleKindCode, dataIndex:'vehicleKindCode', hidden:true, editor: { xtype:'hidden',id:'vehicleKindCode' }
 	},{
 		header:i18n.ZbFw.vehicleKindName, dataIndex:'vehicleKindName', searcher: {anchor:'98%'}
 	},{
 		header:i18n.ZbFw.description, dataIndex:'description', editor:{ maxLength:20,xtype:'textarea' },searcher: { hidden: true }
 	},{
-		header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
+		header:i18n.TrainVehicleTypeWin.vehicleType, dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
 	}],
 	searchFn: function(searchParam){ 
 		TrainType.searchParam = searchParam ;
@@ -63,7 +63,7 @@ TrainType.grid.un('rowdblclick',TrainType.grid.toEditFn,TrainType.grid);
 
 //定义点击确定按钮的操作
 TrainType.submit = function(){
-	alert("请覆盖方法（WorkStationEmp.submit）！");
+	alert(i18n.TrainVehicleTypeWin.msg);
 }
 
 

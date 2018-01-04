@@ -11,6 +11,7 @@
 <title>信息维护</title>
 <script type="text/javascript">
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TrainInspector.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/passenger/base/traininspector/EmpSelectEmp.js"></script>
 <script language="javascript" src="<%=ctx %>//jsp/passenger/base/traininspector/TrainInspector.js"></script><!-- 交路基本信息 -->
 </head>

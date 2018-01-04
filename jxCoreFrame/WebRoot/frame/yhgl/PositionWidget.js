@@ -57,25 +57,25 @@ PositionWidget.PosiList = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : true
 			},
-			loadMask: {msg: "正在处理，请稍侯..."},
+			loadMask: {msg: i18n.PositionWidget.wait},
 			// 偶数行变色
 			stripeRows : true,			
 			id:"PositionWidget_posiList",
 			colModel : new Ext.grid.ColumnModel([
 				new Ext.grid.RowNumberer(), {
 					sortable : true,
-					header : "岗位名称",
-					title : "双击该行记录选择岗位",
+					header : i18n.PositionWidget.positionName,
+					title :i18n.PositionWidget.choicePosition,
 					dataIndex : "posiname"
 				}, {
 					sortable : true,
-					header : "岗位类型",
-					title : "双击该行记录选择岗位",
+					header : i18n.PositionWidget.positionType,
+					title : i18n.PositionWidget.choicePosition,
 					dataIndex : "positype"
 				}, {
 					sortable : true,
-					header : "是否主岗位",
-					title : "双击该行记录选择岗位",
+					header : i18n.PositionWidget.YN,
+					title : i18n.PositionWidget.choicePosition,
 					dataIndex : "isleaf"
 				}
 			]),
@@ -135,7 +135,7 @@ PositionWidget.PosiSelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		PositionWidget.PosiSelectWin.superclass.constructor.call(this, {
-			title : "选择人员",
+			title : i18n.PositionWidget.choiceEmp,
 			width : 520,
 			height : 305,			
 			plain : true,
@@ -151,14 +151,14 @@ PositionWidget.PosiSelectWin = Ext.extend(Ext.Window, {
 							// 工具栏
 							tbar : [{
 									xtype:"label",
-									text:"岗位名称："
+									text:i18n.PositionWidget.positionName+"："
 								},{	            
 					                xtype:"textfield",								                
 					                name : "posiName",
 							        width: 200,							        
 					                id:"PositionWidget_empId"
 								},{
-									text : "搜索",
+									text : i18n.PositionWidget.search,
 									iconCls : "searchIcon",
 									handler : function(){
 										var posiname = Ext.getCmp("PositionWidget_empId").getValue();
@@ -170,7 +170,7 @@ PositionWidget.PosiSelectWin = Ext.extend(Ext.Window, {
 									},
 									scope : this
 								},{
-									text : "重置",
+									text : i18n.PositionWidget.reset,
 									iconCls : "resetIcon",
 									handler : function(){
 										this.grid.getStore().load({

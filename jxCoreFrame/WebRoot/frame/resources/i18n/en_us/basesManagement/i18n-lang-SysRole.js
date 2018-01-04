@@ -1,0 +1,67 @@
+i18n.AllotPowerTree = {};
+i18n.AllotPowerTree.prompt = 'prompt';
+i18n.AllotPowerTree.confirmToSave = 'confirmToSave';
+i18n.AllotPowerTree.save = 'save';
+i18n.AllotPowerTree.funcPermissions = 'funcPermissions';
+i18n.AllotPowerTree.close = 'close';
+
+i18n.AllotPower = {};
+i18n.AllotPower.operatorid = 'operatorId';
+i18n.AllotPower.userid = 'user\'s account';
+i18n.AllotPower.operatorname = 'operatorName';
+i18n.AllotPower.status = 'operatorStatus';
+i18n.AllotPower.enable = 'enable';
+i18n.AllotPower.disable = 'disable';
+i18n.AllotPower.add = 'add';
+i18n.AllotPower.orgid = 'orgId';
+i18n.AllotPower.orgcode = 'orgCode';
+i18n.AllotPower.orgname = 'orgName';
+i18n.AllotPower.orgtype = 'orgType';
+i18n.AllotPower.status = 'orgStatus';
+i18n.AllotPower.groupid = 'workGroupId';
+i18n.AllotPower.groupname = 'workGroup name';
+i18n.AllotPower.grouptype = 'workGroup type';
+i18n.AllotPower.groupstatus = 'workGroup status';
+i18n.AllotPower.positionid = 'positionId';
+i18n.AllotPower.posicode = 'posiCode';
+i18n.AllotPower.posiname = 'posiName';
+i18n.AllotPower.positype = 'posiType';
+i18n.AllotPower.status = 'posiStatus';
+i18n.AllotPower.dutyid = 'jobID';
+i18n.AllotPower.dutycode = 'jobCode';
+i18n.AllotPower.dutyname = 'jobName';
+i18n.AllotPower.dutytype = 'jobType';
+i18n.AllotPower.save = 'save';
+i18n.AllotPower.operatorid = 'operatorID';
+i18n.AllotPower.userid = 'Account';
+i18n.AllotPower.operatorname = 'operatorName';
+i18n.AllotPower.status = 'operatorStatus';
+i18n.AllotPower.prompt = 'prompt';
+i18n.AllotPower.false = 'false,the service\'s information:\n';
+i18n.AllotPower.operatorChoice = 'operatorChoice';
+i18n.AllotPower.orgChoice = 'select oraganizaton';
+i18n.AllotPower.WorkGroupCho = 'select WorkGroup';
+i18n.AllotPower.positChoice = 'select posit';
+i18n.AllotPower.jobChoice = '选择职务';
+
+
+i18n.AllotPowerMain = {};
+i18n.AllotPowerMain.operator = 'operator';
+i18n.AllotPowerMain.organization = 'organization';
+i18n.AllotPowerMain.workGroup = 'workGroup';
+i18n.AllotPowerMain.posit = 'posit';
+i18n.AllotPowerMain.job = 'job';
+i18n.AllotPowerMain.AuthAlloc = 'AuthAlloc';
+i18n.AllotPowerMain.close = 'close';
+
+i18n.SysRole = {};
+i18n.SysRole.AuthAlloc = 'AuthAlloc';
+i18n.SysRole.FunctionAlutho = 'FunctionAlutho';
+i18n.SysRole.roleId = 'roleId';
+i18n.SysRole.roleName = 'roleName';
+i18n.SysRole.roleType = 'roleType';
+i18n.SysRole.ApplicaLevel = 'ApplicaLevel';
+i18n.SysRole.sysLevel = 'sysLevel';
+i18n.SysRole.roleDesc = 'roleDesc';
+i18n.SysRole.applicationId = 'applicationId';
+

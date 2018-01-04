@@ -139,24 +139,24 @@ jx.pjwz.partbase.component.PartsExtendNoSelect = Ext.extend(
 					this.winHeight = 28 * formRowNum + 80;
 				if (!this.isEdit) {
 					this.win = new Ext.Window({
-						title : '配件扩展编号', width : this.winWidth, height : this.winHeight,
+						title :i18n.PartsExtendNoSelect.AccessExtensionNum, width : this.winWidth, height : this.winHeight,
 						plain : true, closeAction : "hide", buttonAlign : 'center',
 						maximizable : true, items : this.form, modal: true,
 						buttons : [{
-							text : "关闭", iconCls : "closeIcon", scope : this,
+							text : i18n.PartsExtendNoSelect.close, iconCls : "closeIcon", scope : this,
 							handler : function() { this.win.hide(); }
 						}]
 					});
 				} else {
 					this.win = new Ext.Window({
-						title : '配件扩展编号', width : this.winWidth, height : this.winHeight,
+						title : i18n.PartsExtendNoSelect.AccessExtensionNum, width : this.winWidth, height : this.winHeight,
 						plain : true, closeAction : "hide", buttonAlign : 'center',
 						maximizable : true, items : this.form, modal: true,
 						buttons : [{
-							text : "保存", iconCls : "saveIcon", scope : this,
+							text : i18n.PartsExtendNoSelect.save, iconCls : "saveIcon", scope : this,
 							handler : this.saveFn
 						}, {
-							text : "关闭", iconCls : "closeIcon", scope : this,
+							text : i18n.PartsExtendNoSelect.close, iconCls : "closeIcon", scope : this,
 							handler : function() { this.win.hide(); }
 						}]
 					});

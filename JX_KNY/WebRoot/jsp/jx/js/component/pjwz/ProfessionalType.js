@@ -36,7 +36,7 @@ ProfessionalType_comboTree = function(){
     loader : new Ext.tree.TreeLoader( {
         dataUrl : ctx + '/professionalType!comboTree.action'
     }),
-    root : new Ext.tree.AsyncTreeNode({id:'ROOT_0',text:'专业类型'}),
+    root : new Ext.tree.AsyncTreeNode({id:'ROOT_0',text:i18n.ProfessionalType.professType}),
     rootVisible: true,
     listeners: {
         beforeload: function(node, e){			
@@ -50,7 +50,7 @@ ProfessionalType_comboTree = function(){
 //            }
     }
 });
-	this.fieldLabel = '专业类型';
+	this.fieldLabel = i18n.ProfessionalType.professType;
     this.treeId = Ext.id()+'-tree';
     this.maxHeight = arguments[0].maxHeight || arguments[0].height || this.maxHeight;
     this.tpl = new Ext.Template('<tpl for="."><div style="height:'+this.maxHeight+'px"><div id="'+this.treeId+'"></div></div></tpl>');

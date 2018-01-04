@@ -14,18 +14,18 @@ Ext.onReady(function(){
 	    labelWidth: 100,                                     //查询表单中的标签宽度
 	    fieldWidth: 180,
 		fields: [{
-			header:'人员名称', dataIndex:'empname', width: 60 ,
+			header:i18n.TrainInspector.empName, dataIndex:'empname', width: 60 ,
 			editor: {}, searcher: { hidden: true }
 		},{
-			header:'人员代码', dataIndex:'empcode', width: 60, editor: {id:'empcode', name: 'empcode', xtype:"hidden" }
+			header:i18n.TrainInspector.empcode, dataIndex:'empcode', width: 60, editor: {id:'empcode', name: 'empcode', xtype:"hidden" }
 		},{
-			header:'班组', dataIndex:'orgname', width: 60, editor: {id:'orgname', name: 'orgname', xtype:"hidden" }
+			header:i18n.TrainInspector.orgname, dataIndex:'orgname', width: 60, editor: {id:'orgname', name: 'orgname', xtype:"hidden" }
 		},{
-			header:'人员id', dataIndex:'empid', hidden:true, editor: {id:'empid', xtype:"hidden" },searcher: { hidden: true }
+			header:i18n.TrainInspector.empid, dataIndex:'empid', hidden:true, editor: {id:'empid', xtype:"hidden" },searcher: { hidden: true }
 		},{
-			header:'orgid', dataIndex:'orgid',hidden:true ,editor: {id:'orgid',  xtype:"hidden" },searcher: { hidden: true }
+			header:i18n.TrainInspector.orgid, dataIndex:'orgid',hidden:true ,editor: {id:'orgid',  xtype:"hidden" },searcher: { hidden: true }
 		},{
-			header:'主键IDx', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
+			header:i18n.TrainInspector.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
 		}],
 		addButtonFn: function(){
 			if(this.beforeAddButtonFn() == false)   return;
@@ -52,7 +52,7 @@ Ext.onReady(function(){
 	var viewport = new Ext.Viewport({
 			layout:'fit',
 			items:[{
-				 region: 'west', layout: 'fit',  title: '乘务检测人员维护',  bodyBorder: false, split: true,width: 600,minSize: 400, maxSize: 800, 
+				 region: 'west', layout: 'fit',  title: i18n.TrainInspector.title,  bodyBorder: false, split: true,width: 600,minSize: 400, maxSize: 800, 
 		     	 collapsible : true,   items:[TrainInspector.grid]
 			}] 
 	});

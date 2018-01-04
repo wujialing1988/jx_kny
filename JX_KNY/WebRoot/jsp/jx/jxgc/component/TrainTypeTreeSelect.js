@@ -37,7 +37,7 @@ jx.jxgc.TrainTypeTreeSelect.trainTypeTree = Ext.extend(Ext.tree.TreePanel, {
 		        dataUrl : ctx + "/trainWorkPlan!tree.action"
 		    }),
 		    root: new Ext.tree.AsyncTreeNode({
-		       	text: '车辆选择',
+		       	text: i18n.TrainTypeTreeSelect.choiceTrain,
 		        id: 'ROOT_0',
 		        leaf: false,
 		        expanded :true
@@ -85,7 +85,7 @@ jx.jxgc.TrainTypeTreeSelect.treeP = new jx.jxgc.TrainTypeTreeSelect.trainTypeTre
 jx.jxgc.TrainTypeTreeSelect.createWin = function(){
     if(jx.jxgc.TrainTypeTreeSelect.win == null){
 	    jx.jxgc.TrainTypeTreeSelect.win = new Ext.Window({
-	        title:'车辆选择', closeAction:"hide", width:300, height:500, layout:"fit", resizable:false, modal:true,
+	        title:i18n.TrainTypeTreeSelect.choiceTrain, closeAction:"hide", width:300, height:500, layout:"fit", resizable:false, modal:true,
             items:jx.jxgc.TrainTypeTreeSelect.treeP
 	    });
     }

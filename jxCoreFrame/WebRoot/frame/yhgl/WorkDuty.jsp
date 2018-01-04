@@ -9,6 +9,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>机构人员管理</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-WorkDuty.js"></script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-Organization.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/PositionWidget.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/EmployeeWidget.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/WorkDuty_Form.js"></script>

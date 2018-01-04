@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>物料信息维护</title>
 <!-- 上面引用了RowEditorGrid.jspf 此处无需使用，页面js报错<script language="javascript" src="<%=ctx%>/jsp/jx/js/component/RowEditorGrid.js"></script> -->
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-MatTypeList.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/pjwz/partbase/MatTypeList.js"></script>
 </head>
 <body>

@@ -14,7 +14,7 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'roleid',
 	    tbar:['search','add','delete','refresh','-',{
-	    	text:"权限分配", iconCls:"editIcon", handler: function(){
+	    	text:i18n.SysRole.AuthAlloc, iconCls:"editIcon", handler: function(){
 	    		if(SysRole.grid.searchWin)  SysRole.grid.searchWin.hide();   
         		if(!$yd.isSelectedRecord(SysRole.grid)) return;//未选择记录，直接返回
         		AllotPowerMain.win.show();
@@ -22,7 +22,7 @@ Ext.onReady(function() {
         		AllotPower.Operator.grid.store.load(); //第一个选项卡操作员表加载数据
 	    	}
 	    },{
-	    	text:"功能权限", iconCls:"pluginIcon", handler: function(){
+	    	text:i18n.SysRole.FunctionAlutho, iconCls:"pluginIcon", handler: function(){
 	    		AllotPowerTree.win.show();
 	    		AllotPowerTree.tree.root.reload();
 	    		/* 加载并出同步树的所有叶子节点 */
@@ -32,17 +32,17 @@ Ext.onReady(function() {
 	    	}
 	    }],
 	    fields: [
-	    	{header:'角色主键', dataIndex:'roleid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'角色名称', dataIndex:'rolename', hidden:false, editor: { maxLength:32,allowBlank:false }},
-	    	{header:'角色类型', dataIndex:'roletype', hidden:false, 
+	    	{header:i18n.SysRole.roleId, dataIndex:'roleid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysRole.roleName, dataIndex:'rolename', hidden:false, editor: { maxLength:32,allowBlank:false }},
+	    	{header:i18n.SysRole.roleType, dataIndex:'roletype', hidden:false, 
 	    	 editor: { id:'_roletype_list0', disabled:true,
 	    		xtype: 'combo',dataColumn :"roletype", hiddenName: "roletype",  mode: 'local' ,valueField: "value", displayField: "text", triggerAction: "all",   		 	
-            	editable: false, forceSelection: true, store:[["0","应用级"],["1","系统级"]]
+            	editable: false, forceSelection: true, store:[["0",i18n.SysRole.ApplicaLevel],["1",i18n.SysRole.sysLevel]]
    			 },
-			 renderer:function(v){ if(v == '0'){return '应用级';} else if(v == '1'){return '系统级';} else {return '应用级';}}
+			 renderer:function(v){ if(v == '0'){return i18n.SysRole.ApplicaLevel;} else if(v == '1'){return i18n.SysRole.sysLevel;} else {return i18n.SysRole.ApplicaLevel;}}
 			},
-	    	{header:'角色描述', dataIndex:'roledesc', hidden:false, editor: { xtype:'textarea',maxLength:200 }},
-	    	{header:'应用ID', dataIndex:'appid', hidden:true, editor: { xtype:'hidden' }}
+	    	{header:i18n.SysRole.roleDesc, dataIndex:'roledesc', hidden:false, editor: { xtype:'textarea',maxLength:200 }},
+	    	{header:i18n.SysRole.applicationId, dataIndex:'appid', hidden:true, editor: { xtype:'hidden' }}
 	    ],
 	    editOrder:['roletype','rolename','roledesc'],
 	    searchOrder:['rolename'],

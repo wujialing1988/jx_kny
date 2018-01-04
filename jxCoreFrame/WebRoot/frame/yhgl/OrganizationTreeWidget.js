@@ -10,7 +10,7 @@ Ext.onReady(function() {
 			dataUrl : ctx + "/organization!treeWidget.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '机构人员',
+			text : i18n.OrganizationTreeWidget.orgEmp,
 			disabled : false,
 			id : 'ROOT_0',
 			nodetype : 'org',
@@ -44,7 +44,7 @@ Ext.onReady(function() {
 	});
 	
 	OrgTreeWidget.transferWin = new Ext.Window({
-            title:"机构调动", 
+            title:i18n.OrganizationTreeWidget.orgMobiliz, 
             width:300, 
             height:400, 
             plain:true, 
@@ -54,7 +54,7 @@ Ext.onReady(function() {
             maximizable:false, 
             items:[OrgTreeWidget.tree], 
             buttons: [{
-                id:'OrgTreeWidgetSaveBtn',text: "确定", iconCls: "saveIcon", scope: this, handler: function(){ 
+                id:'OrgTreeWidgetSaveBtn',text: i18n.OrganizationTreeWidget.confirm, iconCls: "saveIcon", scope: this, handler: function(){ 
                    var empids = $yd.getSelectedIdx(EmpCtl.grid, EmpCtl.grid.storeId);
                    var node = OrgTreeWidget.tree.getSelectionModel().getSelectedNode(); //获取选中的机构
                    

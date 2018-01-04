@@ -10,7 +10,7 @@ Ext.onReady(function(){
 			dataUrl : ctx + "/sysEosDictEntry!tree.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '字典类型',
+			text : i18n.SysEosDictEntry.dicType,
 			disabled : false,
 			id : 'ROOT_0',
 			leaf : false,
@@ -57,7 +57,7 @@ Ext.onReady(function(){
 				} 
 			},
 			failure: function(response, options){
-				MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				MyExt.Msg.alert(i18n.SysEosDictEntry.false + response.status + "\n" + response.responseText);
 			}
 		});
 	}
@@ -72,8 +72,8 @@ Ext.onReady(function(){
 	    storeId:'tempdictid',
 	    tbar:['search','add','delete'],
 	    fields: [
-	    	{header:'业务字典分类', dataIndex:'tempdicttypeid', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'字典项代码',  dataIndex:'tempdictid', hidden:false, 
+	    	{header:i18n.SysEosDictEntry.dicClass, dataIndex:'tempdicttypeid', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.SysEosDictEntry.dicCode,  dataIndex:'tempdictid', hidden:false, 
 	    		editor: {id:'_dictid_1',maxLength:25,allowBlank:false,
 	    			listeners : {
 	    				change : function(){
@@ -83,22 +83,22 @@ Ext.onReady(function(){
 	    			}
 	    		},searcher:{xtype:'textfield'}
 	    	},
-	    	{header:'字典项名称', dataIndex:'dictname', hidden:false, editor: {maxLength:25,allowBlank:false}},
-	    	{header:'字典项状态', dataIndex:'status', hidden:false, 
+	    	{header:i18n.SysEosDictEntry.dicName, dataIndex:'dictname', hidden:false, editor: {maxLength:25,allowBlank:false}},
+	    	{header:i18n.SysEosDictEntry.dicstatus, dataIndex:'status', hidden:false, 
 	    		editor: {id:'_status_1',xtype: 'combo',dataColumn :"status", hiddenName: "status",  mode: 'local' ,valueField: "value", displayField: "text", triggerAction: "all",   		 	
-            		editable: false, forceSelection: true, store:[["1","启用"],["0","禁用"]]
+            		editable: false, forceSelection: true, store:[["1",i18n.SysEosDictEntry.up],["0",i18n.SysEosDictEntry.down]]
 	    		},renderer:function(v){
-	    			if(v == '1'){return '启用';}
-	    			else if(v == '0'){return '禁用';}
-	    			else {return '禁用';}
+	    			if(v == '1'){return i18n.SysEosDictEntry.up;}
+	    			else if(v == '0'){return i18n.SysEosDictEntry.down;}
+	    			else {return i18n.SysEosDictEntry.down;}
 				}
 	    	},
-	    	{header:'排序号', dataIndex:'sortno', hidden:false, editor: {maxLength:3}},
-	    	{header:'层次', dataIndex:'rank', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'上级字典项ID', dataIndex:'parentid', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'字典项Seq', dataIndex:'seqno', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'配置项1', dataIndex:'filter1', hidden:false, editor: {maxLength:25,allowBlank:true}},
-	    	{header:'配置项2', dataIndex:'filter2', hidden:false, editor: {maxLength:25,allowBlank:true}}
+	    	{header:i18n.SysEosDictEntry.sortno, dataIndex:'sortno', hidden:false, editor: {maxLength:3}},
+	    	{header:i18n.SysEosDictEntry.rank, dataIndex:'rank', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.SysEosDictEntry.parentid, dataIndex:'parentid', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.SysEosDictEntry.字典项Seq, dataIndex:'seqno', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.SysEosDictEntry.filter1, dataIndex:'filter1', hidden:false, editor: {maxLength:25,allowBlank:true}},
+	    	{header:i18n.SysEosDictEntry.filter2, dataIndex:'filter2', hidden:false, editor: {maxLength:25,allowBlank:true}}
 	    ],
 	    editOrder:['tempdictid','dictname','sortno','status'],
 	    searchOrder:['dictid','dictname'],
@@ -206,10 +206,10 @@ Ext.onReady(function(){
 	
 	//业务字典项维护窗口
 	EosDictEntry.win = new Ext.Window({
-		title: "字典维护", maximizable: true, width: 700, height: 400, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center',
+		title: i18n.SysEosDictEntry.dicmaintain, maximizable: true, width: 700, height: 400, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center',
 		layout : 'border',
 		items : [ {
-	        title : '<span style="font-weight:normal">字典维护</span>',
+	        title : '<span style="font-weight:normal">'+i18n.SysEosDictEntry.dicmaintain+'</span>',
 	        iconCls : 'chart_organisationIcon',
 	        tools : [ {
 	            id : 'refresh',

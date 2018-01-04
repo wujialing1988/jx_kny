@@ -2,7 +2,7 @@ Ext.onReady(function(){
 	Ext.namespace('MatTypeList');                       //定义命名空间
 	MatTypeList.searchParam = {};
 	MatTypeList.uploadWin = new Ext.Window({
-		title:"上传", width:400, height:120, plain:true, closeAction:"hide", buttonAlign:'center', maximizable:false, modal: true,
+		title:i18n.MatTypeList.upLoad, width:400, height:120, plain:true, closeAction:"hide", buttonAlign:'center', maximizable:false, modal: true,
 		items: uploadFrom = new Ext.form.FormPanel({
 			layout:"form", border:false, style:"padding:10px" , fileUpload:true,
 			align:'center',baseCls: "x-plain", defaultType:'textfield',defaults:{anchor:"95%"},
@@ -14,30 +14,30 @@ Ext.onReady(function(){
 					buttonAlign:'center',
 					items:[{
 						fileUpload:true,
-						fieldLabel:'选择',
+						fieldLabel:i18n.MatTypeList.choice,
 						id: 'imageV',
 						name:'image',
 						labelWidth:60,
 						width:160,
 						xtype : "fileuploadfield",
 						allowBlank:false,
-						buttonText: '浏览...'
+						buttonText:i18n.MatTypeList.browse
 					}],
 					buttons:[{
-						text: "导入", iconCls: "saveIcon", scope: this, handler: function(){
+						text: i18n.MatTypeList.load, iconCls: "saveIcon", scope: this, handler: function(){
 							var form = uploadFrom.getForm();
 							var imagePath = Ext.getCmp("imageV").getValue();
 							if(imagePath==null||imagePath==""){
-								alertFail("尚未选择excel文件！");
+								alertFail(i18n.MatTypeList.NOChoice);
 								return;
 							}
 							if(imagePath.indexOf(".xls")==-1||imagePath.indexOf(".xlsx")!=-1){
-								alertFail("请导入excel2003格式文件！");
+								alertFail(i18n.MatTypeList.canLoad);
 								return;
 							}
 							form.submit({  
 	                        	url: ctx+'/matTypeListFileUpload.action',  
-	                       	 	waitMsg: '正在上传Excel文件请稍候...', 
+	                       	 	waitMsg: i18n.MatTypeList.wait, 
 	                       	 	method: 'POST',
 	                       	 	enctype: 'multipart/form-data',
 	                        	success: function(response, options) { 
@@ -56,7 +56,7 @@ Ext.onReady(function(){
         									 alertFail(result.resultMsg);
 					                	}
 					                } else {
-					                	Ext.Msg.alert('上传失败!',"没有选择文件或文件体积过大！");
+					                	Ext.Msg.alert(i18n.MatTypeList.false,i18n.MatTypeList.prompt);
 					                }
 	                        	}
 	                    	}); 
@@ -71,26 +71,26 @@ Ext.onReady(function(){
 	    saveURL: ctx + '/matTypeList!saveOrUpdate.action',             //保存数据的请求URL
 	    deleteURL: ctx + '/matTypeList!delete.action',            //删除数据的请求URL
 	    tbar:['search','add',
-	        { text:"下载模板", iconCls:"application-vnd-ms-excel", 
+	        { text:i18n.MatTypeList.downLoad, iconCls:"application-vnd-ms-excel", 
 	            handler:function(){
 	            	window.location.href = ctx + '/matTypeList!download.action';
 	            }
 	        },
-	    	{ text:"导入", iconCls:"page_excelIcon", 
+	    	{ text:i18n.MatTypeList.load, iconCls:"page_excelIcon", 
               handler:function(){
                 MatTypeList.uploadWin.show();
              }
 	        },'delete','refresh'],
 	    //viewConfig: null,
 		fields: [{
-			header:'物料编码', dataIndex:'matCode', editor:{ id:'matCode', maxLength:50, allowBlank: false }, width: 120
+			header:i18n.MatTypeList.matCode, dataIndex:'matCode', editor:{ id:'matCode', maxLength:50, allowBlank: false }, width: 120
 		},{
-			header:'物料描述', dataIndex:'matDesc', editor:{  maxLength:50, allowBlank: false }, width: 420
+			header:i18n.MatTypeList.matDesc, dataIndex:'matDesc', editor:{  maxLength:50, allowBlank: false }, width: 420
 		},{
-			header:'计量单位', dataIndex:'unit', editor:{  maxLength:20, allowBlank: false },
+			header:i18n.MatTypeList.unit, dataIndex:'unit', editor:{  maxLength:20, allowBlank: false },
 			searcher: {disabled: true}, width: 80				
 		},{
-			header:'计划单价', dataIndex:'price',  editor:{ xtype:"numberfield", maxLength:6, vtype: 'nonNegativeFloat'  },
+			header:i18n.MatTypeList.price, dataIndex:'price',  editor:{ xtype:"numberfield", maxLength:6, vtype: 'nonNegativeFloat'  },
 			searcher: {disabled: true}		
 		}],
 		storeId: 'matCode',

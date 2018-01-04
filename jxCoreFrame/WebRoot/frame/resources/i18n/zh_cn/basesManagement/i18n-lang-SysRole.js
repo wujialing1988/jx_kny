@@ -1,0 +1,67 @@
+i18n.AllotPowerTree = {};
+i18n.AllotPowerTree.prompt = '提示';
+i18n.AllotPowerTree.confirmToSave = '确认保存？';
+i18n.AllotPowerTree.save = '保存';
+i18n.AllotPowerTree.funcPermissions = '功能权限';
+i18n.AllotPowerTree.close = '关闭';
+
+i18n.AllotPower = {};
+i18n.AllotPower.operatorid = '操作员ID';
+i18n.AllotPower.userid = '登录用户名';
+i18n.AllotPower.operatorname = '操作员名称';
+i18n.AllotPower.status = '操作员状态';
+i18n.AllotPower.enable = '启用';
+i18n.AllotPower.disable = '禁用';
+i18n.AllotPower.add = '新增';
+i18n.AllotPower.orgid = '机构ID';
+i18n.AllotPower.orgcode = '机构代码';
+i18n.AllotPower.orgname = '机构名称';
+i18n.AllotPower.orgtype = '机构类型';
+i18n.AllotPower.status = '机构状态';
+i18n.AllotPower.groupid = '工作组ID';
+i18n.AllotPower.groupname = '工作组名称';
+i18n.AllotPower.grouptype = '工作组类型';
+i18n.AllotPower.groupstatus = '工作组状态';
+i18n.AllotPower.positionid = '岗位编码';
+i18n.AllotPower.posicode = '岗位代码';
+i18n.AllotPower.posiname = '岗位名称';
+i18n.AllotPower.positype = '岗位类别';
+i18n.AllotPower.status = '岗位状态';
+i18n.AllotPower.dutyid = '职务ID';
+i18n.AllotPower.dutycode = '职务代码';
+i18n.AllotPower.dutyname = '职务名称';
+i18n.AllotPower.dutytype = '职务类型';
+i18n.AllotPower.save = '保存';
+i18n.AllotPower.operatorid = '操作员ID';
+i18n.AllotPower.userid = '登录用户名';
+i18n.AllotPower.operatorname = '操作员名称';
+i18n.AllotPower.status = '操作员状态';
+i18n.AllotPower.prompt = '提示';
+i18n.AllotPower.false = '请求失败，服务器状态代码：\n';
+i18n.AllotPower.operatorChoice = '选择操作员';
+i18n.AllotPower.orgChoice = '选择机构';
+i18n.AllotPower.WorkGroupCho = '选择工作组';
+i18n.AllotPower.positChoice = '选择岗位';
+i18n.AllotPower.jobChoice = '选择职务';
+
+
+i18n.AllotPowerMain = {};
+i18n.AllotPowerMain.operator = '操作员';
+i18n.AllotPowerMain.organization = '机构';
+i18n.AllotPowerMain.workGroup = '工作组';
+i18n.AllotPowerMain.posit = '岗位';
+i18n.AllotPowerMain.job = '职务';
+i18n.AllotPowerMain.AuthAlloc = '权限分配';
+i18n.AllotPowerMain.close = '关闭';
+
+i18n.SysRole = {};
+i18n.SysRole.AuthAlloc = '权限分配';
+i18n.SysRole.FunctionAlutho = '功能权限';
+i18n.SysRole.roleId = '角色主键';
+i18n.SysRole.roleName = '角色名称';
+i18n.SysRole.roleType = '角色类型';
+i18n.SysRole.ApplicaLevel = '应用级';
+i18n.SysRole.sysLevel = '系统级';
+i18n.SysRole.roleDesc = '角色描述';
+i18n.SysRole.applicationId = '应用ID';
+

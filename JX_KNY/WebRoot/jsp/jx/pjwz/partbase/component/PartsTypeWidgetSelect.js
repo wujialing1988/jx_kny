@@ -38,7 +38,7 @@ jx.pjwz.PartsTypeSelect.partsTypeTree = Ext.extend(Ext.tree.TreePanel, {
 		        dataUrl : ctx + "/partsType!tree.action"
 		    }),
 		    root: new Ext.tree.AsyncTreeNode({
-		       	text: '配件规格型号',
+		       	text:i18n.PartsTypeWidgetSelect.accessoriesModel,
 		        id: 'ROOT_0',
 		        leaf: false,
 		        expanded :true
@@ -74,18 +74,18 @@ jx.pjwz.PartsTypeSelect.searchForm = new Ext.form.FormPanel({
 		baseCls: "x-plain", border: false,labelWidth:70,
 				fieldWidth:80,
 		items:[{
-        	xtype: 'compositefield', fieldLabel : '物料编码', 
+        	xtype: 'compositefield', fieldLabel : i18n.PartsTypeWidgetSelect.materialCoding, 
 			combineErrors: false,
         	items: [
            {
 				xtype:"textfield",
 				id:"matCode_k",
-				fieldLabel:"物料编码"
+				fieldLabel:i18n.PartsTypeWidgetSelect.materialCoding
 				
 			},
            {
                xtype: 'button',
-               text: '查找',
+               text:i18n.PartsTypeWidgetSelect.search,
                width: 40,
                handler: jx.pjwz.PartsTypeSelect.reloadFn
            }]
@@ -118,7 +118,7 @@ jx.pjwz.PartsTypeSelect.orgTree = Ext.extend(Ext.tree.TreePanel, {
 		        dataUrl : ctx + "/partsRepairList!tree.action"
 		    }),
 		    root: new Ext.tree.AsyncTreeNode({
-		       	text: '承修部门',
+		       	text: i18n.PartsTypeWidgetSelect.maintenDepartment,
 		        id: 'ROOT_0',
 		        leaf: false,
 		        expanded :true
@@ -152,7 +152,7 @@ jx.pjwz.PartsTypeSelect.trainTree = Ext.extend(Ext.tree.TreePanel, {
 		        dataUrl : ctx + "/trainTypeToParts!tree.action"
 		    }),
 		    root: new Ext.tree.AsyncTreeNode({
-		       	text: '车型',
+		       	text:i18n.PartsTypeWidgetSelect.trainModel,
 		        id: 'ROOT_0',
 		        leaf: false,
 		        expanded :true
@@ -192,7 +192,7 @@ jx.pjwz.PartsTypeSelect.createWin = function(){
     if(jx.pjwz.PartsTypeSelect.panel == null)  jx.pjwz.PartsTypeSelect.createPanels();
     if(jx.pjwz.PartsTypeSelect.win == null){
 	    jx.pjwz.PartsTypeSelect.win = new Ext.Window({
-	        title:'规格型号选择', closeAction:"hide", width:300, height:500, layout:"fit", resizable:false, modal:true, 
+	        title:i18n.PartsTypeWidgetSelect.SpecificationChoice, closeAction:"hide", width:300, height:500, layout:"fit", resizable:false, modal:true, 
             items:jx.pjwz.PartsTypeSelect.panel
 	    });
     }
@@ -238,9 +238,9 @@ jx.pjwz.PartsTypeSelect.createPanels = function(){
 	jx.pjwz.PartsTypeSelect.panel =  new Ext.TabPanel( {
 		activeTab: 0,
 	    items : [ {
-	        title: '全部', layout: 'fit', items : [ jx.pjwz.PartsTypeSelect.typeTreePanel ]
+	        title: i18n.PartsTypeWidgetSelect.all, layout: 'fit', items : [ jx.pjwz.PartsTypeSelect.typeTreePanel ]
 	    }, {
-	        title: '按承修部门', layout: 'fit',  items: [ jx.pjwz.PartsTypeSelect.orgPanel ]
+	        title: i18n.PartsTypeWidgetSelect.byDepartment, layout: 'fit',  items: [ jx.pjwz.PartsTypeSelect.orgPanel ]
 	    }/*, {
 	        title: '按车型', layout: 'fit',  items: [ jx.pjwz.PartsTypeSelect.trainPanel ]
 	    }*/ ]

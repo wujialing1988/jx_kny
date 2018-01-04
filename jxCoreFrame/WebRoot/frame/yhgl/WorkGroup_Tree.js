@@ -13,7 +13,7 @@ Ext.onReady(function(){
 			dataUrl : ctx + "/workGroup!tree.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '工作组',
+			text : i18n.WorkGroup_Tree.workTeam,
 			disabled : false,
 			id : 'ROOT_0',
 			nodetype : 'gop',

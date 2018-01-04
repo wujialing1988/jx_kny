@@ -27,7 +27,7 @@ Ext.onReady(function() {
 				border : false,
 				items : [{
 					//index：0
-					title : "全部职务",
+					title : i18n.WorkDuty_Tab.allPosit,
 					border : false,
 					layout : "fit",
 					items : [DutyList.grid],
@@ -38,7 +38,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：1
-					title : "本职务信息",
+					title : i18n.WorkDuty_Tab.positInfor,
 					border : false,
 					layout : "fit",
 					items : [DutyForm.panel],
@@ -49,7 +49,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：2
-					title : "下级职务",
+					title : i18n.WorkDuty_Tab.lowerPosit,
 					border : false,
 					layout : "fit",
 					items : [LowerDutyList.grid],
@@ -62,7 +62,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：3
-					title : "职务人员",
+					title : i18n.WorkDuty_Tab.employee,
 					border : false,
 					layout : "fit",
 					items : [emplist.grid],

@@ -30,14 +30,14 @@ Ext.onReady(function(){
 		    buttonAlign: "center",
 		    renderTo:Ext.getBody(),	
 		    buttons: [{
-			        	id:"submitBtn", text:"保存", iconCls:"saveIcon",
+			        	id:"submitBtn", text:i18n.TestComponent.save, iconCls:"saveIcon",
 			        	handler:function(){
 				            var form = testComponent.form.getForm();
 				            if (!form.isValid()) return;			            
 				            var data = form.getValues();            
 	        		    }
 		    }, {
-		        id:"resetBtn",text: "重置", iconCls:"resetIcon",
+		        id:"resetBtn",text: i18n.TestComponent.reset, iconCls:"resetIcon",
 		        handler: function(){
 //		        	Ext.getCmp("ProfessionalType_comboTree_Id").clearValue();
 //		        	Ext.getCmp("PartsClass_comboTree_Id").clearValue();
@@ -53,12 +53,12 @@ Ext.onReady(function(){
 		        	testComponent.form.findByType("PartsTypeTreeSelect")[0].setValue("");
 		        }
 		    },{
-			        	text:"机构树", iconCls:"saveIcon",
+			        	text:i18n.TestComponent.institutionTree, iconCls:"saveIcon",
 			        	handler:function(){
 				            OmOrganizationTreeWin.win.show();           
 	        		    }
 		    },{
-			        	text:"测试手机应用", iconCls:"saveIcon",
+			        	text:i18n.TestComponent.TestThePhoneAPP, iconCls:"saveIcon",
 			        	handler:function(){
 			        		//工长派工-1.1 查询已派工列表
 //				            Ext.Ajax.request({
@@ -1034,29 +1034,29 @@ Ext.onReady(function(){
 		            baseCls:"x-plain", align:"center", layout:"form", defaultType:"textfield", labelWidth:testComponent.labelWidth,
 		            columnWidth: .5, 
 		            items: [						
-						{ id: 'ProfessionalType_comboTree_Id', xtype: 'ProfessionalType_comboTree', fieldLabel: '专业类型选择控件', 
+						{ id: 'ProfessionalType_comboTree_Id', xtype: 'ProfessionalType_comboTree', fieldLabel: i18n.TestComponent.typpeSelect, 
 						  hiddenName: 'professionalType', returnField: [{widgetId:"textId",propertyName:"text"}], selectNodeModel: 'all',
 						  width: testComponent.fieldWidth },						
-						{ id: 'OmOrganizationCustom_comboTree_Id', xtype: 'OmOrganizationCustom_comboTree', fieldLabel: '组织机构自定义选择控件',
+						{ id: 'OmOrganizationCustom_comboTree_Id', xtype: 'OmOrganizationCustom_comboTree', fieldLabel: i18n.TestComponent.customControl,
 						  hiddenName: 'orgId', returnField: [{widgetId:"textId",propertyName:"orgname"}], selectNodeModel:'all',							   
 						  //queryHql: "from OmOrganization where 1=1 and status = 'running' and orgdegree='oversea'",
 						  queryHql: '[degree]tream',
 						  width: testComponent.fieldWidth, editable: true
 						}, 
-						{ id: 'trainTypeId', xtype: 'Base_combo',	fieldLabel: '通用下拉分页列表选择控件(车型)',
+						{ id: 'trainTypeId', xtype: 'Base_combo',	fieldLabel: i18n.TestComponent.paginationList,
 						  hiddenName: 'trainType', returnField: [{widgetId:"textId",propertyName:"typeName"}],
 						  displayField: 'typeName', valueField: 'typeID',
 						  entity: 'com.yunda.jx.base.jcgy.entity.TrainType', 
 						  fields: ["typeID","typeName"],
 						  pageSize: 20, minListWidth: 200, width: testComponent.fieldWidth, editable: true },
 						 
-						{ id: 'BuildUpType_comboTree_Id', xtype: 'BuildUpType_comboTree', fieldLabel: '组成位置选择控件', configType: '20',
+						{ id: 'BuildUpType_comboTree_Id', xtype: 'BuildUpType_comboTree', fieldLabel: i18n.TestComponent.locationSelect, configType: '20',
 						  partsBuildUpTypeIdx: '8a9309943e872e2f013e87b6999b000f', partsBuildUpTypeName: 'HXN5',
 						  hiddenName: 'buildUpTypeIDX', returnField: [{widgetId:"textId",propertyName:"fixPlaceFullName"}], selectNodeModel: 'all',
 						  width: testComponent.fieldWidth },
-						{ id: 'textId', name: 'text', fieldLabel: '回显文本', width: testComponent.fieldWidth },
+						{ id: 'textId', name: 'text', fieldLabel:i18n.TestComponent.echoText, width: testComponent.fieldWidth },
 //						{ id: 'textId', name: 'text', fieldLabel: '回显文本', width: testComponent.fieldWidth },
-						{ id: 'Bureau_comboTree_Id', xtype: 'BureauSelect_comboTree', fieldLabel: '所属局选择控件',
+						{ id: 'Bureau_comboTree_Id', xtype: 'BureauSelect_comboTree', fieldLabel: i18n.TestComponent.belongBSelect,
 						  hiddenName: 'orgId', returnField: [{widgetId:"textId",propertyName:"text"}], selectNodeModel: 'leaf',						  
 						  width: testComponent.fieldWidth,
 						  listeners : {
@@ -1067,53 +1067,53 @@ Ext.onReady(function(){
 							  	}
 							  }
 						  },
-						  { id: 'Base_comboTree_Id', xtype: 'Base_comboTree', fieldLabel: '通用下拉树选择控件', 
+						  { id: 'Base_comboTree_Id', xtype: 'Base_comboTree', fieldLabel:i18n.TestComponent.dropDTreeselect, 
 						  hiddenName: 'professionalType1', returnField: [{widgetId:"textId",propertyName:"text"}], selectNodeModel: 'all',
-						  business: 'professionalType', rootText: '专业类型',valueField:'professionalTypeID',displayField:'professionalTypeID',
+						  business: 'professionalType', rootText:i18n.TestComponent.profession,valueField:'professionalTypeID',displayField:'professionalTypeID',
 						  width: testComponent.fieldWidth },
-						  { id: 'Base_multyComboTree_Id', xtype: 'Base_multyComboTree', fieldLabel: '通用下拉树多选控件', 
+						  { id: 'Base_multyComboTree_Id', xtype: 'Base_multyComboTree', fieldLabel: i18n.TestComponent.dropDTreeselect, 
 						  hiddenName: 'professionalType2', returnField: [{widgetId:"textId",propertyName:"text"}], selectNodeModel: 'all',
-						  business: 'professionalType', rootText: '专业类型',valueField:'professionalTypeID',displayField:'professionalTypeID',
+						  business: 'professionalType', rootText:i18n.TestComponent.profession,valueField:'professionalTypeID',displayField:'professionalTypeID',
 						  width: testComponent.fieldWidth },
-						  { id: 'OmOrganizationWin_Id', xtype: 'OmOrganization_Win', fieldLabel: '组织机构选择控件',
+						  { id: 'OmOrganizationWin_Id', xtype: 'OmOrganization_Win', fieldLabel:i18n.TestComponent.organSelct,
 						  hiddenName: 'orgId', returnField: [{widgetId:"textId",propertyName:"orgname"}],
-						  rootId: 0, rootText: '铁路总公司', displayField: 'orgcode',
+						  rootId: 0, rootText:i18n.TestComponent.railwayCorporation, displayField: 'orgcode',
 						  width: testComponent.fieldWidth, editable: true
 						},
 						{
-							xtype:"PartsTypeTreeSelect",fieldLabel: '配件规格型号',
+							xtype:"PartsTypeTreeSelect",fieldLabel:i18n.TestComponent.accessoriesModel,
 						  	hiddenName: 'orgId', editable:false,
 						  	returnFn: testComponent.callReturnFn
 						},
 						{
-							xtype:"PartsTypeTreeSelect",fieldLabel: '配件规格型号',
+							xtype:"PartsTypeTreeSelect",fieldLabel: i18n.TestComponent.accessoriesModel,
 						  	hiddenName: 'orgId', editable:false,
 						  	returnFn: testComponent.callReturnFn2
 						},
-						{name:'nodeCaseName', fieldLabel:'工序', xtype:'FactorTrainSelect', editable:false, width:testComponent.fieldWidth, allowBlank :false, returnFn:testComponent.callReturnFn1 },
+						{name:'nodeCaseName', fieldLabel:i18n.TestComponent.process, xtype:'FactorTrainSelect', editable:false, width:testComponent.fieldWidth, allowBlank :false, returnFn:testComponent.callReturnFn1 },
 						{
-							xtype:"TrainTypeTreeSelect",fieldLabel: '在修机车',
+							xtype:"TrainTypeTreeSelect",fieldLabel:i18n.TestComponent.repairing,
 						  	hiddenName: 'trainType', editable:false,
 						  	returnFn: testComponent.callReturnFn3
 						},
 						{ xtype: 'Base_comboTree',hiddenName: 'dictType', //isExpandAll: true,
-						  fieldLabel:'数据字典下拉树',returnField:[{widgetId:"textId",propertyName:"text"}],selectNodeModel:'exceptRoot',
-						  treeUrl: ctx + '/eosDictEntrySelect!tree.action', rootText: '数据字典', queryParams: {'dicttypeid':'PJWZ_PARTS_ACCOUNT_STATUS'},
-						  rootId: '0101', rootText: '待修'
+						  fieldLabel:i18n.TestComponent.dataDicDown,returnField:[{widgetId:"textId",propertyName:"text"}],selectNodeModel:'exceptRoot',
+						  treeUrl: ctx + '/eosDictEntrySelect!tree.action', rootText: i18n.TestComponent.dataDic, queryParams: {'dicttypeid':'PJWZ_PARTS_ACCOUNT_STATUS'},
+						  rootId: '0101', rootText: i18n.TestComponent.toBeRepaired
 						 },
 						{ xtype: 'Base_multyComboTree',hiddenName: 'dictType', //isExpandAll: true,
-						  fieldLabel:'数据字典多选下拉树',returnField:[{widgetId:"textId",propertyName:"text"}],selectNodeModel:'exceptRoot',
-						  treeUrl: ctx + '/eosDictEntrySelect!tree.action', rootText: '数据字典', queryParams: {'dicttypeid':'PJWZ_PARTS_ACCOUNT_STATUS'}
+						  fieldLabel:i18n.TestComponent.dataDicDownMul,returnField:[{widgetId:"textId",propertyName:"text"}],selectNodeModel:'exceptRoot',
+						  treeUrl: ctx + '/eosDictEntrySelect!tree.action', rootText: i18n.TestComponent.dataDic, queryParams: {'dicttypeid':'PJWZ_PARTS_ACCOUNT_STATUS'}
 						 },
 						 {
-							xtype:"PartsExtendNoSelect",fieldLabel: '扩展编号',
+							xtype:"PartsExtendNoSelect",fieldLabel: i18n.TestComponent.extensionNumber,
 						  	hiddenName: 'extendNo', editable:false,
 						  	partsTypeIDX: "100676",
 						  	formColNum: 2,
 						  	returnFn: testComponent.callReturnFn4
 						  	//fields: Ext.getCmp("textId").value
 						},
-						{ id: 'OmEmployee_MultSelectWin_Id',xtype: 'OmEmployee_MultSelectWin', fieldLabel: '人员多选控件',
+						{ id: 'OmEmployee_MultSelectWin_Id',xtype: 'OmEmployee_MultSelectWin', fieldLabel:i18n.TestComponent.peopleSelect,
 						  hiddenName: 'omEmployee', displayField:'empname', valueField: 'empid',
 						  returnField :[{widgetId: "textId", propertyName: "empid"}],
 						  editable: false, width: testComponent.fieldWidth}
@@ -1123,32 +1123,32 @@ Ext.onReady(function(){
 		            baseCls:"x-plain", align:"center", layout:"form", defaultType:"textfield", labelWidth:testComponent.labelWidth,
 		            columnWidth: .5, 
 		            items: [
-		            	{ id: 'EosDictEntry_combo_Id', xtype: 'EosDictEntry_combo', fieldLabel: '数据字典选择控件',
+		            	{ id: 'EosDictEntry_combo_Id', xtype: 'EosDictEntry_combo', fieldLabel:i18n.TestComponent.dataDicChoiceCon,
 						  hiddenName: 'eosDictEntry', displayField: 'dictname', valueField: 'dictid',
 						  returnField :[{widgetId: "textId", propertyName: "dictname"}],
 						  dicttypeid:'PJWZ_Parts_Account_Turnover_Status', 		
 						  width:testComponent.fieldWidth},
-						{ id: 'OmEmployee_SelectWin_Id',xtype: 'OmEmployee_SelectWin', fieldLabel: '人员选择控件',
+						{ id: 'OmEmployee_SelectWin_Id',xtype: 'OmEmployee_SelectWin', fieldLabel: i18n.TestComponent.peopleSelect = i18n.TestComponent.peopleSelect,
 						  hiddenName: 'omEmployee', displayField:'empname', valueField: 'empid',
 						  returnField :[{widgetId: "textId", propertyName: "empid"}],
 						  editable: false, width: testComponent.fieldWidth},
-						{ id: 'GyjcFactory_SelectWin_Id',xtype: 'GyjcFactory_SelectWin', fieldLabel : '生产厂家选择控件',
+						{ id: 'GyjcFactory_SelectWin_Id',xtype: 'GyjcFactory_SelectWin', fieldLabel :i18n.TestComponent.productorSelect,
 						  hiddenName: 'gyjcFactory', returnField: [{widgetId: "textId", propertyName: "fName"}], 
 						  editable: false, //queryHql:"from GyjcFactory ",
 						  width:testComponent.fieldWidth		
 						},
-						{ id: 'PartsAccount_SelectWin_Id', xtype: 'PartsAccount_SelectWin', fieldLabel : '互换配件信息选择控件',
+						{ id: 'PartsAccount_SelectWin_Id', xtype: 'PartsAccount_SelectWin', fieldLabel :i18n.TestComponent.exchangeInfSelect,
 						  hiddenName: 'partsAccount', returnField: [{widgetId: "textId", propertyName: "partsName"}],
 						  editable: false, queryHql: "from PartsAccount where 1=1",
 						  width: testComponent.fieldWidth							
 						},
-				        { id: 'PartsTypeAndQuota_SelectWin_Id', xtype: 'PartsTypeAndQuota_SelectWin', fieldLabel : '互换配件规格型号选择控件',
+				        { id: 'PartsTypeAndQuota_SelectWin_Id', xtype: 'PartsTypeAndQuota_SelectWin', fieldLabel : i18n.TestComponent.exchangeModelSelect,
 				          hiddenName: 'PartsTypeAndQuota', valueField: 'partsClassIdx', displayField: 'partsName',
 				          returnField: [{widgetId: "textId", propertyName: "partsName"}],
 				          editable:false, width:testComponent.fieldWidth
 				        },
 				        { 
-				        	xtype: 'compositefield', fieldLabel : '组成控件', combineErrors: false,
+				        	xtype: 'compositefield', fieldLabel :i18n.TestComponent.compositionControl, combineErrors: false,
 				        	items: [
                            {
                                xtype: 'Base_combo',
@@ -1166,7 +1166,7 @@ Ext.onReady(function(){
                            },
                            {
                                xtype: 'button',
-                               text: '查看',
+                               text:i18n.TestComponent.view,
                                width: 40
                            }]
 				        },
@@ -1179,11 +1179,11 @@ Ext.onReady(function(){
 //									}),
 //						  triggerAction : 'all',
 //						  width: testComponent.fieldWidth }
-				        { id: 'DeportSelect_comboTree_Id', xtype: 'DeportSelect_comboTree', fieldLabel: '所属段选择控件',
+				        { id: 'DeportSelect_comboTree_Id', xtype: 'DeportSelect_comboTree', fieldLabel: i18n.TestComponent.belongSSelect,
 						  hiddenName: 'deportId', returnField: [{widgetId:"textId",propertyName:"text"}], selectNodeModel: 'leaf',						  
 						  width: testComponent.fieldWidth },
 						  {
-						  	id:"trainNo_comb",xtype: "TrainNo_combo",	fieldLabel: "车号",
+						  	id:"trainNo_comb",xtype: "TrainNo_combo",	fieldLabel:i18n.TestComponent.trainNumber,
 							hiddenName: "trainNo", 
 							displayField: "trainNo", valueField: "trainNo",
 							pageSize: 20, minListWidth: 200,
@@ -1202,7 +1202,7 @@ Ext.onReady(function(){
 						  },
 						  {
 								id: 'PartsBuild_SelectWin_Id', xtype: 'PartsBuild_SelectWin', 
-							    hiddenName: 'buildUpTypeDesc', fieldLabel: '零部件组成位置',
+							    hiddenName: 'buildUpTypeDesc', fieldLabel: i18n.TestComponent.compositionParts,
 							    valueField: 'buildUpTypeIdx', displayField: 'buildUpTypeDesc',			    
 							    editable: false, width: testComponent.fieldWidth,
 							    isSingSelect: true,//单选为true，默认为false多选
@@ -1213,7 +1213,7 @@ Ext.onReady(function(){
 							    }
 						  },
 						  {
-								fieldLabel: '人员选择下拉控件(首拼过滤)',
+								fieldLabel: i18n.TestComponent.peopleSelectDown,
 								id: 'OmEmpBase_Combo_Id', xtype: 'Om_Emp_combo', 
 							    hiddenName: 'empname', 
 							    valueField: 'empid', displayField: 'empname',			    
@@ -1236,12 +1236,12 @@ Ext.onReady(function(){
 		var dictName = EosDictEntry.getDictname("PJWZ_Parts_Account_Turnover_Status","10");
 		//Ext.getCmp("EosDictEntry_combo_Id").setDisplayValue("10",dictName);
 		//设置人员选择控件默认显示值
-		Ext.getCmp("OmEmployee_SelectWin_Id").setDisplayValue("5507857","材料库管员");
-		Ext.getCmp("GyjcFactory_SelectWin_Id").setDisplayValue("0002","资阳内燃机车厂");
-		Ext.getCmp("PartsAccount_SelectWin_Id").setDisplayValue("8a8284e339fd5e85013a00ba8cbf00da","主断路器");
+		Ext.getCmp("OmEmployee_SelectWin_Id").setDisplayValue("5507857",i18n.TestComponent.materialLibrarian);
+		Ext.getCmp("GyjcFactory_SelectWin_Id").setDisplayValue("0002",i18n.TestComponent.ZiYanICEDepot);
+		Ext.getCmp("PartsAccount_SelectWin_Id").setDisplayValue("8a8284e339fd5e85013a00ba8cbf00da",i18n.TestComponent.mainCircuitBreaker);
 		Ext.getCmp("PartsTypeAndQuota_SelectWin_Id").setDisplayValue("297eb73439f20d0c0139f270f1e1003a","BVAC.N99D");
-		Ext.getCmp("ProfessionalType_comboTree_Id").setDisplayValue("297eb73439f20d0c0139f230fa63002b","电信号传感器");
-		Ext.getCmp("OmOrganizationWin_Id").setDisplayValue("100011","牵电二组");
+		Ext.getCmp("ProfessionalType_comboTree_Id").setDisplayValue("297eb73439f20d0c0139f230fa63002b",i18n.TestComponent.electricalSignalSensor);
+		Ext.getCmp("OmOrganizationWin_Id").setDisplayValue("100011",i18n.TestComponent.secondGroupPower);
 		Ext.getCmp("Base_comboTree_Id").setDisplayValue("08","08");
 //		Ext.getCmp("PartsBuild_SelectWin_Id").win.buildGrid.store.proxy = new Ext.data.HttpProxy({
 //				        												url: ctx + "/partsBuildSelect!buildUpTypeList.action" +

@@ -13,7 +13,7 @@ Ext.onReady(function(){
 			dataUrl : ctx + "/organization!tree.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '机构人员',
+			text : i18n.Organization_Tree.InstitutionalStaff,
 			disabled : false,
 			id : 'ROOT_0',
 			nodetype : 'org',

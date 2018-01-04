@@ -16,49 +16,49 @@ WhMatQuota.grid = new Ext.yunda.RowEditorGrid({
     deleteURL: ctx + '/whMatQuota!delete.action',            //删除数据的请求URL
     storeAutoLoad : false,
 	fields: [{
-		header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+		header:i18n.WhMatQuota.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 	},{
-		header:'站点编码', dataIndex:'workplaceCode', hidden:true, editor:{ xtype:'hidden', maxLength:50 }
+		header:i18n.WhMatQuota.workplaceCode, dataIndex:'workplaceCode', hidden:true, editor:{ xtype:'hidden', maxLength:50 }
 	},{
-		header:'站点名称', dataIndex:'workplaceName',hidden:true, editor:{  disabled: true,maxLength:100 }
+		header:i18n.WhMatQuota.workplaceName, dataIndex:'workplaceName',hidden:true, editor:{  disabled: true,maxLength:100 }
 	},{
-		header:'库房主键', dataIndex:'whIdx', hidden:true, editor:{ xtype:'hidden', maxLength:50 }
+		header:i18n.WhMatQuota.whIdx, dataIndex:'whIdx', hidden:true, editor:{ xtype:'hidden', maxLength:50 }
 	},{
-		header:'库房名称', dataIndex:'whName',hidden:true, editor:{  disabled: true,maxLength:50 }
+		header:i18n.WhMatQuota.whName, dataIndex:'whName',hidden:true, editor:{  disabled: true,maxLength:50 }
 	},{
-		header:'物料编码', dataIndex:'matCode', editor:{  disabled: true,maxLength:50 }
+		header:i18n.WhMatQuota.matCode, dataIndex:'matCode', editor:{  disabled: true,maxLength:50 }
 	},{
-		header:'物料描述', dataIndex:'matDesc', editor:{ disabled: true, maxLength:100 }
+		header:i18n.WhMatQuota.matDesc, dataIndex:'matDesc', editor:{ disabled: true, maxLength:100 }
 	},{
-		header:'物料类型', dataIndex:'matType', editor:{ disabled: true, maxLength:100 },searcher:{disabled:true}
+		header:i18n.WhMatQuota.matType, dataIndex:'matType', editor:{ disabled: true, maxLength:100 },searcher:{disabled:true}
 	},{
-		header:'计量单位', dataIndex:'unit', editor:{ disabled: true, maxLength:20 },searcher:{disabled:true}
+		header:i18n.WhMatQuota.unit, dataIndex:'unit', editor:{ disabled: true, maxLength:20 },searcher:{disabled:true}
 	},{
-		header:'最低保有量', dataIndex:'minQty', editor:{ xtype:'numberfield' },searcher:{disabled:true}
+		header:i18n.WhMatQuota.minQty, dataIndex:'minQty', editor:{ xtype:'numberfield' },searcher:{disabled:true}
 	},{
-		header:'最大量', dataIndex:'maxQty',hidden:true, editor:{ xtype:'numberfield' },searcher:{disabled:true}
+		header:i18n.WhMatQuota.maxQty, dataIndex:'maxQty',hidden:true, editor:{ xtype:'numberfield' },searcher:{disabled:true}
 	},{
-		header:'当前保有量', dataIndex:'currentQty', editor:{ xtype:'numberfield' },searcher:{disabled:true}
+		header:i18n.WhMatQuota.currentQty, dataIndex:'currentQty', editor:{ xtype:'numberfield' },searcher:{disabled:true}
 	},{
-		header:'使用频率', dataIndex:'useRate',hidden:true, editor:{  maxLength:20 },searcher:{disabled:true}
+		header:i18n.WhMatQuota.useRate, dataIndex:'useRate',hidden:true, editor:{  maxLength:20 },searcher:{disabled:true}
 	},{
-		header:'备注', dataIndex:'remarks', editor:{ xtype:'textarea', maxLength:200 },searcher:{disabled:true}
+		header:i18n.WhMatQuota.remarks, dataIndex:'remarks', editor:{ xtype:'textarea', maxLength:200 },searcher:{disabled:true}
 	},{
-		header:'维护人', dataIndex:'maintainEmp',hidden:true, editor:{ disabled: true, maxLength:25 },searcher:{disabled:true}
+		header:i18n.WhMatQuota.maintainEmp, dataIndex:'maintainEmp',hidden:true, editor:{ disabled: true, maxLength:25 },searcher:{disabled:true}
 	},{
-		header:'维护日期', dataIndex:'maintainDate', hidden:true, xtype:'datecolumn', editor:{ disabled: true,xtype:'my97date' },searcher:{disabled:true}
+		header:i18n.WhMatQuota.maintainDate, dataIndex:'maintainDate', hidden:true, xtype:'datecolumn', editor:{ disabled: true,xtype:'my97date' },searcher:{disabled:true}
 	}],
-	tbar: ["search",{ text:'批量添加', iconCls:'chart_attributeConfigIcon', handler:function(){
+	tbar: ["search",{ text:i18n.WhMatQuota.AddInBatches, iconCls:'chart_attributeConfigIcon', handler:function(){
 //			        			PartsAccount.manageDeptId = Ext.getCmp("PartsAboardExWh_whIdx").getValue();
 					        	if(WhMatQuota.workplaceCode == ""){
-						    		MyExt.Msg.alert("请选择站点！");
+						    		MyExt.Msg.alert(i18n.WhMatQuota.choiceWP);
 						    		return ;
 						    	}
 			           	        MatTypeList.selectWin.show();
 			           	        MatTypeList.grid.store.load();
 						
 			        }},"delete",{
-			    	text: "刷新", iconCls: "refreshIcon", handler: function(){self.location.reload();}
+			    	text: i18n.WhMatQuota.refresh, iconCls: "refreshIcon", handler: function(){self.location.reload();}
 			    }],
 	searchFn: function(searchParam){
 			WhMatQuota.searchParam = searchParam ;
@@ -70,14 +70,14 @@ WhMatQuota.grid = new Ext.yunda.RowEditorGrid({
 		if("" != minQty){
 			minQty = parseInt(minQty);
 			if(minQty > 9999999){
-		    	MyExt.Msg.alert("输入的数量超过了系统最大值 9999999 ！请重新输入");
+		    	MyExt.Msg.alert(i18n.WhMatQuota.maxValue);
 				return;
 		    }
 		}
 		if("" != currentQty){
 			currentQty = parseInt(currentQty);
 			if(currentQty > 9999999){
-		    	MyExt.Msg.alert("输入的数量超过了系统最大值 9999999 ！请重新输入");
+		    	MyExt.Msg.alert(i18n.WhMatQuota.maxValue);
 				return;
 		    }
 		}

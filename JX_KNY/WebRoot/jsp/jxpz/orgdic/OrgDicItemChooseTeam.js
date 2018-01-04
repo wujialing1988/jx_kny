@@ -8,23 +8,23 @@ Ext.onReady(function(){
 	//已选择人员Grid
 	TeamSelect.grid = new Ext.yunda.Grid({
 	    loadURL: ctx + "/omOrganizationSelect!pageQuery.action",                 //装载列表数据的请求URL    
-	    tbar : ['班组名称',{	            
+	    tbar : [i18n.OrgDicItemChooseTeam.teamName,{	            
             xtype:"textfield",								                
             name : "parts",
 	        width: 240,
             id:"partsId"
 		},{
-			text : "搜索",
+			text : i18n.OrgDicItemChooseTeam.search,
 			iconCls : "searchIcon",
 			handler : function(){
 				TeamSelect.orgname = Ext.getCmp("partsId").getValue();				
 				TeamSelect.grid.getStore().load();
 				
 			},
-			title : "按输入框条件查询",
+			title : i18n.OrgDicItemChooseTeam.searchBy,
 			scope : this
 		},{
-			text : "重置",
+			text : i18n.OrgDicItemChooseTeam.reset,
 			iconCls : "resetIcon",
 			handler : function(){
 				delete TeamSelect.orgname;
@@ -39,9 +39,9 @@ Ext.onReady(function(){
 		},{
 			header:'orgseq', dataIndex:'orgseq', hidden:true, editor:{  maxLength:2 }
 		},{
-			header:'班组编号', dataIndex:'orgcode', editor:{ maxLength:18 }
+			header:i18n.OrgDicItemChooseTeam.teamNo, dataIndex:'orgcode', editor:{ maxLength:18 }
 		},{
-			header:'班组名称', dataIndex:'orgname', editor:{ maxLength:18 }
+			header:i18n.OrgDicItemChooseTeam.teamName, dataIndex:'orgname', editor:{ maxLength:18 }
 		}]
 	});
 	
@@ -72,20 +72,20 @@ Ext.onReady(function(){
 	
 	//定义选择窗口
 	TeamSelect.selectWin = new Ext.Window({
-		title:"常用部门选择", width:600, height:400, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
+		title:i18n.OrgDicItemChooseTeam.comDepartChoose, width:600, height:400, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
     	maximizable:false, items:[ TeamSelect.grid ], modal:true,
     	buttons: [{
-			text : "确定",iconCls : "saveIcon", handler: function(){
+			text :i18n.OrgDicItemChooseTeam.comfirm,iconCls : "saveIcon", handler: function(){
 				TeamSelect.submit(); 
 			}
 		},{
-	        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ TeamSelect.selectWin.hide(); }
+	        text: i18n.OrgDicItemChooseTeam.close, iconCls: "closeIcon", scope: this, handler: function(){ TeamSelect.selectWin.hide(); }
 		}]
 	});
 	TeamSelect.submit = function(){
 		var org = TeamSelect.grid.selModel.getSelections();
 		if(org.length == 0){
-			MyExt.Msg.alert("尚未选择一条记录！")
+			MyExt.Msg.alert("i18n.OrgDicItemChooseTeam.noChoose!")
 			return;
 		}
 		var datas = new Array();
@@ -115,7 +115,7 @@ Ext.onReady(function(){
 			},
 			failure: function(response, options){
 				TeamSelect.grid.loadMask.hide();
-				MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				MyExt.Msg.alert(i18n.OrgDicItemChooseTeam.error+"\n" + response.status + "\n" + response.responseText);
 			}
 		});
 	}

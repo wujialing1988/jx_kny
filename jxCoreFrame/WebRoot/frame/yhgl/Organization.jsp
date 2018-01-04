@@ -13,6 +13,7 @@
 <script type="text/javascript">
 	var saveFnEmpId = "";		//用于在新增或编辑人员信息后，记录人员empid，传递给操作员表单作为参数
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-Organization.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/WorkDutyWidget.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/PositionWidget.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/EmployeeWidget.js"></script>

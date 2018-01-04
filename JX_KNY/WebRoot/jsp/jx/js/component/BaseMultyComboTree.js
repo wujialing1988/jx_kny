@@ -97,11 +97,11 @@ jx.js.component.Base_multyComboTree = function(){
 	    },
 	    tbar :new Ext.Toolbar([
 	    	{    	
-                text: "确定", iconCls: "saveIcon", scope: this, handler: function(){ 
+                text:i18n.BaseMultyComboTree.confirm, iconCls: "saveIcon", scope: this, handler: function(){ 
                 	var list = new Array();
                 	list = this.tree.getChecked();
                 	if(list.length == 0){
-                		MyExt.Msg.alert("尚未选择记录!");
+                		MyExt.Msg.alert(i18n.BaseMultyComboTree.noChoiceRecording);
                 		return ;
                 	}
                 	var ids = "";
@@ -142,7 +142,7 @@ jx.js.component.Base_multyComboTree = function(){
 			        this.fireEvent('select', this);
                 }                
             },{
-                text: "清空", iconCls: "resetIcon", scope: this, handler: function(){ 
+                text:i18n.BaseMultyComboTree.clear, iconCls: "resetIcon", scope: this, handler: function(){ 
                 	//清空控件本身值
                 	var node = {id: " ", text: " "};
 					this.setValue(node);

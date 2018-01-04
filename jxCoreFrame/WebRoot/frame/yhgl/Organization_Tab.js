@@ -28,7 +28,7 @@ Ext.onReady(function() {
 				border : false,
 				items : [{
 					//index：0
-					title : "本机构信息",
+					title : i18n.Organization_Tab.AgencyInfor,
 					border : false,
 					layout : "fit",
 					items : [orgForm.panel],
@@ -41,7 +41,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：1
-					title : "下级机构",
+					title : i18n.Organization_Tab.SuborAgencies,
 					border : false,
 					layout : "fit",
 					items : [orglist.grid],
@@ -52,7 +52,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：2
-					title : "本岗位信息",
+					title : i18n.Organization_Tab.postInfor,
 					border : false,
 					layout : "fit",
 					items : [posForm.panel],
@@ -65,7 +65,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：3
-					title : "下级岗位",
+					title : i18n.Organization_Tab.suborPost,
 					border : false,
 					layout : "fit",
 					items : [positionlist.grid],
@@ -77,7 +77,7 @@ Ext.onReady(function() {
 						}
 					}
 				}, {
-					title : "机构下属人员", //机构下属人员
+					title : i18n.Organization_Tab.AgencyStaff, //机构下属人员
 					border : false,
 					layout : "fit",
 					items : [emplist.grid],
@@ -87,7 +87,7 @@ Ext.onReady(function() {
 					 	}
 					}
 				}, {
-					title : "岗位下属人员", //岗位下属人员
+					title : i18n.Organization_Tab.postStaff, //岗位下属人员
 					border : false,
 					layout : "fit",
 					items : [emplist2.grid],
@@ -97,7 +97,7 @@ Ext.onReady(function() {
 					 	}
 					}
 				}, {
-					title : "人员信息",
+					title : i18n.Organization_Tab.empInfor,
 					border : false,
 					layout : "fit",
 					items : [empForm.panel],

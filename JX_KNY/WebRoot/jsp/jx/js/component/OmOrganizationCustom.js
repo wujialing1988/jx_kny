@@ -51,7 +51,7 @@ OrgSelect_comboTree = function(){
 	        scope:this
 	    }
 	});
-	this.fieldLabel = '所属部门';
+	this.fieldLabel =i18n.OmOrganizationCustom.belong;
     this.treeId = Ext.id()+'-tree';
     this.maxHeight = arguments[0].maxHeight || arguments[0].height || this.maxHeight;
     this.tpl = new Ext.Template('<tpl for="."><div style="height:'+this.maxHeight+'px"><div id="'+this.treeId+'"></div></div></tpl>');

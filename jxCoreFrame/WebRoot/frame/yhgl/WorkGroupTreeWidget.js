@@ -13,7 +13,7 @@ Ext.onReady(function() {
 			dataUrl : ctx + "/workGroup!treeWidget.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '工作组',
+			text : i18n.WorkGroupTreeWidget.WorkGroup,
 			disabled : false,
 			id : 'ROOT_0',
 			nodetype : 'gop',
@@ -44,7 +44,7 @@ Ext.onReady(function() {
 	});
 	
 	WGTreeWidget.transferWin = new Ext.Window({
-            title:"工作组调动", 
+            title:i18n.WorkGroupTreeWidget.WGroupMobiliz, 
             width:300, 
             height:400, 
             plain:true, 
@@ -54,7 +54,7 @@ Ext.onReady(function() {
             maximizable:false, 
             items:[WGTreeWidget.tree], 
             buttons: [{
-                id:'WGTreeWidgetSaveBtn',text: "确定", iconCls: "saveIcon", scope: this, handler: function(){ 
+                id:'WGTreeWidgetSaveBtn',text: i18n.WorkGroupTreeWidget.confirm, iconCls: "saveIcon", scope: this, handler: function(){ 
                    if(WGTreeWidget.tree.getSelectionModel().getSelectedNode()==null){
                    		return;
                    }

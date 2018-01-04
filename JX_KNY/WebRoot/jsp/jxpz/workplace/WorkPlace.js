@@ -13,11 +13,11 @@ Ext.onReady(function(){
 		saveFormColNum:1, fieldWidth:200,
 		tbar: ["search", "add", "delete", "refresh"],
 		fields: [{
-			header:'标识代码', dataIndex:'workPlaceCode', editor:{ allowBlank:false, maxLength:50}
+			header:i18n.WorkPlace.workPlaceCode, dataIndex:'workPlaceCode', editor:{ allowBlank:false, maxLength:50}
 		},{
-			header:'名称', dataIndex:'workPlaceName', editor:{ allowBlank:false, maxLength:100 }, width: 150
+			header:i18n.WorkPlace.workPlaceName, dataIndex:'workPlaceName', editor:{ allowBlank:false, maxLength:100 }, width: 150
 		},{
-			header:'描述', dataIndex:'workPlaceDesc', editor:{ maxLength:500, xtype: "textarea" },width: 200
+			header:i18n.WorkPlace.workPlaceDesc, dataIndex:'workPlaceDesc', editor:{ maxLength:500, xtype: "textarea" },width: 200
 		}],
 		afterDeleteFn: function(){ 
 			WorkPlace.workPlaceCode = "##";
@@ -31,7 +31,7 @@ Ext.onReady(function(){
 	    deleteURL: ctx + '/workPlaceToOrg!logicDelete.action',            //删除数据的请求URL
 		saveFormColNum:2,fieldWidth:200, page: false,
 		tbar:[{
-			text:'新增',
+			text:i18n.WorkPlace.add,
 			iconCls: 'addIcon',
 			handler: function(){
 				OmOrganizationTreeWin.win.show();
@@ -41,13 +41,13 @@ Ext.onReady(function(){
 		fields: [{
 			header:'IDX', dataIndex:'idx',hidden:true,editor:{ xtype: "hidden" }
 		},{
-			header:'机构ID', dataIndex:'orgid', hidden:true, editor:{ xtype: "hidden" }
+			header:i18n.WorkPlace.orgid, dataIndex:'orgid', hidden:true, editor:{ xtype: "hidden" }
 		},{
-			header:'机构SEQ', dataIndex:'orgseq', hidden:true, editor:{ xtype: "hidden" }
+			header:i18n.WorkPlace.orgseq, dataIndex:'orgseq', hidden:true, editor:{ xtype: "hidden" }
 		},{
-			header:'机构名称', dataIndex:'orgname', editor:{ }, width: 200
+			header:i18n.WorkPlace.orgname, dataIndex:'orgname', editor:{ }, width: 200
 		},{
-			header:'站点ID', dataIndex:'workPlaceCode', editor:{ }, hidden: true
+			header:i18n.WorkPlace.workPlaceCode, dataIndex:'workPlaceCode', editor:{ }, hidden: true
 		}],
 		toEdit: function(){
 			return false ;
@@ -85,10 +85,10 @@ Ext.onReady(function(){
 		OmOrganizationTreeWin.submit = function(){
 			var workPlaceCode = $yd.getSelectedIdx(WorkPlace.grid, "workPlaceCode");
 			if(workPlaceCode.length > 1){
-				MyExt.Msg.alert("只能选择一个站点");
+				MyExt.Msg.alert(i18n.WorkPlace.onlyOne);
 				return;
 			}else if(workPlaceCode.length < 1){
-				MyExt.Msg.alert("请选择一个站点");
+				MyExt.Msg.alert(i18n.WorkPlace.choiceOne);
 				return;
 			}
 			var nodes = tree.getChecked();
@@ -102,7 +102,7 @@ Ext.onReady(function(){
 				});
 			}
 			if(nodes.length <= 0){
-				MyExt.Msg.alert("尚未勾选一个节点");
+				MyExt.Msg.alert(i18n.WorkPlace.noChoice);
 				return;
 			}
 			WorkPlace.submit(data);
@@ -126,7 +126,7 @@ Ext.onReady(function(){
 	            }
 			},
 	        failure: function(response, options){
-	            MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+	            MyExt.Msg.alert(i18n.WorkPlace.false+"\n" + response.status + "\n" + response.responseText);
 	        }
 		});
 	}
@@ -147,7 +147,7 @@ Ext.onReady(function(){
 		    }, {
 		        region : 'center',
 		        layout : 'fit',
-		        title: "站点对应机构",
+		        title: i18n.WorkPlace.mapping,
 		        items: [ WorkPlace.xgrid ]
 		    }]
 	    }]

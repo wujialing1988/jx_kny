@@ -10,9 +10,9 @@ OrgDicType.grid = new Ext.yunda.RowEditorGrid({
     storeId: "dictTypeId",
     tbar: ['add','delete','refresh'],
 	fields: [{
-		header:'字典编码', dataIndex:'dictTypeId', editor: { id:"dictTypeId",maxLength:50,allowBlank: false }
+		header:i18n.OrgDicType.dicCode, dataIndex:'dictTypeId', editor: { id:"dictTypeId",maxLength:50,allowBlank: false }
 	},{
-		header:'字典描述', dataIndex:'dictTypeDesc', editor:{  maxLength:200,allowBlank: false }
+		header:i18n.OrgDicType.dicDesc, dataIndex:'dictTypeDesc', editor:{  maxLength:200,allowBlank: false }
 	}],
 	listeners: {
 		"rowclick" : function(grid, index, e){
@@ -38,12 +38,12 @@ var viewport = new Ext.Viewport({
     items: {
         xtype: "panel", layout: "border", 
         items:[{
-        	title:'常用部门字典类型',
+        	title:i18n.OrgDicType.comDicType,
             region: 'west', layout: "fit", autoScroll : true, 
             width: 400, minSize: 150, maxSize: 280, split: true, bodyBorder: false,
             items: [OrgDicType.grid]
         },{
-           title:'常用部门字典项',region : 'center', layout : 'fit', bodyBorder: false, items : [ OrgDicItem.grid ]
+        	title:i18n.OrgDicType.comDicItem,region : 'center', layout : 'fit', bodyBorder: false, items : [ OrgDicItem.grid ]
         }]
     }
 });

@@ -11,12 +11,12 @@ jx.jxgc.JobProcessDefSelect = Ext.extend(Ext.form.TriggerField, {
         if(this.disabled)   return;
         var trainTypeIdx =  jx.jxgc.JobProcessDefSelect.trainTypeIDX;
 		if(Ext.isEmpty(trainTypeIdx)){
-			MyExt.Msg.alert("请先选择型号！");
+			MyExt.Msg.alert(i18n.JobProcessDefSelect.choiceType);
 			return;
 		}
 		var rcIDX = jx.jxgc.JobProcessDefSelect.rcIDX;
 		if(Ext.isEmpty(rcIDX)){
-			MyExt.Msg.alert("请先选择修程！");
+			MyExt.Msg.alert(i18n.JobProcessDefSelect.choiceService);
 			return;
 		}
         if(jx.jxgc.JobProcessDefSelect.win == null)   jx.jxgc.JobProcessDefSelect.createWin();        
@@ -39,7 +39,7 @@ jx.jxgc.JobProcessDefSelect.createWin = function(){
     if(jx.jxgc.JobProcessDefSelect.grid == null)  jx.jxgc.JobProcessDefSelect.createGrid();
     if(jx.jxgc.JobProcessDefSelect.win == null){
         jx.jxgc.JobProcessDefSelect.win = new Ext.Window({
-            title:'作业流程选择', closeAction:"hide", width:650, height:400, layout:"fit", resizable:false, modal:true, 
+            title:i18n.JobProcessDefSelect.choiceProcess, closeAction:"hide", width:650, height:400, layout:"fit", resizable:false, modal:true, 
             items:jx.jxgc.JobProcessDefSelect.grid
         });
     }
@@ -53,7 +53,7 @@ jx.jxgc.JobProcessDefSelect.createGrid = function(){
 	    storeAutoLoad:false,    //设置grid的store为手动加载(不设置false会引起参数排序失效)
 	    searchFormColNum:2, singleSelect: true, 
 	    tbar: [{
-				text : "确定",
+				text : i18n.JobProcessDefSelect.confirm,
 				iconCls : "addIcon",
 				handler : function(){
 					var grid = jx.jxgc.JobProcessDefSelect.grid;
@@ -64,7 +64,7 @@ jx.jxgc.JobProcessDefSelect.createGrid = function(){
 				},
 				scope: this
 			},{
-				text : "取消",
+				text : i18n.JobProcessDefSelect.cancel,
 				iconCls : "closeIcon",
 				handler : function(){
 					 jx.jxgc.JobProcessDefSelect.win.hide();
@@ -72,27 +72,27 @@ jx.jxgc.JobProcessDefSelect.createGrid = function(){
 				scope: this
 			}],
 	    fields: [{
-	        header:'idx主键', dataIndex:'idx', hidden:true
+	        header:i18n.JobProcessDefSelect.idx, dataIndex:'idx', hidden:true
 	    },{ 
-	        header:'流程编码', dataIndex:'processCode'
+	        header:i18n.JobProcessDefSelect.processCode, dataIndex:'processCode'
 	    },{ 
-	        header:'流程名称', dataIndex:'processName'
+	        header:i18n.JobProcessDefSelect.processName, dataIndex:'processName'
 	    },{
-	        header:'流程描述', dataIndex:'description'
+	        header:i18n.JobProcessDefSelect.description, dataIndex:'description'
 	    },{
-	        header:'车型主键', dataIndex:'trainTypeIDX', hidden: true
+	        header:i18n.JobProcessDefSelect.trainTypeIDX, dataIndex:'trainTypeIDX', hidden: true
 	    },{
-	        header:'车型', dataIndex:'trainTypeShortName', hidden: true
+	        header:i18n.JobProcessDefSelect.trainTypeShortName, dataIndex:'trainTypeShortName', hidden: true
 	    },{
-	        header:'车号', dataIndex:'trainNo', hidden: true
+	        header:i18n.JobProcessDefSelect.trainNo, dataIndex:'trainNo', hidden: true
 	    },{
-	        header:'车型名称', dataIndex:'trainTypeName', hidden: true
+	        header:i18n.JobProcessDefSelect.trainTypeName, dataIndex:'trainTypeName', hidden: true
 	    },{
-	        header:'修程主键', dataIndex:'rcIDX', hidden: true
+	        header:i18n.JobProcessDefSelect.rcIDX, dataIndex:'rcIDX', hidden: true
 	    },{
-	        header:'修程名称', dataIndex:'rcName', hidden: true
+	        header:i18n.JobProcessDefSelect.rcName, dataIndex:'rcName', hidden: true
 	    },{
-	        header:'额定工期（小时）', dataIndex:'ratedWorkDay', hidden: true
+	        header:i18n.JobProcessDefSelect.ratedWorkDay, dataIndex:'ratedWorkDay', hidden: true
 	    }],
         searchOrder:['trainTypeShortName','trainNo'],
         toEditFn:function(grid, rowIndex, e){

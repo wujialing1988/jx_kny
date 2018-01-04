@@ -23,19 +23,19 @@ Ext.onReady(function(){
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/award_star_gold_1.png"/><label style="font-size:13px"> 部 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/award_star_gold_1.png"/><label style="font-size:13px"> '+i18n.Organization.unit+' </label>'
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/award_star_gold_3.png"/><label style="font-size:13px"> 段 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/award_star_gold_3.png"/><label style="font-size:13px">'+ i18n.Organization.section+' </label>'
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/medal_silver_2.png"/><label style="font-size:13px"> 班组 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/medal_silver_2.png"/><label style="font-size:13px">'+ i18n.Organization.team+' </label>'
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/building.png"/><label style="font-size:13px"> 岗位 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/building.png"/><label style="font-size:13px">'+ i18n.Organization.post+' </label>'
 			}]
 		},{
 			xtype: 'panel',	border:false,	layout:'column',	align:'center', columnWidth:0.4, 
@@ -44,26 +44,26 @@ Ext.onReady(function(){
 			},{
 				border : false,
 				height : 28,				
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/award_star_gold_2.png"/><label style="font-size:13px"> 局 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/award_star_gold_2.png"/><label style="font-size:13px"> '+i18n.Organization.Bureau+' </label>'
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/medal_silver_1.png"/><label style="font-size:13px"> 车间 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/medal_silver_1.png"/><label style="font-size:13px"> '+i18n.Organization.workshop+' </label>'
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/medal_silver_3.png"/><label style="font-size:13px"> 科室 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/medal_silver_3.png"/><label style="font-size:13px"> '+i18n.Organization.Department+' </label>'
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/user_suit.png"/><label style="font-size:13px"> 人员 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/user_suit.png"/><label style="font-size:13px"> '+i18n.Organization.personnel+' </label>'
 			}]
 		}]
 	});
 	
 	/** 下载构型模板 */
 	orgFrame.downloadTemplate = function() {
-		window.location.href = ctx + "/frame/template/组织人员导入模板.xls";
+		window.location.href = ctx + i18n.Organization.importXLS;
 	}
 	
 	// 重新加载树
@@ -82,7 +82,7 @@ Ext.onReady(function(){
 	
 	/** 导入机构人员 */
 	orgFrame.importWin = new Ext.Window({
-		title:"导入机构人员",
+		title:i18n.Organization.importPers,
 		width:450, height:160,
 		plain:true, maximizable:false, modal: true,
 		closeAction:"hide",
@@ -97,12 +97,12 @@ Ext.onReady(function(){
 			baseCls: "x-plain", defaults:{anchor:"100%"},
 			labelWidth:80,
 			items:[{
-				fieldLabel:'选择文件',
+				fieldLabel:i18n.Organization.chooseFile,
 				name:'orgEmpImport',
 				xtype: "fileuploadfield",
 				allowBlank:false,
 				editable:false,
-				buttonText: '浏览文件...'
+				buttonText: i18n.Organization.browseFile
 			},{
 				xtype:'displayfield'
 			},{
@@ -118,7 +118,7 @@ Ext.onReady(function(){
 		},
 		buttonAlign:'center',
 		buttons:[{
-			text: "导入", iconCls: "saveIcon", handler: function(){
+			text: i18n.Organization.import, iconCls: "saveIcon", handler: function(){
 				var window = this.findParentByType('window');
 				var form = window.find('xtype', 'form')[0].getForm();
 				if (!form.isValid()) {
@@ -127,13 +127,13 @@ Ext.onReady(function(){
 				var filePath = window.find('name', 'orgEmpImport')[0].getValue();
 				var hzm = filePath.substring(filePath.lastIndexOf("."));
 				if(hzm !== ".xls"){
-					MyExt.Msg.alert('该功能仅支持<span style="color:red;"> Excel2003（*.xls） </span>版本文件！');
+					MyExt.Msg.alert(i18n.Organization.support);
 					return;
 				}
 				form.submit({
                 	url: ctx+'/orgEmpImport!saveImport.action',
-                	waitTitle:'请稍候',
-               	 	waitMsg: '正在导入数据请稍候...', 
+                	waitTitle:i18n.Organization.wait,
+               	 	waitMsg: i18n.Organization.importing, 
                	 	method: 'POST',
                	 	enctype: 'multipart/form-data',
                 	// 请求成功后的回调函数
@@ -155,13 +155,13 @@ Ext.onReady(function(){
                 		if (!Ext.isEmpty(result.errMsg)) {
  							alertFail(result.errMsg);
                 		} else {
-				       	 	Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + action.response.status + "\n" + action.response.responseText);
+				       	 	Ext.Msg.alert(i18n.Organization.import, i18n.Organization.false + action.response.status + "\n" + action.response.responseText);
                 		}
 				    }
             	}); 
 			}
 		}, {
-			text:'关闭', iconCls:'closeIcon', handler: function() {
+			text:i18n.Organization.close, iconCls:'closeIcon', handler: function() {
 				this.findParentByType('window').hide();
 			}
 		}]
@@ -181,7 +181,7 @@ Ext.onReady(function(){
 					var orgImportTip = Ext.getCmp('orgImportTip');
 					if (result.isCanImport == false) {
 						//alertFail("系统已存在机构数据，Excel中的机构数据将忽略导入！");
-						orgImportTip.setValue('<span style="color:red;">系统已存在机构数据，Excel中的机构数据将忽略导入！</span>');
+						orgImportTip.setValue(i18n.Organization.exit);
 					} else {
 						orgImportTip.setValue('');
 					}
@@ -205,16 +205,16 @@ Ext.onReady(function(){
 	        layout : 'fit',     //自动填充
 	        bbar: [
 			{
-				text: '<span style="color:gray;">模板下载</span>', iconCls: 'downloadIcon', handler: orgFrame.downloadTemplate
+				text: '<span style="color:gray;">'+i18n.Organization.TemplateDownload+'</span>', iconCls: 'downloadIcon', handler: orgFrame.downloadTemplate
 			},
 			'-',
 			{
-				text: '<span style="color:gray;">导入</span>', iconCls: 'page_excelIcon', handler: orgFrame.openImportWin
+				text: '<span style="color:gray;">'+i18n.Organization.import+'</span>', iconCls: 'page_excelIcon', handler: orgFrame.openImportWin
 			}],
 	        items : [orgtree.tree]
 	    }, {
 	    	collapsible : true, //面板可收缩
-	    	title : '图示标识',	//标题
+	    	title : i18n.Organization.GraphicLogo,	//标题
 	        region : 'south',   //位于主区域下部
 			height : 140,       //图示区域高度
 			bodyBorder: false,	//自动滚动条

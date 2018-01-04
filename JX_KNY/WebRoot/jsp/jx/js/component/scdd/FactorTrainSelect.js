@@ -35,7 +35,7 @@ jx.scdd.FactorTrainSelect.createWin = function(){
     if(jx.scdd.FactorTrainSelect.panel == null)  jx.scdd.FactorTrainSelect.createGrid();
     if(jx.scdd.FactorTrainSelect.win == null){
 	    jx.scdd.FactorTrainSelect.win = new Ext.Window({
-	        title:'选择节点', closeAction:"hide", width:600, height:300, layout:"fit", resizable:false, modal:true, 
+	        title:i18n.FactorTrainSelect.choiceNode, closeAction:"hide", width:600, height:300, layout:"fit", resizable:false, modal:true, 
             items:jx.scdd.FactorTrainSelect.panel
 	    });
     }
@@ -50,47 +50,47 @@ jx.scdd.FactorTrainSelect.createGrid = function(){
         viewConfig: null,
         tbar:['search','-',
 		    {
-	    	    xtype:'label', text: '状态：'
+	    	    xtype:'label', text: i18n.FactorTrainSelect.status
 		    },{   
-			    xtype:'checkbox', name:'status', id: 'status_new', boxLabel:'未处理&nbsp;&nbsp;&nbsp;&nbsp;', inputValue:node_status_new,
+			    xtype:'checkbox', name:'status', id: 'status_new', boxLabel:i18n.FactorTrainSelect.notProcessed+'&nbsp;&nbsp;&nbsp;&nbsp;', inputValue:node_status_new,
 			    handler: function(){
 			    	jx.scdd.FactorTrainSelect.checkQuery(node_status_new);
 			    }
 			  },{   
-			    xtype:'checkbox', name:'status', id: 'status_handling', boxLabel:'处理中&nbsp;&nbsp;&nbsp;&nbsp;', inputValue:node_status_handling, checked:true,
+			    xtype:'checkbox', name:'status', id: 'status_handling', boxLabel:i18n.FactorTrainSelect.processing+'&nbsp;&nbsp;&nbsp;&nbsp;', inputValue:node_status_handling, checked:true,
 			    handler: function(){
 			    	jx.scdd.FactorTrainSelect.checkQuery(node_status_handling);
 			    }
 			  },{   
-			    xtype:'checkbox', name:'status', id: 'status_handled', boxLabel:'已处理&nbsp;&nbsp;&nbsp;&nbsp;', inputValue:node_status_handled,
+			    xtype:'checkbox', name:'status', id: 'status_handled', boxLabel:i18n.FactorTrainSelect.processed+'&nbsp;&nbsp;&nbsp;&nbsp;', inputValue:node_status_handled,
 			    handler: function(){
 			    	jx.scdd.FactorTrainSelect.checkQuery(node_status_handled);
 			    }
 			  }
 		  ],
 	    fields: [{
-	        header:'idx主键', dataIndex:'idx', hidden:true
+	        header:'i18n.FactorTrainSelect.idx', dataIndex:'idx', hidden:true
 	    },{
-	        header:'工艺节点主键', dataIndex:'nodeIDX', hidden:true
+	        header:i18n.FactorTrainSelect.nodeIDX, dataIndex:'nodeIDX', hidden:true
 	    },{
-	        header:'施修任务兑现单主键', dataIndex:'rdpIDX', hidden:true
+	        header:i18n.FactorTrainSelect.rdpIDX, dataIndex:'rdpIDX', hidden:true
 	    },{
-	        header:'节点', dataIndex:'nodeCaseName', width: 150
+	        header:i18n.FactorTrainSelect.nodeCaseName, dataIndex:'nodeCaseName', width: 150
 	    },{
-	        header:'状态', dataIndex:'status', searcher:{disabled:true},
+	        header:i18n.FactorTrainSelect.status, dataIndex:'status', searcher:{disabled:true},
 	        renderer : function(v){return getNodeStatus(v);}, width: 100
 	    },{
-	        header:'车型', dataIndex:'trainTypeShortName',searcher:{disabled:true}, hidden:true
+	        header:i18n.FactorTrainSelect.trainTypeShortName, dataIndex:'trainTypeShortName',searcher:{disabled:true}, hidden:true
 	    },{
-            header:'车号', dataIndex:'trainNo',searcher:{disabled:true}, hidden:true
+            header:i18n.FactorTrainSelect.trainNo, dataIndex:'trainNo',searcher:{disabled:true}, hidden:true
         },{
-            header:'车型idx', dataIndex:'trainTypeIdx',searcher:{disabled:true}, hidden:true
+            header:i18n.FactorTrainSelect.trainTypeIdx, dataIndex:'trainTypeIdx',searcher:{disabled:true}, hidden:true
         },{
-            header:'修程idx', dataIndex:'repairClassIdx',searcher:{disabled:true}, hidden:true
+            header:i18n.FactorTrainSelect.repairClassIdx, dataIndex:'repairClassIdx',searcher:{disabled:true}, hidden:true
         },{
-	        header:'修程', dataIndex:'repairClassName',searcher:{disabled:true}, hidden:true
+	        header:i18n.FactorTrainSelect.repairClassName, dataIndex:'repairClassName',searcher:{disabled:true}, hidden:true
 	    },{
-	        header:'修次', dataIndex:'repairTimeName',searcher:{disabled:true}, hidden:true
+	        header:i18n.FactorTrainSelect.repairTimeName, dataIndex:'repairTimeName',searcher:{disabled:true}, hidden:true
 	    }],
         toEditFn:function(grid, rowIndex, e){
             jx.scdd.FactorTrainSelect.returnFn(grid, rowIndex, e);
@@ -112,17 +112,17 @@ jx.scdd.FactorTrainSelect.createGrid = function(){
         singleSelect: true, storeAutoLoad: false, tbar:['search'],
         viewConfig: null,
 	    fields: [{
-	        header:'idx主键', dataIndex:'idx', hidden:true
+	        header:i18n.FactorTrainSelect.idx, dataIndex:'idx', hidden:true
 	    },{
-	        header:'工艺流程实例主键', dataIndex:'tecProcessCaseIDX', hidden:true 
+	        header:i18n.FactorTrainSelect.tecProcessCaseIDX, dataIndex:'tecProcessCaseIDX', hidden:true 
 	    },{
-	        header:'车型', dataIndex:'trainTypeShortName', width: 60
+	        header:i18n.FactorTrainSelect.trainTypeShortName, dataIndex:'trainTypeShortName', width: 60
 	    },{
-	        header:'车号', dataIndex:'trainNo', width: 60
+	        header:i18n.FactorTrainSelect.trainNo, dataIndex:'trainNo', width: 60
 	    },{
-	        header:'修程', dataIndex:'repairClassName', width: 60
+	        header:i18n.FactorTrainSelect.repairClassName, dataIndex:'repairClassName', width: 60
 	    },{
-	        header:'修次', dataIndex:'repairtimeName',searcher:{disabled:true}, width: 60
+	        header:i18n.FactorTrainSelect.repairTimeName, dataIndex:'repairtimeName',searcher:{disabled:true}, width: 60
 	    }],
 	    /**
 	     * 查询前获取查询表单参数，此函数依赖searchForm（查询窗口是否创建）（可覆盖此方法重构查询）
@@ -137,15 +137,15 @@ jx.scdd.FactorTrainSelect.createGrid = function(){
 	jx.scdd.FactorTrainSelect.panel =  new Ext.Panel( {
 	    layout : 'border',
 	    items : [ {
-	        title: '承修机车', width: 290, minSize: 160, maxSize: 400, split: true, region: 'west', bodyBorder: false,
+	        title: i18n.FactorTrainSelect.maintainTrain, width: 290, minSize: 160, maxSize: 400, split: true, region: 'west', bodyBorder: false,
 	        layout: 'fit', items : [ jx.scdd.FactorTrainSelect.trainList ]
 	    }, {
-	        title: '工艺节点', region : 'center', layout: 'fit', bodyBorder: false, items: [ jx.scdd.FactorTrainSelect.grid ]
+	        title: i18n.FactorTrainSelect.node, region : 'center', layout: 'fit', bodyBorder: false, items: [ jx.scdd.FactorTrainSelect.grid ]
 	    } ]
 	});
 	jx.scdd.FactorTrainSelect.grid.store.on("beforeload", function(){
 		if(Ext.isEmpty(jx.scdd.FactorTrainSelect.rdpIdx)){
-			MyExt.Msg.alert("请先选择承修机车!");
+			MyExt.Msg.alert(i18n.FactorTrainSelect.chooseMaintainTrain);
 			return false;
 		}
 		var searchParam = jx.scdd.FactorTrainSelect.searchParam;

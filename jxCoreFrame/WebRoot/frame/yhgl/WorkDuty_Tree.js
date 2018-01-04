@@ -13,7 +13,7 @@ Ext.onReady(function(){
 			dataUrl : ctx + "/workDuty!tree.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '职务',
+			text :i18n.WorkDuty_Tree.posit,
 			disabled : false,
 			id : 'ROOT_0',
 			nodetype : 'dict',

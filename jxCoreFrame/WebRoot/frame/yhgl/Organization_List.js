@@ -22,7 +22,7 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 	    storeId:'orgid',
 	    tbar:['search','add','delete',{
-	    	text:"机构调整", iconCls:"chart_organisationIcon", handler: function(){
+	    	text:i18n.Organization_List.InstitutionalAdjustment, iconCls:"chart_organisationIcon", handler: function(){
 	    		if(!$yd.isSelectedRecord(orglist.grid)) return;//未选择记录，直接返回
 //	    		if(orglist.grid.selModel.getCount() > 1){
 //	    			MyExt.Msg.alert("请只针对一个机构进行操作！");
@@ -36,19 +36,19 @@ Ext.onReady(function(){
 	    }],
 	    fields: [
 	    	//列表中隐藏
-	    	{header:'主键', dataIndex:'orgid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'上级机构',dataIndex:'parentorgid',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'创建时间', dataIndex:'createtime', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'机构层次',dataIndex:'orglevel',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'机构序列',dataIndex:'orgseq',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'机构管理员',dataIndex:'orgmanager',hidden:true,editor:{id:'_orgmanager_list0', xtype:'hidden'}},
-	    	{header:'是否是叶子节点',dataIndex:'isleaf',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'子节点数',dataIndex:'subcount',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'机构主管岗位',dataIndex:'posiname',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.orgid, dataIndex:'orgid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.Organization_List.parentorgid,dataIndex:'parentorgid',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.createtime, dataIndex:'createtime', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.Organization_List.orglevel,dataIndex:'orglevel',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.orgseq,dataIndex:'orgseq',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.orgmanager,dataIndex:'orgmanager',hidden:true,editor:{id:'_orgmanager_list0', xtype:'hidden'}},
+	    	{header:i18n.Organization_List.isleaf1,dataIndex:'isleaf',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.subcount1,dataIndex:'subcount',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.manaposition,dataIndex:'posiname',hidden:true,editor:{xtype:'hidden'}},
 	    	//列表中显示
-	    	{header:'机构代码', dataIndex:'orgcode', hidden:false, editor: {maxLength:32,allowBlank:false, vtype:'alphanum2',tabIndex :1}},
-	    	{header:'机构名称', dataIndex:'orgname', hidden:false, editor: {maxLength:30,allowBlank:false, tabIndex :2}},
-			{header:'机构等级', dataIndex:'orgdegree', hidden:false, 
+	    	{header:i18n.Organization_List.orgcode, dataIndex:'orgcode', hidden:false, editor: {maxLength:32,allowBlank:false, vtype:'alphanum2',tabIndex :1}},
+	    	{header:i18n.Organization_List.orgname, dataIndex:'orgname', hidden:false, editor: {maxLength:30,allowBlank:false, tabIndex :2}},
+			{header:i18n.Organization_List.orgdegree, dataIndex:'orgdegree', hidden:false, 
 				editor: {
 					allowBlank:false, id:'_orgdegree_list0',tabIndex :3,
 					xtype: 'EosDictEntry_combo', hiddenName: 'orgdegree', displayField: 'dictname', valueField: 'dictid',status:'1',dicttypeid:'ABF_ORGDEGREE'
@@ -56,7 +56,7 @@ Ext.onReady(function(){
 					return EosDictEntry.getDictname('ABF_ORGDEGREE',v);
 				}
 			},
-			{header:'机构状态', dataIndex : 'status',  hidden:false, 
+			{header:i18n.Organization_List.status, dataIndex : 'status',  hidden:false, 
 				editor: {
 					allowBlank:false, id:'_status_list0', tabIndex :4,
 					xtype: 'EosDictEntry_combo', hiddenName: 'status', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_ORGSTATUS'
@@ -64,7 +64,7 @@ Ext.onReady(function(){
 					return EosDictEntry.getDictname('ABF_ORGSTATUS',v);
 				}
 			},
-			{header:'机构类型', dataIndex : 'orgtype',  hidden:false, 
+			{header:i18n.Organization_List.orgtype, dataIndex : 'orgtype',  hidden:false, 
 				editor: { 
 					id:'_orgtype_list0',tabIndex :5,
 					xtype: 'EosDictEntry_combo', hiddenName: 'orgtype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_ORGTYPE'
@@ -72,29 +72,29 @@ Ext.onReady(function(){
 					return EosDictEntry.getDictname('ABF_ORGTYPE',v);
 				}
 			},
-			{header:'排列顺序', dataIndex:'sortno', hidden:true, editor: {vtype:'positiveInt',maxLength:4, tabIndex :6}},
-			{header:'主页', dataIndex:'weburl', hidden:true, editor: {maxLength:40, tabIndex :7}},
-			{header:'机构主管人员', dataIndex:'managerid', hidden:true, editor: {
+			{header:i18n.Organization_List.sortno, dataIndex:'sortno', hidden:true, editor: {vtype:'positiveInt',maxLength:4, tabIndex :6}},
+			{header:i18n.Organization_List.weburl, dataIndex:'weburl', hidden:true, editor: {maxLength:40, tabIndex :7}},
+			{header:i18n.Organization_List.managerid, dataIndex:'managerid', hidden:true, editor: {
 				xtype: "OmEmployee_SelectWin", id:'_managerid_list0',tabIndex :11,
 				hiddenName: "managerid", displayField:"empname", valueField: "empid",
 				returnField :[{widgetId: '_orgmanager_list0',propertyName:'empname'}],
 				editable: false 
 			}},
-			{header:'联系人', dataIndex:'linkman', hidden:true, editor: {maxLength:15, tabIndex :9}},
-			{header:'电子邮件', dataIndex:'email', hidden:true, editor: {maxLength:30,tabIndex :13 }},
-			{header:'生效日期', dataIndex:'startdate', hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false, tabIndex :15}},
-			{header:'机构地址', dataIndex:'orgaddr', hidden:true, editor: { xtype:'textarea', maxLength:30,tabIndex :17}},
-		    {header:'所属地域', dataIndex:'area',  hidden:true, editor: {maxLength:15, tabIndex :8}},
-			{header:'邮政编码', dataIndex:'zipcode',  hidden:true, editor: {vtype:'postalcode',maxLength:10,tabIndex :10}},
-			{header:'机构主管岗位', dataIndex:'manaposition',  hidden:true, editor: {
+			{header:i18n.Organization_List.linkman, dataIndex:'linkman', hidden:true, editor: {maxLength:15, tabIndex :9}},
+			{header:i18n.Organization_Form._email, dataIndex:'email', hidden:true, editor: {maxLength:30,tabIndex :13 }},
+			{header:i18n.Organization_List.startdate1, dataIndex:'startdate', hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false, tabIndex :15}},
+			{header:i18n.Organization_Form._status, dataIndex:'orgaddr', hidden:true, editor: { xtype:'textarea', maxLength:30,tabIndex :17}},
+		    {header:i18n.Organization_Form._area, dataIndex:'area',  hidden:true, editor: {maxLength:15, tabIndex :8}},
+			{header:i18n.Organization_Form._zipcode, dataIndex:'zipcode',  hidden:true, editor: {vtype:'postalcode',maxLength:10,tabIndex :10}},
+			{header:i18n.Organization_Form._manaposition, dataIndex:'manaposition',  hidden:true, editor: {
 				xtype: "OmPosition_SelectWin", id:'_manaposition_list0',tabIndex :12,
 				hiddenName: "manaposition", displayField:"posiname", valueField: "positionid", 
 				returnField :[{widgetId: '_temp',propertyName:'posiname'}],
 				editable: false 
 			}},
-			{header:'联系电话', dataIndex:'linktel',  hidden:true, editor: {vtype:'mobile',tabIndex :14}},
-			{header:'失效时期', dataIndex:'enddate',  hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false, tabIndex :16}},
-			{header:'备注', dataIndex:'remark',  hidden:true, editor: {xtype:'textarea',maxLength:200,tabIndex :18}}
+			{header:i18n.Organization_Form._linktel, dataIndex:'linktel',  hidden:true, editor: {vtype:'mobile',tabIndex :14}},
+			{header:i18n.Organization_List.enddate, dataIndex:'enddate',  hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false, tabIndex :16}},
+			{header:i18n.Organization_List.remark_3, dataIndex:'remark',  hidden:true, editor: {xtype:'textarea',maxLength:200,tabIndex :18}}
 	    ],
 	    editOrder:['orgid','parentorgid','orglevel','orgseq','orgmanager','isleaf','subcount',
 	    'orgcode','orgname','orgdegree','status','orgtype','sortno','weburl','area','linkman',
@@ -174,7 +174,7 @@ Ext.onReady(function(){
 	//记录数据字典项-机构状态
 	Ext.getCmp("_status_list0").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			orglist.statusStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -183,7 +183,7 @@ Ext.onReady(function(){
 	//记录数据字典项-机构等级
 	Ext.getCmp("_orgdegree_list0").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			orglist.degreeStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -191,7 +191,7 @@ Ext.onReady(function(){
 	//记录数据字典项-机构类型
 	Ext.getCmp("_orgtype_list0").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			orglist.orgtypeStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -244,15 +244,15 @@ Ext.onReady(function(){
 	    tbar:['search','add','delete'],
 	    fields: [
 	    	//列表中隐藏
-	    	{header:'人员ID', dataIndex:'empid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'操作员ID',dataIndex:'operatorid',hidden:true,editor:{xtype:'hidden',id:'_operatorid_0'}},
-	    	{header:'操作员登录号',dataIndex:'userid',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'人员全名',dataIndex:'realname',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'基本岗位',dataIndex:'position',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'员工IC卡号',dataIndex:'cardNum',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'工资代码',dataIndex:'payId',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.empid_3, dataIndex:'empid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.Organization_List.operatorid,dataIndex:'operatorid',hidden:true,editor:{xtype:'hidden',id:'_operatorid_0'}},
+	    	{header:i18n.Organization_List.userid_3,dataIndex:'userid',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.realname_3,dataIndex:'realname',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.position_3,dataIndex:'position',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.cardNum_3,dataIndex:'cardNum',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.payId_3,dataIndex:'payId',hidden:true,editor:{xtype:'hidden'}},
 	    	//列表中显示
-	    	{header:'人员代码', dataIndex:'empcode', hidden:false, 
+	    	{header:i18n.Organization_List.empNum, dataIndex:'empcode', hidden:false, 
 	    	 editor: {maxLength:30,allowBlank:false, id:'_empcode_Id', vtype:'alphanum2',
 	    	  listeners : {
 	    	  	change : function(){
@@ -264,7 +264,7 @@ Ext.onReady(function(){
 							       var result = Ext.util.JSON.decode(response.responseText);
 							       if (result != null && result.errMsg == null) {
 						           		if(result.isExits == true){
-						           			MyExt.Msg.alert('人员代码【' + Ext.getCmp('_empcode_Id').getValue() + '】已存在! 请重新设置。');
+						           			MyExt.Msg.alert(i18n.Organization_List.empNumM + Ext.getCmp('_empcode_Id').getValue() +i18n.Organization_List.exit);
 						           			Ext.getCmp('_empcode_Id').setValue('');
 						           		}
 							       } else {
@@ -272,22 +272,22 @@ Ext.onReady(function(){
 							       }
 							},
 							failure: function(response, options){
-							       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+							       MyExt.Msg.alert(i18n.Organization_List.false + response.status + "\n" + response.responseText);
 							}
 						});
 					}
 	    	  	}
 	    	  }
 	    	},searcher:{maxLength:30}},
-	    	{header:'人员姓名', dataIndex:'empname', hidden:false, editor: {maxLength:25,allowBlank:false,id:'_empname_0',vtype:'chinese'}},
-			{header:'性别', dataIndex:'gender', hidden:false, 
+	    	{header:i18n.Organization_List.empname, dataIndex:'empname', hidden:false, editor: {maxLength:25,allowBlank:false,id:'_empname_0',vtype:'chinese'}},
+			{header:i18n.Organization_List.gender, dataIndex:'gender', hidden:false, 
 				editor: {
 					id: '_gender_list4', xtype: 'EosDictEntry_combo', hiddenName: 'gender', displayField: 'dictname', valueField: 'dictid',status:'1',dicttypeid:'ABF_GENDER'
 				},renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_GENDER',v);
 				}
 			},
-			{header:'人员状态', dataIndex : 'empstatus',  hidden:false, 
+			{header:i18n.Organization_List.empstatus, dataIndex : 'empstatus',  hidden:false, 
 				editor: {
 					id:'_empstatus_list4', xtype: 'EosDictEntry_combo', hiddenName: 'empstatus', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_EMPSTATUS'
 				},renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
@@ -295,51 +295,51 @@ Ext.onReady(function(){
 				}
 			},
 			
-			{header:'证件类型', dataIndex : 'cardtype',  hidden:false, 
+			{header:i18n.Organization_List.cardtype, dataIndex : 'cardtype',  hidden:false, 
 				editor: {
 					id:'_cardtype_list4', xtype: 'EosDictEntry_combo', hiddenName: 'cardtype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_CARDTYPE'
 				},renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_CARDTYPE',v);
 				}
 			},
-			{header:'政治面貌', dataIndex : 'party',  hidden:false, 
+			{header:i18n.Organization_List.party, dataIndex : 'party',  hidden:false, 
 				editor: { 
 					id:'_party_list4', xtype: 'EosDictEntry_combo', hiddenName: 'party', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_PARTYVISAGE'
 				},renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_PARTYVISAGE',v);
 				}
 			},
-			{header:'职级', dataIndex : 'degree',  hidden:false, 
+			{header:i18n.Organization_List.degree, dataIndex : 'degree',  hidden:false, 
 				editor: { 
 					id:'_degree_list4', xtype: 'EosDictEntry_combo', hiddenName: 'degree', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_EMPZC'
 				},renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_EMPZC',v);
 				}
 			},
-			{header:'出生日期', dataIndex:'birthdate',  hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
-			{header:'证件号码', dataIndex:'cardno', hidden:true, editor: {maxLength:20}},
-			{header:'入职时间', dataIndex:'indate', hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
-			{header:'离职时间', dataIndex:'outdate', hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
-			{header:'办公室电话', dataIndex:'otel', hidden:true, editor: {vtype:'telphone',maxLength:12}},
-			{header:'办公室地址', dataIndex:'oaddress', hidden:true, editor: {maxLength:255}},
-			{header:'办公邮编', dataIndex:'ozipcode', hidden:true, editor: {vtype:'postalcode',maxLength:10}},
-			{header:'办公邮箱', dataIndex:'oemail', hidden:true, editor: {maxLength:128}},
-		    {header:'传真号码', dataIndex:'faxno', hidden:true, editor: {maxLength:14,vtype:'telphone'}},
-			{header:'手机号码', dataIndex:'mobileno', hidden:true, editor: {vtype:'mobile',maxLength:14}},
-			{header:'IM号码', dataIndex:'msn', hidden:true, editor: {maxLength:16,xtype:'hidden'}},
-			{header:'家庭电话', dataIndex:'htel', hidden:true, editor: {vtype:'telphone',maxLength:12}},
-			{header:'家庭地址', dataIndex:'haddress', hidden:true, editor: {maxLength:128}},
-			{header:'家庭邮编', dataIndex:'hzipcode', hidden:true, editor: {vtype:'postalcode',maxLength:10}},
-			{header:'个人邮箱', dataIndex:'pemail', hidden:true, editor: {maxLength:128}},
-			{header:'直接主管', dataIndex:'major', hidden:true, editor: {xtype:'hidden'}},
-			{header:'可授权角色', dataIndex:'specialty', hidden:true, editor: {xtype:'hidden'}},
-			{header:'可管理机构', dataIndex:'orgidlist', hidden:true, editor: {xtype:'hidden'}},
-			{header:'工作描述', dataIndex:'workexp', hidden:true, editor: {xtype:'textarea',maxLength:512}},
-			{header:'注册日期', dataIndex:'regdate', hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
-			{header:'创建时间', dataIndex:'createtime', hidden:true, editor: {xtype:'hidden'}},
-			{header:'最后更新时间', dataIndex:'lastmodytime', hidden:true, editor: {xtype:'hidden'}},
-			{header:'主机构编号', dataIndex:'orgid', hidden:true, editor: {xtype:'hidden'}},
-			{header:'备注', dataIndex:'remark',  hidden:true, editor: {xtype:'textarea',maxLength:200}}
+			{header:i18n.Organization_List.birthdate, dataIndex:'birthdate',  hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
+			{header:i18n.Organization_List.cardno, dataIndex:'cardno', hidden:true, editor: {maxLength:20}},
+			{header:i18n.Organization_List.indate, dataIndex:'indate', hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
+			{header:i18n.Organization_List.outdate, dataIndex:'outdate', hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
+			{header:i18n.Organization_List.otel, dataIndex:'otel', hidden:true, editor: {vtype:'telphone',maxLength:12}},
+			{header:i18n.Organization_List.oaddress, dataIndex:'oaddress', hidden:true, editor: {maxLength:255}},
+			{header:i18n.Organization_List.ozipcode, dataIndex:'ozipcode', hidden:true, editor: {vtype:'postalcode',maxLength:10}},
+			{header:i18n.Organization_List.oemail, dataIndex:'oemail', hidden:true, editor: {maxLength:128}},
+		    {header:i18n.Organization_List.faxno, dataIndex:'faxno', hidden:true, editor: {maxLength:14,vtype:'telphone'}},
+			{header:i18n.Organization_List.mobileno, dataIndex:'mobileno', hidden:true, editor: {vtype:'mobile',maxLength:14}},
+			{header:i18n.Organization_List.msn, dataIndex:'msn', hidden:true, editor: {maxLength:16,xtype:'hidden'}},
+			{header:i18n.Organization_List.htel, dataIndex:'htel', hidden:true, editor: {vtype:'telphone',maxLength:12}},
+			{header:i18n.Organization_List.haddress, dataIndex:'haddress', hidden:true, editor: {maxLength:128}},
+			{header:i18n.Organization_List.hzipcode, dataIndex:'hzipcode', hidden:true, editor: {vtype:'postalcode',maxLength:10}},
+			{header:i18n.Organization_List.pemail, dataIndex:'pemail', hidden:true, editor: {maxLength:128}},
+			{header:i18n.Organization_List.major, dataIndex:'major', hidden:true, editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.specialty, dataIndex:'specialty', hidden:true, editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.orgidlist, dataIndex:'orgidlist', hidden:true, editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.workexp, dataIndex:'workexp', hidden:true, editor: {xtype:'textarea',maxLength:512}},
+			{header:i18n.Organization_List.regdate, dataIndex:'regdate', hidden:true, editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
+			{header:i18n.Organization_List.createtime, dataIndex:'createtime', hidden:true, editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.lastmodytime, dataIndex:'lastmodytime', hidden:true, editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.orgid, dataIndex:'orgid', hidden:true, editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.remark, dataIndex:'remark',  hidden:true, editor: {xtype:'textarea',maxLength:200}}
 	    ],
 	    editOrder:[
 	    	'empid','operatorid','userid','realname','position','cardNum','payId','lastmodytime','orgid','createtime', //隐藏部分
@@ -352,9 +352,9 @@ Ext.onReady(function(){
 	        //计算查询窗体宽度
 	        if(this.saveWinWidth == null)   this.saveWinWidth = (this.labelWidth + this.fieldWidth + 8) * this.saveFormColNum + 60;
 	        this.saveWin = new Ext.Window({
-	            title:"新增", width:this.saveWinWidth, height:this.saveWinHeight, plain:true, closeAction:"hide", buttonAlign:'center', maximizable:true, items:this.saveForm, 
+	            title:i18n.Organization_List.add, width:this.saveWinWidth, height:this.saveWinHeight, plain:true, closeAction:"hide", buttonAlign:'center', maximizable:true, items:this.saveForm, 
 	            buttons: [{
-	            	id: 'operatorBtn', text: "登录设置", iconCls: "cogIcon", hidden:false, scope: this, handler: function(){
+	            	id: 'operatorBtn', text: i18n.Organization_List.loginOption, iconCls: "cogIcon", hidden:false, scope: this, handler: function(){
 	            		this.saveWin.hide();
 		            	operator.win.show();
 		            	/*
@@ -433,7 +433,7 @@ Ext.onReady(function(){
 								       }
 								},
 								failure: function(response, options){
-								       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+								       MyExt.Msg.alert(i18n.Organization_List.false+ response.status + "\n" + response.responseText);
 								}
 							});
 	            		} 
@@ -444,9 +444,9 @@ Ext.onReady(function(){
 	            		}
 	            	}
 	            },{
-	                text: "保存", iconCls: "saveIcon", scope: this, handler: this.saveFn
+	                text: i18n.Organization_List.save1, iconCls: "saveIcon", scope: this, handler: this.saveFn
 	            }, {
-	                text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ this.saveWin.hide(); }
+	                text: i18n.Organization_List.close1, iconCls: "closeIcon", scope: this, handler: function(){ this.saveWin.hide(); }
 	            }]
 	        });
 	    },
@@ -565,7 +565,7 @@ Ext.onReady(function(){
 		    orgtree.tree.getRootNode().expand();
 	        this.saveWin.hide(); //隐藏人员表单
 	        if(!isOperator&&saveFnEmpName!=null&&saveFnEmpName!=""){
-		        Ext.MessageBox.confirm('提示','是否将【'+saveFnEmpName+'】设为操作员?',function(btn){
+		        Ext.MessageBox.confirm(i18n.Organization_List.prompt,i18n.Organization_List.YN+saveFnEmpName+i18n.Organization_List.beoperator,function(btn){
 		        	if(btn=="yes"){
 		        		operator.win.show();
 		        		/*
@@ -600,14 +600,14 @@ Ext.onReady(function(){
 	//记录数据字典项-人员性别
 	Ext.getCmp("_gender_list4").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			emplist.genderStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
 	//记录数据字典项-人员状态
 	Ext.getCmp("_empstatus_list4").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			emplist.empstatusStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -615,7 +615,7 @@ Ext.onReady(function(){
 	//记录数据字典项-政治面貌
 	Ext.getCmp("_party_list4").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			emplist.partyStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -623,7 +623,7 @@ Ext.onReady(function(){
 	//记录数据字典项-职级
 	Ext.getCmp("_degree_list4").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			emplist.degreeStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -631,7 +631,7 @@ Ext.onReady(function(){
 	//记录数据字典项-证件类型
 	Ext.getCmp("_cardtype_list4").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			emplist.cardtypeStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -682,35 +682,35 @@ Ext.onReady(function(){
 				labelWidth: operator.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ fieldLabel:'操作员ID', id:'_operatorid_1', name:'operatorid', hidden:true },
-					{ fieldLabel:'操作员名称', id:'_operatorname_1',name:'operatorname', hidden:true},
-					{ fieldLabel:'解锁时间', id:'_unlocktime_1', name:'unlocktime', hidden:true, xtype:'my97date', format: 'Y-m-d',initNow:false },
-					{ fieldLabel:'最后一次登录时间', id:'_lastlogin_1', name:'lastlogin', hidden:true, xtype:'my97date', format: 'Y-m-d',initNow:false },
-					{ fieldLabel:'最新登录次数', id:'_errcount_1', name:'errcount', hidden:true },
-					{ fieldLabel:'有效时间范围', id:'_validtime_1', name:'validtime', hidden:true },
-					{ fieldLabel:'MAC码', id:'_maccode_1', name:'maccode', hidden:true },
-					{ fieldLabel:'iP地址', id:'_ipaddress_1', name:'ipaddress', hidden:true },
-					{ fieldLabel:'邮箱', id:'_email_1', name:'email', hidden:true },
+					{ fieldLabel:i18n.Organization_List.operatorid, id:'_operatorid_1', name:'operatorid', hidden:true },
+					{ fieldLabel:i18n.Organization_List.operatorname, id:'_operatorname_1',name:'operatorname', hidden:true},
+					{ fieldLabel:i18n.Organization_List.unlocktime, id:'_unlocktime_1', name:'unlocktime', hidden:true, xtype:'my97date', format: 'Y-m-d',initNow:false },
+					{ fieldLabel:i18n.Organization_List.lastlogin, id:'_lastlogin_1', name:'lastlogin', hidden:true, xtype:'my97date', format: 'Y-m-d',initNow:false },
+					{ fieldLabel:i18n.Organization_List.errcount, id:'_errcount_1', name:'errcount', hidden:true },
+					{ fieldLabel:i18n.Organization_List.validtime, id:'_validtime_1', name:'validtime', hidden:true },
+					{ fieldLabel:i18n.Organization_List.maccode, id:'_maccode_1', name:'maccode', hidden:true },
+					{ fieldLabel:i18n.Organization_List.ipaddress, id:'_ipaddress_1', name:'ipaddress', hidden:true },
+					{ fieldLabel:i18n.Organization_List.email1, id:'_email_1', name:'email', hidden:true },
 					//显示部分
-					{ id:"_userid_1",	fieldLabel:'登录名',	name:'userid', allowBlank:false, width:operator.fieldWidth, maxLength:30},
-					{ fieldLabel:'操作员状态', id:'_status_1', name:'status',
+					{ id:"_userid_1",	fieldLabel:i18n.Organization_List.userid,	name:'userid', allowBlank:false, width:operator.fieldWidth, maxLength:30},
+					{ fieldLabel:i18n.Organization_List.OperStatus, id:'_status_1', name:'status',
 					  xtype: 'EosDictEntry_combo', hiddenName: 'status', status:'1', displayField: 'dictname', 
 					  valueField: 'dictid', dicttypeid:'ABF_OPERSTATUS'},
-					{ fieldLabel:'菜单风格', id:'_menutype_1', name:'menutype',
+					{ fieldLabel:i18n.Organization_List.menutype, id:'_menutype_1', name:'menutype',
 					  xtype: 'EosDictEntry_combo', hiddenName: 'menutype', status:'1', displayField: 'dictname', 
 					  valueField: 'dictid', dicttypeid:'ABF_LAYOUTSTYLE'},
-					{ fieldLabel:'生效日期', id:'_startdate_1', name:'startdate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth }
+					{ fieldLabel:i18n.Organization_List.startdate1, id:'_startdate_1', name:'startdate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth }
 				]
 			},{
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: operator.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:"_password_1", fieldLabel:'登录密码', name:'password', inputType:'password', allowBlank:false, width:operator.fieldWidth, maxLength:30},
-					{ fieldLabel:'认证模式', id:'_authmode_1', name:'authmode',
+					{ id:"_password_1", fieldLabel:i18n.Organization_List.password, name:'password', inputType:'password', allowBlank:false, width:operator.fieldWidth, maxLength:30},
+					{ fieldLabel:i18n.Organization_List.authmode, id:'_authmode_1', name:'authmode',
 					  xtype: 'EosDictEntry_combo', hiddenName: 'authmode', status:'1', displayField: 'dictname', 
 					  valueField: 'dictid', dicttypeid:'ABF_AUTHMODE'},
-					{ fieldLabel:'密码失效日期', id:'_invaldate_1', name:'invaldate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth},
-					{ fieldLabel:'失效日期', id:'_enddate_1', name:'enddate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth }
+					{ fieldLabel:i18n.Organization_List.invaldate, id:'_invaldate_1', name:'invaldate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth},
+					{ fieldLabel:i18n.Organization_List.enddate, id:'_enddate_1', name:'enddate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth }
 					
 				]
 			}]
@@ -720,7 +720,7 @@ Ext.onReady(function(){
 	//记录数据字典项-操作员状态
 	Ext.getCmp("_status_1").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			operator.statusStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -728,7 +728,7 @@ Ext.onReady(function(){
 	//记录数据字典项-认证模式
 	Ext.getCmp("_authmode_1").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			operator.authmodeStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -736,19 +736,19 @@ Ext.onReady(function(){
 	//记录数据字典项-菜单风格
 	Ext.getCmp("_menutype_1").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			operator.menutypeStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
 	
 	operator.win = new Ext.Window({
-		title: "操作员设置", maximizable: false, width: 550, height: 200, layout: "fit", 
+		title: i18n.Organization_List.operatorOption, maximizable: false, width: 550, height: 200, layout: "fit", 
 		plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
 		items : [{
 			xtype: 'panel',	border:true,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", 
 			items: [operator.operatorForm],
 			buttons: [{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.Organization_List.save1, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = operator.operatorForm.getForm();
             		var data = form.getValues();
 			        var cfg = {
@@ -770,7 +770,7 @@ Ext.onReady(function(){
 			        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
             	}
 	        },{
-		 	 text: "关闭", iconCls: "closeIcon",handler: function(){ 
+		 	 text: i18n.Organization_List.close1, iconCls: "closeIcon",handler: function(){ 
 		 	 	operator.win.hide(); 
 		 	 }
 		 }]
@@ -795,44 +795,44 @@ Ext.onReady(function(){
 	    tbar:['search','add','delete'],
 	    fields: [
 	    	//列表中隐藏
-	    	{header:'岗位编码', dataIndex:'positionid', hidden:true, editor:{xtype:'hidden' }},
-	    	{header:'上级岗位', dataIndex:'manaposi',	hidden:true, editor:{xtype:'hidden'}},
-	    	{header:'岗位层次',	dataIndex:'posilevel',	hidden:true, editor:{xtype:'hidden'}},
-	    	{header:'岗位序列',	dataIndex:'positionseq',	hidden:true, editor:{xtype:'hidden'}},
-	    	{header:'创建时间', dataIndex:'createtime', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'最后一次修改时间', dataIndex:'lastupdate', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'最近更新人员', dataIndex:'updator', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'是否是叶子节点', dataIndex:'isleaf', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'子节点数', dataIndex:'subcount', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'所属机构',	dataIndex:'orgid',	hidden:true, editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.positionid, dataIndex:'positionid', hidden:true, editor:{xtype:'hidden' }},
+	    	{header:i18n.Organization_List.manaposi, dataIndex:'manaposi',	hidden:true, editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.posilevel,	dataIndex:'posilevel',	hidden:true, editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.positionseq,	dataIndex:'positionseq',	hidden:true, editor:{xtype:'hidden'}},
+	    	{header:i18n.Organization_List.createtime, dataIndex:'createtime', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.lastupdate, dataIndex:'lastupdate', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.updator, dataIndex:'updator', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.isleaf1, dataIndex:'isleaf', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.subcount1, dataIndex:'subcount', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.Organization_List.orgid1,	dataIndex:'orgid',	hidden:true, editor:{xtype:'hidden'}},
 	    	//列表中显示
-	    	{header:'岗位代码', dataIndex:'posicode', hidden:false, editor: {allowBlank:false, maxLength:8}},
-	    	{header:'岗位名称', dataIndex:'posiname', hidden:false, editor: {allowBlank:false, maxLength:15}},
-	    	{header:'所属机构',	dataIndex:'orgname', hidden:false, editor:{id:'_orgname_list0',disabled:true}},
-	    	{header:'所属职务', dataIndex:'dutyid',	hidden:true, editor:{
+	    	{header:i18n.Organization_List.posicode, dataIndex:'posicode', hidden:false, editor: {allowBlank:false, maxLength:8}},
+	    	{header:i18n.Organization_List.posiname, dataIndex:'posiname', hidden:false, editor: {allowBlank:false, maxLength:15}},
+	    	{header:i18n.Organization_List.orgid1,	dataIndex:'orgname', hidden:false, editor:{id:'_orgname_list0',disabled:true}},
+	    	{header:i18n.Organization_List.dutyid, dataIndex:'dutyid',	hidden:true, editor:{
 	    		id:'_dutyid_list0',
 	    		xtype: "WorkDuty_comboTree",
 	    		hiddenName: "dutyid", disabled:false,
 	    		selectNodeModel: "exceptRoot" ,
 		    	allowBlank: false
 	    	}},
-	    	{header:'所属职务', dataIndex:'dutyname', hidden:false, editor: {xtype:'hidden'}},
-	    	{header:'岗位类别', dataIndex : 'positype',  hidden:false, 
+	    	{header:i18n.Organization_List.dutyid, dataIndex:'dutyname', hidden:false, editor: {xtype:'hidden'}},
+	    	{header:i18n.Organization_List.positype, dataIndex : 'positype',  hidden:false, 
 				editor: { 
 					id:'_positype_list3',xtype: 'EosDictEntry_combo', hiddenName: 'positype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_POSITYPE', disabled:true, allowBlank:false
 				},renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_POSITYPE',v);
 				}
 			},
-			{header:'岗位状态', dataIndex : 'status',  hidden:false, 
+			{header:i18n.Organization_List.status1, dataIndex : 'status',  hidden:false, 
 				editor: { 
 					id:'_status_list3',xtype: 'EosDictEntry_combo', hiddenName: 'status', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_POSISTATUS'
 				},renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_POSISTATUS',v);
 				}
 			},
-			{header:'有效开始时间', dataIndex:'startdate', hidden:false, xtype:'datecolumn',	editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
-			{header:'有效结束时间', dataIndex:'enddate', hidden:false, xtype:'datecolumn', 	editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}}
+			{header:i18n.Organization_List.startdate1, dataIndex:'startdate', hidden:false, xtype:'datecolumn',	editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
+			{header:i18n.Organization_List.enddate1, dataIndex:'enddate', hidden:false, xtype:'datecolumn', 	editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}}
 			
 	    ],
 	    editOrder:['posicode','posiname','orgname','dutyid','startdate','enddate'],
@@ -914,7 +914,7 @@ Ext.onReady(function(){
 	//记录数据字典项-岗位类别
 	Ext.getCmp("_positype_list3").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			positionlist.positypeStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -922,7 +922,7 @@ Ext.onReady(function(){
 	//记录数据字典项-岗位状态
 	Ext.getCmp("_status_list3").getStore().on("load", function(store, records){
 		for(var i=0;i<records.length;i++){
-			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == '请选择..') continue;
+			if(typeof(records[i].data.dictname) != 'undefined' && records[i].data.dictname == i18n.Organization_List.PChoose) continue;
 			positionlist.statusStore.push({dictid:records[i].data.dictid,dictname:records[i].data.dictname});
 		}
 	});
@@ -964,7 +964,7 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 	    storeId:'empid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.Organization_List.add1, iconCls:"addIcon", handler: function(){
 	    		if(AddEmpList.grid.searchWin)  AddEmpList.grid.searchWin.hide();   
         		if(!$yd.isSelectedRecord(AddEmpList.grid)) return;//未选择记录，直接返回
         		//如果当前执行的是岗位下的人员新增操作
@@ -977,16 +977,16 @@ Ext.onReady(function(){
 	    	}
 	    }],
 	    fields: [
-	    	{header:'人员ID', dataIndex:'empid', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'操作员登录号', dataIndex:'userid',hidden:false, editor:{xtype:'hidden'},searcher:{}},  //显示
-	    	{header:'人员代码', dataIndex:'empcode', hidden:false, editor:{xtype:'hidden'}},    //显示
-	    	{header:'人员姓名', dataIndex:'empname', hidden:false, editor:{xtype:'hidden'},searcher:{}},    //显示
-			{header:'性别', dataIndex:'gender', hidden:false, editor:{xtype:'hidden'},
+	    	{header:i18n.Organization_List.empid, dataIndex:'empid', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.Organization_List.userid1, dataIndex:'userid',hidden:false, editor:{xtype:'hidden'},searcher:{}},  //显示
+	    	{header:i18n.Organization_List.empcode, dataIndex:'empcode', hidden:false, editor:{xtype:'hidden'}},    //显示
+	    	{header:i18n.Organization_List.empname1, dataIndex:'empname', hidden:false, editor:{xtype:'hidden'},searcher:{}},    //显示
+			{header:i18n.Organization_List.gender1, dataIndex:'gender', hidden:false, editor:{xtype:'hidden'},
 				renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_GENDER',v);
 				}
 			},        //显示
-			{header:'人员状态', dataIndex : 'empstatus',  hidden:false, editor:{xtype:'hidden'},
+			{header:i18n.Organization_List.empstatus1, dataIndex : 'empstatus',  hidden:false, editor:{xtype:'hidden'},
 				renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_EMPSTATUS',v);
 				}
@@ -1024,7 +1024,7 @@ Ext.onReady(function(){
 	});
 	
 	AddEmpList.win = new Ext.Window({
-		title:"新增", 
+		title:i18n.Organization_List.add1, 
 		width:556, 
 		height:356, 
 		plain:true, 
@@ -1063,12 +1063,12 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 	    storeId:'empid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.Organization_List.add1, iconCls:"addIcon", handler: function(){
 	    		AddEmpList.win.show();
 	    		AddEmpList.grid.store.load();
 	    	}
 	    },{
-	    	text:"删除", iconCls:"deleteIcon", handler: function(){
+	    	text:i18n.Organization_List.delete1, iconCls:"deleteIcon", handler: function(){
 	    		if(emplist2.grid.searchWin)  emplist2.grid.searchWin.hide();   
         		if(!$yd.isSelectedRecord(emplist2.grid)) return;//未选择记录，直接返回
         		//如果当前执行的是岗位下的人员删除操作
@@ -1081,16 +1081,16 @@ Ext.onReady(function(){
 	    	}	
 	    }],
 	    fields: [
-	    	{header:'人员ID', 	dataIndex:'empid', 		hidden:true, 	editor: {xtype:'hidden'}},
-	    	{header:'登录帐号',	dataIndex:'userid',		hidden:false,	editor:	{xtype:'hidden'},	searcher:{}},
-	    	{header:'人员姓名', 	dataIndex:'empname', 	hidden:false, 	editor: {xtype:'hidden'},	searcher:{}},
-	    	{header:'人员状态', 	dataIndex:'empstatus', 	hidden:false, 	editor: {xtype:'hidden'},
+	    	{header:i18n.Organization_List.empid, 	dataIndex:'empid', 		hidden:true, 	editor: {xtype:'hidden'}},
+	    	{header:i18n.Organization_List.userid2,	dataIndex:'userid',		hidden:false,	editor:	{xtype:'hidden'},	searcher:{}},
+	    	{header:i18n.Organization_List.empname1, 	dataIndex:'empname', 	hidden:false, 	editor: {xtype:'hidden'},	searcher:{}},
+	    	{header:i18n.Organization_List.empstatus1, 	dataIndex:'empstatus', 	hidden:false, 	editor: {xtype:'hidden'},
 	    		renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_EMPSTATUS',v);
 				}
 	    	},
-	    	{header:'所属机构', 	dataIndex:'orgname', 	hidden:false, 	editor: {xtype:'hidden'}},
-	    	{header:'所属岗位', dataIndex:'groupname', 	hidden:false, 	editor: {xtype:'hidden'}}
+	    	{header:i18n.Organization_List.orgname1, 	dataIndex:'orgname', 	hidden:false, 	editor: {xtype:'hidden'}},
+	    	{header:i18n.Organization_List.groupname, dataIndex:'groupname', 	hidden:false, 	editor: {xtype:'hidden'}}
 	    ],
 	    editOrder:[],
 	    searchOrder:['userid','empname'],

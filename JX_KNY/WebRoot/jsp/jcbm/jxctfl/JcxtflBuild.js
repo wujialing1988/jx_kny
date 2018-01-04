@@ -72,7 +72,7 @@ Ext.onReady(function(){
 	/** 添加已选择的机车构型到指定节点 */
 	JcxtflBuild.buildJcgx = function(data, type) {
 		if (isNull(JcgxBuild.shortName) || isNull(JcgxBuild.nodeIDX)) {
-			MyExt.Msg.alert("请选择需要构型的节点");
+			MyExt.Msg.alert(i18n.JcxtflBuild.childNodes);
 			return;
 		}
 		var dataAry = new Array();
@@ -80,14 +80,14 @@ Ext.onReady(function(){
 			dataAry.push(data[i].data);
 		}
 		if (dataAry.length <= 0) {
-			MyExt.Msg.alert("请选择一条记录");
+			MyExt.Msg.alert(i18n.JcxtflBuild.choiceMessage);
 			return;
 		}
-		var tip = '是否确认添加已选择多个分类到：<span style="color:green;font-weight:bold;">' + JcxtflBuild.path + '&nbsp;</span>？';
+		var tip = i18n.JcxtflBuild.addTo+'<span style="color:green;font-weight:bold;">' + JcxtflBuild.path + '&nbsp;</span>？';
 		if (1 === dataAry.length) {
-			tip = '是否确认添加&nbsp;<b>' + dataAry[0].flmc + '</b>&nbsp;到：<span style="color:green;font-weight:bold;">' + JcxtflBuild.path + '&nbsp;</span>？'
+			tip = i18n.JcxtflBuild.YN+'&nbsp;<b>' + dataAry[0].flmc + '</b>&nbsp;'+i18n.JcxtflBuild.to+'：<span style="color:green;font-weight:bold;">' + JcxtflBuild.path + '&nbsp;</span>？'
 		}
-		Ext.Msg.confirm('提示', tip, function(btn) {
+		Ext.Msg.confirm(i18n.JcxtflBuild.prompt, tip, function(btn) {
 			if (btn != 'yes') return;
 			if (self.loadMask) self.loadMask.show();
 			Ext.Ajax.request({
@@ -108,14 +108,14 @@ Ext.onReady(function(){
 						JcxtflBuild.tree.getSelectionModel().clearSelections();
 						JcgxBuild.reloadTree(JcgxBuild.treePath);
 						JcgxBuild.grid.store.reload();
-						alertSuccess("机车构型添加成功！");						
+						alertSuccess(i18n.JcxtflBuild.addSuccess);						
 					} else {
 						alertFail(result.errMsg);
 					}
 				},
 				failure : function(response, options) {
 	        		if (self.loadMask) self.loadMask.hide();
-					MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+					MyExt.Msg.alert(i18n.JcxtflBuild.false+"\n" + response.status + "\n" + response.responseText);
 				}
 			});
 		});
@@ -128,32 +128,32 @@ Ext.onReady(function(){
 	    storeAutoLoad:false,
 	    storeId:'coID',  
 		tbar:[{
-				text:"确定当前分类", iconCls:"editIcon",
+				text:i18n.JcxtflBuild.confirmClass, iconCls:"editIcon",
 				handler:function(){
 				  	var data = JcxtflBuild.grid.selModel.getSelections();
 				  	JcxtflBuild.buildJcgx(data, "single")
 				}
 			},{
-				text:"确定当前分类及其下级分类", iconCls:"editIcon",
+				text:i18n.JcxtflBuild.confirmClassC, iconCls:"editIcon",
 				handler:function(){
 				 	var data = JcxtflBuild.grid.selModel.getSelections();
 				  	JcxtflBuild.buildJcgx(data, "all")
 			}
 		}],
 	    fields: [{
-	    	header:'主键', dataIndex:'coID',hidden:true
+	    	header:i18n.JcxtflBuild.coID, dataIndex:'coID',hidden:true
 	    },{
-			header:'父类节点', dataIndex:'fjdID',hidden:true
+			header:i18n.JcxtflBuild.fjdID, dataIndex:'fjdID',hidden:true
 		},{
-			header:'分类编码', dataIndex:'flbm'
+			header:i18n.JcxtflBuild.flbm, dataIndex:'flbm'
 		},{
-			header:'分类名称', dataIndex:'flmc'
+			header:i18n.JcxtflBuild.flmc, dataIndex:'flmc'
 		},{
-			header:'零部件名称', dataIndex:'lbjbm'
+			header:i18n.JcxtflBuild.lbjbm, dataIndex:'lbjbm'
 		},{
-			header:'适用车型', dataIndex:'sycx',width:200
+			header:i18n.JcxtflBuild.sycx, dataIndex:'sycx',width:200
 		},{
-			header:'是否有子节点', dataIndex:'coHaschild',hidden:true
+			header:i18n.JcxtflBuild.coHaschild, dataIndex:'coHaschild',hidden:true
 		}],
 		toEditFn: function(){}
     });
@@ -177,7 +177,7 @@ Ext.onReady(function(){
 	
 	// 定义机车系统分类护窗口
 	JcxtflBuild.win = new Ext.Window({
-		title : "系统分类",
+		title : i18n.JcxtflBuild.Taxonomy,
 		width : 1000, height : 600,
 		closeAction : 'hide',
 		modal : true,
@@ -186,7 +186,7 @@ Ext.onReady(function(){
 			layout : 'fit', /*border : false, */region : "west"
 		},
 		items : [{
-			title : '<span style="font-weight:normal">机车系统分类</span>',
+			title : '<span style="font-weight:normal">'+i18n.JcxtflBuild.LSC+'</span>',
 			iconCls : 'icon-expand-all',
 			collapsible : true,
 			width : 279,
@@ -198,7 +198,7 @@ Ext.onReady(function(){
 		
 		buttonAlign:'center',
 		buttons:[{
-			text:'关闭', iconCls:'closeIcon', handler:function(){
+			text:i18n.JcxtflBuild.close, iconCls:'closeIcon', handler:function(){
 				this.findParentByType('window').hide();
 			}
 		}],
