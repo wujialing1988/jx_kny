@@ -22,22 +22,22 @@ MatTypeList.grid = new Ext.yunda.Grid({
     loadURL: ctx + '/matTypeList!findPageList.action',                 //装载列表数据的请求URL
     storeAutoLoad: false,storeId: 'matCode',
 	fields: [{
-			header:'物料编码', dataIndex:'matCode', editor:{ id:'matCode', maxLength:50, allowBlank: false }, width: 120
+			header:i18n.ChooseMatTypeList.matCode, dataIndex:'matCode', editor:{ id:'matCode', maxLength:50, allowBlank: false }, width: 120
 		},{
-			header:'物料描述', dataIndex:'matDesc', editor:{  maxLength:50, allowBlank: false }, width: 420
+			header:i18n.ChooseMatTypeList.matDesc, dataIndex:'matDesc', editor:{  maxLength:50, allowBlank: false }, width: 420
 		},{
-			header:'计量单位', dataIndex:'unit', editor:{  maxLength:20, allowBlank: false }, width: 80				
+			header:i18n.ChooseMatTypeList.unit, dataIndex:'unit', editor:{  maxLength:20, allowBlank: false }, width: 80				
 		}],
 	tbar: [{
-        xtype:"label", text:"物料编码： " 
+        xtype:"label", text:i18n.ChooseMatTypeList.matCode+"： " 
     },{
         xtype: "textfield",id:"MatTypeList_matCode",name:"matCode"
     },{
-        xtype:"label", text:"物料描述： " 
+        xtype:"label", text:i18n.ChooseMatTypeList.matDesc+"： " 
     },{
         xtype: "textfield",id:"MatTypeList_matDesc",name:"matDesc"
     },{
-        text:"查询", iconCls:"searchIcon", handler: function(){
+        text:i18n.ChooseMatTypeList.search, iconCls:"searchIcon", handler: function(){
 			MatTypeList.grid.store.load();
         }        
     }]
@@ -55,7 +55,7 @@ MatTypeList.grid.store.on('beforeload',function(){
 });
 //选择物料窗口
 MatTypeList.selectWin = new Ext.Window({
-    title: "物料选择", layout: "border", width: 650, height: 460, modal: true, 
+    title: i18n.ChooseMatTypeList.matChoice, layout: "border", width: 650, height: 460, modal: true, 
     closeAction: "hide", buttonAlign:'center', 
     items: [{
 			layout: "fit",
@@ -74,7 +74,7 @@ MatTypeList.selectWin = new Ext.Window({
 			style: 'padding:0px 10px 10px 10px;',
 			items:[
 				{
-					id:"matTypeItems_0",xtype: 'radiogroup', fieldLabel: '物料类型', items: MatTypeList.matTypeItems, anchor:'80%',
+					id:"matTypeItems_0",xtype: 'radiogroup', fieldLabel: i18n.ChooseMatTypeList.matType, items: MatTypeList.matTypeItems, anchor:'80%',
 	                listeners: {
 	            		"render" : function(field){
 	            			//将选中的数据标红
@@ -83,10 +83,10 @@ MatTypeList.selectWin = new Ext.Window({
 				}]
 		}],
     	buttons: [{
-	        text:"确定", iconCls:"saveIcon", handler: function(){
+	        text:i18n.ChooseMatTypeList.confirm, iconCls:"saveIcon", handler: function(){
 	            var sm = MatTypeList.grid.getSelectionModel();
 	            if (sm.getCount() < 1) {
-	                MyExt.Msg.alert("尚未选择一条记录！");
+	                MyExt.Msg.alert(i18n.ChooseMatTypeList.NoChoice);
 	                return;
 	            }
 	            var data = sm.getSelections();
@@ -113,7 +113,7 @@ MatTypeList.selectWin = new Ext.Window({
 	                    }
 	                },
 	                failure: function(response, options){
-	                    MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+	                    MyExt.Msg.alert(i18n.ChooseMatTypeList.false+"\n" + response.status + "\n" + response.responseText);
 	                }
 	            });
 	        }

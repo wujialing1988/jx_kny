@@ -19,7 +19,7 @@ ClassOrganizationUser.tree = new Ext.tree.TreePanel({
 	root: new Ext.tree.TreeLoader({
 		disabled : false,
 		id : 'ROOT_0',
-		text : '分队列表',
+		text : i18n.ClassOrganizationUser.dividedList,
 		leaf : false,
 		iconCls : 'chart_organisationIcon'
 	}),
@@ -60,7 +60,7 @@ ClassOrganizationUser.tree = new Ext.tree.TreePanel({
 			                }
 			            },
 			            failure: function(response, options){
-			                MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+			                MyExt.Msg.alert(i18n.ClassOrganizationUser.false+"\n" + response.status + "\n" + response.responseText);
 			            }
 			        });					
 				}
@@ -69,7 +69,7 @@ ClassOrganizationUser.tree = new Ext.tree.TreePanel({
 	});
 	
 ClassOrganizationUser.selectwin = new Ext.Window({
-	title: "选择分队", maximizable: false, width: 350, height: 400, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center',modal:true,
+	title: i18n.ClassOrganizationUser.choiceDivided, maximizable: false, width: 350, height: 400, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center',modal:true,
 	items : [ {
         collapsible : false,
         width : 180,
@@ -111,32 +111,32 @@ ClassOrganizationUser.grid = new Ext.grid.EditorGridPanel({
 	colModel:new Ext.grid.ColumnModel([ new Ext.grid.RowNumberer(),	
 	 ClassOrganizationUser.sm,
 	{
-		header:'班组班次对应ID', dataIndex:'classOrgIdx',hidden:true,width: 120,editor: {}
+		header:i18n.ClassOrganizationUser.classOrgIdx, dataIndex:'classOrgIdx',hidden:true,width: 120,editor: {}
 	},
      	{
-		header:'班组ID', dataIndex:'orgIdx',width: 120,hidden:true,editor: {}
+		header:i18n.ClassOrganizationUser.orgIdx, dataIndex:'orgIdx',width: 120,hidden:true,editor: {}
 	},
      	{
-		header:'分队ID', dataIndex:'orgUserIdx',width: 120,hidden:true,editor: {}
+		header:i18n.ClassOrganizationUser.orgUserIdx, dataIndex:'orgUserIdx',width: 120,hidden:true,editor: {}
 	},	
      	{
-		header:'人员名称', dataIndex:'workPersonName',width: 120,editor: {}
+		header:i18n.ClassOrganizationUser.workPersonName, dataIndex:'workPersonName',width: 120,editor: {}
 	},
      	{
-		header:'人员ID', dataIndex:'workPersonIdx',width: 120,hidden:true,editor: {}
+		header:i18n.ClassOrganizationUser.workPersonIdx, dataIndex:'workPersonIdx',width: 120,hidden:true,editor: {}
 	},
      	{
-		header:'分队', dataIndex:'queueName',width: 120,editor: {}
+		header:i18n.ClassOrganizationUser.queueName, dataIndex:'queueName',width: 120,editor: {}
 	},
      	{
-		header:'分队编码', dataIndex:'queueCode',width: 120,hidden:true,editor: {}
+		header:i18n.ClassOrganizationUser.queueCode, dataIndex:'queueCode',width: 120,hidden:true,editor: {}
 	},	{
-		header:'位置', dataIndex:'positionName',width: 120, hidden:true,editor: {
+		header:i18n.ClassOrganizationUser.positionName, dataIndex:'positionName',width: 120, hidden:true,editor: {
 
 		}
 	},
      	{
-		header:'位置', dataIndex:'positionNo',width: 120,hidden:false,editor: {
+		header:i18n.ClassOrganizationUser.positionName, dataIndex:'positionNo',width: 120,hidden:false,editor: {
 			id:'positionNo_combo',
 			xtype: 'EosDictEntry_combo',
 			hiddenName: 'positionName',
@@ -149,17 +149,17 @@ ClassOrganizationUser.grid = new Ext.grid.EditorGridPanel({
 		}
 	},	
 		{
-		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
+		header:i18n.ClassOrganizationUser.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	}
 	]),
 	tbar:[{
-		text : '选择分队',		
+		text : i18n.ClassOrganizationUser.choiceDivided,		
 		disabled:false,
 		iconCls:"addIcon",
     	handler: function(){
 			var records = ClassOrganizationUser.grid.getSelectionModel().getSelections();
 			if(records.length == 0){
-				MyExt.Msg.alert("请先选择人员！");
+				MyExt.Msg.alert(i18n.ClassOrganizationUser.choicepeople);
 				return;
 			}    		
     		ClassOrganizationUser.selectwin.show();

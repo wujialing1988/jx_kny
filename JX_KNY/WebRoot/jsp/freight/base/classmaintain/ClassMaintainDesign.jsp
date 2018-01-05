@@ -17,6 +17,7 @@
     var vehicleType = '<%=request.getParameter("vehicleType") %>';
 </script>
 <title>班次维护</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-ClassMaintainDesign.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/freight/base/classmaintain/ChooseMatTypeList.js"></script> 
 <script language="javascript" src="<%=ctx%>/jsp/freight/base/classmaintain/WhMatQuota.js"></script>

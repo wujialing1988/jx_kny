@@ -20,19 +20,19 @@ ClassMaintain.grid = new Ext.yunda.Grid({
     fieldWidth: 180,
 	fields: [
      	{
-		header:'工作地点标识码', dataIndex:'workplaceCode',hidden:true,width: 120,editor: {xtype:"hidden"}
+		header:i18n.ClassMaintain.workplaceCode, dataIndex:'workplaceCode',hidden:true,width: 120,editor: {xtype:"hidden"}
 	},
      	{
-		header:'工作地点名称', dataIndex:'workplaceName',hidden:true,width: 120,editor: {xtype:"hidden"}
+		header:i18n.ClassMaintain.workplaceName, dataIndex:'workplaceName',hidden:true,width: 120,editor: {xtype:"hidden"}
 	},
      	{
-		header:'班次编码', dataIndex:'classNo',width: 120,editor: {allowBlank:false}
+		header:i18n.ClassMaintain.classNo, dataIndex:'classNo',width: 120,editor: {allowBlank:false}
 	},
      	{
-		header:'班次名称', dataIndex:'className',width: 120,editor: {allowBlank:false}
+		header:i18n.ClassMaintain.className, dataIndex:'className',width: 120,editor: {allowBlank:false}
 	},
      	{
-		header:'排序', dataIndex:'seqNo',width: 120,editor: {
+		header:i18n.ClassMaintain.seqNo, dataIndex:'seqNo',width: 120,editor: {
 					xtype:'numberfield',
 			        allowDecimals:false,
 			        allowNegative:false,
@@ -40,7 +40,7 @@ ClassMaintain.grid = new Ext.yunda.Grid({
 			        maxValue:99,
 			        allowBlank:false},searcher: { hidden: true }
 	},{
-		header:'类型', dataIndex:'vehicleType',hidden: true ,width: 120,editor: {
+		header:i18n.ClassMaintain.vehicleType, dataIndex:'vehicleType',hidden: true ,width: 120,editor: {
 //			id:'vehicleType_combo',
 //			xtype: 'EosDictEntry_combo',
 //			hiddenName: 'vehicleType',
@@ -51,17 +51,17 @@ ClassMaintain.grid = new Ext.yunda.Grid({
 		},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 			var result = '' ;
 			if('10' == value){
-				result = '货车' ;
+				result = i18n.ClassMaintain.truck ;
 			}else if('20' == value){
-				result = '客车' ;
+				result = i18n.ClassMaintain.bus ;
 			}
 			return result;
 		}
 	},
      	{
-		header:'备注', dataIndex:'remark',width: 120,editor: {xtype:'textarea', maxLength:1000 },searcher: { hidden: true }
+		header:i18n.ClassMaintain.remark, dataIndex:'remark',width: 120,editor: {xtype:'textarea', maxLength:1000 },searcher: { hidden: true }
 	},{
-		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
+		header:i18n.ClassMaintain.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	}],
 	searchFn: function(searchParam){ 
 		ClassMaintain.searchParam = searchParam ;
@@ -120,9 +120,9 @@ ClassMaintain.WorkPlaceGrid = new Ext.yunda.Grid({
 	    storeId:'workPlaceCode', singleSelect: true,
 		saveFormColNum:1, fieldWidth:200,isEdit:false,
 		fields: [{
-			header:'标识代码', dataIndex:'workPlaceCode', editor:{ allowBlank:false, maxLength:50}
+			header:i18n.ClassMaintain.workplaceCode1, dataIndex:'workPlaceCode', editor:{ allowBlank:false, maxLength:50}
 		},{
-			header:'名称', dataIndex:'workPlaceName', editor:{ allowBlank:false, maxLength:100 }, width: 150
+			header:i18n.ClassMaintain.name, dataIndex:'workPlaceName', editor:{ allowBlank:false, maxLength:100 }, width: 150
 		}],
 		beforeShowEditWin: function(record, rowIndex){ 
 			return false ;

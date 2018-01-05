@@ -14,7 +14,7 @@ Ext.onReady(function(){
 	        region: 'center', bodyBorder: false,
 	        layout: 'fit', items : [ ClassOrganizationUser.grid ]
 	    }, {
-	        region: 'west',  title: '班组选择',  bodyBorder: false, split: true, width: 400, layout: 'fit',   minSize: 160, maxSize: 400, 
+	        region: 'west',  title: i18n.ClassMaintainDesign.orgChoice,  bodyBorder: false, split: true, width: 400, layout: 'fit',   minSize: 160, maxSize: 400, 
 		    collapsible : true, items: [ ClassOrganization.grid ]
 	    }]
 	});
@@ -40,7 +40,7 @@ Ext.onReady(function(){
 	    activeTab: 0,
 	    frame:true,
 	    items:[{
-	            title: "班次维护", border: false, xtype: "panel", layout: "fit",id:'ClassMaintainDesign_tab',
+	            title: i18n.ClassMaintainDesign.maintainTimes, border: false, xtype: "panel", layout: "fit",id:'ClassMaintainDesign_tab',
 	            items: [
 	            	ClassMaintainDesign.ClassMaintainPanel
 	            ],
@@ -73,7 +73,7 @@ Ext.onReady(function(){
 	        region: 'center', bodyBorder: false,
 	        layout: 'fit', items : [ ClassMaintainDesign.tabs ]
 	    	},{ 		
-		     	 region: 'west',  title: '站点',  bodyBorder: false, split: true, width: 400, layout: 'fit',   minSize: 160, maxSize: 400, 
+		     	 region: 'west',  title: i18n.ClassMaintainDesign.Site,  bodyBorder: false, split: true, width: 400, layout: 'fit',   minSize: 160, maxSize: 400, 
 		     	 collapsible : true,   items:[ClassMaintain.WorkPlaceGrid]
 			}]
 		}]

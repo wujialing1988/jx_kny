@@ -21,12 +21,12 @@ ClassOrganization.grid = new Ext.yunda.Grid({
     page: false,
 	tbar : [
 	{
-		text : '选择班组',		
+		text : i18n.ClassOrganization.orgChoice,		
 		disabled:false,
 		iconCls:"chart_organisationIcon",
     	handler: function(){
     		if(ClassOrganization.classIdx == "###"){
-    			MyExt.Msg.alert("请先选择班次！");
+    			MyExt.Msg.alert(i18n.ClassOrganization.orgTimesChoice);
 				return;
     		}
     		ClassOrganizationSelectWin.whereList = [] ;
@@ -41,19 +41,19 @@ ClassOrganization.grid = new Ext.yunda.Grid({
 	],
 	fields: [
      	{
-		header:'班次主键', dataIndex:'classIdx',hidden:true,width: 120,editor: {}
+		header:i18n.ClassOrganization.classIdx, dataIndex:'classIdx',hidden:true,width: 120,editor: {}
 	},
      	{
-		header:'班组ID', dataIndex:'orgid',width: 120,hidden:true,editor: {}
+		header:i18n.ClassOrganization.orgid, dataIndex:'orgid',width: 120,hidden:true,editor: {}
 	},
      	{
-		header:'班组名称', dataIndex:'orgname',width: 120,editor: {}
+		header:i18n.ClassOrganization.orgname, dataIndex:'orgname',width: 120,editor: {}
 	},
      	{
-		header:'班组序列', dataIndex:'orgseq',width: 120,hidden:true,editor: {}
+		header:i18n.ClassOrganization.orgseq, dataIndex:'orgseq',width: 120,hidden:true,editor: {}
 	},
 		{
-		header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
+		header:i18n.ClassOrganization.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 	}],
 	searchFn: function(searchParam){ 
 		ClassOrganization.searchParam = searchParam ;
@@ -94,7 +94,7 @@ ClassOrganization.grid.getStore().addListener('load',function(me, records, optio
 ClassOrganizationSelectWin.submit = function(){
 	var org = ClassOrganizationSelectWin.grid.selModel.getSelections();
 	if(org.length == 0){
-		MyExt.Msg.alert("尚未选择一条记录！")
+		MyExt.Msg.alert(i18n.ClassOrganization.NoChoice)
 		return;
 	}
 	var datas = new Array();
@@ -123,7 +123,7 @@ ClassOrganizationSelectWin.submit = function(){
 		},
 		failure: function(response, options){
 			ClassOrganization.grid.loadMask.hide();
-			MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+			MyExt.Msg.alert(i18n.ClassOrganization.false+"\n" + response.status + "\n" + response.responseText);
 		}
 	});
 }
