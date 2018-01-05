@@ -15,5 +15,6 @@ i18n.WorkPlace.mapping = 'siteToOrg';
 
 
 i18n.OmOrganizationTreeWin = {};
+i18n.OmOrganizationTreeWin.confirm = 'confirm';
 i18n.OmOrganizationTreeWin.institutionalChoice = 'institutionalChoice';
 i18n.OmOrganizationTreeWin.text = 'please cover OmOrganizationTreeWin.submit function to finsh action!';

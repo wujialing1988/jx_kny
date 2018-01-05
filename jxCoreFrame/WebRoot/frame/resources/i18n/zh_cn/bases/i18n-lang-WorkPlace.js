@@ -14,5 +14,6 @@ i18n.WorkPlace.false = '请求失败，服务器状态代码：';
 i18n.WorkPlace.mapping = '站点对应机构';
 
 i18n.OmOrganizationTreeWin = {};
+i18n.OmOrganizationTreeWin.confirm = '确定';
 i18n.OmOrganizationTreeWin.institutionalChoice = '机构选择';
 i18n.OmOrganizationTreeWin.text = '请覆盖，OmOrganizationTreeWin.submit 方法完成自己操作业务！';

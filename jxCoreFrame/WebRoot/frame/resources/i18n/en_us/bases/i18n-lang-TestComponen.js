@@ -38,7 +38,7 @@ i18n.TestComponent.mainCircuitBreaker = 'MainCircuitBreaker';
 i18n.TestComponent.electricalSignalSensor = 'ElectricalSignalSensor';
 i18n.TestComponent.secondGroupOfPower = 'SecondGroupOfPower';
 
-i18n.OmEmployeeSelect = {};
+/*i18n.OmEmployeeSelect = {};
 i18n.OmEmployeeSelect.wait = 'Processing.wait...';
 i18n.OmEmployeeSelect.pname = 'people\‘s name';
 i18n.OmEmployeeSelect.search = 'Search';
@@ -47,7 +47,7 @@ i18n.OmEmployeeSelect.name = 'name';
 i18n.OmEmployeeSelect.choicePeople = 'click to choice the employee';
 i18n.OmEmployeeSelect.peopleCoding = 'employeeCoding';
 i18n.OmEmployeeSelect.ownTeam = 'OwnTeam';
-i18n.OmEmployeeSelect.choicePeople1 = 'choice the employee';
+i18n.OmEmployeeSelect.choicePeople1 = 'choice the employee';*/
 
 i18n.ProfessionalType = {};
 i18n.ProfessionalType.professType = 'professType';
