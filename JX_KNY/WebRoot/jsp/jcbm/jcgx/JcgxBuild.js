@@ -128,7 +128,7 @@ Ext.onReady(function() {
 			},
 			movenode: function( tree, node, oldParent, newParent, index ) {
 				if (oldParent === newParent) {
-					MyExt.Msg.alert('无效操作，暂时不支持同级节点的顺序调整！');
+					MyExt.Msg.alert(i18n.JcgxBuild.InvalidOper);
 					return;
 				}
 				// Ajax请求
@@ -153,7 +153,7 @@ Ext.onReady(function() {
 				    //请求失败后的回调函数
 				   	failure: function(response, options){
 						if (self.loadMask) self.loadMask.hide();
-				        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				        Ext.Msg.alert(i18n.JcgxBuild.prompt, i18n.JcgxBuild.false+"\n" + response.status + "\n" + response.responseText);
 				    }
 				});
 			}
@@ -194,7 +194,7 @@ Ext.onReady(function() {
 	        return true;
 	    },
 		tbar: [{
-			text: "选择系统分类",
+			text: i18n.JcgxBuild.choiceSysClass,
 			iconCls: "editIcon",
 			handler: function() {
 				JcxtflBuild.shortName = JcgxBuild.shortName;
@@ -202,11 +202,11 @@ Ext.onReady(function() {
 				JcxtflBuild.win.show();
 			}
 		}, {
-			text: "删除",
+			text: i18n.JcgxBuild.delete,
 			iconCls: "deleteIcon",
 			handler: function() {
 				if (!$yd.isSelectedRecord(JcgxBuild.grid)) return;
-				Ext.Msg.confirm("提示  ", "该操作将不能恢复，是否继续？  ", function(btn) {
+				Ext.Msg.confirm(i18n.JcgxBuild.prompt, i18n.JcgxBuild.Norepair, function(btn) {
 					if (btn != 'yes') return;
 					if (self.loadMask) self.loadMask.show();
 					Ext.Ajax.request({
@@ -220,49 +220,49 @@ Ext.onReady(function() {
 							if (result.success == true) {
 								JcgxBuild.grid.store.reload();
 								JcgxBuild.reloadTree();
-								MyExt.Msg.alert("删除操作成功！");
+								MyExt.Msg.alert(i18n.JcgxBuild.deleteOk);
 							} else {
 								alertFail(result.errMsg);
 							}
 						},
 						failure: function(response, options) {
 							if (self.loadMask) self.loadMask.hide();
-							MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+							MyExt.Msg.alert(i18n.JcgxBuild.false+"\n" + response.status + "\n" + response.responseText);
 						}
 					});
 				});
 			}
 		}, '->', {
-			text:'置顶', iconCls:'moveTopIcon', handler: function() {
+			text:i18n.JcgxBuild.moveTopIcon, iconCls:'moveTopIcon', handler: function() {
 				JcgxBuild.moveOrder(JcgxBuild.grid, ORDER_TYPE_TOP);
 			}
 		}, {
-			text:'上移', iconCls:'moveUpIcon', handler: function() {
+			text:i18n.JcgxBuild.moveUpIcon, iconCls:'moveUpIcon', handler: function() {
 				JcgxBuild.moveOrder(JcgxBuild.grid, ORDER_TYPE_PRE);
 			}
 		}, {
-			text:'下移', iconCls:'moveDownIcon', handler: function() {
+			text:i18n.JcgxBuild.moveDownIcon, iconCls:'moveDownIcon', handler: function() {
 				JcgxBuild.moveOrder(JcgxBuild.grid, ORDER_TYPE_NEX);
 			}
 		}, {
-			text:'置底', iconCls:'moveBottomIcon', handler: function() {
+			text:i18n.JcgxBuild.moveBottom, iconCls:'moveBottomIcon', handler: function() {
 				JcgxBuild.moveOrder(JcgxBuild.grid, ORDER_TYPE_BOT);
 			}
 		}],
 		fields: [{
-			header: '主键', dataIndex: 'coID', hidden: true
+			header: i18n.JcgxBuild.coID, dataIndex: 'coID', hidden: true
 		}, {
-			header: '父类节点', dataIndex: 'fjdID', hidden: true
+			header: i18n.JcgxBuild.fjdID, dataIndex: 'fjdID', hidden: true
 		}, {
-			header: '顺序号', dataIndex: 'seqNo',editor: { readOnly: true }
+			header: i18n.JcgxBuild.seqNo, dataIndex: 'seqNo',editor: { readOnly: true }
 		}, {
-			header: '分类编码', dataIndex: 'flbm', editor: { readOnly: true }, width: 80
+			header: i18n.JcgxBuild.flbm, dataIndex: 'flbm', editor: { readOnly: true }, width: 80
 		}, {
-			header: '分类名称', dataIndex: 'flmc', editor: { readOnly: true }, width: 200
+			header: i18n.JcgxBuild.flmc, dataIndex: 'flmc', editor: { readOnly: true }, width: 200
 		}, {
-			header: '分类简称', dataIndex: 'fljc', editor: { readOnly: true },  width: 100
+			header: i18n.JcgxBuild.fljc, dataIndex: 'fljc', editor: { readOnly: true },  width: 100
 		}, {
-			header: '位置名称', dataIndex: 'wzmc', width: 100,
+			header: i18n.JcgxBuild.wzmc, dataIndex: 'wzmc', width: 100,
 			editor: {
 				id: "wzmc_id",
 				selectOnFocus:false, typeAhead:false,
@@ -289,15 +289,15 @@ Ext.onReady(function() {
  				 }
 			}
 		}, {
-			header: '位置名称编码', dataIndex: 'wzdm',hidden:true,
+			header: i18n.JcgxBuild.wzdm, dataIndex: 'wzdm',hidden:true,
 			editor: { id: "wzdm_id" }
 		}, {
-			header: '专业类型',
+			header: i18n.JcgxBuild.zylxID,
 			dataIndex: 'zylxID',
 			editor: {
 				id: 'id_zylx_id',
 				xtype: "ProfessionalType_comboTree",
-				fieldLabel: "专业类型",
+				fieldLabel: i18n.JcgxBuild.zylxID,
 				hiddenName: "zylxID",
 				returnField: [{ widgetId: "id_zylx", propertyName: "text" }],
 				selectNodeModel: "all"
@@ -306,9 +306,9 @@ Ext.onReady(function() {
 				return record.get('zylx');
 			}
 		}, {
-			header: '专业类型', dataIndex: 'zylx', hidden: true, editor: { id: "id_zylx" }
+			header: i18n.JcgxBuild.zylxID, dataIndex: 'zylx', hidden: true, editor: { id: "id_zylx" }
 		}, {
-			header: '检修专用', dataIndex: 'jxzy', width: 60, align: 'center',
+			header: i18n.JcgxBuild.jxzy, dataIndex: 'jxzy', width: 60, align: 'center',
 			editor: {
 				xtype: 'combo',
 				fieldLabel: '',
@@ -316,7 +316,7 @@ Ext.onReady(function() {
 				hiddenName: 'jxzy',
 				store: new Ext.data.SimpleStore({
 					fields: ['v', 't'],
-					data: [[1, '是'], [0, '否']]
+					data: [[1, i18n.JcgxBuild.Y], [0, i18n.JcgxBuild.N]]
 				}),
 				valueField: 'v',
 				displayField: 't',
@@ -325,12 +325,12 @@ Ext.onReady(function() {
 				editable: false
 			},
 			renderer: function(v) {
-				if (v == 1) return "是";
-				if (v == 0) return "否";
+				if (v == 1) return i18n.JcgxBuild.Y;
+				if (v == 0) return i18n.JcgxBuild.N;
 				return "";
 			}
 		}, {
-			header: '整备专用', dataIndex: 'sfzbzy', width: 60, align: 'center',
+			header: i18n.JcgxBuild.sfzbzy, dataIndex: 'sfzbzy', width: 60, align: 'center',
 			editor: {
 				xtype: 'combo',
 				fieldLabel: '',
@@ -338,7 +338,7 @@ Ext.onReady(function() {
 				hiddenName: 'sfzbzy',
 				store: new Ext.data.SimpleStore({
 					fields: ['v', 't'],
-					data: [[1, '是'], [0, '否']]
+					data: [[1, i18n.JcgxBuild.Y], [0, i18n.JcgxBuild.N]]
 				}),
 				valueField: 'v',
 				displayField: 't',
@@ -347,12 +347,12 @@ Ext.onReady(function() {
 				editable: false
 			},
 			renderer: function(v) {
-				if (v == 1) return "是";
-				if (v == 0) return "否";
+				if (v == 1) return i18n.JcgxBuild.Y;
+				if (v == 0) return i18n.JcgxBuild.N;
 				return "";
 			}
 		}, {
-			header: '电子档案专用', dataIndex: 'sfsyDzda', width: 80, align: 'center',
+			header: i18n.JcgxBuild.sfsyDzda, dataIndex: 'sfsyDzda', width: 80, align: 'center',
 			editor: {
 				xtype: 'combo',
 				fieldLabel: '',
@@ -360,7 +360,7 @@ Ext.onReady(function() {
 				hiddenName: 'sfsyDzda',
 				store: new Ext.data.SimpleStore({
 					fields: ['v', 't'],
-					data: [[1, '是'], [0, '否']]
+					data: [[1, i18n.JcgxBuild.Y], [0, i18n.JcgxBuild.N]]
 				}),
 				valueField: 'v', displayField: 't',
 				triggerAction: 'all',
@@ -368,24 +368,24 @@ Ext.onReady(function() {
 				editable: false
 			},
 			renderer: function(v) {
-				if (v == 1) return "是";
-				if (v == 0) return "否";
+				if (v == 1) return i18n.JcgxBuild.Y;
+				if (v == 0) return i18n.JcgxBuild.N;
 				return "";
 			}
 		}, {
-			header: '构型位置全名', dataIndex: 'wzqm',editor: { readOnly: true }, width: 320
+			header: i18n.JcgxBuild.wzqm, dataIndex: 'wzqm',editor: { readOnly: true }, width: 320
 		}, {
-			header: '零部件名称编码', dataIndex: 'lbjbm', hidden: true
+			header: i18n.JcgxBuild.lbjbm, dataIndex: 'lbjbm', hidden: true
 		}, {
-			header: '拼音简称 ', dataIndex: 'pyjc', hidden: true
+			header: i18n.JcgxBuild.pyjc, dataIndex: 'pyjc', hidden: true
 		}, {
-			header: '是否有子节点', dataIndex: 'coHaschild', hidden: true
+			header: i18n.JcgxBuild.coHaschild, dataIndex: 'coHaschild', hidden: true
 		}, {
-			header: '构型位置编码', dataIndex: 'gxwzbm', hidden: true
+			header: i18n.JcgxBuildgxwzbm, dataIndex: 'gxwzbm', hidden: true
 		}, {
-			header: '车型', dataIndex: 'sycx', hidden: true
+			header: i18n.JcgxBuild.sycx, dataIndex: 'sycx', hidden: true
 		}, {
-			header: '记录状态', dataIndex: 'recordStatus', hidden: true
+			header: i18n.JcgxBuild.recordStatus, dataIndex: 'recordStatus', hidden: true
 		}],
 		listeners: {
 			cellclick:function(grid, rowIndex, columnIndex, e) {
@@ -431,42 +431,42 @@ Ext.onReady(function() {
 		deleteURL: ctx + "/jcxtflFault!delete.action",
 		storeAutoLoad: false,
 		tbar: [{
-			text: "选择故障现象", iconCls: 'addIcon', handler: function() {
+			text: i18n.JcgxBuild.choicemalfunction, iconCls: 'addIcon', handler: function() {
 				JcxtflFault.win.show();
 			}
 		},{
-			text: "新增故障现象", iconCls: 'addIcon',hidden:true, handler: function() {
+			text: i18n.JcgxBuild.addmalfunction, iconCls: 'addIcon',hidden:true, handler: function() {
 				JcxtflFault.formWin.show();
 			}
 		}, 'delete', '->',{
-			text:'置顶', iconCls:'moveTopIcon', handler: function() {
+			text:i18n.JcgxBuild.moveTopIcon, iconCls:'moveTopIcon', handler: function() {
 				JcgxBuild.moveOrderFault(JcgxBuild.jcxtflFaultGrid, ORDER_TYPE_TOP);
 			}
 		}, {
-			text:'上移', iconCls:'moveUpIcon', handler: function() {
+			text:i18n.JcgxBuild.moveUpIcon, iconCls:'moveUpIcon', handler: function() {
 				JcgxBuild.moveOrderFault(JcgxBuild.jcxtflFaultGrid, ORDER_TYPE_PRE);
 			}
 		}, {
-			text:'下移', iconCls:'moveDownIcon', handler: function() {
+			text:i18n.JcgxBuild.moveDownIcon, iconCls:'moveDownIcon', handler: function() {
 				JcgxBuild.moveOrderFault(JcgxBuild.jcxtflFaultGrid, ORDER_TYPE_NEX);
 			}
 		}, {
-			text:'置底', iconCls:'moveBottomIcon', handler: function() {
+			text:i18n.JcgxBuild.moveBottom, iconCls:'moveBottomIcon', handler: function() {
 				JcgxBuild.moveOrderFault(JcgxBuild.jcxtflFaultGrid, ORDER_TYPE_BOT);				
 			}
 		}],
 		fields: [{
-			header: '主键', dataIndex: 'idx', hidden: true
+			header: i18n.JcgxBuild.coID, dataIndex: 'idx', hidden: true
 		}, {
-			header: '顺序号', dataIndex: 'seqNo',editor: { readOnly: true }
+			header: i18n.JcgxBuild.seqNo, dataIndex: 'seqNo',editor: { readOnly: true }
 		}, {
-			header: '分类编码', dataIndex: 'flbm'
+			header: i18n.JcgxBuild.flbm, dataIndex: 'flbm'
 		}, {
-			header: '故障现象编码', dataIndex: 'faultId'
+			header: i18n.JcgxBuild.faultId, dataIndex: 'faultId'
 		}, {
-			header: '故障现象名称', dataIndex: 'faultName'
+			header: i18n.JcgxBuild.faultName, dataIndex: 'faultName'
 		}, {
-			header: '故障类型', dataIndex: 'faultTypeName'
+			header: i18n.JcgxBuild.faultTypeName, dataIndex: 'faultTypeName'
 		}],
 		toEditFn: function() {
 		}
@@ -481,7 +481,7 @@ Ext.onReady(function() {
 
 	/** 构建节点位置全名 */
 	JcgxBuild.updateWzqm = function() {
-		Ext.Msg.confirm("提示", "是否确认重新设置构型位置全名？", function(btn) {
+		Ext.Msg.confirm(i18n.JcgxBuild.prompt, i18n.JcgxBuild.confirmPosition, function(btn) {
 			if (btn == 'yes') {
 				if (self.loadMask) self.loadMask.show();
 				Ext.Ajax.request({
@@ -493,14 +493,14 @@ Ext.onReady(function() {
 						var result = Ext.util.JSON.decode(response.responseText);
 						if (result.success == true) {
 							JcgxBuild.grid.store.reload();
-							alertSuccess("构型位置全名构建成功！");
+							alertSuccess(i18n.JcgxBuild.success);
 						} else {
 							alertFail(result.errMsg);
 						}
 					},
 					failure: function(response, options) {
 						if (self.loadMask) self.loadMask.hide();
-						MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+						MyExt.Msg.alert(i18n.JcgxBuild.false+"\n" + response.status + "\n" + response.responseText);
 					}
 				});
 			}
@@ -514,7 +514,7 @@ Ext.onReady(function() {
 	
 	/** 导入机车构型 */
 	JcgxBuild.importWin = new Ext.Window({
-		title:"导入机车构型",
+		title:i18n.JcgxBuild.loadTrain,
 		width:450, height:120,
 		plain:true, maximizable:false, modal: true,
 		closeAction:"hide",
@@ -529,12 +529,12 @@ Ext.onReady(function() {
 			baseCls: "x-plain", defaults:{anchor:"100%"},
 			labelWidth:80,
 			items:[{
-				fieldLabel:'选择文件',
+				fieldLabel:i18n.JcgxBuild.choiceFile,
 				name:'jcgx',
 				xtype: "fileuploadfield",
 				allowBlank:false,
 				editable:false,
-				buttonText: '浏览文件...'
+				buttonText: i18n.JcgxBuild.browseFile
 			}]
 		}],
 		listeners:{
@@ -545,7 +545,7 @@ Ext.onReady(function() {
 		},
 		buttonAlign:'center',
 		buttons:[{
-			text: "导入", iconCls: "saveIcon", handler: function(){
+			text: i18n.JcgxBuild.load, iconCls: "saveIcon", handler: function(){
 				var window = this.findParentByType('window');
 				var form = window.find('xtype', 'form')[0].getForm();
 				if (!form.isValid()) {
@@ -554,13 +554,13 @@ Ext.onReady(function() {
 				var filePath = window.find('name', 'jcgx')[0].getValue();
 				var hzm = filePath.substring(filePath.lastIndexOf("."));
 				if(hzm !== ".xls"){
-					MyExt.Msg.alert('该功能仅支持<span style="color:red;"> Excel2003（*.xls） </span>版本文件！');
+					MyExt.Msg.alert(i18n.JcgxBuild.msg+'<span style="color:red;"> Excel2003（*.xls） </span>'+i18n.JcgxBuild.msg1);
 					return;
 				}
 				form.submit({
                 	url: ctx+'/jcgxBuild!saveImport.action?shortName=' + JcgxBuild.shortName,
-                	waitTitle:'请稍候',
-               	 	waitMsg: '正在导入数据请稍候...', 
+                	waitTitle:i18n.JcgxBuild.wait,
+               	 	waitMsg: i18n.JcgxBuild.loading, 
                	 	method: 'POST',
                	 	enctype: 'multipart/form-data',
                 	// 请求成功后的回调函数
@@ -583,13 +583,13 @@ Ext.onReady(function() {
                 		if (!Ext.isEmpty(result.errMsg)) {
  							alertFail(result.errMsg);
                 		} else {
-				       	 	Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + action.response.status + "\n" + action.response.responseText);
+				       	 	Ext.Msg.alert(i18n.JcgxBuild.prompt, i18n.JcgxBuild.false+"\n" + action.response.status + "\n" + action.response.responseText);
                 		}
 				    }
             	}); 
 			}
 		}, {
-			text:'关闭', iconCls:'closeIcon', handler: function() {
+			text:i18n.JcgxBuild.close, iconCls:'closeIcon', handler: function() {
 				this.findParentByType('window').hide();
 			}
 		}]
@@ -597,7 +597,7 @@ Ext.onReady(function() {
 	
 	/** 打开机车构型导入窗口 */
 	JcgxBuild.openImportWin = function() {
-		Ext.Msg.confirm("提示", "导入构型将删除该车型已有构型数据，是否继续？", function(btn) {
+		Ext.Msg.confirm(i18n.JcgxBuild.prompt, i18n.JcgxBuild.loadingOrNot, function(btn) {
 			if (btn == 'yes') {
 				JcgxBuild.importWin.show();
 			}
@@ -606,24 +606,24 @@ Ext.onReady(function() {
 
 	// 定义机车构型维护窗口
 	JcgxBuild.win = new Ext.Window({
-		title: "机车构型维护", maximized: true, layout: "border", closeAction: "hide",
+		title: i18n.JcgxBuild.lcm, maximized: true, layout: "border", closeAction: "hide",
 		items: [{
 			region: "west",
 			width: 279,
 			collapsible: true,
 			iconCls: 'icon-expand-all',
-			title: '<span style="font-weight:normal">机车构型节点树<span style="color:gray;">（*可拖动）</span></span>',
+			title: '<span style="font-weight:normal">'+i18n.JcgxBuild.lcnt+'<span style="color:gray;">（*'+i18n.JcgxBuild.cbd+'）</span></span>',
 			bbar: [
 			{
-				text: '<span style="color:gray;">模板下载</span>', iconCls: 'downloadIcon', handler: JcgxBuild.downloadGxTemp
+				text: '<span style="color:gray;">'+i18n.JcgxBuild.td+'</span>', iconCls: 'downloadIcon', handler: JcgxBuild.downloadGxTemp
 			},
 			'-',
 			{
-				text: '<span style="color:gray;">导入</span>', iconCls: 'page_excelIcon', handler: JcgxBuild.openImportWin
+				text: '<span style="color:gray;">'+i18n.JcgxBuild.import+'</span>', iconCls: 'page_excelIcon', handler: JcgxBuild.openImportWin
 			},
 			'-',
 			{
-				text: '<span style="color:gray;">构建节点位置全名</span>', iconCls: 'configIcon', handler: JcgxBuild.updateWzqm
+				text: '<span style="color:gray;">'+i18n.JcgxBuild.bnfn+'</span>', iconCls: 'configIcon', handler: JcgxBuild.updateWzqm
 			}],
 			tools: [{
 				id: 'refresh', handler: function() {
@@ -638,14 +638,14 @@ Ext.onReady(function() {
 			activeTab: 0,
 			region: "center",
 			items: [{
-				title: "下级系统分类", layout: "fit", items: [JcgxBuild.grid]
+				title: i18n.JcgxBuild.ssc, layout: "fit", items: [JcgxBuild.grid]
 			}, {
-				title: "故障现象", layout: "fit", items: [JcgxBuild.jcxtflFaultGrid]
+				title: i18n.JcgxBuild.sym, layout: "fit", items: [JcgxBuild.jcxtflFaultGrid]
 			}]
 		}],
 		buttonAlign: 'center',
 		buttons: [{
-			text: '关闭', iconCls: 'closeIcon', handler: function() {
+			text: i18n.JcgxBuild.close, iconCls: 'closeIcon', handler: function() {
 				JcgxBuild.tree.getSelectionModel().clearSelections();
 				this.findParentByType('window').hide();
 			}
