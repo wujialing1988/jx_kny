@@ -8,7 +8,7 @@ Ext.onReady(function(){
 
 		/** 导入车辆构型分类 */
 	JcxtflBuildWh.importWin = new Ext.Window({
-		title:"导入车辆构型分类", 
+		title:i18n.JcxtflBuildWh.title, 
 		width:450, height:120, 
 		plain:true, maximizable:false, modal: true,
 		closeAction:"hide",
@@ -23,12 +23,12 @@ Ext.onReady(function(){
 			baseCls: "x-plain", defaults:{anchor:"100%"},
 			labelWidth:80,
 			items:[{
-				fieldLabel:'选择文件',
+				fieldLabel:i18n.JcxtflBuildWh.choiceFile,
 				name:'jcxtfl',
 				xtype: "fileuploadfield",
 				allowBlank:false,
 				editable:false,
-				buttonText: '浏览文件...'
+				buttonText: i18n.JcxtflBuildWh.browseFile
 			}]
 		}],
 		listeners:{
@@ -39,7 +39,7 @@ Ext.onReady(function(){
 		},
 		buttonAlign:'center', 
 		buttons:[{
-			text: "导入", iconCls: "saveIcon", handler: function(){
+			text: i18n.JcxtflBuildWh.load, iconCls: "saveIcon", handler: function(){
 				var window = this.findParentByType('window');
 				var form = window.find('xtype', 'form')[0].getForm();
 				if (!form.isValid()) {
@@ -48,13 +48,13 @@ Ext.onReady(function(){
 				var filePath = window.find('name', 'jcxtfl')[0].getValue();
 				var hzm = filePath.substring(filePath.lastIndexOf("."));
 				if(hzm !== ".xls"){
-					MyExt.Msg.alert('该功能仅支持<span style="color:red;"> Excel2003（*.xls） </span>版本文件！');
+					MyExt.Msg.alert(i18n.JcxtflBuildWh.msg);
 					return;
 				}
 				form.submit({  
                 	url: ctx+'/jcxtflBuild!saveImport.action',  
-                	waitTitle:'请稍候',
-               	 	waitMsg: '正在导入数据请稍候...', 
+                	waitTitle:i18n.JcxtflBuildWh.wait,
+               	 	waitMsg: i18n.JcxtflBuildWh.loading, 
                	 	method: 'POST',
                	 	enctype: 'multipart/form-data',
                 	// 请求成功后的回调函数
@@ -77,13 +77,13 @@ Ext.onReady(function(){
                 		if (!Ext.isEmpty(result.errMsg)) {
  							alertFail(result.errMsg);
                 		} else {
-				       	 	Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + action.response.status + "\n" + action.response.responseText);
+				       	 	Ext.Msg.alert(i18n.JcxtflBuildWh.prompt, i18n.JcxtflBuildWh.false+"\n" + action.response.status + "\n" + action.response.responseText);
                 		}
 				    }
             	}); 
 			}
 		}, {
-			text:'关闭', iconCls:'closeIcon', handler: function() {
+			text:i18n.JcxtflBuildWh.close, iconCls:'closeIcon', handler: function() {
 				this.findParentByType('window').hide();
 			}
 		}]
@@ -96,11 +96,11 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 		storeId: 'coID',
 		tbar: ['search','add',{
-			text: "删除",
+			text: i18n.JcxtflBuildWh.delete,
 			iconCls: "deleteIcon",
 			handler: function() {
 				if (!$yd.isSelectedRecord(JcxtflBuildWh.grid)) return;
-				Ext.Msg.confirm("提示  ", "该操作将不能恢复，是否继续？  ", function(btn) {
+				Ext.Msg.confirm(i18n.JcxtflBuildWh.prompt, i18n.JcxtflBuildWh.YN, function(btn) {
 					if (btn != 'yes') return;
 					if (self.loadMask) self.loadMask.show();
 					Ext.Ajax.request({
@@ -114,47 +114,47 @@ Ext.onReady(function(){
 							if (result.success == true) {
 								JcxtflBuildWh.grid.store.reload();
 								JcxtflBuildWh.reloadTree(JcxtflBuildWh.treePath);
-								MyExt.Msg.alert("删除操作成功！");
+								MyExt.Msg.alert(i18n.JcxtflBuildWh.deleteOk);
 							} else {
 								alertFail(result.errMsg);
 							}
 						},
 						failure: function(response, options) {
 							if (self.loadMask) self.loadMask.hide();
-							MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+							MyExt.Msg.alert(i18n.JcxtflBuildWh.false+"\n" + response.status + "\n" + response.responseText);
 						}
 					});
 				});
 			}
 		}, '->', '-', {
-			text: '下载车辆构型系统分类', iconCls:"page_excelIcon", handler: function() {
-				var url = ctx + '/jsp/jcbm/jxctfl/机车构型系统分类导入(t_Jcbm_Jcxtfl).xls';
+			text: i18n.JcxtflBuildWh.textD, iconCls:"page_excelIcon", handler: function() {
+				var url = ctx + '/jsp/jcbm/jxctfl/'+i18n.JcxtflBuildWh.importXLS+'(t_Jcbm_Jcxtfl).xls';
 				window.open(url, '_self', 'width:0,height:0');
 			}
 		}, {
-			text: '导入车辆构型系统分类', iconCls:"page_excelIcon", handler: function() {
+			text:i18n.JcxtflBuildWh.textU, iconCls:"page_excelIcon", handler: function() {
 				JcxtflBuildWh.importWin.show();
 			}
 		}],
 		fields: [{
-			header:'idx主键', dataIndex:'coID', hidden:true, editor: { xtype:'hidden' }
+			header:i18n.JcxtflBuildWh.coID, dataIndex:'coID', hidden:true, editor: { xtype:'hidden' }
 		},{
-			header:'父节点ID', dataIndex:'fjdID', hidden:true, editor: { xtype:'hidden' }
+			header:i18n.JcxtflBuildWh.fjdID, dataIndex:'fjdID', hidden:true, editor: { xtype:'hidden' }
 		},{
-			header:'是否有子节点', dataIndex:'coHaschild', hidden:true, editor: { xtype:'hidden' }
+			header:i18n.JcxtflBuildWh.coHaschild, dataIndex:'coHaschild', hidden:true, editor: { xtype:'hidden' }
 		},{
-			header:'分类编码', dataIndex:'flbm',editor:{  maxLength:50, allowBlank: false }
+			header:i18n.JcxtflBuildWh.flbm, dataIndex:'flbm',editor:{  maxLength:50, allowBlank: false }
 		},{
-			header:'分类名称', dataIndex:'flmc',editor:{  maxLength:50, allowBlank: false }
+			header:i18n.JcxtflBuildWh.flmc, dataIndex:'flmc',editor:{  maxLength:50, allowBlank: false }
 		},{
-			header:'分类简称', dataIndex:'fljc',editor:{  maxLength:50, allowBlank: false }
+			header:i18n.JcxtflBuildWh.fljc, dataIndex:'fljc',editor:{  maxLength:50, allowBlank: false }
 		},{
-			header: '专业类型',
+			header: i18n.JcxtflBuildWh.professionType,
 			dataIndex: 'zylxID',
 			editor: {
 				id: 'id_zylx_id',
 				xtype: "ProfessionalType_comboTree",
-				fieldLabel: "专业类型",
+				fieldLabel: i18n.JcxtflBuildWh.professionType,
 				hiddenName: "zylxID",
 				returnField: [{ widgetId: "id_zylx", propertyName: "text" }],
 				selectNodeModel: "all"
@@ -163,13 +163,13 @@ Ext.onReady(function(){
 				return record.get('zylx');
 			}
 		}, {
-			header: '专业类型', dataIndex: 'zylx', hidden: true, editor: { id: "id_zylx" }
+			header: i18n.JcxtflBuildWh.professionType, dataIndex: 'zylx', hidden: true, editor: { id: "id_zylx" }
 		},{
-			header:'拼音简称', dataIndex:'pyjc',editor:{  maxLength:50, readOnly:true }
+			header:i18n.JcxtflBuildWh.pyjc, dataIndex:'pyjc',editor:{  maxLength:50, readOnly:true }
 		},{
-			header:'零部件名称编码', dataIndex:'lbjbm'
+			header:i18n.JcxtflBuildWh.lbjbm, dataIndex:'lbjbm'
 		},{
-			header:'适用车辆车型', dataIndex:'sycx', editor: { xtype : 'JobProcessDefSelect',allowBlank: false, onTriggerClick:function(){
+			header:i18n.JcxtflBuildWh.sycx, dataIndex:'sycx', editor: { xtype : 'JobProcessDefSelect',allowBlank: false, onTriggerClick:function(){
 				if (JcxtflBuildWh.editRowRec && JcxtflBuildWh.editRowRec.data.sycx) {
 				    TrainType.trainVehicleCode = JcxtflBuildWh.editRowRec.data.sycx.replace(/\//g, ',');
 				}
@@ -193,7 +193,7 @@ Ext.onReady(function(){
 		beforeAddButtonFn: function(){
 			if(JcxtflBuildWh.nodeIDX == "" || JcxtflBuildWh.nodeIDX == null)
 			{
-				MyExt.Msg.alert("请选择父节点信息！");
+				MyExt.Msg.alert(i18n.JcxtflBuildWh.choiceFatherNode);
 				return false;
 			}else{
 				return true;   	
@@ -230,11 +230,11 @@ Ext.onReady(function(){
 	TrainType.submit = function(){
 		var sm = TrainType.grid.getSelectionModel();
 	    if (sm.getCount() < 1) {
-	        MyExt.Msg.alert("尚未选择一条记录！");
+	        MyExt.Msg.alert(i18n.JcxtflBuildWh.Nochoice);
 	        return;
 	    }
 	    if (sm.getCount() > 40) {
-	        MyExt.Msg.alert("最多只能选择40个车型！");
+	        MyExt.Msg.alert(i18n.JcxtflBuildWh.maxNum);
 	        return;
 	    }
 	    var objData = sm.getSelections();
@@ -277,7 +277,7 @@ Ext.onReady(function(){
 			dataUrl : ctx + "/jcxtflBuild!tree.action"
 		}),
 		root: new Ext.tree.AsyncTreeNode({
-		    text: '车辆系统分类',
+		    text: i18n.JcxtflBuildWh.trainSysCFication,
 	        id: "1",
 	        leaf: false,
 	        expanded :true,
@@ -339,14 +339,14 @@ Ext.onReady(function(){
 	JcxtflBuildWh.tabs = new Ext.TabPanel({
 	    activeTab: 0, frame:true, singleSelect: true,
 	    items:[{  
-	       id: "jcxtflBuildWhTab", title: '车辆系统分类', layout:'fit',items:[JcxtflBuildWh.grid]
+	       id: "jcxtflBuildWhTab", title: i18n.JcxtflBuildWh.trainSysCFication, layout:'fit',items:[JcxtflBuildWh.grid]
 	    }]
 	});
 	//页面自适应布局
 	var viewport = new Ext.Viewport({
 	    layout : 'border',
 	    items : [ {
-	        title: '车辆系统分类', width: 280, minSize: 160, maxSize: 400, split: true, region: 'west', bodyBorder: false,
+	        title:i18n.JcxtflBuildWh.trainSysCFication, width: 280, minSize: 160, maxSize: 400, split: true, region: 'west', bodyBorder: false,
 	        collapsible : true,
 		tools: [{
 			id: 'refresh', handler: function() {

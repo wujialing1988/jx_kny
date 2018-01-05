@@ -36,42 +36,42 @@ EmployeeSelect.grid = new Ext.yunda.Grid({
     storeAutoLoad: false, storeId : "empid",
     tbar:[{
 		xtype:"label",
-		text:"人员姓名："
+		text:i18n.EmpSelectEmp.empName
 	},{	            
         xtype:"textfield",  id:"empName_Id", width: 100
 	},{
-		text : "搜索", iconCls : "searchIcon", title: "按输入框条件查询", width: 40,
+		text : i18n.EmpSelectEmp.search, iconCls : "searchIcon", title: i18n.EmpSelectEmp.searchBy, width: 40,
 		handler : function(){
 			EmployeeSelect.grid.getStore().load();
 		}
 	},{
-		text : "确定",iconCls : "saveIcon", handler: function(){
+		text :i18n.EmpSelectEmp.confirm,iconCls : "saveIcon", handler: function(){
 			EmployeeSelect.submit(); 
 		}
 	},{
-		text : "取消",iconCls : "closeIcon", handler: function(){
+		text :i18n.EmpSelectEmp.cancle,iconCls : "closeIcon", handler: function(){
 			EmployeeSelect.selectWin.hide(); 
 		}
 	}],
 	fields: [{
-		header:'人员主键', dataIndex:'empid', hidden:true, editor:{  maxLength:8 } 
+		header:i18n.EmpSelectEmp.empid, dataIndex:'empid', hidden:true, editor:{  maxLength:8 } 
 	},{
-		header:"人员代码", dataIndex:"empcode",width:80,editor:{ } 
+		header:i18n.EmpSelectEmp.empcode, dataIndex:"empcode",width:80,editor:{ } 
 	},{
-		header:"人员名称", dataIndex:"empname",width:80,editor:{ } 
+		header:i18n.EmpSelectEmp.empName1, dataIndex:"empname",width:80,editor:{ } 
 	},{
-		header:"性别",dataIndex:"gender",width:60,editor:{ },
+		header:i18n.EmpSelectEmp.gender,dataIndex:"gender",width:60,editor:{ },
 		renderer : function(v){
-			if(v == 'm') return "男"
-			else if(v == 'f') return "女"
+			if(v == 'm') return i18n.EmpSelectEmp.M
+			else if(v == 'f') return i18n.EmpSelectEmp.W
 			else return null
 		}
 	},{
-		header:"单位ID",hidden:true, dataIndex:"orgid",editor:{ } 
+		header:i18n.EmpSelectEmp.orgid,hidden:true, dataIndex:"orgid",editor:{ } 
 	},{
-		header:"所属班组",dataIndex:"orgname",width:100,editor:{ } 
+		header:i18n.EmpSelectEmp.orgname,dataIndex:"orgname",width:100,editor:{ } 
 	},{
-		header:"人员状态",hidden:true, dataIndex:"empstatus",editor:{ } 
+		header:i18n.EmpSelectEmp.empStatus,hidden:true, dataIndex:"empstatus",editor:{ } 
 	}]
 });
 EmployeeSelect.grid.store.on('beforeload',function(){
@@ -79,14 +79,14 @@ EmployeeSelect.grid.store.on('beforeload',function(){
 	     this.baseParams.orgseq = EmployeeSelect.orgSeq;
 	});
 EmployeeSelect.selectWin = new Ext.Window({
-	title:"选择人员信息", maximizable:true,width:650, height:350, closeAction:"hide", modal:true, layout : "border",
+	title:i18n.EmpSelectEmp.empInforChoice, maximizable:true,width:650, height:350, closeAction:"hide", modal:true, layout : "border",
 			items : [new Ext.Panel({
 						width : 200,
 						minSize : 160,
 						maxSize : 280,
 						region : "west",
 						collapsible: true,
-						title : '<span style="font-weight:normal">机构树</span>',
+						title : '<span style="font-weight:normal">'+i18n.EmpSelectEmp.instituteTree+'</span>',
 			        	iconCls : 'icon-expand-all',
 			        	tools : [ {
 				            id : 'refresh',
@@ -108,7 +108,7 @@ EmployeeSelect.grid.un('rowdblclick', EmployeeSelect.grid.toEditFn, EmployeeSele
 EmployeeSelect.submit = function(){
 	   var records=EmployeeSelect.grid.selModel.getSelections();
 	   if(records.length<1){
-	   	  MyExt.Msg.alert("尚未选择一条记录！");
+	   	  MyExt.Msg.alert(i18n.EmpSelectEmp.Nochoice);
 	   	  return ;
 	   }
 	   var count=records.length;
@@ -140,7 +140,7 @@ EmployeeSelect.submit = function(){
 	            }
 	        },
 	        failure: function(response, options){
-	            MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+	            MyExt.Msg.alert(i18n.EmpSelectEmp.false+"\n" + response.status + "\n" + response.responseText);
 	        }
 	    });
 };
