@@ -44,11 +44,11 @@ Ext.onReady(function(){
         store: ZbglRdpPlanRecordCL.store,
         loadMask:true,
         columns: [
-            {header: "车型车号", width: 20, sortable: true,  dataIndex: 'trainTypeNo'},
-			{header: "专业分类", width: 20, sortable: true, dataIndex: 'wiName'},
-            {header: "处理人", width: 20, sortable: true,  dataIndex: 'handlePersonName'},
-            {header: "处理时间", width: 20, sortable: true,dataIndex: 'handleTime'},
-            {header: "状态", width: 20, sortable: true,  dataIndex: 'wiStatus',renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+            {header: i18n.PassengerInspectionPlan.trainTypeNum, width: 20, sortable: true,  dataIndex: 'trainTypeNo'},
+			{header: i18n.PassengerInspectionPlan.professionType, width: 20, sortable: true, dataIndex: 'wiName'},
+            {header: i18n.PassengerInspectionPlan.handlePerson, width: 20, sortable: true,  dataIndex: 'handlePersonName'},
+            {header: i18n.PassengerInspectionPlan.handleTime, width: 20, sortable: true,dataIndex: 'handleTime'},
+            {header: i18n.PassengerInspectionPlan.status, width: 20, sortable: true,  dataIndex: 'wiStatus',renderer: function(value, metaData, record, rowIndex, colIndex, store) {
             		return '<div style="background:'+ ZbglRdpPlanRecordCL.statusColorArrays[value] +';color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">' + ZbglRdpPlanRecordCL.statusArrays[value] + '</div>';
             	}
             }
@@ -63,13 +63,13 @@ Ext.onReady(function(){
         width: 700,
         tbar  : ['->',{
         	iconCls : 'icon-expand-all',
-            text:'全部展开',
+            text:i18n.PassengerInspectionPlan.expand,
             handler : function(){
             	ZbglRdpPlanRecordCL.grid.getView().expandAllGroups();
             }
         	} ,{
         	iconCls : 'icon-collapse-all',
-            text:'全部收缩',
+            text:i18n.PassengerInspectionPlan.collapse,
             handler : function(){
                 ZbglRdpPlanRecordCL.grid.getView().collapseAllGroups();
             }

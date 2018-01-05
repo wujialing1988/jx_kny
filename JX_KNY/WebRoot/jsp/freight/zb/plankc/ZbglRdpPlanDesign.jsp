@@ -128,6 +128,7 @@
 
 </script>
 <script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-TrainInspectionPlan.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/PassengerTransport/i18n-lang-PassengerInspectionPlan.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/jquery/jquery.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/freight/zb/plankc/TrainDemandSelectWin.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 

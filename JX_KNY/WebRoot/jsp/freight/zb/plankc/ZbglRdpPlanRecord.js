@@ -43,12 +43,12 @@ Ext.onReady(function(){
         store: ZbglRdpPlanRecord.store,
         loadMask:true,
         columns: [
-            {id:'wiName',header: "专业分类", width: 20, sortable: true, dataIndex: 'wiName'},
-            {header: "车型", width: 20, sortable: true,  dataIndex: 'trainTypeCode'},
-            {header: "车号", width: 20, sortable: true,  dataIndex: 'trainNo'},
-            {header: "处理人", width: 20, sortable: true,  dataIndex: 'handlePersonName'},
-            {header: "处理时间", width: 20, sortable: true,dataIndex: 'handleTime'},
-            {header: "状态", width: 20, sortable: true,  dataIndex: 'wiStatus',renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+            {id:'wiName',header: i18n.PassengerInspectionPlan.professionType, width: 20, sortable: true, dataIndex: 'wiName'},
+            {header: i18n.PassengerInspectionPlan.trainType, width: 20, sortable: true,  dataIndex: 'trainTypeCode'},
+            {header: i18n.PassengerInspectionPlan.trainNum, width: 20, sortable: true,  dataIndex: 'trainNo'},
+            {header: i18n.PassengerInspectionPlan.handlePerson, width: 20, sortable: true,  dataIndex: 'handlePersonName'},
+            {header: i18n.PassengerInspectionPlan.handleTime, width: 20, sortable: true,dataIndex: 'handleTime'},
+            {header: i18n.PassengerInspectionPlan.status, width: 20, sortable: true,  dataIndex: 'wiStatus',renderer: function(value, metaData, record, rowIndex, colIndex, store) {
             		return '<div style="background:'+ ZbglRdpPlanRecord.statusColorArrays[value] +';color:white;width:48px;height:18px;line-height:18px;text-align:center;border-radius:8px;margin-left:10px;">' + ZbglRdpPlanRecord.statusArrays[value] + '</div>';
             	}
             }
@@ -63,13 +63,13 @@ Ext.onReady(function(){
         width: 700,
         tbar  : ['->',{
         	iconCls : 'icon-expand-all',
-            text:'全部展开',
+            text:i18n.PassengerInspectionPlan.expand,
             handler : function(){
             	ZbglRdpPlanRecord.grid.getView().expandAllGroups();
             }
         	} ,{
         	iconCls : 'icon-collapse-all',
-            text:'全部收缩',
+            text:i18n.PassengerInspectionPlan.collapse,
             handler : function(){
                 ZbglRdpPlanRecord.grid.getView().collapseAllGroups();
             }
