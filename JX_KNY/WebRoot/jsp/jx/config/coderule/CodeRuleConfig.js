@@ -5,14 +5,14 @@ Ext.onReady(function(){
 //定义命名空间
 Ext.namespace("CodeRuleConfig");
 //显示处理等待状态的控件，必须在此定义，若在外部定义全局变量会刷新整个页面
-CodeRuleConfig.loadMask = new Ext.LoadMask(Ext.getBody(), { msg: "正在处理，请等待......" });
+CodeRuleConfig.loadMask = new Ext.LoadMask(Ext.getBody(), { msg: i18n.CodeRuleConfig.wait });
 //表单组件高宽等设置
 CodeRuleConfig.labelWidth = 100;
 CodeRuleConfig.fieldWidth = 180;
 
 //新增编辑窗口
 CodeRuleConfig.win = new Ext.Window({
-    title: "业务编码规则属性",	maximizable: true, 		width: 530, 	height: 400,
+    title: i18n.CodeRuleConfig.codingRules,	maximizable: true, 		width: 530, 	height: 400,
     plain: true,   	closeAction: "hide", 	layout: "fit",items:CodeRuleConfigProp.grid
 //    items: {
 //        xtype:"tabpanel",id:"CodeRuleConfig_win", activeTab:0, enableTabScroll:true, border:false,
@@ -45,15 +45,15 @@ CodeRuleConfig.grid = new Ext.yunda.RowEditorGrid({
     beforeeditFn: CodeRuleConfig.beforeeditFn,                              //编辑记录前触发的函数
 //    deleteButtonFn:CodeRuleConfigProp.deleteButtonFn,
     fields: [{                                                                //列、store、编辑控件，必须配置
-        header: '规则名称', dataIndex: 'ruleName', editor: { allowBlank: false }
+        header:i18n.CodeRuleConfig.ruleName, dataIndex: 'ruleName', editor: { allowBlank: false }
     },{
-        header: '功能点', dataIndex: 'ruleFunction',  editor: { allowBlank: false }     
-    },{ header: "操作", dataIndex:"operate",renderer: function(value, metaData, record, rowIndex, colIndex, store){ 
+        header: i18n.CodeRuleConfig.ruleFunction, dataIndex: 'ruleFunction',  editor: { allowBlank: false }     
+    },{ header:i18n.CodeRuleConfig.operate, dataIndex:"operate",renderer: function(value, metaData, record, rowIndex, colIndex, store){ 
         	var html = "";
     		html = "<span><a href='#' onclick='CodeRuleConfig.showProWin(" + rowIndex + ")'>属性配置</a></span>";
             return html;
         },searcher:{disabled:true}},{
-        header: 'idx主键', dataIndex: 'idx', hidden: true
+        header: 'i18n.CodeRuleConfig.idx', dataIndex: 'idx', hidden: true
     }],
     defaultData: {idx: null},                 //新增时默认Record记录值，必须配置
   	searchFn: function(searchParam){
@@ -65,7 +65,7 @@ CodeRuleConfig.showProWin = function(idx){
 			if(CodeRuleConfig.grid.searchWin != null) CodeRuleConfig.grid.searchWin.hide();
             var r = CodeRuleConfig.grid.store.getAt(idx);
 //                CodeRuleConfig.win.setIconClass("edit1Icon");
-            CodeRuleConfig.win.setTitle("业务编码规则属性");
+            CodeRuleConfig.win.setTitle(i18n.CodeRuleConfig.codingRules);
             CodeRuleConfig.win.show();
         	CodeRuleConfigProp.ruleIDX = r.get("idx");
         	CodeRuleConfigProp.grid.store.on("beforeload", function(){

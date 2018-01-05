@@ -12,7 +12,7 @@ OrgDicItem.grid = new Ext.yunda.Grid({
     storeAutoLoad: false,
     storeId: "id.orgId",
     tbar: [{
-	    	text: '新增',
+	    	text: i18n.OrgDicItem.add,
 	    	iconCls: 'addIcon',
 	    	handler: function(){
 	    		TeamSelect.selectWin.show();
@@ -20,13 +20,13 @@ OrgDicItem.grid = new Ext.yunda.Grid({
 	    	}
 	    },'delete','refresh'],
 	fields: [{
-		header:'字典编码', dataIndex:'id.dictTypeId', hidden:true, editor: { xtype:'hidden' }
+		header:i18n.OrgDicItem.dicCode, dataIndex:'id.dictTypeId', hidden:true, editor: { xtype:'hidden' }
 	},{
-		header:'部门ID', dataIndex:'id.orgId', hidden:true, editor: { xtype:'hidden' }
+		header:i18n.OrgDicItem.departmentID, dataIndex:'id.orgId', hidden:true, editor: { xtype:'hidden' }
 	},{
-		header:'部门序列', dataIndex:'orgSeq', editor:{  maxLength:200 }
+		header:i18n.OrgDicItem.departmentSeq, dataIndex:'orgSeq', editor:{  maxLength:200 }
 	},{
-		header:'部门名称', dataIndex:'orgName', editor:{  maxLength:100 }
+		header:i18n.OrgDicItem.departmentName, dataIndex:'orgName', editor:{  maxLength:100 }
 	}],
 	deleteButtonFn: function(){                         //点击删除按钮触发的函数，默认执行删除操作
         if(this.saveWin)    this.saveWin.hide();

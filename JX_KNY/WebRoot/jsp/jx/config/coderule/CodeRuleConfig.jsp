@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>业务编码规则配置</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-CodeRuleConfig.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/config/coderule/CodeRuleConfigProp.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/config/coderule/CodeRuleConfig.js"></script>
 </head>
