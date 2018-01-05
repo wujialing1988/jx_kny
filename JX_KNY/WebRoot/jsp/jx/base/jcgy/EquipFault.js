@@ -8,13 +8,13 @@ Ext.onReady(function(){
 	    saveURL: ctx + '/equipFault!saveOrUpdate.action',            //保存数据的请求URL
 	    deleteURL: ctx + '/equipFault!delete.action',           	 //删除数据的请求URL
 		fields: [{
-			header:'故障编号', dataIndex:'FaultID', editor:{ allowBlank:false }
+			header:i18n.EquipFault.FaultID, dataIndex:'FaultID', editor:{ allowBlank:false }
 		},{
-			header:'故障名称', dataIndex:'FaultName', editor:{ allowBlank:false }
+			header:i18n.EquipFault.FaultName, dataIndex:'FaultName', editor:{ allowBlank:false }
 		},{
-			header:'故障类别id', dataIndex:'FaultTypeID',hidden:true, editor:{ xtype:'hidden',id:'FaultTypeID'  }
+			header:i18n.EquipFault.FaultTypeID, dataIndex:'FaultTypeID',hidden:true, editor:{ xtype:'hidden',id:'FaultTypeID'  }
 		},{
-			header:'故障类别', dataIndex:'FaultTypeName',hidden:false, editor:{
+			header:i18n.EquipFault.FaultTypeName, dataIndex:'FaultTypeName',hidden:false, editor:{
 				id:'FaultTypeName_combo',
 				xtype: 'EosDictEntry_combo',
 				hiddenName: 'FaultTypeName',
