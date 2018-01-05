@@ -15,7 +15,7 @@ Ext.namespace('AcMenu');                       //定义命名空间
 	        dataUrl : ctx + "/menu!tree.action"
 	    }),            
 	    root: new Ext.tree.AsyncTreeNode({
-	        text:'系统菜单',  id: "null", leaf: false, expanded:true, iconCls : 'chart_organisationIcon'
+	        text:i18n.AcMenu.sysMenu,  id: "null", leaf: false, expanded:true, iconCls : 'chart_organisationIcon'
 	    }),
 	    listeners: {
 	        'click': function(node, e) {
@@ -39,7 +39,7 @@ Ext.namespace('AcMenu');                       //定义命名空间
 	    storeId:'menuid',
 	    fieldWidth: 250,
 	    fields: [{
-	            header:'菜单编号', dataIndex:'menuid', hidden:false, 
+	            header:i18n.AcMenu.menuNum, dataIndex:'menuid', hidden:false, 
 	            editor: {id:'_menuid_0', maxLength:40, allowBlank:false, vtype:'alphanum2', enableKeyEvents:true,
 	            	listeners : {
 	            		keyup : function (){
@@ -47,7 +47,7 @@ Ext.namespace('AcMenu');                       //定义命名空间
 	            		}
 	            	}}
 	        },{
-	            header:'菜单名称', dataIndex:'menuname', 
+	            header:i18n.AcMenu.menuName, dataIndex:'menuname', 
 	            editor:{  maxLength:20, allowBlank:false, vtype:'validChar', enableKeyEvents:true,
 	            	listeners: {
 	            		keyup : function (){
@@ -55,29 +55,29 @@ Ext.namespace('AcMenu');                       //定义命名空间
 	            		}
 	            	}}
 	        },{
-	            header:'菜单显示名称', dataIndex:'menulabel', editor:{ id:'_menulabel_0', maxLength:20, allowBlank:false,vtype:'validChar' }
+	            header:i18n.AcMenu.menulabel, dataIndex:'menulabel', editor:{ id:'_menulabel_0', maxLength:20, allowBlank:false,vtype:'validChar' }
 	        },{
-	            header:'菜单代码', dataIndex:'menucode', editor:{ id:'_menucode_0', maxLength:40, vtype:'alphanum2' }
+	            header:i18n.AcMenu.menucode, dataIndex:'menucode', editor:{ id:'_menucode_0', maxLength:40, vtype:'alphanum2' }
 	        },{
-	            header:'功能调用入口', dataIndex:'menuaction', width:200, editor:{xtype:'textarea', maxLength:256, id:'_menuaction_0' }
+	            header:i18n.AcMenu.menuaction, dataIndex:'menuaction', width:200, editor:{xtype:'textarea', maxLength:256, id:'_menuaction_0' }
 	        },{
-	            header:'是否叶子菜单', dataIndex:'isleaf', hidden:true, editor:{ xtype:'hidden', value:'y' }            
+	            header:i18n.AcMenu.isleaf, dataIndex:'isleaf', hidden:true, editor:{ xtype:'hidden', value:'y' }            
 	        },{
-	            header:'菜单层次', dataIndex:'menulevel', hidden:true, editor:{ xtype:'hidden' }
+	            header:i18n.AcMenu.menulevel, dataIndex:'menulevel', hidden:true, editor:{ xtype:'hidden' }
 	        },{
-	            header:'父菜单编号', dataIndex:'parentsid', hidden:true, editor: { xtype:'hidden' }
+	            header:i18n.AcMenu.parentsid, dataIndex:'parentsid', hidden:true, editor: { xtype:'hidden' }
 	        },{
-	            header:'显示顺序', dataIndex:'displayorder', editor:{ id:'_displayorder_0', xtype:'numberfield', maxLength:2 }
+	            header:i18n.AcMenu.displayorder, dataIndex:'displayorder', editor:{ id:'_displayorder_0', xtype:'numberfield', maxLength:2 }
 	        },{
-	            header:'菜单路径序列', dataIndex:'menuseq', hidden:true, editor: { xtype:'hidden' }
+	            header:i18n.AcMenu.menuseq, dataIndex:'menuseq', hidden:true, editor: { xtype:'hidden' }
 	        },{
-	            header:'页面打开方式', dataIndex:'openmode', hidden:true, editor: { xtype:'hidden', value:'comm' }
+	            header:i18n.AcMenu.openmode, dataIndex:'openmode', hidden:true, editor: { xtype:'hidden', value:'comm' }
 	        },{
-	            header:'子节点数', dataIndex:'subcount', hidden:true, editor: { xtype:'hidden' }
+	            header:i18n.AcMenu.subcount, dataIndex:'subcount', hidden:true, editor: { xtype:'hidden' }
 	        },{
-	            header:'应用编号', dataIndex:'appid', hidden:true, editor: { id:'_appid_0', xtype:'hidden' }
+	            header:i18n.AcMenu.funccode, dataIndex:'appid', hidden:true, editor: { id:'_appid_0', xtype:'hidden' }
 	        },{
-	            header:'功能编号', dataIndex:'funccode', hidden:true, editor: {
+	            header:i18n.AcMenu.appid, dataIndex:'funccode', hidden:true, editor: {
 					xtype: "SysFunction_SelectWin",id:'_funccode_0',
 					hiddenName: "funccode", displayField:"funccode", valueField: "funccode",
 					returnField :[{widgetId: '_menuaction_0',propertyName:'funcaction'},
