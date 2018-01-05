@@ -13,7 +13,7 @@ BureauSelect_comboTree = function(){
 	        scope:this
 	    }
 	});
-	this.fieldLabel = '所属局';
+	this.fieldLabel = i18n.BureauSelect.belong;
     this.treeId = Ext.id()+'-tree';
     this.maxHeight = arguments[0].maxHeight || arguments[0].height || this.maxHeight;
     this.tpl = new Ext.Template('<tpl for="."><div style="height:'+this.maxHeight+'px"><div id="'+this.treeId+'"></div></div></tpl>');

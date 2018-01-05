@@ -35,16 +35,16 @@
  *   componentId 控件id           
  */
 getStatusMean = function(v){
-	if(v == 'WAITING_REPAIR') return '待修';		
-	if(v == 'IN_REPAIR') return '在修';
-	if(v == 'REPAIRED') return '修竣';
-	if(v == 'WAITING_SCRAP') return '待报废';
-	if(v == 'SCRAPPED') return '报废';
-	if(v == 'TO_ASSEMBLED') return '待上配件/车';
-	if(v == 'OUTSOURCED_NOT_BACK') return '委外未回厂/段';
-	if(v == 'OUTSOURCED') return '委外修';
-	if(v == 'IN_WAREHOUSE') return '在库';
-	if(v == 'ASSEMBLED') return '在车/配件';
+	if(v == 'WAITING_REPAIR') return i18n.PartsAccountSelect.WAITING_REPAIR;		
+	if(v == 'IN_REPAIR') return i18n.PartsAccountSelect.IN_REPAIR;
+	if(v == 'REPAIRED') return i18n.PartsAccountSelect.REPAIRED;
+	if(v == 'WAITING_SCRAP') return i18n.PartsAccountSelect.WAITING_SCRAP;
+	if(v == 'SCRAPPED') return i18n.PartsAccountSelect.SCRAPPED;
+	if(v == 'TO_ASSEMBLED') return i18n.PartsAccountSelect.TO_ASSEMBLED;
+	if(v == 'OUTSOURCED_NOT_BACK') return i18n.PartsAccountSelect.OUTSOURCED_NOT_BACK;
+	if(v == 'OUTSOURCED') return i18n.PartsAccountSelect.OUTSOURCED;
+	if(v == 'IN_WAREHOUSE') return i18n.PartsAccountSelect.IN_WAREHOUSE;
+	if(v == 'ASSEMBLED') return i18n.PartsAccountSelect.ASSEMBLED;
 }
 PartsAccount_store = new Ext.data.JsonStore({
 	url : ctx + "/partsSelect!pageList.action",
@@ -70,7 +70,7 @@ PartsAccount_List = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : false
 			},
-			loadMask: {msg: "正在处理，请稍侯..."},
+			loadMask: {msg:i18n.PartsAccountSelect.wait},
 			// 偶数行变色
 			stripeRows : true,
 			// 工具栏
@@ -79,12 +79,12 @@ PartsAccount_List = Ext.extend(Ext.grid.GridPanel, {
 					hiddenName:"queryType",
 					store: new Ext.data.SimpleStore({
 						fields: ["type"],
-						data: [ ["按配件名称"], ["按规格型号"],["按配件编号"] ]
+						data: [ [i18n.PartsAccountSelect.byName], [i18n.PartsAccountSelect.byType],[i18n.PartsAccountSelect.byNo] ]
 					}),
 					displayField:"type",
 					width: 110,
 					valueField:"type",
-					value:"按配件名称",
+					value:i18n.PartsAccountSelect.byName,
 					mode:"local",
 					editable: false,
 					triggerAction: "all"
@@ -93,32 +93,32 @@ PartsAccount_List = Ext.extend(Ext.grid.GridPanel, {
 	                name : "parts",
 			        width: 240
 				},{
-					text : "搜索",
+					text : i18n.PartsAccountSelect.search,
 					iconCls : "searchIcon",
 					handler : function(){
 						var searchText = this.getTopToolbar().get(1).getValue();
 						var querytype = this.getTopToolbar().get(0).getValue();						
-						if(querytype == '按规格型号'){
+						if(querytype == i18n.PartsAccountSelect.byType){
 							this.store.baseParams.partsname = "";
 							this.store.baseParams.nameplateNo = "";
 							this.store.baseParams.specificationModel = searchText;
 							this.store.load();
-						}else if(querytype == '按配件名称'){
+						}else if(querytype == i18n.PartsAccountSelect.byName){
 							this.store.baseParams.specificationModel = "";
 							this.store.baseParams.nameplateNo = "";
 							this.store.baseParams.partsname = searchText;
 							this.store.load();
-						}else if(querytype == '按配件编号'){
+						}else if(querytype == i18n.PartsAccountSelect.byNo){
 							this.store.baseParams.partsname = "";
 							this.store.baseParams.specificationModel = "";
 							this.store.baseParams.nameplateNo = searchText;
 							this.store.load();
 						}						
 					},
-					title : "按输入框条件查询",
+					title : i18n.PartsAccountSelect.searchBy,
 					scope : this
 				},{
-					text : "重置",
+					text : i18n.PartsAccountSelect.reset,
 					iconCls : "resetIcon",
 					handler : function(){
 						this.store.baseParams.partsname = "";
@@ -126,11 +126,11 @@ PartsAccount_List = Ext.extend(Ext.grid.GridPanel, {
 						this.store.baseParams.nameplateNo = "";
 						this.store.load();
 						this.getTopToolbar().get(1).setValue("");
-						this.getTopToolbar().get(0).setValue("按配件名称");
+						this.getTopToolbar().get(0).setValue(i18n.PartsAccountSelect.byName);
 					},
 					scope : this
 				},{
-					text : "清空",
+					text :i18n.PartsAccountSelect.clear,
 					iconCls : "resetIcon",
 					handler : function(){
 						this.parentObj.parentObj.clearValue();
@@ -151,10 +151,10 @@ PartsAccount_List = Ext.extend(Ext.grid.GridPanel, {
 				}],
 			colModel : new Ext.grid.ColumnModel([
 				new Ext.grid.RowNumberer(), 
-				{ sortable:true, header:"配件名称", dataIndex:"partsName", width: 100 },			
-		        { sortable:true, header:"规格型号", dataIndex:"specificationModel", width: 100 },			
-		        { sortable:true, header:"配件编号", dataIndex:"nameplateNo", width: 150 },		
-		        { sortable:true, header:"配件状态", dataIndex:"partsStatus", width: 150,  
+				{ sortable:true, header:i18n.PartsAccountSelect.partsName, dataIndex:"partsName", width: 100 },			
+		        { sortable:true, header:i18n.PartsAccountSelect.specificationModel, dataIndex:"specificationModel", width: 100 },			
+		        { sortable:true, header:i18n.PartsAccountSelect.nameplateNo, dataIndex:"nameplateNo", width: 150 },		
+		        { sortable:true, header:i18n.PartsAccountSelect.partsStatus, dataIndex:"partsStatus", width: 150,  
 		          renderer : function(v){return getStatusMean(v);} }
 		        ]),
 			store : PartsAccount_store,
@@ -216,7 +216,7 @@ Parts_SelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		Parts_SelectWin.superclass.constructor.call(this, {
-			title : "配件选择",
+			title :i18n.PartsAccountSelect.partsChoice,
 			width : 550,
 			height : 305,			
 			plain : true,

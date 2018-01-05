@@ -96,20 +96,20 @@ omEmployeeMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : true
 			},
-			loadMask: {msg: "正在处理，请稍侯..."},
+			loadMask: {msg: i18n.OmEmployeeMultSelect.wait},
 			// 偶数行变色
 			stripeRows : true,	
 			selModel : omEmployeeMultSelect.sm,
 			// 工具栏
 			tbar : [{
 					xtype:"label",
-					text:"人员姓名："
+					text:i18n.OmEmployeeMultSelect.Pname
 				},{	            
 	                xtype:"textfield",								                
 	                name : "empName",
 			        width: 80
 				},{
-					text : "搜索",
+					text : i18n.OmEmployeeMultSelect.search,
 					iconCls : "searchIcon",
 					handler : function(){
 						var empname = this.getTopToolbar().get(1).getValue();
@@ -118,7 +118,7 @@ omEmployeeMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					},
 					scope : this
 				},{
-					text : "重置",
+					text : i18n.OmEmployeeMultSelect.reset,
 					iconCls : "resetIcon",
 					handler : function(){
 						this.store.baseParams.emp = "";
@@ -127,13 +127,13 @@ omEmployeeMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					},
 					scope : this
 				},{
-					text : "选择",
+					text : i18n.OmEmployeeMultSelect.choice,
 					iconCls : "addIcon",
 					handler : function(){
 						var sm = this.parentObj.grid.getSelectionModel();
 			            var data = sm.getSelections();
 			            if (sm.getCount() < 1) {
-			                MyExt.Msg.alert("尚未选择一条记录！");
+			                MyExt.Msg.alert(i18n.OmEmployeeMultSelect.noChoiceRecording);
 			                return;
 			            }
 		            	var ids = "";
@@ -174,20 +174,20 @@ omEmployeeMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 				        this.parentObj.hide();
 					},
 					scope : this
-				},{text:'取消',iconCls:'deleteIcon',handler:function(){
+				},{text:i18n.OmEmployeeMultSelect.cancle,iconCls:'deleteIcon',handler:function(){
 	              	   this.parentObj.hide();
 	              },scope : this}],
 			colModel : new Ext.grid.ColumnModel([
 				omEmployeeMultSelect.sm,
 				new Ext.grid.RowNumberer(), {
 					sortable : true,
-					header : "名称",
-					title : "双击该行记录选择人员",
+					header : i18n.OmEmployeeMultSelect.name,
+					title : i18n.OmEmployeeMultSelect.doubleClickToChoice,
 					dataIndex : "empname"
 				}, {
 					sortable : true,
-					header : "人员代码",
-					title : "双击该行记录选择人员",
+					header : i18n.OmEmployeeMultSelect.pCoding,
+					title : i18n.OmEmployeeMultSelect.doubleClickToChoice,
 					dataIndex : "empcode"
 				}, {
 					sortable : true,
@@ -263,7 +263,7 @@ omEmployeeMultSelect.UserSelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		omEmployeeMultSelect.UserSelectWin.superclass.constructor.call(this, {
-			title : "选择人员",
+			title : i18n.OmEmployeeMultSelect.choiceP,
 			width : 530,
 			height : 305,			
 			plain : true,

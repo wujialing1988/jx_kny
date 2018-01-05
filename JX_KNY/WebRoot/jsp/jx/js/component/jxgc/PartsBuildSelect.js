@@ -19,12 +19,12 @@ PartsBuild_List = Ext.extend(Ext.yunda.Grid, {
 				hiddenName:"queryType",
 				store: new Ext.data.SimpleStore({
 					fields: ["type"],
-					data: [ ["按配件名称"], ["按规格型号"],["按图号"], ["按专业类型"] ]
+					data: [ [i18n.PartsBuildSelect.byName], [i18n.PartsBuildSelect.byType],[i18n.PartsBuildSelect.byPicNo], [i18n.PartsBuildSelect.byProfessType] ]
 				}),
 				displayField:"type",
 				width: 110,
 				valueField:"type",
-				value:"按配件名称",
+				value:i18n.PartsBuildSelect.byName,
 //				id:"PartsTypeByBuild_queryTypeId",
 				mode:"local",
 				editable: false,
@@ -35,27 +35,27 @@ PartsBuild_List = Ext.extend(Ext.yunda.Grid, {
 		        width: 200/*,
                 id:"PartsTypeByBuild_partsId"*/
 			},{
-				text : "搜索",
+				text : i18n.PartsBuildSelect.search,
 				iconCls : "searchIcon",
 				handler : function(){
 					var querytype = this.getTopToolbar().get(0).getValue();
 					var searchText = this.getTopToolbar().get(1).getValue();
-					if(querytype == '按规格型号'){
+					if(querytype ==i18n.PartsBuildSelect.byType){
 						var searchParam = {};
 						searchParam.buildUpTypeName = searchText;
 						this.store.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
 						this.store.load();
-					}else if(querytype == '按配件名称'){
+					}else if(querytype == i18n.PartsBuildSelect.byName){
 						var searchParam = {};
 						searchParam.buildUpTypeDesc = searchText;
 						this.store.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
 						this.store.load();
-					}else if(querytype == '按图号'){
+					}else if(querytype == i18n.PartsBuildSelect.byPicNo){
 						var searchParam = {};
 						searchParam.chartNo = searchText;
 						this.store.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
 						this.store.load();
-					}else if(querytype == '按专业类型'){
+					}else if(querytype == i18n.PartsBuildSelect.byProfessType){
 						var searchParam = {};
 						searchParam.professionalTypeName = searchText;
 						this.store.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
@@ -63,52 +63,52 @@ PartsBuild_List = Ext.extend(Ext.yunda.Grid, {
 					}
 					
 				},
-				title : "按输入框条件查询",
+				title : i18n.PartsBuildSelect.searchBy,
 				scope : this
 			},{
-				text : "重置",
+				text : i18n.PartsBuildSelect.reset,
 				iconCls : "resetIcon",
 				handler : function(){
 					var searchParam = {};					
 					this.store.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
 					this.store.load();
 					this.getTopToolbar().get(1).setValue("");
-					this.getTopToolbar().get(0).setValue("按配件名称");
+					this.getTopToolbar().get(0).setValue(i18n.PartsBuildSelect.byName);
 				},
 				scope : this
 			}],
 			fields: [{
-				header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.id, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'专业类型表主键', dataIndex:'professionalTypeIdx', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.professionalTypeIdx, dataIndex:'professionalTypeIdx', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'配件名称', dataIndex:'buildUpTypeDesc', width: 100
+				header:i18n.PartsBuildSelect.buildUpTypeDesc, dataIndex:'buildUpTypeDesc', width: 100
 			},{
-				header:'规格型号', dataIndex:'buildUpTypeName', width: 130
+				header:i18n.PartsBuildSelect.Specification, dataIndex:'buildUpTypeName', width: 130
 			},{
-				header:'图号', dataIndex:'chartNo', width: 50
+				header:i18n.PartsBuildSelect.chartNo, dataIndex:'chartNo', width: 50
 			},{
-				header:'专业类型', dataIndex:'professionalTypeName', width: 60
+				header:i18n.PartsBuildSelect.professType, dataIndex:'professionalTypeName', width: 60
 			},{
-				header:'配件分类表主键', dataIndex:'partsClassIdx', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.assignPartsTIdKey, dataIndex:'partsClassIdx', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'配件分类名称', dataIndex:'className', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.classificationName, dataIndex:'className', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'物料编码', dataIndex:'matCode', hidden:true,editor:{ xtype:'hidden'}
+				header:i18n.PartsBuildSelect.materialCoding, dataIndex:'matCode', hidden:true,editor:{ xtype:'hidden'}
 			},{
-				header:'配件名称', dataIndex:'partsName', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.buildUpTypeDesc, dataIndex:'partsName', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'规格型号', dataIndex:'specificationModel', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.Specification, dataIndex:'specificationModel', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'规格型号编码', dataIndex:'specificationModelCode', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.SpecificationCoding, dataIndex:'specificationModelCode', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'组成型号主键', dataIndex:'buildUpTypeIDX', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.buildUpTypeIDX, dataIndex:'buildUpTypeIDX', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'组成型号编码', dataIndex:'buildUpTypeCode', hidden:true, editor:{  xtype:'hidden' }
+				header:i18n.PartsBuildSelect.buildUpTypeCode, dataIndex:'buildUpTypeCode', hidden:true, editor:{  xtype:'hidden' }
 			},{
-				header:'partsTypeIDX', dataIndex:'partsTypeIDX', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.partsTypeIDX, dataIndex:'partsTypeIDX', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'是否虚拟配件', dataIndex:'isVirtual', width: 80
+				header:i18n.PartsBuildSelect.isVirtual, dataIndex:'isVirtual', width: 80
 			},{
 				header:'fBuildUpTypeIDX', dataIndex:'fBuildUpTypeIDX', hidden:true, editor: { xtype:'hidden' }
 			},{
@@ -159,7 +159,7 @@ PartsPlace_List = Ext.extend(Ext.yunda.Grid, {
     		pageSize: 500, 
     		sortInfo : {field:'buildUpPlaceFullName',direction:'ASC'},
 			tbar: [{
-				text : "确定",
+				text : i18n.PartsBuildSelect.confirm,
 				iconCls : "saveIcon",
 				handler : function(){
 					var isSingSelect = this.parentObj.parentObj.isSingSelect;
@@ -170,7 +170,7 @@ PartsPlace_List = Ext.extend(Ext.yunda.Grid, {
 	    			//单选
 					if(isSingSelect == true){
 						if(data.length > 1){
-		    				MyExt.Msg.alert("只能确定一条记录");
+		    				MyExt.Msg.alert(i18n.PartsBuildSelect.onlyOne);
 							return;
 		    			}
 					}
@@ -197,7 +197,7 @@ PartsPlace_List = Ext.extend(Ext.yunda.Grid, {
 				scope : this
 			}],
 			fields: [{
-				header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 			},{
 				header:'fBuildUpTypeIDX', dataIndex:'fBuildUpTypeIDX', hidden:true, editor: { xtype:'hidden' }
 			},{
@@ -207,9 +207,9 @@ PartsPlace_List = Ext.extend(Ext.yunda.Grid, {
 			},{
 				header:'buildUpTypeIdx', dataIndex:'buildUpTypeIdx', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'组成位置编码全名', dataIndex:'buildUpPlaceFullCode', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.buildUpPlaceFullCode, dataIndex:'buildUpPlaceFullCode', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'组成位置名称全名', dataIndex:'buildUpPlaceFullName'
+				header:i18n.PartsBuildSelect.buildUpPlaceFullName, dataIndex:'buildUpPlaceFullName'
 			},{
 				header:'buildUpClass', dataIndex:'buildUpClass', hidden:true, editor: { xtype:'hidden' }
 			},{
@@ -217,11 +217,11 @@ PartsPlace_List = Ext.extend(Ext.yunda.Grid, {
 			},{
 				header:'isLastVsersion', dataIndex:'isLastVsersion', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'配件名称', dataIndex:'buildUpTypeDesc', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.buildUpTypeDesc, dataIndex:'buildUpTypeDesc', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'规格型号', dataIndex:'buildUpTypeName', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.buildUpTypeName, dataIndex:'buildUpTypeName', hidden:true, editor: { xtype:'hidden' }
 			},{
-				header:'图号', dataIndex:'chartNo', hidden:true, editor: { xtype:'hidden' }
+				header:i18n.PartsBuildSelect.chartNo, dataIndex:'chartNo', hidden:true, editor: { xtype:'hidden' }
 			},{
 				header:'isVirtual', dataIndex:'isVirtual', hidden:true, editor: { xtype:'hidden' }
 			}],
@@ -274,7 +274,7 @@ PartsBuild_SelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		PartsBuild_SelectWin.superclass.constructor.call(this, {
-			title : "规格型号选择",
+			title : i18n.PartsBuildSelect.SpecificationChoice,
 			width : 850,
 			height : 305,			
 			plain : true,

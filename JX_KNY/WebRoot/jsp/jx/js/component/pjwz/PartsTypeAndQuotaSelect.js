@@ -46,33 +46,33 @@ PartsTypeAndQuota_Type_List = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : true
 			},
-			loadMask: {msg: "正在处理，请稍侯..."},
+			loadMask: {msg: i18n.PartsTypeAndQuotaSelect.wait},
 			// 偶数行变色
 			stripeRows : true,	
 			colModel : new Ext.grid.ColumnModel([
 					new Ext.grid.RowNumberer(), 
-				{ sortable:true, header:"规格型号", dataIndex:"specificationModel" },	
-				{ sortable:true, header:"配件名称", dataIndex:"partsName" },			
-		        { sortable:true, header:"计量单位", dataIndex:"unit" },
-		        { sortable:true, header:"带序列号", dataIndex:"isHasSeq",renderer:function(v){ if(v==1){return '是'}else{ return "否"}} }]),
+				{ sortable:true, header:i18n.PartsTypeAndQuotaSelect.specification, dataIndex:"specificationModel" },	
+				{ sortable:true, header:i18n.PartsTypeAndQuotaSelect.partsName, dataIndex:"partsName" },			
+		        { sortable:true, header:i18n.PartsTypeAndQuotaSelect.unit, dataIndex:"unit" },
+		        { sortable:true, header:i18n.PartsTypeAndQuotaSelect.isHasSeq, dataIndex:"isHasSeq",renderer:function(v){ if(v==1){return '是'}else{ return "否"}} }]),
 			store : PartsTypeAndQuota_PartsTypestore,
 			bbar: Ext.yunda.createPagingToolbar({store: PartsTypeAndQuota_PartsTypestore}),
 			tbar: [{
-						text : "规格型号：",
+						text :i18n.PartsTypeAndQuotaSelect.specification,
 						xtype: "label"
 					},
 					{		                           
 		                xtype:"textfield",width:120
 		                
 					},{
-						text : " 配件名称：",
+						text : i18n.PartsTypeAndQuotaSelect.partsName,
 						xtype: "label"
 					},
 					{		                           
 		                xtype:"textfield",width:120
 		                
 					},{
-						text : "搜索",
+						text : i18n.PartsTypeAndQuotaSelect.search,
 						iconCls : "searchIcon",
 						handler : function(){
 							var specificationModel = this.getTopToolbar().get(1).getValue();
@@ -83,10 +83,10 @@ PartsTypeAndQuota_Type_List = Ext.extend(Ext.grid.GridPanel, {
 				            this.store.baseParams.entityJson = Ext.util.JSON.encode(searchParam);
 							this.store.load();																						
 						},
-						title : "按输入框条件查询",
+						title : i18n.PartsTypeAndQuotaSelect.searchBy,
 						scope: this
 					},{
-						text : "重置",
+						text :i18n.PartsTypeAndQuotaSelect.reset,
 						iconCls : "resetIcon",
 						handler : function(){
 							this.store.baseParams.entityJson = Ext.util.JSON.encode({});
@@ -157,7 +157,7 @@ PartsTypeAndQuota_SelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		PartsTypeAndQuota_SelectWin.superclass.constructor.call(this, {
-			title : "配件规格型号选择",
+			title :i18n.PartsTypeAndQuotaSelect.theChoice,
 			width : 550,
 			height : 305,			
 			plain : true,

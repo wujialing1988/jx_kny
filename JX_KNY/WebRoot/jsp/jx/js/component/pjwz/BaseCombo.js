@@ -88,7 +88,7 @@ Ext.extend(jx.js.component.pjwz.Base_combo,Ext.form.ComboBox,{
 							var obj = {};
 							var fields = this.fields.keys;
 							for (var i = 0; i < fields.length; i++) {
-								obj[fields[i]] = "请选择...";
+								obj[fields[i]] = i18n.BaseCombo.choose;
 							}
 							this.insert(0, [new Ext.data.Record(obj)]);
 						}

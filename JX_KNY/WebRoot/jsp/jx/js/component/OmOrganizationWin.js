@@ -75,7 +75,7 @@ jx.js.component.orgWin = Ext.extend(Ext.Window, {
 	modal:true,	
 	constructor : function() {		
 		jx.js.component.orgWin.superclass.constructor.call(this, {
-			title: "机构选择",
+			title: i18n.OmOrganizationWin.institutionalChoice,
 			width: 280,
 			height: 305,			
 			plain: true,
@@ -83,11 +83,11 @@ jx.js.component.orgWin = Ext.extend(Ext.Window, {
 			layout: "fit",
 			items: [this.tree],
 			buttonAlign: "center",
-			buttons: [{text: "确定", iconCls: "saveIcon", scope: this, handler: function(){				
+			buttons: [{text: i18n.OmOrganizationWin.confirm, iconCls: "saveIcon", scope: this, handler: function(){				
 				var list = new Array();
             	list = this.tree.getChecked();
             	if(list.length == 0){
-            		MyExt.Msg.alert("尚未选择记录!");
+            		MyExt.Msg.alert(i18n.OmOrganizationWin.noChoiceRecording);
             		return ;
             	}
             	var ids = "";

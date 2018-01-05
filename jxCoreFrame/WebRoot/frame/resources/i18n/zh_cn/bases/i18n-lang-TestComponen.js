@@ -38,7 +38,7 @@ i18n.TestComponent.mainCircuitBreaker = '主断路器';
 i18n.TestComponent.electricalSignalSensor = '电信号传感器';
 i18n.TestComponent.secondGroupPower = '牵电二组';
 
-i18n.OmEmployeeSelect = {};
+/*i18n.OmEmployeeSelect = {};
 i18n.OmEmployeeSelect.wait = '正在处理，请稍候...';
 i18n.OmEmployeeSelect.pname = '人员姓名：'
 i18n.OmEmployeeSelect.search = '搜索';
@@ -47,7 +47,7 @@ i18n.OmEmployeeSelect.name = '名称';
 i18n.OmEmployeeSelect.choicePeople = '双击该行记录选择人员';
 i18n.OmEmployeeSelect.peopleCoding = '人员代码';
 i18n.OmEmployeeSelect.ownTeam = '所属班组';
-i18n.OmEmployeeSelect.choicePeople1 = '选择人员';
+i18n.OmEmployeeSelect.choicePeople1 = '选择人员';*/
 
 i18n.ProfessionalType = {};
 i18n.ProfessionalType.professType = '专业类型';
