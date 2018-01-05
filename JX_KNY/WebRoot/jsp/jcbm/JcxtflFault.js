@@ -7,12 +7,12 @@ Ext.onReady(function(){
     	loadURL: ctx + '/equipFault!pageList.action',                 //装载列表数据的请求URL
     	isEdit:false,
     	tbar: [{
-        	xtype:"label", text:"  故障名称：" 
+        	xtype:"label", text:i18n.JcxtflFault.faultName+"：" 
     	},{			
             xtype: "textfield",    
             id: "fault_searchId"
 		},{
-			text : "搜索",
+			text : i18n.JcxtflFault.search,
 			iconCls : "searchIcon",
 			handler : function(){
 				var faultName = Ext.getCmp("fault_searchId").getValue();
@@ -27,14 +27,14 @@ Ext.onReady(function(){
 			},			
 			width : 40
 		},{
-			text : "确定",
+			text : i18n.JcxtflFault.confirm,
 			iconCls : "saveIcon",
 			handler : function(){
         		if(!$yd.isSelectedRecord(JcxtflFault.faultSelectGrid)) return;
         		var tempData = JcxtflFault.faultSelectGrid.selModel.getSelections();
         		var dataAry = new Array();
         		if(JcgxBuild.flbm =="" ||  JcgxBuild.flbm == null){
-        			 MyExt.Msg.alert("请选择节后再进行故障添加");
+        			 MyExt.Msg.alert(i18n.JcxtflFault.chioceAdd);
         			 return;
         		}
         		for(var i = 0;i < tempData.length;i++){
@@ -62,7 +62,7 @@ Ext.onReady(function(){
 	                    }
 	                },
 	                failure: function(response, options){
-	                    MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+	                    MyExt.Msg.alert(i18n.JcxtflFault.false+"\n" + response.status + "\n" + response.responseText);
 	                }
 	            });
 			}
@@ -70,25 +70,25 @@ Ext.onReady(function(){
 			
 		}],
 		fields: [{
-			header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }	
+			header:i18n.JcxtflFault.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }	
 		},{
-			header:'故障编号', dataIndex:'FaultID', editor:{   }, sortable: true
+			header:i18n.JcxtflFault.FaultID, dataIndex:'FaultID', editor:{   }, sortable: true
 		},{
-			header:'故障名称', dataIndex:'FaultName', editor:{   }
+			header:i18n.JcxtflFault.FaultName, dataIndex:'FaultName', editor:{   }
 		},{
-			header:'故障类别id', dataIndex:'FaultTypeID',hidden:true, editor:{ xtype:'hidden'   }
+			header:i18n.JcxtflFault.FaultTypeID, dataIndex:'FaultTypeID',hidden:true, editor:{ xtype:'hidden'   }
 		},{
-			header:'故障类别', dataIndex:'FaultTypeName', editor:{ xtype:'hidden'   }
+			header:i18n.JcxtflFault.FaultType, dataIndex:'FaultTypeName', editor:{ xtype:'hidden'   }
 		}]
 	});
 	
 	
 	// 故障选择窗口
 	JcxtflFault.win = new Ext.Window({
-	    title: "故障现象选择", width: 600, height:400, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center', modal:true,
+	    title: i18n.JcxtflFault.faultChoice, width: 600, height:400, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center', modal:true,
 	    items: [JcxtflFault.faultSelectGrid],
 	    buttons: [{
-            text: "关闭", iconCls: "closeIcon", 
+            text: i18n.JcxtflFault.close, iconCls: "closeIcon", 
             handler: function(){ 
             	JcxtflFault.win.hide();
             }
@@ -103,7 +103,7 @@ Ext.onReady(function(){
 		},
 		items: [{
 			items: [{
-				fieldLabel: '故障名称', name: 'faultName', xtype: 'textfield',
+				fieldLabel: i18n.JcxtflFault.FaultName, name: 'faultName', xtype: 'textfield',
 				maxLength:250, allowBlank: false, width:300
 			}]
 		}]
@@ -111,14 +111,14 @@ Ext.onReady(function(){
 	
 	//故障新增窗口
 	JcxtflFault.formWin = new Ext.Window({
-	    title: "新增", width: 600, height:200, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center', modal:true,
+	    title: i18n.JcxtflFault.add, width: 600, height:200, layout: "fit", plain: true, closeAction: "hide",buttonAlign: 'center', modal:true,
 	    items: [JcxtflFault.form],
 	    buttons: [{
-			text : "确定",
+			text : i18n.JcxtflFault.confirm,
 			iconCls : "saveIcon",
 			handler : function(){ 
 				if(JcgxBuild.flbm =="" ||  JcgxBuild.flbm == null){
-        			 MyExt.Msg.alert("请选择节后再进行故障添加");
+        			 MyExt.Msg.alert(i18n.JcxtflFault.chioceAdd);
         			 return;
         		}
     			var form = JcxtflFault.form.getForm();
@@ -142,12 +142,12 @@ Ext.onReady(function(){
 	                    }
 	                },
 	                failure: function(response, options){
-	                    MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+	                    MyExt.Msg.alert(i18n.JcxtflFault.false+"\n" + response.status + "\n" + response.responseText);
 	                }
 	            });
 			}
 		},{
-            text: "关闭", iconCls: "closeIcon", 
+            text: i18n.JcxtflFault.close, iconCls: "closeIcon", 
             handler: function(){ 
             	JcxtflFault.formWin.hide();
             }

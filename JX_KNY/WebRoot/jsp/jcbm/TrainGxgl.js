@@ -11,14 +11,14 @@ Ext.onReady(function() {
 		tools: [{
 			id: 'help', handler: function() {
 				Ext.Msg.show({
-				   title:'提示',
-				   msg: '输入查询条件后按回车键可以进行快捷查询！',
+				   title:i18n.TrainGxgl.prompt,
+				   msg: i18n.TrainGxgl.toSearch,
 				   buttons: Ext.MessageBox.OK,
 				   icon: Ext.MessageBox.INFO
 				});
 			}
 		}],
-		title: '查询', region: 'north', labelWidth: TrainGxgl.labelWidth,
+		title:i18n.TrainGxgl.search, region: 'north', labelWidth: TrainGxgl.labelWidth,
 		height: 110, padding: 10, frame: true, collapsible: true,
 		layout: 'column',
 		defaults: {
@@ -36,20 +36,20 @@ Ext.onReady(function() {
 		},
 		items: [{
 			items:[{
-				fieldLabel: '车辆车型代码', name: 'typeCode'
+				fieldLabel: i18n.TrainGxgl.typeCode, name: 'typeCode'
 			}]
 		}, {
 			items:[{
-				fieldLabel: '车辆车型名称', name: 'typeName'
+				fieldLabel: i18n.TrainGxgl.typeName, name: 'typeName'
 			}]
 		}],
 		buttonAlign: 'center',
 		buttons: [{
-			text: '查询', iconCls: 'searchIcon', handler: function() {
+			text: i18n.TrainGxgl.search, iconCls: 'searchIcon', handler: function() {
 				TrainGxgl.grid.store.load();
 			}
 		}, {
-			text: '重置', iconCls: 'resetIcon', handler: function() {
+			text: i18n.TrainGxgl.reset, iconCls: 'resetIcon', handler: function() {
 				this.findParentByType('form').getForm().reset();
 				TrainGxgl.grid.store.load();
 			}
@@ -62,30 +62,30 @@ Ext.onReady(function() {
 		singleSelect : true,
 		loadURL : ctx + "/trainVehicleType!pageList.action",
 		tbar: ['refresh',
-			'-', '<span style="color:gray;">*&nbsp;选择并双击一条记录进行机车构型设置</span>'
+			'-', '<span style="color:gray;">*&nbsp;'+i18n.TrainGxgl.choiceEdit+'</span>'
 		],
 		fields : [{
-			header : '主键',dataIndex : 'idx',hidden : true
+			header : i18n.TrainGxgl.idx,dataIndex : 'idx',hidden : true
 		}, {
-			header : '操作', dataIndex : '', editor : { xtype : 'hidden' },
+			header : i18n.TrainGxgl.edit, dataIndex : '', editor : { xtype : 'hidden' },
 			searchor : { xtype : 'hidden' },
 			renderer : function(record) {
 				var html = "";
-				html = "<span><a href='#' onclick='TrainGxgl.configJcgx()'>设置构型</a></span>";
+				html = "<span><a href='#' onclick='TrainGxgl.configJcgx()'>"+i18n.TrainGxgl.setBuild+"</a></span>";
 				return html;
 			}
 		}, {
-			header : '车辆车型代码', dataIndex : 'typeCode'
+			header : i18n.TrainGxgl.typeCode, dataIndex : 'typeCode'
 		}, {
-			header : '车辆车型名称', dataIndex : 'typeName'
+			header : i18n.TrainGxgl.typeName, dataIndex : 'typeName'
 		},{
-			header : '简称', dataIndex:'shortName'
+			header : i18n.TrainGxgl.shortName, dataIndex:'shortName'
 		}, {
-			header : '车型种类', dataIndex : 'vehicleKindName'
+			header : i18n.TrainGxgl.vehicleKindName, dataIndex : 'vehicleKindName'
 		},{
-			header:'客货类型', dataIndex:'vehicleType', hidden : true
+			header:i18n.TrainGxgl.vehicleType, dataIndex:'vehicleType', hidden : true
 		},{
-			header:'描述', dataIndex:'description'
+			header:i18n.TrainGxgl.description, dataIndex:'description'
 		}],
 		// 双击记录进行机车构型配置
 		toEditFn : function() {
@@ -101,11 +101,11 @@ Ext.onReady(function() {
 	TrainGxgl.configJcgx = function() {
 		var sm = TrainGxgl.grid.getSelectionModel();
 		if (sm.getCount() <= 0) {
-			MyExt.Msg.alert('尚未选择一条记录！');
+			MyExt.Msg.alert(i18n.TrainGxgl.description);
 			return;
 		}
 		if (sm.getCount() > 1) {
-			MyExt.Msg.alert('请只选择一条记录设置构型');
+			MyExt.Msg.alert(i18n.TrainGxgl.onlyOne);
 			return;
 		}
 		var record = sm.getSelections()[0];
