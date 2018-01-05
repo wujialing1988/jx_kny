@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>密码设置</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-NewPassWord.js"></script>
 <script type="text/javascript">
 Ext.onReady(function() {
 	Ext.namespace('newPwd'); 

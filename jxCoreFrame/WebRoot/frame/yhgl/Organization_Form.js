@@ -20,46 +20,46 @@ Ext.onReady(function() {
 				labelWidth: orgForm.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ id:'_orgid', fieldLabel:'机构ID',name:'orgid', disabled:false,hidden:true},
-					{ id:'_createtime', fieldLabel:'创建时间',name:'createtime', disabled:false,hidden:true},
-					{ id:"_parentorgid", fieldLabel:'上级机构', name:'parentorgid', 	disabled:false, hidden:true},
-					{ id:"_orglevel", fieldLabel:'机构层次', name:'orglevel', 	disabled:false, hidden:true},
-					{ id:"_orgseq", fieldLabel:'机构序列', name:'orgseq', 	disabled:false, hidden:true},
-					{ id:"_orgmanager", fieldLabel:'机构管理员', name:'orgmanager', 	disabled:false, hidden:true},
-					{ id:"_isleaf", fieldLabel:'是否是叶子节点', name:'isleaf', 	disabled:false, hidden:true},
-					{ id:"_subcount", fieldLabel:'子节点数', name:'subcount', 	disabled:false, hidden:true},
+					{ id:'_orgid', fieldLabel:i18n.Organization_Form._orgid,name:'orgid', disabled:false,hidden:true},
+					{ id:'_createtime', fieldLabel:i18n.Organization_Form._createtime,name:'createtime', disabled:false,hidden:true},
+					{ id:"_parentorgid", fieldLabel:i18n.Organization_Form._parentorgid, name:'parentorgid', 	disabled:false, hidden:true},
+					{ id:"_orglevel", fieldLabel:i18n.Organization_Form._orglevel, name:'orglevel', 	disabled:false, hidden:true},
+					{ id:"_orgseq", fieldLabel:i18n.Organization_Form._orgseq, name:'orgseq', 	disabled:false, hidden:true},
+					{ id:"_orgmanager", fieldLabel:i18n.Organization_Form._orgmanager, name:'orgmanager', 	disabled:false, hidden:true},
+					{ id:"_isleaf", fieldLabel:i18n.Organization_Form._isleaf, name:'isleaf', 	disabled:false, hidden:true},
+					{ id:"_subcount", fieldLabel:i18n.Organization_Form._subcount, name:'subcount', 	disabled:false, hidden:true},
 					//显示部分
-					{ id:"_orgcode",	fieldLabel:'机构代码', allowBlank:false,	name:'orgcode',	 width:orgForm.fieldWidth, maxLength:32},
-					{ id:'_orgdegree', fieldLabel: '机构等级', name:'orgdegree', xtype: 'EosDictEntry_combo', hiddenName: 'orgdegree', displayField: 'dictname', valueField: 'dictid',status:'1',dicttypeid:'ABF_ORGDEGREE'},
-					{ id:"_sortno", fieldLabel:'排列顺序', name:'sortno',  width:orgForm.fieldWidth, vtype:'positiveInt',maxLength:4},
-					{ id:"_weburl", fieldLabel:'主页', name:'weburl',  width:orgForm.fieldWidth,maxLength:200},
-					{ id:"_linkman", fieldLabel:'联系人', name:'linkman',  width:orgForm.fieldWidth,maxLength:15},
-					{ id:"_managerid", fieldLabel:'机构主管人员', name:'managerid', xtype: "OmEmployee_SelectWin", 
+					{ id:"_orgcode",	fieldLabel:i18n.Organization_Form._orgcode, allowBlank:false,	name:'orgcode',	 width:orgForm.fieldWidth, maxLength:32},
+					{ id:'_orgdegree', fieldLabel: i18n.Organization_Form._orgdegree, name:'orgdegree', xtype: 'EosDictEntry_combo', hiddenName: 'orgdegree', displayField: 'dictname', valueField: 'dictid',status:'1',dicttypeid:'ABF_ORGDEGREE'},
+					{ id:"_sortno", fieldLabel:i18n.Organization_Form._sortno, name:'sortno',  width:orgForm.fieldWidth, vtype:'positiveInt',maxLength:4},
+					{ id:"_weburl", fieldLabel:i18n.Organization_Form._weburl, name:'weburl',  width:orgForm.fieldWidth,maxLength:200},
+					{ id:"_linkman", fieldLabel:i18n.Organization_Form._linkman, name:'linkman',  width:orgForm.fieldWidth,maxLength:15},
+					{ id:"_managerid", fieldLabel:i18n.Organization_Form._managerid, name:'managerid', xtype: "OmEmployee_SelectWin", 
 					  hiddenName: "managerid", displayField:"empname", valueField: "empid", width:orgForm.fieldWidth,
 					  returnField :[{widgetId: '_orgmanager',propertyName:'empname'}],
 					  editable: false
 					},
-					{ id:"_email", fieldLabel:'电子邮件', name:'email',  width:orgForm.fieldWidth,maxLength:100 },
-					{ id:"_startdate", fieldLabel:'生效日期', name:'startdate',  width:orgForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:"_orgaddr", fieldLabel:'机构地址', name:'orgaddr', xtype:'textarea', maxLength:100,width:orgForm.fieldWidth}
+					{ id:"_email", fieldLabel:i18n.Organization_Form._email, name:'email',  width:orgForm.fieldWidth,maxLength:100 },
+					{ id:"_startdate", fieldLabel:i18n.Organization_Form._startdate, name:'startdate',  width:orgForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:"_orgaddr", fieldLabel:i18n.Organization_Form._orgaddr, name:'orgaddr', xtype:'textarea', maxLength:100,width:orgForm.fieldWidth}
 				]
 			},{
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: orgForm.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:"_orgname", fieldLabel:'机构名称', name:'orgname', allowBlank:false, width:orgForm.fieldWidth,maxLength:30},
-					{ id:'_orgtype', fieldLabel:'机构类型', name : 'orgtype', xtype: 'EosDictEntry_combo', hiddenName: 'orgtype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_ORGTYPE'},
-		            { id:'_status', fieldLabel:'机构状态', name : 'status', xtype: 'EosDictEntry_combo', hiddenName: 'status', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_ORGSTATUS'},
-					{ id:"_area", fieldLabel:'所属地域', name:'area',  width:orgForm.fieldWidth,maxLength:15 },
-					{ id:"_zipcode", fieldLabel:'邮政编码', name:'zipcode',  width:orgForm.fieldWidth,vtype:'postalcode',maxLength:10 },
-					{ id:"_manaposition", fieldLabel:'机构主管岗位', name:'manaposition',  width:orgForm.fieldWidth , xtype: "OmPosition_SelectWin",
+					{ id:"_orgname", fieldLabel:i18n.Organization_Form._orgname, name:'orgname', allowBlank:false, width:orgForm.fieldWidth,maxLength:30},
+					{ id:'_orgtype', fieldLabel:i18n.Organization_Form._orgtype, name : 'orgtype', xtype: 'EosDictEntry_combo', hiddenName: 'orgtype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_ORGTYPE'},
+		            { id:'_status', fieldLabel:i18n.Organization_Form._status, name : 'status', xtype: 'EosDictEntry_combo', hiddenName: 'status', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_ORGSTATUS'},
+					{ id:"_area", fieldLabel:i18n.Organization_Form._area, name:'area',  width:orgForm.fieldWidth,maxLength:15 },
+					{ id:"_zipcode", fieldLabel:i18n.Organization_Form._zipcode, name:'zipcode',  width:orgForm.fieldWidth,vtype:'postalcode',maxLength:10 },
+					{ id:"_manaposition", fieldLabel:i18n.Organization_Form._manaposition, name:'manaposition',  width:orgForm.fieldWidth , xtype: "OmPosition_SelectWin",
 					  hiddenName: "manaposition", displayField:"posiname", valueField: "positionid", 
 					  returnField :[{widgetId: '_temp',propertyName:'posiname'}],
 					  editable: false 
 					},
-					{ id:"_linktel", fieldLabel:'联系电话', name:'linktel',  width:orgForm.fieldWidth, vtype:'mobile'},
-					{ id:"_enddate", fieldLabel:'失效时期', name:'enddate',  width:orgForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_remark', fieldLabel:'备注', name:'remark',xtype:'textarea',maxLength:200,width:orgForm.fieldWidth }
+					{ id:"_linktel", fieldLabel:i18n.Organization_Form._linktel, name:'linktel',  width:orgForm.fieldWidth, vtype:'mobile'},
+					{ id:"_enddate", fieldLabel:i18n.Organization_Form._enddate, name:'enddate',  width:orgForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_remark', fieldLabel:i18n.Organization_Form._remark, name:'remark',xtype:'textarea',maxLength:200,width:orgForm.fieldWidth }
 				]
 			}]
 		}]
@@ -114,20 +114,20 @@ Ext.onReady(function() {
 				       }
 				},
 				failure: function(response, options){
-				       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				       MyExt.Msg.alert(i18n.Organization_Form.false+"\n" + response.status + "\n" + response.responseText);
 				}
 			});
 		}
 	}
-	orgForm.ZZMask = new Ext.LoadMask(Ext.getBody(), {msg:"正在处理，请稍侯..."});
+	orgForm.ZZMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.Organization_Form.wait});
 	orgForm.panel = new Ext.Panel({
-		title: "编辑", layout: "fit", plain:true, 
+		title: i18n.Organization_Form.edit, layout: "fit", plain:true, 
 		closeAction: "hide", modal: true, buttonAlign: "center",
 		items : [{
 			xtype: 'panel',	border:false,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", 
 			items: orgForm.currentInfoForm,
 			buttons: [{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.Organization_Form.save, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = orgForm.currentInfoForm.getForm();
             		if (!form.isValid()) return;
             		var data = form.getValues();
@@ -172,36 +172,36 @@ Ext.onReady(function() {
 				labelWidth: posForm.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ id:'_positionid_2', fieldLabel:'岗位编码', name:'positionid', disabled:false, hidden:true},
-					{ id:'_manaposi_2',   fieldLabel:'上级岗位', name:'manaposi',   disabled:false, hidden:true},
-					{ id:'_posilevel_2',  fieldLabel:'岗位层次', name:'posilevel',  disabled:false, hidden:true},
-					{ id:'_positionseq_2',fieldLabel:'岗位序列', name:'positionseq',disabled:false, hidden:true},
-					{ id:'_createtime_2', fieldLabel:'创建时间', name:'createtime', disabled:false, hidden:true},
-					{ id:'_lastupdate_2', fieldLabel:'最后一次修改时间', name:'lastupdate', 	disabled:false, hidden:true},
-					{ id:'_updator_2',    fieldLabel:'最近更新人员', name:'updator', 	disabled:false, hidden:true},
-					{ id:'_isleaf_2', fieldLabel:'是否是叶子节点', name:'isleaf', disabled:false, hidden:true},
-					{ id:'_subcount_2',   fieldLabel:'子节点数', name:'subcount',   disabled:false, hidden:true},
+					{ id:'_positionid_2', fieldLabel:i18n.Organization_Form._positionid_2, name:'positionid', disabled:false, hidden:true},
+					{ id:'_manaposi_2',   fieldLabel:i18n.Organization_Form._manaposi_2, name:'manaposi',   disabled:false, hidden:true},
+					{ id:'_posilevel_2',  fieldLabel:i18n.Organization_Form._posilevel_2, name:'posilevel',  disabled:false, hidden:true},
+					{ id:'_positionseq_2',fieldLabel:i18n.Organization_Form._positionseq_2, name:'positionseq',disabled:false, hidden:true},
+					{ id:'_createtime_2', fieldLabel:i18n.Organization_Form._createtime_2, name:'createtime', disabled:false, hidden:true},
+					{ id:'_lastupdate_2', fieldLabel:i18n.Organization_Form._lastupdate_2, name:'lastupdate', 	disabled:false, hidden:true},
+					{ id:'_updator_2',    fieldLabel:i18n.Organization_Form._updator_2, name:'updator', 	disabled:false, hidden:true},
+					{ id:'_isleaf_2', fieldLabel:i18n.Organization_Form._isleaf_2, name:'isleaf', disabled:false, hidden:true},
+					{ id:'_subcount_2',   fieldLabel:i18n.Organization_Form._subcount_2, name:'subcount',   disabled:false, hidden:true},
 					//显示部分
-					{ id:'_posicode_2', fieldLabel:'岗位代码',	name:'posicode', allowBlank:false, width:posForm.fieldWidth, maxLength:20},
-					{ id:'_orgid_2', fieldLabel:'所属机构', name:'orgid',  width:posForm.fieldWidth, maxLength:20},
-					{ id:'_positype_2', fieldLabel: '岗位类别', name:'positype', xtype: 'EosDictEntry_combo', disabled:true, allowBlank:false,
+					{ id:'_posicode_2', fieldLabel:i18n.Organization_Form._posicode_2,	name:'posicode', allowBlank:false, width:posForm.fieldWidth, maxLength:20},
+					{ id:'_orgid_2', fieldLabel:i18n.Organization_Form._orgid_2, name:'orgid',  width:posForm.fieldWidth, maxLength:20},
+					{ id:'_positype_2', fieldLabel: i18n.Organization_Form._positype_2, name:'positype', xtype: 'EosDictEntry_combo', disabled:true, allowBlank:false,
 					  hiddenName: 'positype', displayField: 'dictname', valueField: 'dictid', status:'1', dicttypeid:'ABF_POSITYPE'},
-					{ id:'_startdate_2', fieldLabel:'有效开始时间', name:'startdate', width:posForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false}
+					{ id:'_startdate_2', fieldLabel:i18n.Organization_Form._startdate_2, name:'startdate', width:posForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false}
 				]
 			},{
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: posForm.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:'_posiname_2', fieldLabel:'岗位名称', name:'posiname', allowBlank:false, width:posForm.fieldWidth,maxLength:128},
-					{ id:'_dutyid_2',   fieldLabel:'所属职务', name:'dutyid',    width:posForm.fieldWidth,maxLength:30,
+					{ id:'_posiname_2', fieldLabel:i18n.Organization_Form._posiname_2, name:'posiname', allowBlank:false, width:posForm.fieldWidth,maxLength:128},
+					{ id:'_dutyid_2',   fieldLabel:i18n.Organization_Form._dutyid_2, name:'dutyid',    width:posForm.fieldWidth,maxLength:30,
 						xtype: "WorkDuty_comboTree",
 			    		hiddenName: "dutyid", disabled:false,
 			    		selectNodeModel: "leaf" ,
 				    	allowBlank: false
 					},
-				    { id:'_status_2', fieldLabel: '岗位状态', name:'status', xtype: 'EosDictEntry_combo', 
+				    { id:'_status_2', fieldLabel: i18n.Organization_Form._status_2, name:'status', xtype: 'EosDictEntry_combo', 
 					  hiddenName: 'status', displayField: 'dictname', valueField: 'dictid', status:'1', dicttypeid:'ABF_POSISTATUS'},
-					{ id:'_enddate_2', fieldLabel:'有效结束时间', name:'enddate', width:posForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false}
+					{ id:'_enddate_2', fieldLabel:i18n.Organization_Form._enddate_2, name:'enddate', width:posForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false}
 				]
 			}]
 		}]
@@ -248,20 +248,20 @@ Ext.onReady(function() {
 				       }
 				},
 				failure: function(response, options){
-				       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				       MyExt.Msg.alert(i18n.Organization_Form.false+"\n" + response.status + "\n" + response.responseText);
 				}
 			});
 		}
 	}
 	
 	posForm.panel = new Ext.Panel({
-		title: "编辑", layout: "fit", plain:true, 
+		title: i18n.Organization_Form.edit, layout: "fit", plain:true, 
 		closeAction: "hide", modal: true, buttonAlign: "center",
 		items : [{
 			xtype: 'panel',	border:false,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", 
 			items: posForm.cPosForm,
 			buttons: [{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.Organization_Form.save, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = posForm.cPosForm.getForm();
             		if (!form.isValid()) return;
             		Ext.getCmp('_positype_2').setDisabled(false); //解除岗位类别的disabled状态
@@ -305,60 +305,60 @@ Ext.onReady(function() {
 				labelWidth: empForm.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ id:'_empid_3', fieldLabel:'人员ID', name:'empid', disabled:false, hidden:true},
-					{ id:'_operatorid_3', fieldLabel:'操作员ID', name:'operatorid', disabled:false, hidden:true},
-					{ id:'_userid_3', fieldLabel:'操作员登录号', name:'userid', disabled:false, hidden:true},
-					{ id:'_realname_3', fieldLabel:'人员全名', name:'realname', disabled:false, hidden:true},
-					{ id:'_position_3', fieldLabel:'基本岗位', name:'position', disabled:false, hidden:true},
-					{ id:'_cardNum_3', fieldLabel:'员工IC卡号', name:'cardNum', disabled:false, hidden:true},
-					{ id:'_payId_3', fieldLabel:'工资代码', name:'payId', disabled:false, hidden:true},
-					{ id:'_createtime_3', fieldLabel:'创建时间', name:'createtime', disabled:false, hidden:true},
-					{ id:'_lastmodytime_3', fieldLabel:'最后更新时间', name:'lastmodytime', disabled:false, hidden:true},
-					{ id:'_orgid_3', fieldLabel:'主机构编号', name:'orgid', disabled:false, hidden:true},
+					{ id:'_empid_3', fieldLabel:i18n.Organization_Form._empid_3, name:'empid', disabled:false, hidden:true},
+					{ id:'_operatorid_3', fieldLabel:i18n.Organization_Form._operatorid_3, name:'operatorid', disabled:false, hidden:true},
+					{ id:'_userid_3', fieldLabel:i18n.Organization_Form._userid_3, name:'userid', disabled:false, hidden:true},
+					{ id:'_realname_3', fieldLabel:i18n.Organization_Form._realname_3, name:'realname', disabled:false, hidden:true},
+					{ id:'_position_3', fieldLabel:i18n.Organization_Form._position_3, name:'position', disabled:false, hidden:true},
+					{ id:'_cardNum_3', fieldLabel:i18n.Organization_Form._cardNum_3, name:'cardNum', disabled:false, hidden:true},
+					{ id:'_payId_3', fieldLabel:i18n.Organization_Form._payId_3, name:'payId', disabled:false, hidden:true},
+					{ id:'_createtime_3', fieldLabel:i18n.Organization_Form._createtime_3, name:'createtime', disabled:false, hidden:true},
+					{ id:'_lastmodytime_3', fieldLabel:i18n.Organization_Form._lastmodytime_3, name:'lastmodytime', disabled:false, hidden:true},
+					{ id:'_orgid_3', fieldLabel:i18n.Organization_Form._orgid_3, name:'orgid', disabled:false, hidden:true},
 					//显示部分
-					{ id:'_empcode_3', fieldLabel:'人员代码',	name:'empcode', allowBlank:false, width:empForm.fieldWidth, maxLength:30, vtype:'alphanum2'},
-					{ id:'_regdate_3', fieldLabel:'注册日期',	name:'regdate', width:empForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_gender_3', fieldLabel:'性别',	name:'gender', width:empForm.fieldWidth, maxLength:20,
+					{ id:'_empcode_3', fieldLabel:i18n.Organization_Form._empcode_3,	name:'empcode', allowBlank:false, width:empForm.fieldWidth, maxLength:30, vtype:'alphanum2'},
+					{ id:'_regdate_3', fieldLabel:i18n.Organization_Form._regdate_3,	name:'regdate', width:empForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_gender_3', fieldLabel:i18n.Organization_Form._gender_3,	name:'gender', width:empForm.fieldWidth, maxLength:20,
 						xtype: 'EosDictEntry_combo', hiddenName: 'gender', displayField: 'dictname', valueField: 'dictid',status:'1',dicttypeid:'ABF_GENDER'
 					},
-					{ id:'_party_3', fieldLabel:'政治面貌',	name:'party',  width:posForm.fieldWidth, 
+					{ id:'_party_3', fieldLabel:i18n.Organization_Form._party_3,	name:'party',  width:posForm.fieldWidth, 
 						xtype: 'EosDictEntry_combo', hiddenName: 'party', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_PARTYVISAGE'
 					},
-					{ id:'_cardtype_3', fieldLabel:'证件类型',	name:'cardtype',  width:posForm.fieldWidth, 
+					{ id:'_cardtype_3', fieldLabel:i18n.Organization_Form._cardtype_3,	name:'cardtype',  width:posForm.fieldWidth, 
 						xtype: 'EosDictEntry_combo', hiddenName: 'cardtype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_CARDTYPE'
 					},
-					{ id:'_indate_3', fieldLabel:'入职时间',	name:'indate', width:posForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_otel_3', fieldLabel:'办公室电话',	name:'otel', width:posForm.fieldWidth, vtype:'telphone',maxLength:12},
-					{ id:'_ozipcode_3', fieldLabel:'办公邮编',	name:'ozipcode', width:posForm.fieldWidth, vtype:'postalcode',maxLength:10},
-					{ id:'_faxno_3', fieldLabel:'传真号码',	name:'faxno', width:posForm.fieldWidth, maxLength:14,vtype:'telphone'},
-					{ id:'_htel_3', fieldLabel:'家庭电话',	name:'htel', width:posForm.fieldWidth, vtype:'telphone',maxLength:12},
-					{ id:'_hzipcode_3', fieldLabel:'家庭邮编',	name:'hzipcode', width:posForm.fieldWidth, vtype:'postalcode',maxLength:10},
-					{ id:'_msn_3', fieldLabel:'IM号码',	name:'msn', width:posForm.fieldWidth, maxLength:16,hidden:true},
-					{ id:'_major_3', fieldLabel:'直接主管',	name:'major', width:posForm.fieldWidth, maxLength:20,hidden:true},
-					{ id:'_workexp_3', fieldLabel:'工作描述',	name:'workexp', width:posForm.fieldWidth, xtype:'textarea',maxLength:512}
+					{ id:'_indate_3', fieldLabel:i18n.Organization_Form._indate_3,	name:'indate', width:posForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_otel_3', fieldLabel:i18n.Organization_Form._otel_3,	name:'otel', width:posForm.fieldWidth, vtype:'telphone',maxLength:12},
+					{ id:'_ozipcode_3', fieldLabel:i18n.Organization_Form._ozipcode_3,	name:'ozipcode', width:posForm.fieldWidth, vtype:'postalcode',maxLength:10},
+					{ id:'_faxno_3', fieldLabel:i18n.Organization_Form._faxno_3,	name:'faxno', width:posForm.fieldWidth, maxLength:14,vtype:'telphone'},
+					{ id:'_htel_3', fieldLabel:i18n.Organization_Form._htel_3,	name:'htel', width:posForm.fieldWidth, vtype:'telphone',maxLength:12},
+					{ id:'_hzipcode_3', fieldLabel:i18n.Organization_Form._hzipcode_3,	name:'hzipcode', width:posForm.fieldWidth, vtype:'postalcode',maxLength:10},
+					{ id:'_msn_3', fieldLabel:i18n.Organization_Form._msn_3,	name:'msn', width:posForm.fieldWidth, maxLength:16,hidden:true},
+					{ id:'_major_3', fieldLabel:i18n.Organization_Form._major_3,	name:'major', width:posForm.fieldWidth, maxLength:20,hidden:true},
+					{ id:'_workexp_3', fieldLabel:i18n.Organization_Form._workexp_3,	name:'workexp', width:posForm.fieldWidth, xtype:'textarea',maxLength:512}
 				]
 			},{
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: empForm.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:'_empname_3', fieldLabel:'人员姓名',	name:'empname', allowBlank:false, width:empForm.fieldWidth, maxLength:25,vtype:'chinese'},
-					{ id:'_birthdate_3', fieldLabel:'出生日期',	name:'birthdate', width:empForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_empstatus_3', fieldLabel:'人员状态',	name:'empstatus', width:empForm.fieldWidth, 
+					{ id:'_empname_3', fieldLabel:i18n.Organization_Form._empname_3,	name:'empname', allowBlank:false, width:empForm.fieldWidth, maxLength:25,vtype:'chinese'},
+					{ id:'_birthdate_3', fieldLabel:i18n.Organization_Form._birthdate_3,	name:'birthdate', width:empForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_empstatus_3', fieldLabel:i18n.Organization_Form._empstatus_3,	name:'empstatus', width:empForm.fieldWidth, 
 						xtype: 'EosDictEntry_combo', hiddenName: 'empstatus', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_EMPSTATUS'
 					},
-					{ id:'_degree_3', fieldLabel:'职级',	name:'degree', width:posForm.fieldWidth, 
+					{ id:'_degree_3', fieldLabel:i18n.Organization_Form._degree_3,	name:'degree', width:posForm.fieldWidth, 
 						xtype: 'EosDictEntry_combo', hiddenName: 'degree', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_EMPZC'
 					},
-					{ id:'_cardno_3', fieldLabel:'证件号码',	name:'cardno', width:posForm.fieldWidth, maxLength:20},
-					{ id:'_outdate_3', fieldLabel:'离职时间',	name:'outdate', width:posForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_oaddress_3', fieldLabel:'办公室地址',	name:'oaddress', width:posForm.fieldWidth, maxLength:255},
-					{ id:'_oemail_3', fieldLabel:'办公邮箱',	name:'oemail', width:posForm.fieldWidth, maxLength:128},
-					{ id:'_mobileno_3', fieldLabel:'手机号码',	name:'mobileno',  width:posForm.fieldWidth, vtype:'mobile',maxLength:14},
-					{ id:'_haddress_3', fieldLabel:'家庭地址',	name:'haddress',  width:posForm.fieldWidth, maxLength:128},
-					{ id:'_pemail_3', fieldLabel:'个人邮箱',	name:'pemail', width:posForm.fieldWidth, maxLength:128},
-					{ id:'_specialty_3', fieldLabel:'可授权角色',	name:'specialty', width:posForm.fieldWidth, maxLength:20,hidden:true},
-					{ id:'_orgidlist_3', fieldLabel:'可管理机构',	name:'orgidlist', width:posForm.fieldWidth, maxLength:20,hidden:true},
-					{ id:'_remark_3', fieldLabel:'备注',	name:'remark', width:posForm.fieldWidth, xtype:'textarea',maxLength:200}
+					{ id:'_cardno_3', fieldLabel:i18n.Organization_Form._cardno_3,	name:'cardno', width:posForm.fieldWidth, maxLength:20},
+					{ id:'_outdate_3', fieldLabel:i18n.Organization_Form._outdate_3,	name:'outdate', width:posForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_oaddress_3', fieldLabel:i18n.Organization_Form._oaddress_3,	name:'oaddress', width:posForm.fieldWidth, maxLength:255},
+					{ id:'_oemail_3', fieldLabel:i18n.Organization_Form._oemail_3,	name:'oemail', width:posForm.fieldWidth, maxLength:128},
+					{ id:'_mobileno_3', fieldLabel:i18n.Organization_Form._mobileno_3,	name:'mobileno',  width:posForm.fieldWidth, vtype:'mobile',maxLength:14},
+					{ id:'_haddress_3', fieldLabel:i18n.Organization_Form._haddress_3,	name:'haddress',  width:posForm.fieldWidth, maxLength:128},
+					{ id:'_pemail_3', fieldLabel:i18n.Organization_Form._pemail_3,	name:'pemail', width:posForm.fieldWidth, maxLength:128},
+					{ id:'_specialty_3', fieldLabel:i18n.Organization_Form._specialty_3,	name:'specialty', width:posForm.fieldWidth, maxLength:20,hidden:true},
+					{ id:'_orgidlist_3', fieldLabel:i18n.Organization_Form._orgidlist_3,	name:'orgidlist', width:posForm.fieldWidth, maxLength:20,hidden:true},
+					{ id:'_remark_3', fieldLabel:i18n.Organization_Form._remark_3,	name:'remark', width:posForm.fieldWidth, xtype:'textarea',maxLength:200}
 				]
 			}]
 		}]
@@ -429,20 +429,20 @@ Ext.onReady(function() {
 				       }
 				},
 				failure: function(response, options){
-				       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				       MyExt.Msg.alert(i18n.Organization_Form.false+"\n" + response.status + "\n" + response.responseText);
 				}
 			});
 		}
 	}
 	
 	empForm.panel = new Ext.Panel({
-		title: "编辑", layout: "fit", plain:true, 
+		title: i18n.Organization_Form.edit, layout: "fit", plain:true, 
 		closeAction: "hide", modal: true, buttonAlign: "center",
 		items : [{
 			xtype: 'panel',	border:false,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", 
 			items: empForm.cEmpForm,
 			buttons: [{
-	            	id: '_operatorBtn_3', text: "登录设置", iconCls: "cogIcon", hidden:false, scope: this, handler: function(){
+	            	id: '_operatorBtn_3', text:i18n.Organization_Form.loginOption, iconCls: "cogIcon", hidden:false, scope: this, handler: function(){
 	            		saveFnEmpId = empForm.cEmpForm.getForm().findField("_empid_3").getValue();
 		            	operator.win.show();
 		            	/*
@@ -494,7 +494,7 @@ Ext.onReady(function() {
 								       }
 								},
 								failure: function(response, options){
-								       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+								       MyExt.Msg.alert(i18n.Organization_Form.false+"\n" + response.status + "\n" + response.responseText);
 								}
 							});
 	            		} 
@@ -505,7 +505,7 @@ Ext.onReady(function() {
 	            		}
 	            	}
 	            },{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.Organization_Form.save, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = empForm.cEmpForm.getForm();
             		if (!form.isValid()) return;
             		var data = form.getValues();

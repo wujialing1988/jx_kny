@@ -8,6 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>操作员管理</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-OperatorCtl.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/OperatorCtl.js"></script>
 </head>
 <body>

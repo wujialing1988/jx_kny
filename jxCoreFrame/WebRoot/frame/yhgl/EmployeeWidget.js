@@ -97,20 +97,20 @@ EmployeeWidget.UserList = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : true
 			},
-			loadMask: {msg: "正在处理，请稍侯..."},
+			loadMask: {msg:i18n.EmployeeWidget.wait},
 			// 偶数行变色
 			stripeRows : true,			
 			id:"EmployeeWidget_userList",
 			colModel : new Ext.grid.ColumnModel([
 				new Ext.grid.RowNumberer(), {
 					sortable : true,
-					header : "名称",
-					title : "双击该行记录选择人员",
+					header : i18n.EmployeeWidget.name,
+					title : i18n.EmployeeWidget.choicePosition,
 					dataIndex : "empname"
 				}, {
 					sortable : true,
-					header : "人员代码",
-					title : "双击该行记录选择人员",
+					header : i18n.EmployeeWidget.empNum,
+					title :i18n.EmployeeWidget.choicePosition,
 					dataIndex : "empcode"
 			}]),
 			store : EmployeeWidget.userstore,
@@ -185,7 +185,7 @@ EmployeeWidget.UserSelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		EmployeeWidget.UserSelectWin.superclass.constructor.call(this, {
-			title : "选择人员",
+			title :i18n.EmployeeWidget.choiceEmp,
 			width : 520,
 			height : 305,			
 			plain : true,
@@ -209,14 +209,14 @@ EmployeeWidget.UserSelectWin = Ext.extend(Ext.Window, {
 							// 工具栏
 							tbar : [{
 									xtype:"label",
-									text:"人员代码或姓名："
+									text:i18n.EmployeeWidget.empNumOrname+"："
 								},{	            
 					                xtype:"textfield",								                
 					                name : "empName",
 							        width: 200,							        
 					                id:"EmployeeWidget_empId"
 								},{
-									text : "搜索",
+									text : i18n.EmployeeWidget.search,
 									iconCls : "searchIcon",
 									handler : function(){
 										var empname = Ext.getCmp("EmployeeWidget_empId").getValue();
@@ -228,7 +228,7 @@ EmployeeWidget.UserSelectWin = Ext.extend(Ext.Window, {
 									},
 									scope : this
 								},{
-									text : "重置",
+									text : i18n.EmployeeWidget.reset,
 									iconCls : "resetIcon",
 									handler : function(){
 										this.grid.getStore().load({

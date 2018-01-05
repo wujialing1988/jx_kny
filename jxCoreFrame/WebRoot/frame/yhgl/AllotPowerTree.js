@@ -78,7 +78,7 @@ Ext.onReady(function() {
 	}
 	
 	function confirmAndSave (cfg){
-	    Ext.Msg.confirm("提示  ", "确认保存？  ", function(btn){
+	    Ext.Msg.confirm(i18n.AllotPowerTree.prompt, i18n.AllotPowerTree.confirmToSave, function(btn){
 	        if(btn != 'yes')    return;
 	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
 	    });    
@@ -87,7 +87,7 @@ Ext.onReady(function() {
 	//权限树
 	AllotPowerTree.tree = new Ext.tree.TreePanel({
 		tbar : ['-',{
-	    	text:"保存", iconCls:"saveIcon", handler: function(){
+	    	text:i18n.AllotPowerTree.save, iconCls:"saveIcon", handler: function(){
 	    		dataAry = new Array();
 	    		var root = AllotPowerTree.tree.getRootNode();
 	    		getHasChkedNode(root);
@@ -115,7 +115,7 @@ Ext.onReady(function() {
 			dataUrl : ctx + "/sysApp!tree.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '功能权限',
+			text :i18n.AllotPowerTree.funcPermissions,
 			disabled : false,
 			id : 'ROOT_0',
 			leaf : false,
@@ -148,7 +148,7 @@ Ext.onReady(function() {
 	
 	/** 权限分配窗口 */
 	AllotPowerTree.win = new Ext.Window({
-		title: "功能权限",
+		title: i18n.AllotPowerTree.funcPermissions,
 		width: 350, height: 500, 
 		layout: "fit", 
 		plain: true, border:false, maximizable: false,  
@@ -156,7 +156,7 @@ Ext.onReady(function() {
 		items : [AllotPowerTree.tree],
 		buttonAlign: 'center', 
 		buttons:[{
-			text:'关闭', iconCls:'closeIcon', handler: function() {
+			text:i18n.AllotPowerTree.close, iconCls:'closeIcon', handler: function() {
 				this.findParentByType('window').hide();
 			}
 		}]

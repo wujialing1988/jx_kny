@@ -9,6 +9,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>工作组管理</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-WorkGroup.js"></script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-Organization.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/WorkDutyWidget.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/EmployeeWidget.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/WorkGroup_Form.js"></script>

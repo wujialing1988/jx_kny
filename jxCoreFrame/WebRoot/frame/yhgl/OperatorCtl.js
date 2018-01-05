@@ -12,8 +12,8 @@ Ext.onReady(function() {
 	    storeAutoLoad: true,
 	    storeId:'operatorid',
 	    tbar:['search','delete','refresh','-',
-	    	{xtype:"label", text:"操作员状态:"},
-	    	{xtype:"radio",name:"statuschoose", boxLabel:"启用&nbsp;&nbsp;&nbsp;&nbsp;", checked:true,
+	    	{xtype:"label", text:i18n.OperatorCtl.operatorType},
+	    	{xtype:"radio",name:"statuschoose", boxLabel:i18n.OperatorCtl.Enabled+"&nbsp;&nbsp;&nbsp;&nbsp;", checked:true,
 	    		handler:function(radio, checked){
 	    			if(checked){
 	    				Operator.searchParams = {status:'running'};
@@ -21,7 +21,7 @@ Ext.onReady(function() {
 	    			}
 	    		}
 	    	},
-	    	{xtype:"radio", name:"statuschoose", boxLabel:"禁用&nbsp;&nbsp;&nbsp;&nbsp;",
+	    	{xtype:"radio", name:"statuschoose", boxLabel:i18n.OperatorCtl.Disabled+"&nbsp;&nbsp;&nbsp;&nbsp;",
       	        handler:function(radio, checked){
       	        	if(checked){
       	        		Operator.searchParams = {status:'stop'};
@@ -32,29 +32,29 @@ Ext.onReady(function() {
 	    ],
 	    	
 		fields: [
-			{header:'操作员ID', dataIndex:'operatorid', hidden:true, editor: { xtype:'hidden' }},
-			{header:'登录用户名', dataIndex:'userid', hidden:false, editor: {allowBlank:false,maxLength:32}},
-			{header:'密码', dataIndex:'password', hidden:true, editor: { inputType:'password', allowBlank:false, maxLength:32 }},
-			{header:'密码失效日期', dataIndex:'invaldate', hidden:true, editor: { xtype:'hidden' }},
-			{header:'操作员名称', dataIndex:'operatorname', hidden:false, editor: { allowBlank:false, maxLength:32}},
-			{header:'认证模式', dataIndex:'authmode', hidden:true, editor: { xtype:'hidden' }},
-			{header:'操作员状态', dataIndex:'status', hidden:false, 
+			{header:i18n.OperatorCtl.operatorid, dataIndex:'operatorid', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.userid, dataIndex:'userid', hidden:false, editor: {allowBlank:false,maxLength:32}},
+			{header:i18n.OperatorCtl.password, dataIndex:'password', hidden:true, editor: { inputType:'password', allowBlank:false, maxLength:32 }},
+			{header:i18n.OperatorCtl.invaldate, dataIndex:'invaldate', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.operatorname, dataIndex:'operatorname', hidden:false, editor: { allowBlank:false, maxLength:32}},
+			{header:i18n.OperatorCtl.authmode, dataIndex:'authmode', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.status, dataIndex:'status', hidden:false, 
 			 editor: {
 			 	id:'_status_1',allowBlank:false,xtype: 'combo',dataColumn :"status", hiddenName: "status",  mode: 'local' ,valueField: "value", displayField: "text", triggerAction: "all",   		 	
-            		editable: false, forceSelection: true, store:[["running","启用"],["stop","禁用"]]
+            		editable: false, forceSelection: true, store:[["running",i18n.OperatorCtl.Enabled],["stop",i18n.OperatorCtl.Disabled]]
 			 },
-			  renderer:function(v){ if(v == 'running'){return '启用';} else if(v == 'stop'){return '禁用';} else {return '禁用';}}
+			  renderer:function(v){ if(v == 'running'){return i18n.OperatorCtl.Enabled;} else if(v == 'stop'){return i18n.OperatorCtl.Disabled;} else {return i18n.OperatorCtl.Disabled;}}
 			},
-			{header:'解锁时间', dataIndex:'unlocktime', hidden:true, editor: { xtype:'hidden' }},
-			{header:'菜单风格', dataIndex:'menutype', hidden:true, editor: { xtype:'hidden' }},
-			{header:'最后一次登录时间', dataIndex:'lastlogin', hidden:true, editor: { xtype:'hidden' }},
-			{header:'最新登录次数', dataIndex:'errcount', hidden:true, editor: { xtype:'hidden' }},
-			{header:'有效开始时间', dataIndex:'startdate', hidden:true, editor: { xtype:'hidden' }},
-			{header:'有效结束时间', dataIndex:'enddate', hidden:true, editor: { xtype:'hidden' }},
-			{header:'有效时间范围', dataIndex:'validtime', hidden:true, editor: { xtype:'hidden' }},
-			{header:'MAC码', dataIndex:'maccode', hidden:true, editor: { xtype:'hidden' }},
-			{header:'iP地址', dataIndex:'ipaddress', hidden:true, editor: { xtype:'hidden' }},
-			{header:'邮箱', dataIndex:'email', hidden:true, editor: { xtype:'hidden' }}
+			{header:i18n.OperatorCtl.unlocktime, dataIndex:'unlocktime', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.menutype, dataIndex:'menutype', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.lastlogin, dataIndex:'lastlogin', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.errcount, dataIndex:'errcount', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.startdate, dataIndex:'startdate', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.enddate, dataIndex:'enddate', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.validtime, dataIndex:'validtime', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.maccode, dataIndex:'maccode', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.ipaddress, dataIndex:'ipaddress', hidden:true, editor: { xtype:'hidden' }},
+			{header:i18n.OperatorCtl.email, dataIndex:'email', hidden:true, editor: { xtype:'hidden' }}
 		],
 		editOrder:[],
 		searchOrder:['userid'],

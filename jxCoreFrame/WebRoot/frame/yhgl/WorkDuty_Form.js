@@ -19,24 +19,24 @@ Ext.onReady(function() {
 				labelWidth: DutyForm.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ id:'_dutyid_0', fieldLabel:'职务ID',name:'dutyid', disabled:false,hidden:true},
-					{ id:'_parentduty_0', fieldLabel:'父职务ID',name:'parentduty', disabled:false,hidden:true},
-					{ id:'_dutylevel_0', fieldLabel:'职务层次',name:'dutylevel', disabled:false,hidden:true},
-					{ id:'_dutyseq_0', fieldLabel:'职务序列号',name:'dutyseq', disabled:false,hidden:true},
-					{ id:'_isleaf_0', fieldLabel:'是否叶子节点',name:'isleaf', disabled:false,hidden:true},
-					{ id:'_subcount_0', fieldLabel:'子节点数',name:'subcount', disabled:false,hidden:true},
+					{ id:'_dutyid_0', fieldLabel:i18n.WorkDuty_Form._dutyid_0,name:'dutyid', disabled:false,hidden:true},
+					{ id:'_parentduty_0', fieldLabel:i18n.WorkDuty_Form._parentduty_0,name:'parentduty', disabled:false,hidden:true},
+					{ id:'_dutylevel_0', fieldLabel:i18n.WorkDuty_Form._dutylevel_0,name:'dutylevel', disabled:false,hidden:true},
+					{ id:'_dutyseq_0', fieldLabel:i18n.WorkDuty_Form._dutyseq_0,name:'dutyseq', disabled:false,hidden:true},
+					{ id:'_isleaf_0', fieldLabel:i18n.WorkDuty_Form._isleaf_0,name:'isleaf', disabled:false,hidden:true},
+					{ id:'_subcount_0', fieldLabel:i18n.WorkDuty_Form._subcount_0,name:'subcount', disabled:false,hidden:true},
 					//显示部分
-					{ id:'_parentdutyname_0', fieldLabel:'上级职务',name:'parentdutyname', disabled:true,hidden:false,width:DutyForm.fieldWidth},
-					{ id:'_dutycode_0', fieldLabel:'职务代码',name:'dutycode', vtype:'alphanum2', maxLength:20,allowBlank:false,width:DutyForm.fieldWidth},
-					{ id:'_remark_0', fieldLabel:'备注',name:'remark', xtype:'textarea', maxLength:256,allowBlank:true,width:DutyForm.fieldWidth}
+					{ id:'_parentdutyname_0', fieldLabel:i18n.WorkDuty_Form._parentdutyname_0,name:'parentdutyname', disabled:true,hidden:false,width:DutyForm.fieldWidth},
+					{ id:'_dutycode_0', fieldLabel:i18n.WorkDuty_Form._dutycode_0,name:'dutycode', vtype:'alphanum2', maxLength:20,allowBlank:false,width:DutyForm.fieldWidth},
+					{ id:'_remark_0', fieldLabel:i18n.WorkDuty_Form._remark_0,name:'remark', xtype:'textarea', maxLength:256,allowBlank:true,width:DutyForm.fieldWidth}
 				]
 			},{
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: DutyForm.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:'_dutytype_0', fieldLabel: '职务类别', name:'dutytype', xtype: 'EosDictEntry_combo', width:DutyForm.fieldWidth,
+					{ id:'_dutytype_0', fieldLabel: i18n.WorkDuty_Form._dutytype_0, name:'dutytype', xtype: 'EosDictEntry_combo', width:DutyForm.fieldWidth,
 					  hiddenName: 'dutytype', displayField: 'dictname', valueField: 'dictid', status:'1', dicttypeid:'ABF_DUTYTYPE'},
-					{ id:'_dutyname_0', fieldLabel:'职务名称',name:'dutyname', vtype:'validChar', maxLength:15,allowBlank:false,width:DutyForm.fieldWidth}
+					{ id:'_dutyname_0', fieldLabel:i18n.WorkDuty_Form._dutyname_0,name:'dutyname', vtype:'validChar', maxLength:15,allowBlank:false,width:DutyForm.fieldWidth}
 				]
 			}]
 		}]
@@ -71,20 +71,20 @@ Ext.onReady(function() {
 				       }
 				},
 				failure: function(response, options){
-				       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				       MyExt.Msg.alert(i18n.WorkDuty_Form.false + response.status + "\n" + response.responseText);
 				}
 			});
 		}
 	};
 	
 	DutyForm.panel = new Ext.Panel({
-		title: "编辑", layout: "fit", plain:true, 
+		title: i18n.WorkDuty_Form.edit, layout: "fit", plain:true, 
 		closeAction: "hide", modal: true, align:'center',
 		items : [{
 			xtype: 'panel',	border:false,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", buttonAlign: "center",
 			items: DutyForm.currentInfoForm,
 			buttons: [{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.WorkDuty_Form.save, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = DutyForm.currentInfoForm.getForm();
             		if (!form.isValid()) return;
             		var data = form.getValues();

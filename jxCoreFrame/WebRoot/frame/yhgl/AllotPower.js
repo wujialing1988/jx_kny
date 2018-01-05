@@ -12,17 +12,17 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'operatorid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.AllotPower.add, iconCls:"addIcon", handler: function(){
 	    		AllotPower.SelectWin.Operator.show();
 	    		AllotPower.AddOperator.grid.store.load();
 	    	}
 	    },'delete'],
 	    fields: [
-	    	{header:'操作员ID', dataIndex:'operatorid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'登录用户名', dataIndex:'userid', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'操作员名称', dataIndex:'operatorname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'操作员状态', dataIndex:'status', hidden:false, editor: { xtype:'hidden' },
-	    	renderer:function(v){ if(v == 'running'){return '启用';} else if(v == 'stop'){return '禁用';} else {return '禁用';}}}
+	    	{header:i18n.AllotPower.operatorid, dataIndex:'operatorid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.userid, dataIndex:'userid', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.operatorname, dataIndex:'operatorname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.status, dataIndex:'status', hidden:false, editor: { xtype:'hidden' },
+	    	renderer:function(v){ if(v == 'running'){return i18n.AllotPower.enable;} else if(v == 'stop'){return i18n.AllotPower.disable;} else {return i18n.AllotPower.disable;}}}
 	    ],
 	    editOrder:[],
 	    searchOrder:['userid','operatorname'],
@@ -80,19 +80,19 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'orgid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.AllotPower.add, iconCls:"addIcon", handler: function(){
 	    		AllotPower.SelectWin.Organization.show();
 	    		AllotPower.AddOrganization.grid.store.load();
 	    	}
 	    },'delete'],
 	    fields: [
-	    	{header:'机构ID', dataIndex:'orgid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'机构代码', dataIndex:'orgcode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'机构名称', dataIndex:'orgname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'机构类型', dataIndex:'orgtype', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.orgid, dataIndex:'orgid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.orgcode, dataIndex:'orgcode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.orgname, dataIndex:'orgname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.orgtype, dataIndex:'orgtype', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_ORGTYPE',v); }
 	    	},
-	    	{header:'机构状态', dataIndex:'status', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.status, dataIndex:'status', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_ORGSTATUS',v);}
 	    	}
 	    ],
@@ -152,17 +152,17 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'groupid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.AllotPower.add, iconCls:"addIcon", handler: function(){
 	    		AllotPower.SelectWin.Group.show();
 	    		AllotPower.AddGroup.grid.store.load();
 	    	}
 	    },'delete'],
 	    fields: [
-	    	{header:'工作组ID', dataIndex:'groupid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'工作组名称', dataIndex:'groupname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'工作组类型', dataIndex:'grouptype', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.groupid, dataIndex:'groupid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.groupname, dataIndex:'groupname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.grouptype, dataIndex:'grouptype', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_GROUPTYPE',v); }},
-	    	{header:'工作组状态', dataIndex:'groupstatus', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.groupstatus, dataIndex:'groupstatus', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_GROUPSTATUS',v);}}
 	    ],
 	    editOrder:[],
@@ -221,18 +221,18 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'positionid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.AllotPower.add, iconCls:"addIcon", handler: function(){
 	    		AllotPower.SelectWin.Position.show();
 	    		AllotPower.AddPosition.grid.store.load();
 	    	}
 	    },'delete'],
 	    fields: [
-	    	{header:'岗位编码', dataIndex:'positionid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'岗位代码', dataIndex:'posicode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'岗位名称', dataIndex:'posiname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'岗位类别', dataIndex:'positype', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.positionid, dataIndex:'positionid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.posicode, dataIndex:'posicode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.posiname, dataIndex:'posiname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.positype, dataIndex:'positype', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_POSITYPE',v);}},
-	    	{header:'岗位状态', dataIndex:'status',   hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.status, dataIndex:'status',   hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_POSISTATUS',v);}}
 	    	
 	    ],
@@ -292,16 +292,16 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'dutyid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.AllotPower.add, iconCls:"addIcon", handler: function(){
 	    		AllotPower.SelectWin.Duty.show();
 	    		AllotPower.AddDuty.grid.store.load();
 	    	}
 	    },'delete'],
 	    fields: [
-	    	{header:'职务ID',  dataIndex:'dutyid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'职务代码', dataIndex:'dutycode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'职务名称', dataIndex:'dutyname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'职务类型', dataIndex:'dutytype', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.dutyid,  dataIndex:'dutyid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.dutycode, dataIndex:'dutycode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.dutyname, dataIndex:'dutyname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.dutytype, dataIndex:'dutytype', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_DUTYTYPE',v);}}
 	    ],
 	    editOrder:[],
@@ -362,7 +362,7 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'operatorid',
 	    tbar:['search',{
-	    	text:"保存", iconCls:"saveIcon", handler: function(){
+	    	text:i18n.AllotPower.save, iconCls:"saveIcon", handler: function(){
 	    		if(!$yd.isSelectedRecord(AllotPower.AddOperator.grid)) return;//未选择记录，直接返回
 	    		if(AllotPower.AddOperator.grid.searchWin)  AllotPower.AddOperator.grid.searchWin.hide();   
 	    		Ext.Ajax.request(Ext.apply(AllotPower.SelectWin.cfgAjaxRequest2(AllotPower.Operator.grid), {
@@ -375,11 +375,11 @@ Ext.onReady(function() {
 	    	}
 	    }],
 	    fields: [
-	    	{header:'操作员ID', dataIndex:'operatorid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'登录用户名', dataIndex:'userid', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'操作员名称', dataIndex:'operatorname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'操作员状态', dataIndex:'status', hidden:false, editor: { xtype:'hidden' },
-	    	renderer:function(v){ if(v == 'running'){return '启用';} else if(v == 'stop'){return '禁用';} else {return '禁用';}}}
+	    	{header:i18n.AllotPower.operatorid, dataIndex:'operatorid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.userid, dataIndex:'userid', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.operatorname, dataIndex:'operatorname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.status, dataIndex:'status', hidden:false, editor: { xtype:'hidden' },
+	    	renderer:function(v){ if(v == 'running'){return i18n.AllotPower.enable;} else if(v == 'stop'){return i18n.AllotPower.disable;} else {return i18n.AllotPower.disable;}}}
 	    ],
 	    editOrder:[],
 	    searchOrder:['userid','operatorname'],
@@ -423,7 +423,7 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'orgid',
 	    tbar:['search',{
-	    	text:"保存", iconCls:"saveIcon", handler: function(){
+	    	text:i18n.AllotPower.save, iconCls:"saveIcon", handler: function(){
 	    		if(!$yd.isSelectedRecord(AllotPower.AddOrganization.grid)) return;//未选择记录，直接返回
 	    		if(AllotPower.AddOrganization.grid.searchWin)  AllotPower.AddOrganization.grid.searchWin.hide();   
 	    		Ext.Ajax.request(Ext.apply(AllotPower.SelectWin.cfgAjaxRequest2(AllotPower.Organization.grid), {
@@ -436,13 +436,13 @@ Ext.onReady(function() {
 	    	}
 	    }],
 	    fields: [
-	    	{header:'机构ID', dataIndex:'orgid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'机构代码', dataIndex:'orgcode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'机构名称', dataIndex:'orgname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'机构类型', dataIndex:'orgtype', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.orgid, dataIndex:'orgid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.orgcode, dataIndex:'orgcode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.orgname, dataIndex:'orgname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.orgtype, dataIndex:'orgtype', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_ORGTYPE',v); }
 	    	},
-	    	{header:'机构状态', dataIndex:'status', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.status, dataIndex:'status', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_ORGSTATUS',v);}
 	    	}
 	    ],
@@ -488,7 +488,7 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'groupid',
 	    tbar:['search',{
-	    	text:"保存", iconCls:"saveIcon", handler: function(){
+	    	text:i18n.AllotPower.save, iconCls:"saveIcon", handler: function(){
 	    		if(!$yd.isSelectedRecord(AllotPower.AddGroup.grid)) return;//未选择记录，直接返回
 	    		if(AllotPower.AddGroup.grid.searchWin)  AllotPower.AddGroup.grid.searchWin.hide();   
 	    		Ext.Ajax.request(Ext.apply(AllotPower.SelectWin.cfgAjaxRequest2(AllotPower.Group.grid), {
@@ -501,11 +501,11 @@ Ext.onReady(function() {
 	    	}
 	    }],
 	    fields: [
-	    	{header:'工作组ID', dataIndex:'groupid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'工作组名称', dataIndex:'groupname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'工作组类型', dataIndex:'grouptype', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.groupid, dataIndex:'groupid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.groupname, dataIndex:'groupname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.grouptype, dataIndex:'grouptype', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_GROUPTYPE',v); }},
-	    	{header:'工作组状态', dataIndex:'groupstatus', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.groupstatus, dataIndex:'groupstatus', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_GROUPSTATUS',v);}}
 	    ],
 	    editOrder:[],
@@ -549,7 +549,7 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'positionid',
 	    tbar:['search',{
-	    	text:"保存", iconCls:"saveIcon", handler: function(){
+	    	text:i18n.AllotPower.save, iconCls:"saveIcon", handler: function(){
 	    		if(!$yd.isSelectedRecord(AllotPower.AddPosition.grid)) return;//未选择记录，直接返回
 	    		if(AllotPower.AddPosition.grid.searchWin)  AllotPower.AddPosition.grid.searchWin.hide();   
 	    		Ext.Ajax.request(Ext.apply(AllotPower.SelectWin.cfgAjaxRequest2(AllotPower.Position.grid), {
@@ -562,12 +562,12 @@ Ext.onReady(function() {
 	    	}
 	    }],
 	    fields: [
-	    	{header:'岗位编码', dataIndex:'positionid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'岗位代码', dataIndex:'posicode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'岗位名称', dataIndex:'posiname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'岗位类别', dataIndex:'positype', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.positionid, dataIndex:'positionid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.posicode, dataIndex:'posicode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.posiname, dataIndex:'posiname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.positype, dataIndex:'positype', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_POSITYPE',v);}},
-	    	{header:'岗位状态', dataIndex:'status',   hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.status, dataIndex:'status',   hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_POSISTATUS',v);}}
 	    	
 	    ],
@@ -612,7 +612,7 @@ Ext.onReady(function() {
 	    singleSelect: false,
 	    storeId:'dutyid',
 	    tbar:['search',{
-	    	text:"保存", iconCls:"saveIcon", handler: function(){
+	    	text:i18n.AllotPower.save, iconCls:"saveIcon", handler: function(){
 	    		if(!$yd.isSelectedRecord(AllotPower.AddDuty.grid)) return;//未选择记录，直接返回
 	    		if(AllotPower.AddDuty.grid.searchWin)  AllotPower.AddDuty.grid.searchWin.hide();   
 	    		Ext.Ajax.request(Ext.apply(AllotPower.SelectWin.cfgAjaxRequest2(AllotPower.Duty.grid), {
@@ -625,10 +625,10 @@ Ext.onReady(function() {
 	    	}
 	    }],
 	    fields: [
-	    	{header:'职务ID',  dataIndex:'dutyid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'职务代码', dataIndex:'dutycode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'职务名称', dataIndex:'dutyname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
-	    	{header:'职务类型', dataIndex:'dutytype', hidden:false, editor: { xtype:'hidden' },
+	    	{header:i18n.AllotPower.dutyid,  dataIndex:'dutyid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.AllotPower.dutycode, dataIndex:'dutycode', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.dutyname, dataIndex:'dutyname', hidden:false, editor: { xtype:'hidden' }, searcher:{}},
+	    	{header:i18n.AllotPower.dutytype, dataIndex:'dutytype', hidden:false, editor: { xtype:'hidden' },
 	    	 renderer: function(v,metadata, record,rowIndex, colIndex, store){ return EosDictEntry.getDictname('ABF_DUTYTYPE',v);}}
 	    ],
 	    editOrder:[],
@@ -684,34 +684,34 @@ Ext.onReady(function() {
 		    //请求失败后的回调函数
 		    failure: function(response, options){
 		        if(self.loadMask)    self.loadMask.hide();
-		        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+		        Ext.Msg.alert(i18n.AllotPower.prompt,i18n.AllotPower.false + response.status + "\n" + response.responseText);
 		    }
 		};
 	    return cfg;
 	}
 	
 	AllotPower.SelectWin.Operator = new Ext.Window({
-		title: "选择操作员", maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
+		title:i18n.AllotPower.operatorChoice, maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
 		items : [{xtype: 'panel',	border:true,  align:'center',  buttonAlign: "center", baseCls: "x-plain", layout: "fit", items: [AllotPower.AddOperator.grid]}]
 	});
 	
 	AllotPower.SelectWin.Organization = new Ext.Window({
-		title: "选择机构", maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
+		title: i18n.AllotPower.orgChoice, maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
 		items : [{xtype: 'panel',	border:true,  layout:'fit',	align:'center',  buttonAlign: "center", baseCls: "x-plain", items: [AllotPower.AddOrganization.grid]}]
 	});
 	
 	AllotPower.SelectWin.Group = new Ext.Window({
-		title: "选择工作组", maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
+		title: i18n.AllotPower.WorkGroupCho, maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
 		items : [{xtype: 'panel',	border:true,  layout:'fit',	align:'center',  buttonAlign: "center", baseCls: "x-plain", items: [AllotPower.AddGroup.grid]}]
 	});
 	
 	AllotPower.SelectWin.Position = new Ext.Window({
-		title: "选择岗位", maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
+		title: i18n.AllotPower.positChoice, maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
 		items : [{xtype: 'panel',	border:true,  layout:'fit',	align:'center',  buttonAlign: "center", baseCls: "x-plain", items: [AllotPower.AddPosition.grid]}]
 	});
 	
 	AllotPower.SelectWin.Duty = new Ext.Window({
-		title: "选择职务", maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
+		title:i18n.AllotPower.jobChoice, maximizable: false, width: 650, height: 400, layout: "fit", plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
 		items : [{xtype: 'panel',	border:true,  layout:'fit',	align:'center',  buttonAlign: "center", baseCls: "x-plain", items: [AllotPower.AddDuty.grid]}]
 	});
 });

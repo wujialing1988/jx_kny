@@ -9,6 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>人员控制</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-EmployeeCtl.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/WorkGroupTreeWidget.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/OrganizationTreeWidget.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/EmployeeCtl.js"></script>

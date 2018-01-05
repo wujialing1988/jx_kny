@@ -21,35 +21,35 @@ Ext.onReady(function(){
 	    tbar:['search','add','delete'],
 	    fields: [
 	    	//列表中隐藏
-	    	{header:'工作组ID', dataIndex:'groupid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'父工作组',dataIndex:'parentgroupid',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'隶属机构ID',dataIndex:'orgid',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'工作组层次',dataIndex:'grouplevel',hidden:true,editor:{xtype:'hidden'}},
-	    	{header:'工作组路径序列', dataIndex:'groupseq', hidden:true, editor: {maxLength:255,xtype:'hidden'}},
-	    	{header:'负责人(虚拟字段)', dataIndex:'empname', hidden:true, editor: {id:'_empname_list0',xtype:'hidden'}},
-	    	{header:'创建时间', dataIndex:'createtime', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'最近更新时间', dataIndex:'lastupdate', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'最近更新人员', dataIndex:'updator', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'是否叶子节点', dataIndex:'isleaf', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'子节点数', dataIndex:'subcount', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.groupid, dataIndex:'groupid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkGroup_List.parentgroupid,dataIndex:'parentgroupid',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.orgid,dataIndex:'orgid',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.grouplevel,dataIndex:'grouplevel',hidden:true,editor:{xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.groupseq, dataIndex:'groupseq', hidden:true, editor: {maxLength:255,xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.empname, dataIndex:'empname', hidden:true, editor: {id:'_empname_list0',xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.createtime, dataIndex:'createtime', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.lastupdate, dataIndex:'lastupdate', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.updator, dataIndex:'updator', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.isleaf, dataIndex:'isleaf', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.subcount, dataIndex:'subcount', hidden:true, editor: {xtype:'hidden'}},
 	    	//列表中显示
-	    	{header:'工作组名称', dataIndex:'groupname', hidden:false, editor: {maxLength:25,allowBlank:false,vtype:'validChar'}},
-	    	{header:'负责人', dataIndex:'manager', hidden:true, editor: {id:'_manager_list0',xtype: "OmEmployee_SelectWin",
+	    	{header:i18n.WorkGroup_List.groupname, dataIndex:'groupname', hidden:false, editor: {maxLength:25,allowBlank:false,vtype:'validChar'}},
+	    	{header:i18n.WorkGroup_List.manager, dataIndex:'manager', hidden:true, editor: {id:'_manager_list0',xtype: "OmEmployee_SelectWin",
 	    		hiddenName: "manager",displayField:"empname",valueField: "empid",
 	    		returnField :[{widgetId: '_empname_list0',propertyName:'empname'}],editable: false }},
-	    	{header:'工作组类型', dataIndex:'grouptype', editor: {xtype: 'EosDictEntry_combo', id:'_grouptype_list0',
+	    	{header:i18n.WorkGroup_List.grouptype, dataIndex:'grouptype', editor: {xtype: 'EosDictEntry_combo', id:'_grouptype_list0',
 	    		hiddenName: 'grouptype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_GROUPTYPE'},
 	    		renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_GROUPTYPE',v);
 				}},
-	    	{header:'工作组状态', dataIndex:'groupstatus', editor: {xtype: 'EosDictEntry_combo',  id:'_groupstatus_list0',
+	    	{header:i18n.WorkGroup_List.groupstatus, dataIndex:'groupstatus', editor: {xtype: 'EosDictEntry_combo',  id:'_groupstatus_list0',
 	    		hiddenName: 'groupstatus', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_GROUPSTATUS'},
 	    		renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_GROUPSTATUS',v);
 				}},
-	    	{header:'有效开始日期', dataIndex:'startdate', xtype:'datecolumn',format: 'Y-m-d', editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
-	    	{header:'有效截止日期', dataIndex:'enddate', xtype:'datecolumn',format: 'Y-m-d', editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
-	    	{header:'工作组描述', dataIndex:'groupdesc', editor: {maxLength:256,xtype:'textarea'}}
+	    	{header:i18n.WorkGroup_List.startdate, dataIndex:'startdate', xtype:'datecolumn',format: 'Y-m-d', editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
+	    	{header:i18n.WorkGroup_List.enddate, dataIndex:'enddate', xtype:'datecolumn',format: 'Y-m-d', editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
+	    	{header:i18n.WorkGroup_List.groupdesc, dataIndex:'groupdesc', editor: {maxLength:256,xtype:'textarea'}}
 	    ],
 	    editOrder:['groupid','parentgroupid','orgid','grouplevel','groupseq','createtime','lastupdate','updator','isleaf','subcount',
 	    			'groupname','manager','grouptype','groupstatus','startdate','enddate','groupdesc'],
@@ -172,41 +172,41 @@ Ext.onReady(function(){
 	    tbar:['search','add','delete'],
 	    fields: [
 	    	//列表中隐藏
-	    	{header:'岗位编码', dataIndex:'positionid', hidden:true, editor:{xtype:'hidden' }},
-	    	{header:'上级岗位', dataIndex:'manaposi',	hidden:true, editor:{xtype:'hidden'}},
-	    	{header:'岗位层次',	dataIndex:'posilevel',	hidden:true, editor:{xtype:'hidden'}},
-	    	{header:'岗位序列',	dataIndex:'positionseq',	hidden:true, editor:{xtype:'hidden'}},
-	    	{header:'创建时间', dataIndex:'createtime', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'最后一次修改时间', dataIndex:'lastupdate', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'最近更新人员', dataIndex:'updator', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'是否是叶子节点', dataIndex:'isleaf', hidden:true, 	editor: {xtype:'hidden'}},
-			{header:'子节点数', dataIndex:'subcount', hidden:true, 	editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.positionid, dataIndex:'positionid', hidden:true, editor:{xtype:'hidden' }},
+	    	{header:i18n.WorkGroup_List.manaposi, dataIndex:'manaposi',	hidden:true, editor:{xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.posilevel,	dataIndex:'posilevel',	hidden:true, editor:{xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.positionseq,	dataIndex:'positionseq',	hidden:true, editor:{xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.createtime, dataIndex:'createtime', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.WorkGroup_List.lastupdate1, dataIndex:'lastupdate', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.WorkGroup_List.updator1, dataIndex:'updator', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.WorkGroup_List.isleaf, dataIndex:'isleaf', hidden:true, 	editor: {xtype:'hidden'}},
+			{header:i18n.WorkGroup_List.subcount, dataIndex:'subcount', hidden:true, 	editor: {xtype:'hidden'}},
 	    	//列表中显示
-	    	{header:'岗位代码', dataIndex:'posicode', hidden:false, editor: {allowBlank:false, maxLength:20, vtype:'alphanum2'}},
-	    	{header:'岗位名称', dataIndex:'posiname', hidden:false, editor: {allowBlank:false, maxLength:40, vtype:'validChar'}},
-	    	{header:'所属机构',	dataIndex:'orgid',	hidden:true, editor:{xtype:'hidden'}},
-	    	{header:'所属职务', dataIndex:'dutyid',	hidden:true, editor:{
+	    	{header:i18n.WorkGroup_List.posicode, dataIndex:'posicode', hidden:false, editor: {allowBlank:false, maxLength:20, vtype:'alphanum2'}},
+	    	{header:i18n.WorkGroup_List.posiname, dataIndex:'posiname', hidden:false, editor: {allowBlank:false, maxLength:40, vtype:'validChar'}},
+	    	{header:i18n.WorkGroup_List.posiname,	dataIndex:'orgid',	hidden:true, editor:{xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.orgid, dataIndex:'dutyid',	hidden:true, editor:{
 	    		id:'_dutyid_list0',
 	    		xtype: "WorkDuty_comboTree",
 	    		hiddenName: "dutyid", disabled:false,
 	    		selectNodeModel: "exceptRoot" ,
 		    	allowBlank: false
 	    	}},
-	    	{header:'所属职务', dataIndex:'dutyname', hidden:false, editor: {xtype:'hidden'}},
-	    	{header:'岗位类别', dataIndex : 'positype',  hidden:false,  editor:{xtype:'hidden'},
+	    	{header:i18n.WorkGroup_List.dutyid, dataIndex:'dutyname', hidden:false, editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.positype, dataIndex : 'positype',  hidden:false,  editor:{xtype:'hidden'},
 				renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_POSITYPE',v);
 				}
 			},
-			{header:'岗位状态', dataIndex : 'status',  hidden:false, 
+			{header:i18n.WorkGroup_List.status, dataIndex : 'status',  hidden:false, 
 				editor: { 
 					id:'_status_list4',xtype: 'EosDictEntry_combo', hiddenName: 'status', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_POSISTATUS'
 				},renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_POSISTATUS',v);
 				}
 			},
-			{header:'有效开始时间', dataIndex:'startdate', hidden:false, xtype:'datecolumn',	editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
-			{header:'有效结束时间', dataIndex:'enddate', hidden:false, xtype:'datecolumn', 	editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}}
+			{header:i18n.WorkGroup_List.startdate, dataIndex:'startdate', hidden:false, xtype:'datecolumn',	editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}},
+			{header:i18n.WorkGroup_List.enddate, dataIndex:'enddate', hidden:false, xtype:'datecolumn', 	editor: {xtype:'my97date', format: 'Y-m-d',initNow:false}}
 			
 	    ],
 	    editOrder:['posicode','posiname','startdate','enddate','dutyid','status'],
@@ -319,7 +319,7 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 	    storeId:'empid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.WorkGroup_List.add, iconCls:"addIcon", handler: function(){
 	    		if(AddEmpList.grid.searchWin)  AddEmpList.grid.searchWin.hide();   
         		if(!$yd.isSelectedRecord(AddEmpList.grid)) return;//未选择记录，直接返回
         		//如果当前执行的是工作组下的人员新增操作
@@ -339,16 +339,16 @@ Ext.onReady(function(){
 	    	}
 	    }],
 	    fields: [
-	    	{header:'人员ID', dataIndex:'empid', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'操作员登录号', dataIndex:'userid',hidden:false, editor:{xtype:'hidden'},searcher:{}},  //显示
-	    	{header:'人员代码', dataIndex:'empcode', hidden:false, editor:{xtype:'hidden'}},    //显示
-	    	{header:'人员姓名', dataIndex:'empname', hidden:false, editor:{xtype:'hidden'},searcher:{}},    //显示
-			{header:'性别', dataIndex:'gender', hidden:false, editor:{xtype:'hidden'},
+	    	{header:i18n.WorkGroup_List.empid, dataIndex:'empid', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.userid, dataIndex:'userid',hidden:false, editor:{xtype:'hidden'},searcher:{}},  //显示
+	    	{header:i18n.WorkGroup_List.empcode, dataIndex:'empcode', hidden:false, editor:{xtype:'hidden'}},    //显示
+	    	{header:i18n.WorkGroup_List.empname, dataIndex:'empname', hidden:false, editor:{xtype:'hidden'},searcher:{}},    //显示
+			{header:i18n.WorkGroup_List.gender, dataIndex:'gender', hidden:false, editor:{xtype:'hidden'},
 				renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_GENDER',v);
 				}
 			},        //显示
-			{header:'人员状态', dataIndex : 'empstatus',  hidden:false, editor:{xtype:'hidden'},
+			{header:i18n.WorkGroup_List.empstatus, dataIndex : 'empstatus',  hidden:false, editor:{xtype:'hidden'},
 				renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_EMPSTATUS',v);
 				}
@@ -390,7 +390,7 @@ Ext.onReady(function(){
 	});
 	
 	AddEmpList.win = new Ext.Window({
-		title:"新增", 
+		title:i18n.WorkGroup_List.add, 
 		width:556, 
 		height:356, 
 		plain:true, 
@@ -429,12 +429,12 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 	    storeId:'empid',
 	    tbar:['search',{
-	    	text:"新增", iconCls:"addIcon", handler: function(){
+	    	text:i18n.WorkGroup_List.add, iconCls:"addIcon", handler: function(){
 	    		AddEmpList.win.show();
 	    		AddEmpList.grid.store.load();
 	    	}
 	    },{
-	    	text:"删除", iconCls:"deleteIcon", handler: function(){
+	    	text:i18n.WorkGroup_List.delete, iconCls:"deleteIcon", handler: function(){
 	    		if(emplist.grid.searchWin)  AddEmpList.grid.searchWin.hide();   
         		if(!$yd.isSelectedRecord(emplist.grid)) return;//未选择记录，直接返回
         		//如果当前执行的是工作组下的人员删除操作
@@ -454,16 +454,16 @@ Ext.onReady(function(){
 	    	}	
 	    }],
 	    fields: [
-	    	{header:'人员ID', 	dataIndex:'empid', 		hidden:true, 	editor: {xtype:'hidden'}},
-	    	{header:'登录帐号',	dataIndex:'userid',		hidden:false,	editor:	{xtype:'hidden'},	searcher:{}},
-	    	{header:'人员姓名', 	dataIndex:'empname', 	hidden:false, 	editor: {xtype:'hidden'},	searcher:{}},
-	    	{header:'人员状态', 	dataIndex:'empstatus', 	hidden:false, 	editor: {xtype:'hidden'},
+	    	{header:i18n.WorkGroup_List.empid, 	dataIndex:'empid', 		hidden:true, 	editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.userid1,	dataIndex:'userid',		hidden:false,	editor:	{xtype:'hidden'},	searcher:{}},
+	    	{header:i18n.WorkGroup_List.empname, 	dataIndex:'empname', 	hidden:false, 	editor: {xtype:'hidden'},	searcher:{}},
+	    	{header:i18n.WorkGroup_List.empstatus, 	dataIndex:'empstatus', 	hidden:false, 	editor: {xtype:'hidden'},
 	    		renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_EMPSTATUS',v);
 				}
 	    	},
-	    	{header:'所属机构', 	dataIndex:'orgname', 	hidden:false, 	editor: {xtype:'hidden'}},
-	    	{header:'所属工作组', dataIndex:'groupname', 	hidden:false, 	editor: {xtype:'hidden'}}
+	    	{header:i18n.WorkGroup_List.orgname, 	dataIndex:'orgname', 	hidden:false, 	editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkGroup_List.groupname, dataIndex:'groupname', 	hidden:false, 	editor: {xtype:'hidden'}}
 	    ],
 	    editOrder:[],
 	    searchOrder:['userid','empname'],

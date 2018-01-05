@@ -1,0 +1,15 @@
+i18n.MatTypeList = {};
+i18n.MatTypeList.upLoad = 'upLoad';
+i18n.MatTypeList.choice = 'choice';
+i18n.MatTypeList.browse = 'browse...';
+i18n.MatTypeList.load = 'improt';
+i18n.MatTypeList.NOChoice = 'not choice excel file';
+i18n.MatTypeList.canLoad = 'please load excel2003 file';
+i18n.MatTypeList.wait = 'upLoading,wait...';
+i18n.MatTypeList.false = 'upLoad false';
+i18n.MatTypeList.prompt = 'not choice file or file is too large';
+i18n.MatTypeList.downLoad = 'download template';
+i18n.MatTypeList.matCode = 'matCode';
+i18n.MatTypeList.matDesc = 'matDesc';
+i18n.MatTypeList.unit = 'unit';
+i18n.MatTypeList.price = 'plan price';

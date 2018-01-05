@@ -26,7 +26,7 @@ Ext.onReady(function() {
 				border : false,
 				items : [{
 					//index：0
-					title : "工作组信息",
+					title : i18n.WorkGroup_Tab.teamInfor,
 					border : false,
 					layout : "fit",
 					items : [WGForm.panel],
@@ -39,7 +39,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：1
-					title : "下级工作组",
+					title : i18n.WorkGroup_Tab.SuborGroup,
 					border : false,
 					layout : "fit",
 					items : [WGList.grid],
@@ -50,7 +50,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：2
-					title : "本岗位信息",
+					title : i18n.WorkGroup_Tab.postInfor,
 					border : false,
 					layout : "fit",
 					items : [posForm.panel],
@@ -63,7 +63,7 @@ Ext.onReady(function() {
 					}
 				}, {
 					//index：3
-					title : "下级岗位",
+					title : i18n.WorkGroup_Tab.LowerPosit,
 					border : false,
 					layout : "fit",
 					items : [positionlist.grid],
@@ -75,7 +75,7 @@ Ext.onReady(function() {
 						}
 					}
 				}, {
-					title : "下属人员",
+					title : i18n.WorkGroup_Tab.Subordinates,
 					border : false,
 					layout : "fit",
 					items : [emplist.grid],
@@ -85,16 +85,16 @@ Ext.onReady(function() {
 							//因工作组/岗位下的人员列表采用同一个表格组件，这里根据用户点击的节点类型动态改变表头标题
 							//工作组的下属人员
 							if(WGTab.currentNodeType != null && WGTab.currentNodeType != '' && WGTab.currentNodeType == 'gop'){
-								emplist.grid.getColumnModel().setColumnHeader(7,'所属工作组');
+								emplist.grid.getColumnModel().setColumnHeader(7,i18n.WorkGroup_Tab.workingGroup);
 							}
 							//岗位的下属人员
 							else if(WGTab.currentNodeType != null && WGTab.currentNodeType != '' && WGTab.currentNodeType == 'pos'){
-								emplist.grid.getColumnModel().setColumnHeader(7,'所属岗位');
+								emplist.grid.getColumnModel().setColumnHeader(7,i18n.WorkGroup_Tab.TheirPositions);
 							}
 					 	}
 					}
 				}, {
-					title : "人员信息",
+					title : i18n.WorkGroup_Tab.empInfor,
 					border : false,
 					layout : "fit",
 					items : [empForm.panel],

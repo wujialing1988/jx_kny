@@ -23,7 +23,7 @@ Ext.onReady(function(){
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/folder_user.png"/><label style="font-size:13px"> 分类 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/folder_user.png"/><label style="font-size:13px"> '+i18n.WorkDuty.classification+' </label>'
 			}]
 		},{
 			xtype: 'panel',	border:false,	layout:'column',	align:'center', columnWidth:0.4, 
@@ -32,7 +32,7 @@ Ext.onReady(function(){
 			},{
 				border : false,
 				height : 28,				
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/user_gray.png"/><label style="font-size:13px"> 职务 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/user_gray.png"/><label style="font-size:13px"> '+i18n.WorkDuty.posit+' </label>'
 			}]
 		}]
 	});

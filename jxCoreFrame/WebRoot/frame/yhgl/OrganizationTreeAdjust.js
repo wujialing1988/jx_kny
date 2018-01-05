@@ -10,7 +10,7 @@ Ext.onReady(function() {
 			dataUrl : ctx + "/organization!orgAdjust.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '机构调整',
+			text : i18n.OrganizationTreeAdjust.InstitutionalAdjustment,
 			disabled : false,
 			id : 'ROOT_0',
 			leaf : false,
@@ -46,7 +46,7 @@ Ext.onReady(function() {
 	});
 	
 	OrgTreeAdjust.transferWin = new Ext.Window({
-            title:"机构调动", 
+            title:i18n.OrganizationTreeAdjust.InstitutionalTransfer, 
             width:300, 
             height:400, 
             plain:true, 
@@ -56,7 +56,7 @@ Ext.onReady(function() {
             maximizable:false, 
             items:[OrgTreeAdjust.tree], 
             buttons: [{
-                id:'OrgTreeAdjustSaveBtn',text: "确定", iconCls: "saveIcon", scope: this, handler: function(){ 
+                id:'OrgTreeAdjustSaveBtn',text: i18n.OrganizationTreeAdjust.confirm, iconCls: "saveIcon", scope: this, handler: function(){ 
                    	var node = OrgTreeAdjust.tree.getSelectionModel().getSelectedNode(); //获取选中的机构
                    	var saveUrl = ctx + '/organization!updateOrgAdjust.action'; //更新机构层级
                    	//执行保存的AJAX请求

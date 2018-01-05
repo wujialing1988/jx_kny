@@ -24,11 +24,11 @@ Ext.onReady(function(){
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/medal_silver_2.png"/><label style="font-size:13px"> 工作组 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/medal_silver_2.png"/><label style="font-size:13px"> '+i18n.WorkGroup.workTeam+' </label>'
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/building.png"/><label style="font-size:13px"> 岗位 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/building.png"/><label style="font-size:13px">'+ i18n.WorkGroup.posit+' </label>'
 			}]
 		},{
 			xtype: 'panel',	border:false,	layout:'column',	align:'center', columnWidth:0.4, 
@@ -37,7 +37,7 @@ Ext.onReady(function(){
 			},{
 				border : false,
 				height : 28,
-				html : '<img src="'+ctx+'/frame/resources/images/toolbar/user_suit.png"/><label style="font-size:13px"> 人员 </label>'
+				html : '<img src="'+ctx+'/frame/resources/images/toolbar/user_suit.png"/><label style="font-size:13px">'+ i18n.WorkGroup.emp+' </label>'
 			}]
 		}]
 	});
@@ -54,7 +54,7 @@ Ext.onReady(function(){
 	        items : [WGTree.tree]
 	    }, {
 	    	collapsible : true, //面板可收缩
-	    	title : '图示标识',	//标题
+	    	title : i18n.WorkGroup.graphicLogo,	//标题
 	        region : 'south',   //位于主区域下部
 			height : 140,       //图示区域高度
 			bodyBorder: false,	//自动滚动条

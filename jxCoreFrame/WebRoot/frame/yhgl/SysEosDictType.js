@@ -13,7 +13,7 @@ Ext.onReady(function(){
 			dataUrl : ctx + "/sysEosDictType!tree.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '字典类型',
+			text : i18n.SysEosDicType.dicType,
 			disabled : false,
 			id : 'ROOT_0',
 			leaf : false,
@@ -58,7 +58,7 @@ Ext.onReady(function(){
 				} 
 			},
 			failure: function(response, options){
-				MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				MyExt.Msg.alert(i18n.SysEosDicType.false + response.status + "\n" + response.responseText);
 			}
 		});
 	}
@@ -72,18 +72,18 @@ Ext.onReady(function(){
 	    storeAutoLoad: false,
 	    storeId:'dicttypeid',
 	    tbar:['search','add','delete',{
-	    	text:"字典项维护", iconCls:"leafIcon", scope:this , 
+	    	text:i18n.SysEosDicType.dicmaintain, iconCls:"leafIcon", scope:this , 
 			handler: function(){
 				if(!$yd.isSelectedRecord(EosDictType.grid)) return; //未选择则返回并提示
 				EosDictEntry.win.show();
 				EosDictEntry.tree.root.reload();
 		    	EosDictEntry.tree.getRootNode().expand();
-		    	EosDictEntry.tree.getRootNode().setText(EosDictType.grid.selModel.getSelections()[0].get("dicttypename"));
+		    	EosDictEntry.tree.getRootNode().setText(EosDictType.grid.selModel.getSelections()[0].get("dict"));
 		    	EosDictEntry.grid.store.load();
 			}
 	    }],
 	    fields: [
-	    	{header:'类型代码', dataIndex:'dicttypeid', 	hidden:false, 
+	    	{header:i18n.SysEosDicType.TypeCode, dataIndex:'dicttypeid', 	hidden:false, 
 	    		editor: {id:'_dicttypeid_0',allowBlank:false,maxLength:60,
 	    			listeners : {
 	    				change : function(){
@@ -92,13 +92,13 @@ Ext.onReady(function(){
 	    			}
 	    		},searcher:{xtype:'textfield'}
 	    	},
-	    	{header:'类型名称', dataIndex:'dicttypename', hidden:false, editor: {allowBlank:false,maxLength:30}},
-	    	{header:'类型层级', dataIndex:'rank', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'上层代码', dataIndex:'parentid', hidden:true, editor: {xtype:'hidden'}},
-	    	{header:'层次序列', dataIndex:'seqno', hidden:true, editor: {xtype:'hidden'}}
+	    	{header:i18n.SysEosDicType.dict, dataIndex:'dict', hidden:false, editor: {allowBlank:false,maxLength:30}},
+	    	{header:i18n.SysEosDicType.rank, dataIndex:'rank', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.SysEosDicType.parentid, dataIndex:'parentid', hidden:true, editor: {xtype:'hidden'}},
+	    	{header:i18n.SysEosDicType.seqno, dataIndex:'seqno', hidden:true, editor: {xtype:'hidden'}}
 	    ],
-	    editOrder:['dicttypeid','dicttypename'],
-	    searchOrder:['dicttypeid','dicttypename'],
+	    editOrder:['dicttypeid','dict'],
+	    searchOrder:['dicttypeid','dict'],
 		searchFn : function(searchParam) {
 			EosDictType.searchParams = searchParam;
 			this.store.load();
@@ -190,7 +190,7 @@ Ext.onReady(function(){
 			items : {
 				id : '_tabPanel', xtype : "tabpanel", activeTab : 0, enableTabScroll : true, border : false,
 				items : [{
-					title : "下级类型信息",
+					title : i18n.SysEosDicType.lowerTypeInfor,
 					border : false,
 					layout : "fit",
 					items : [EosDictType.grid]

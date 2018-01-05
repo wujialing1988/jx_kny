@@ -14,7 +14,7 @@ Ext.onReady(function() {
 	    loadMask: {msg: null},
 	    storeId:'appid',
 	    tbar:['search','add','delete','-',{
-	    	text:"功能维护", iconCls:"pluginIcon", handler: function(){
+	    	text:i18n.SysFuncion.funcMaintain, iconCls:"pluginIcon", handler: function(){
 	    		if(Sys.App.grid.searchWin)  Sys.App.grid.searchWin.hide();   
         		if(!$yd.isSelectedRecord(Sys.App.grid)) return;//未选择记录，直接返回
         		if(Sys.App.grid.selModel.getSelections().length>1){ MyExt.Msg.alert("只能选择一个应用！"); return;} //
@@ -24,21 +24,21 @@ Ext.onReady(function() {
 	    	}
 	    }],
 	    fields: [
-	    	{header:'应用编号', dataIndex:'appid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'应用代码', dataIndex:'appcode', hidden:false, editor: { maxLength:10, allowBlank:false, vtype:'alphanum2'}},
-	    	{header:'应用名称', dataIndex:'appname', hidden:false, editor: { maxLength:25, allowBlank:false, vtype:'validChar' }},
-	    	{header:'应用类型', dataIndex:'apptype', hidden:true, editor: { xtype:'hidden',value:'0' }},
-	    	{header:'是否开通', dataIndex:'isopen', hidden:true, editor: { xtype:'hidden',value:'y' }},
-	    	{header:'开通日期', dataIndex:'opendate', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'访问地址', dataIndex:'url', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'应用描述', dataIndex:'appdesc', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'管理维护人员', dataIndex:'maintenance', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'应用管理角色', dataIndex:'manarole', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'备注', dataIndex:'demo', hidden:false, editor: {xtype:'textarea',maxLength:400}},
-	    	{header:'是否接入集中工作平台', dataIndex:'iniwp', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'是否接入集中任务中心', dataIndex:'intaskcenter', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.AppId, dataIndex:'appid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.appcode, dataIndex:'appcode', hidden:false, editor: { maxLength:10, allowBlank:false, vtype:'alphanum2'}},
+	    	{header:i18n.SysFuncion.appname, dataIndex:'appname', hidden:false, editor: { maxLength:25, allowBlank:false, vtype:'validChar' }},
+	    	{header:i18n.SysFuncion.apptype, dataIndex:'apptype', hidden:true, editor: { xtype:'hidden',value:'0' }},
+	    	{header:i18n.SysFuncion.isopen, dataIndex:'isopen', hidden:true, editor: { xtype:'hidden',value:'y' }},
+	    	{header:i18n.SysFuncion.opendate, dataIndex:'opendate', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.url, dataIndex:'url', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.appdesc, dataIndex:'appdesc', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.maintenance, dataIndex:'maintenance', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.manarole, dataIndex:'manarole', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.remark, dataIndex:'demo', hidden:false, editor: {xtype:'textarea',maxLength:400}},
+	    	{header:i18n.SysFuncion.iniwp, dataIndex:'iniwp', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.intaskcenter, dataIndex:'intaskcenter', hidden:true, editor: { xtype:'hidden' }},
 	    	{header:'IP', dataIndex:'ipaddr', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'端口', dataIndex:'ipport', hidden:true, editor: { xtype:'hidden' }}
+	    	{header:i18n.SysFuncion.ipport, dataIndex:'ipport', hidden:true, editor: { xtype:'hidden' }}
 	    ],
 	    editOrder:['appid','appcode','appname','demo'],
 	    searchOrder:['appcode','appname'],
@@ -78,7 +78,7 @@ Ext.onReady(function() {
 			dataUrl : ctx + "/sysFuncGroup!tree.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '应用功能组',
+			text : i18n.SysFuncion.AppFuncGroup,
 			disabled : false,
 			id : 'ROOT_0',
 			leaf : false,
@@ -101,8 +101,8 @@ Ext.onReady(function() {
     			} else {
     				Ext.getCmp('_tabPanel').unhideTabStripItem(0); //显示 功能标签
     				var title = Ext.getCmp('_tabPanel').getActiveTab().title;
-    				if(title == '子功能组列表') Sys.Funcgroup.findClkTreeNode(node);
-    				else if(title == '功能列表') Sys.Func.findClkTreeNode(node);
+    				if(title == i18n.SysFuncion.Sub_funcGroupList) Sys.Funcgroup.findClkTreeNode(node);
+    				else if(title == i18n.SysFuncion.functionList) Sys.Func.findClkTreeNode(node);
 //    				Ext.getCmp('_tabPanel').setActiveTab(0);
 //    				Sys.Func.findClkTreeNode(node);      //加载【功能】列表数据
     			}
@@ -149,14 +149,14 @@ Ext.onReady(function() {
 	    storeId:'funcgroupid',
 	    tbar:['search','add','delete'],
 	    fields: [
-	    	{header:'功能组编号', dataIndex:'funcgroupid', hidden:false, editor: {id:'_funcgroupid_1',vtype:'positiveInt',maxLength:8, allowBlank:false}},
-	    	{header:'应用编号', dataIndex:'appid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'功能组名称', dataIndex:'funcgroupname', hidden:false, editor: {maxLength:30, allowBlank:false}},
-	    	{header:'上级功能组', dataIndex:'parentgroup', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'节点层次', dataIndex:'grouplevel', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'功能组路径序列', dataIndex:'funcgroupseq', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'是否叶子节点', dataIndex:'isleaf', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'子节点数', dataIndex:'subcount', hidden:true, editor: { xtype:'hidden' }}
+	    	{header:i18n.SysFuncion.funcgroupid, dataIndex:'funcgroupid', hidden:false, editor: {id:'_funcgroupid_1',vtype:'positiveInt',maxLength:8, allowBlank:false}},
+	    	{header:i18n.SysFuncion.appid, dataIndex:'appid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.funcgroupname, dataIndex:'funcgroupname', hidden:false, editor: {maxLength:30, allowBlank:false}},
+	    	{header:i18n.SysFuncion.parentgroup, dataIndex:'parentgroup', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.grouplevel, dataIndex:'grouplevel', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.funcgroupseq, dataIndex:'funcgroupseq', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.isleaf, dataIndex:'isleaf', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.subcount, dataIndex:'subcount', hidden:true, editor: { xtype:'hidden' }}
 	    ],
 	    editOrder:['funcgroupid','funcgroupname'],
 	    searchOrder:['funcgroupname'],
@@ -322,14 +322,14 @@ Ext.onReady(function() {
 	    storeId:'funccode',
 	    tbar:['search','add','delete'],
 	    fields: [
-	    	{header:'功能编号', dataIndex:'funccode', hidden:false, editor: {id:'_funccode_0', maxLength:20, allowBlank:false }},//xtype:'hidden' }},
-	    	{header:'功能组编号', dataIndex:'funcgroupid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'功能名称', dataIndex:'funcname', hidden:false, editor: { maxLength:20, allowBlank:false }},
-	    	{header:'功能描述', dataIndex:'funcdesc', hidden:true, editor: { xtype:'textarea',maxLength:400 }},
-	    	{header:'功能调用入口', dataIndex:'funcaction', hidden:false, editor: { xtype:'textarea',maxLength:200 }},
-	    	{header:'输入参数', dataIndex:'parainfo', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'是否验证权限', dataIndex:'ischeck', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'功能类型', dataIndex:'functype', hidden:false, editor: { 
+	    	{header:i18n.SysFuncion.funccode, dataIndex:'funccode', hidden:false, editor: {id:'_funccode_0', maxLength:20, allowBlank:false }},//xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.funcgroupid, dataIndex:'funcgroupid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.funcname, dataIndex:'funcname', hidden:false, editor: { maxLength:20, allowBlank:false }},
+	    	{header:i18n.SysFuncion.funcdesc, dataIndex:'funcdesc', hidden:true, editor: { xtype:'textarea',maxLength:400 }},
+	    	{header:i18n.SysFuncion.funcaction, dataIndex:'funcaction', hidden:false, editor: { xtype:'textarea',maxLength:200 }},
+	    	{header:i18n.SysFuncion.parainfo, dataIndex:'parainfo', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.ischeck, dataIndex:'ischeck', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.SysFuncion.functype, dataIndex:'functype', hidden:false, editor: { 
 	    		xtype:'combo',
 			    triggerAction: 'all',
 			    mode: 'local',
@@ -344,7 +344,7 @@ Ext.onReady(function() {
 			    valueField: 'text',
 			    displayField: 'text'
     		}},
-	    	{header:'是否菜单', dataIndex:'ismenu', hidden:false, 
+	    	{header:i18n.SysFuncion.ismenu, dataIndex:'ismenu', hidden:false, 
 	    	  editor: {
 	    	  	allowBlank:false,
 	    		id : '_ismenu_1', 
@@ -357,11 +357,11 @@ Ext.onReady(function() {
 	    		triggerAction : "all",   		 	
             	editable : false, 
             	forceSelection : true, 
-            	store : [["y","是"],["n","否"]]
+            	store : [["y",i18n.SysFuncion.Y],["n",i18n.SysFuncion.N]]
               },renderer:function(v){
-	    			if(v == 'y'){return '是';}
-	    			else if(v == 'n'){return '否';}
-	    			else {return '否';}
+	    			if(v == 'y'){return i18n.SysFuncion.Y;}
+	    			else if(v == 'n'){return i18n.SysFuncion.N;}
+	    			else {return i18n.SysFuncion.N;}
 				}
               }
 	    ],
@@ -476,14 +476,14 @@ Ext.onReady(function() {
 			items : {
 				id:'_tabPanel', xtype : "tabpanel", activeTab : 0, enableTabScroll : true, border : false,
 				items : [{
-					title : "功能列表", order : false, layout : "fit", items : [Sys.Func.grid],
+					title : i18n.SysFuncion.functionList, order : false, layout : "fit", items : [Sys.Func.grid],
 					listeners : {
 				 		"activate" : function() {
 				 			Sys.Func.findClkTreeNode();
 					 	}
 					}
 				}, {
-					title : "子功能组列表", border : false, layout : "fit", items : [Sys.Funcgroup.grid],
+					title : i18n.SysFuncion.Sub_funcGroupList, border : false, layout : "fit", items : [Sys.Funcgroup.grid],
 					listeners : {
 						"activate" : function() {
 							Sys.Funcgroup.findClkTreeNode();
@@ -496,10 +496,10 @@ Ext.onReady(function() {
 	
 	/** 权限分配窗口 */
 	var functionWin = new Ext.Window({
-		title: "功能维护", maximizable: false, width: 750, height: 500, layout: "border", 
+		title: i18n.SysFuncion.funcMaintain, maximizable: false, width: 750, height: 500, layout: "border", 
 		plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
 		items : [{
-			title : '应用功能组',
+			title : i18n.SysFuncion.AppFuncGroup,
 			region : 'west',
 			xtype : 'panel',
 			width : 200,

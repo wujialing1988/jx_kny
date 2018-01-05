@@ -20,23 +20,23 @@ Ext.onReady(function(){
 	    tbar:['search','add','delete'],
 	    fields: [
 	    	//列表中隐藏
-	    	{header:'职务ID', dataIndex:'dutyid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.dutyid, dataIndex:'dutyid', hidden:true, editor: { xtype:'hidden' }},
 	    	{header:'父职务ID', dataIndex:'parentduty', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'上级职务', dataIndex:'parentdutyname', hidden:true, editor: { disabled:true }},
-	    	{header:'职务层次', dataIndex:'dutylevel', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'职务序列号', dataIndex:'dutyseq', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'是否叶子节点', dataIndex:'isleaf', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'子节点数', dataIndex:'subcount', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.parentdutyname, dataIndex:'parentdutyname', hidden:true, editor: { disabled:true }},
+	    	{header:i18n.WorkDuty_List.dutylevel, dataIndex:'dutylevel', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.dutyseq, dataIndex:'dutyseq', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.isleaf, dataIndex:'isleaf', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.subcount, dataIndex:'subcount', hidden:true, editor: { xtype:'hidden' }},
 	    	//列表中显示
-	    	{header:'职务代码', dataIndex:'dutycode', hidden:false, editor: {vtype:'alphanum2', maxLength:20,allowBlank:false }},
-	    	{header:'职务名称', dataIndex:'dutyname', hidden:false, editor: { maxLength:15,allowBlank:false, vtype:'validChar' }},
-	    	{header:'职务类别', dataIndex:'dutytype', hidden:false, editor: { 
+	    	{header:i18n.WorkDuty_List.dutycode, dataIndex:'dutycode', hidden:false, editor: {vtype:'alphanum2', maxLength:20,allowBlank:false }},
+	    	{header:i18n.WorkDuty_List.dutyname, dataIndex:'dutyname', hidden:false, editor: { maxLength:15,allowBlank:false, vtype:'validChar' }},
+	    	{header:i18n.WorkDuty_List.dutytype, dataIndex:'dutytype', hidden:false, editor: { 
 				id:'_dutytype_list0',xtype: 'EosDictEntry_combo', hiddenName: 'dutytype', displayField: 'dictname', valueField: 'dictid',status:'1',dicttypeid:'ABF_DUTYTYPE',allowBlank:false}, 
 				renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_DUTYTYPE',v);
 				}
 			},
-	    	{header:'备注', dataIndex:'remark', hidden:false, editor: {xtype:'textarea', maxLength:200,allowBlank:true}}
+	    	{header:i18n.WorkDuty_List.remark, dataIndex:'remark', hidden:false, editor: {xtype:'textarea', maxLength:200,allowBlank:true}}
 	    ],
 	    editOrder:['parentdutyname','dutytype','dutycode','dutyname','remark'],
 	    searchOrder:['dutycode','dutyname'],
@@ -147,23 +147,23 @@ Ext.onReady(function(){
 	    tbar:['search','add','delete'],
 	    fields: [
 	    	//列表中隐藏
-	    	{header:'职务ID', dataIndex:'dutyid', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'父职务ID', dataIndex:'parentduty', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'上级职务', dataIndex:'parentdutyname', hidden:true, editor: { disabled:true }},
-	    	{header:'职务层次', dataIndex:'dutylevel', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'职务序列号', dataIndex:'dutyseq', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'是否叶子节点', dataIndex:'isleaf', hidden:true, editor: { xtype:'hidden' }},
-	    	{header:'子节点数', dataIndex:'subcount', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.dutyid, dataIndex:'dutyid', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.parentduty, dataIndex:'parentduty', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.parentdutyname, dataIndex:'parentdutyname', hidden:true, editor: { disabled:true }},
+	    	{header:i18n.WorkDuty_List.dutylevel, dataIndex:'dutylevel', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.dutyseq, dataIndex:'dutyseq', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.isleaf, dataIndex:'isleaf', hidden:true, editor: { xtype:'hidden' }},
+	    	{header:i18n.WorkDuty_List.subcount, dataIndex:'subcount', hidden:true, editor: { xtype:'hidden' }},
 	    	//列表中显示
-	    	{header:'职务代码', dataIndex:'dutycode', hidden:false, editor: {vtype:'positiveInt', maxLength:6,allowBlank:false }},
-	    	{header:'职务名称', dataIndex:'dutyname', hidden:false, editor: { maxLength:15,allowBlank:false, vtype:'validChar' }},
-	    	{header:'职务类别', dataIndex:'dutytype', hidden:false, editor: { 
+	    	{header:i18n.WorkDuty_List.dutycode, dataIndex:'dutycode', hidden:false, editor: {vtype:'positiveInt', maxLength:6,allowBlank:false }},
+	    	{header:i18n.WorkDuty_List.dutyname, dataIndex:'dutyname', hidden:false, editor: { maxLength:15,allowBlank:false, vtype:'validChar' }},
+	    	{header:i18n.WorkDuty_List.dutytype, dataIndex:'dutytype', hidden:false, editor: { 
 				id:'_dutytype_list1',xtype: 'EosDictEntry_combo', hiddenName: 'dutytype', displayField: 'dictname', valueField: 'dictid',status:'1',dicttypeid:'ABF_DUTYTYPE',allowBlank:false}, 
 				renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_DUTYTYPE',v);
 				}
 			},
-	    	{header:'备注', dataIndex:'remark', hidden:false, editor: {xtype:'textarea', maxLength:256,allowBlank:true}}
+	    	{header:i18n.WorkDuty_List.remark, dataIndex:'remark', hidden:false, editor: {xtype:'textarea', maxLength:256,allowBlank:true}}
 	    ],
 	    editOrder:['parentdutyname','dutytype','dutycode','dutyname','remark'],
 	    searchOrder:['dutycode','dutyname'],
@@ -284,15 +284,15 @@ Ext.onReady(function(){
 	    storeId:'empid',
 	    tbar:['search'],
 	    fields: [
-	    	{header:'人员ID', 	dataIndex:'empid', 		hidden:true, 	editor: {xtype:'hidden'}},
-	    	{header:'登录帐号',	dataIndex:'userid',		hidden:false,	editor:	{xtype:'hidden'},	searcher:{}},
-	    	{header:'人员姓名', 	dataIndex:'empname', 	hidden:false, 	editor: {xtype:'hidden'},	searcher:{}},
-	    	{header:'人员状态', 	dataIndex:'empstatus', 	hidden:false, 	editor: {xtype:'hidden'},
+	    	{header:i18n.WorkDuty_List.empid, 	dataIndex:'empid', 		hidden:true, 	editor: {xtype:'hidden'}},
+	    	{header:i18n.WorkDuty_List.userid,	dataIndex:'userid',		hidden:false,	editor:	{xtype:'hidden'},	searcher:{}},
+	    	{header:i18n.WorkDuty_List.empname, 	dataIndex:'empname', 	hidden:false, 	editor: {xtype:'hidden'},	searcher:{}},
+	    	{header:i18n.WorkDuty_List.empstatus, 	dataIndex:'empstatus', 	hidden:false, 	editor: {xtype:'hidden'},
 	    		renderer: function(v,metadata, record,rowIndex, colIndex, store){ 
 					return EosDictEntry.getDictname('ABF_EMPSTATUS',v);
 				}
 	    	},
-	    	{header:'所属机构', 	dataIndex:'orgname', 	hidden:false, 	editor: {xtype:'hidden'}}
+	    	{header:i18n.WorkDuty_List.orgname, 	dataIndex:'orgname', 	hidden:false, 	editor: {xtype:'hidden'}}
 //	    	,{header:'所属工作组', dataIndex:'groupname', 	hidden:false, 	editor: {xtype:'hidden'}}
 	    ],
 	    editOrder:[],

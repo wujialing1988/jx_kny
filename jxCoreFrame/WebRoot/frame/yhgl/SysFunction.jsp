@@ -15,6 +15,7 @@
 	var FUNC_TYPE_REPORT = '<%= AcFunction.FUNC_TYPE_REPORT %>';		// 应用功能类型 - 报表功能
 	var FUNC_TYPE_SERVICE = '<%= AcFunction.FUNC_TYPE_SERVICE %>';		// 应用功能类型 - 后台服务
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-SysFunction.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/SysFunction.js"></script>
 </head>
 <body>

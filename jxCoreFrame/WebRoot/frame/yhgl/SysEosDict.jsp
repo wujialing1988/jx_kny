@@ -9,6 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>业务字典管理</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/basesManagement/i18n-lang-SysEosDic.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/yhgl/SysEosDictEntry.js"></script><!-- 业务字典明细 -->
 <script language="javascript" src="<%=ctx %>/frame/yhgl/SysEosDictType.js"></script> <!-- 业务字典分类 -->
 </head>

@@ -18,33 +18,33 @@ Ext.onReady(function() {
 				labelWidth: WGForm.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ id:'_groupid_F0', fieldLabel:'工作组ID', name:'groupid',    disabled:false,hidden:true},
-					{ id:'_parentgroupid_F0', fieldLabel:'父工作组', name:'parentgroupid', 	disabled:false, hidden:true},
-					{ id:'_orgid_F0', fieldLabel:'隶属机构ID', name:'orgid', 	disabled:false, hidden:true},
-					{ id:'_grouplevel_F0', fieldLabel:'工作组层次', name:'grouplevel', 	disabled:false, hidden:true},
-					{ id:'_groupseq_F0', fieldLabel:'工作组路径序列', name:'groupseq', 	disabled:false, hidden:true},
-					{ id:'_createtime_F0', fieldLabel:'创建时间', name:'createtime', 	disabled:false, hidden:true},
-					{ id:'_lastupdate_F0', fieldLabel:'最近更新时间', name:'lastupdate', 	disabled:false, hidden:true},
-					{ id:'_updator_F0', fieldLabel:'最近更新人员', name:'updator', 	disabled:false, hidden:true},
-					{ id:'_isleaf_F0', fieldLabel:'是否叶子节点', name:'isleaf', 	disabled:false, hidden:true},
-					{ id:'_empname_F0', fieldLabel:'负责人(虚拟字段)', name:'empname',    disabled:false,hidden:true},
+					{ id:'_groupid_F0', fieldLabel:i18n.WorkGroup_Form.groupid, name:'groupid',    disabled:false,hidden:true},
+					{ id:'_parentgroupid_F0', fieldLabel:i18n.WorkGroup_Form.parentgroupid, name:'parentgroupid', 	disabled:false, hidden:true},
+					{ id:'_orgid_F0', fieldLabel:i18n.WorkGroup_Form.orgid, name:'orgid', 	disabled:false, hidden:true},
+					{ id:'_grouplevel_F0', fieldLabel:i18n.WorkGroup_Form.grouplevel, name:'grouplevel', 	disabled:false, hidden:true},
+					{ id:'_groupseq_F0', fieldLabel:i18n.WorkGroup_Form.groupseq, name:'groupseq', 	disabled:false, hidden:true},
+					{ id:'_createtime_F0', fieldLabel:i18n.WorkGroup_Form.createtime, name:'createtime', 	disabled:false, hidden:true},
+					{ id:'_lastupdate_F0', fieldLabel:i18n.WorkGroup_Form.lastupdate, name:'lastupdate', 	disabled:false, hidden:true},
+					{ id:'_updator_F0', fieldLabel:i18n.WorkGroup_Form.updator, name:'updator', 	disabled:false, hidden:true},
+					{ id:'_isleaf_F0', fieldLabel:i18n.WorkGroup_Form.isleaf, name:'isleaf', 	disabled:false, hidden:true},
+					{ id:'_empname_F0', fieldLabel:i18n.WorkGroup_Form.empname, name:'empname',    disabled:false,hidden:true},
 					//显示部分
-					{ id:'_groupname_F0', fieldLabel:'工作组名称', name:'groupname', width:WGForm.fieldWidth, maxLength:25,allowBlank:false,vtype:'validChar'},
-					{ id:'_grouptype_F0', fieldLabel:'工作组类型', name:'grouptype', width:WGForm.fieldWidth, xtype: 'EosDictEntry_combo', 
+					{ id:'_groupname_F0', fieldLabel:i18n.WorkGroup_Form.groupname, name:'groupname', width:WGForm.fieldWidth, maxLength:25,allowBlank:false,vtype:'validChar'},
+					{ id:'_grouptype_F0', fieldLabel:i18n.WorkGroup_Form.grouptype, name:'grouptype', width:WGForm.fieldWidth, xtype: 'EosDictEntry_combo', 
 	    				hiddenName: 'grouptype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_GROUPTYPE'},
-					{ id:'_startdate_F0', fieldLabel:'有效开始日期', name:'startdate', width:WGForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_groupdesc_F0', fieldLabel:'工作组描述', name:'groupdesc', width:WGForm.fieldWidth, maxLength:256,xtype:'textarea'}
+					{ id:'_startdate_F0', fieldLabel:i18n.WorkGroup_Form.startdate, name:'startdate', width:WGForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_groupdesc_F0', fieldLabel:i18n.WorkGroup_Form.groupdesc, name:'groupdesc', width:WGForm.fieldWidth, maxLength:256,xtype:'textarea'}
 				]
 			},{
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: WGForm.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:'_manager_F0', fieldLabel:'负责人', name:'manager', width:WGForm.fieldWidth, xtype: "OmEmployee_SelectWin",
+					{ id:'_manager_F0', fieldLabel:i18n.WorkGroup_Form.manager, name:'manager', width:WGForm.fieldWidth, xtype: "OmEmployee_SelectWin",
 	    				hiddenName: "manager",displayField:"empname",valueField: "empid",
 	    				returnField :[{widgetId: '_empname_F0',propertyName:'empname'}],editable: false },
-	    			{ id:'_groupstatus_F0', fieldLabel:'工作组状态', name:'groupstatus',width:WGForm.fieldWidth, xtype: 'EosDictEntry_combo', 
+	    			{ id:'_groupstatus_F0', fieldLabel:i18n.WorkGroup_Form.groupstatus, name:'groupstatus',width:WGForm.fieldWidth, xtype: 'EosDictEntry_combo', 
 	    				hiddenName: 'groupstatus', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_GROUPSTATUS'},
-	    			{ id:'_enddate_F0', fieldLabel:'有效截止日期', name:'enddate',width:WGForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false}	
+	    			{ id:'_enddate_F0', fieldLabel:i18n.WorkGroup_Form.enddate, name:'enddate',width:WGForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false}	
 				]
 			}]
 		}]
@@ -91,20 +91,20 @@ Ext.onReady(function() {
 				       }
 				},
 				failure: function(response, options){
-				       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				       MyExt.Msg.alert(i18n.WorkGroup_Form.false + response.status + "\n" + response.responseText);
 				}
 			});
 		}
 	}
 	
 	WGForm.panel = new Ext.Panel({
-		title: "编辑", layout: "fit", plain:true, 
+		title: i18n.WorkGroup_Form.edit, layout: "fit", plain:true, 
 		closeAction: "hide", modal: true, buttonAlign: "center",
 		items : [{
 			xtype: 'panel',	border:false,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", 
 			items: WGForm.cGroupForm,
 			buttons: [{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.WorkGroup_Form.save, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = WGForm.cGroupForm.getForm();
             		if (!form.isValid()) return;
             		var data = form.getValues();
@@ -146,21 +146,21 @@ Ext.onReady(function() {
 				labelWidth: posForm.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ id:'_positionid_2', fieldLabel:'岗位编码', name:'positionid', disabled:false, hidden:true},
-					{ id:'_manaposi_2',   fieldLabel:'上级岗位', name:'manaposi',   disabled:false, hidden:true},
-					{ id:'_posilevel_2',  fieldLabel:'岗位层次', name:'posilevel',  disabled:false, hidden:true},
-					{ id:'_positionseq_2',fieldLabel:'岗位序列', name:'positionseq',disabled:false, hidden:true},
-					{ id:'_createtime_2', fieldLabel:'创建时间', name:'createtime', disabled:false, hidden:true},
-					{ id:'_lastupdate_2', fieldLabel:'最后一次修改时间', name:'lastupdate', 	disabled:false, hidden:true},
-					{ id:'_updator_2',    fieldLabel:'最近更新人员', name:'updator', 	disabled:false, hidden:true},
-					{ id:'_isleaf_2', fieldLabel:'是否是叶子节点', name:'isleaf', disabled:false, hidden:true},
-					{ id:'_subcount_2',   fieldLabel:'子节点数', name:'subcount',   disabled:false, hidden:true},
-					{ id:'_orgid_2', fieldLabel:'所属机构', name:'orgid', disabled:false, hidden:true},
-					{ id:'_positype_2', fieldLabel: '岗位类别', name:'positype', disabled:false, hidden:true},
+					{ id:'_positionid_2', fieldLabel:i18n.WorkGroup_Form.positionid, name:'positionid', disabled:false, hidden:true},
+					{ id:'_manaposi_2',   fieldLabel:i18n.WorkGroup_Form.manaposi, name:'manaposi',   disabled:false, hidden:true},
+					{ id:'_posilevel_2',  fieldLabel:i18n.WorkGroup_Form.posilevel, name:'posilevel',  disabled:false, hidden:true},
+					{ id:'_positionseq_2',fieldLabel:i18n.WorkGroup_Form.positionseq, name:'positionseq',disabled:false, hidden:true},
+					{ id:'_createtime_2', fieldLabel:i18n.WorkGroup_Form.createtime, name:'createtime', disabled:false, hidden:true},
+					{ id:'_lastupdate_2', fieldLabel:i18n.WorkGroup_Form.lastupdate, name:'lastupdate', 	disabled:false, hidden:true},
+					{ id:'_updator_2',    fieldLabel:i18n.WorkGroup_Form.updator, name:'updator', 	disabled:false, hidden:true},
+					{ id:'_isleaf_2', fieldLabel:i18n.WorkGroup_Form.isleaf, name:'isleaf', disabled:false, hidden:true},
+					{ id:'_subcount_2',   fieldLabel:i18n.WorkGroup_Form.subcount, name:'subcount',   disabled:false, hidden:true},
+					{ id:'_orgid_2', fieldLabel:i18n.WorkGroup_Form._orgid_2, name:'orgid', disabled:false, hidden:true},
+					{ id:'_positype_2', fieldLabel: i18n.WorkGroup_Form._positype_2, name:'positype', disabled:false, hidden:true},
 					//显示部分
-					{ id:'_posicode_2', fieldLabel:'岗位代码',	name:'posicode', allowBlank:false, width:posForm.fieldWidth, maxLength:20, vtype:'alphanum2'},
-					{ id:'_startdate_2', fieldLabel:'有效开始时间', name:'startdate', width:posForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_dutyid_2',   fieldLabel:'所属职务', name:'dutyid',    width:posForm.fieldWidth,maxLength:30 ,
+					{ id:'_posicode_2', fieldLabel:i18n.WorkGroup_Form._posicode_2,	name:'posicode', allowBlank:false, width:posForm.fieldWidth, maxLength:20, vtype:'alphanum2'},
+					{ id:'_startdate_2', fieldLabel:i18n.WorkGroup_Form._startdate_2, name:'startdate', width:posForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_dutyid_2',   fieldLabel:i18n.WorkGroup_Form._dutyid_2, name:'dutyid',    width:posForm.fieldWidth,maxLength:30 ,
 					 	xtype: "WorkDuty_comboTree",
 			    		hiddenName: "dutyid", disabled:false,
 			    		selectNodeModel: "leaf" ,
@@ -171,9 +171,9 @@ Ext.onReady(function() {
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: posForm.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:'_posiname_2', fieldLabel:'岗位名称', name:'posiname', allowBlank:false, width:posForm.fieldWidth,maxLength:40, vtype:'validChar'},
-					{ id:'_enddate_2', fieldLabel:'有效结束时间', name:'enddate', width:posForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false},
-				    { id:'_status_2', fieldLabel: '岗位状态', name:'status', xtype: 'EosDictEntry_combo', 
+					{ id:'_posiname_2', fieldLabel:i18n.WorkGroup_Form._posiname_2, name:'posiname', allowBlank:false, width:posForm.fieldWidth,maxLength:40, vtype:'validChar'},
+					{ id:'_enddate_2', fieldLabel:i18n.WorkGroup_Form._enddate_2, name:'enddate', width:posForm.fieldWidth,xtype:'my97date', format: 'Y-m-d',initNow:false},
+				    { id:'_status_2', fieldLabel: i18n.WorkGroup_Form._status_2, name:'status', xtype: 'EosDictEntry_combo', 
 					  hiddenName: 'status', displayField: 'dictname', valueField: 'dictid', status:'1', dicttypeid:'ABF_POSISTATUS'}
 				]
 			}]
@@ -221,20 +221,20 @@ Ext.onReady(function() {
 				       }
 				},
 				failure: function(response, options){
-				       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				       MyExt.Msg.alert(i18n.WorkGroup_Form.false + response.status + "\n" + response.responseText);
 				}
 			});
 //		}
 	}
 	
 	posForm.panel = new Ext.Panel({
-		title: "编辑", layout: "fit", plain:true, 
+		title: i18n.WorkGroup_Form.edit, layout: "fit", plain:true, 
 		closeAction: "hide", modal: true, buttonAlign: "center",
 		items : [{
 			xtype: 'panel',	border:false,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", 
 			items: posForm.cPosForm,
 			buttons: [{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.WorkGroup_Form.save, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = posForm.cPosForm.getForm();
             		if (!form.isValid()) return;
             		var data = form.getValues();
@@ -275,35 +275,35 @@ Ext.onReady(function() {
 				labelWidth: operator.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ fieldLabel:'操作员ID', id:'_operatorid_1', name:'operatorid', hidden:true },
-					{ fieldLabel:'操作员名称', id:'_operatorname_1',name:'operatorname', hidden:true},
-					{ fieldLabel:'解锁时间', id:'_unlocktime_1', name:'unlocktime', hidden:true, xtype:'my97date', format: 'Y-m-d',initNow:false },
-					{ fieldLabel:'最后一次登录时间', id:'_lastlogin_1', name:'lastlogin', hidden:true, xtype:'my97date', format: 'Y-m-d',initNow:false },
-					{ fieldLabel:'最新登录次数', id:'_errcount_1', name:'errcount', hidden:true },
-					{ fieldLabel:'有效时间范围', id:'_validtime_1', name:'validtime', hidden:true },
-					{ fieldLabel:'MAC码', id:'_maccode_1', name:'maccode', hidden:true },
-					{ fieldLabel:'iP地址', id:'_ipaddress_1', name:'ipaddress', hidden:true },
-					{ fieldLabel:'邮箱', id:'_email_1', name:'email', hidden:true },
+					{ fieldLabel:i18n.WorkGroup_Form._operatorid_1, id:'_operatorid_1', name:'operatorid', hidden:true },
+					{ fieldLabel:i18n.WorkGroup_Form._operatorname_1, id:'_operatorname_1',name:'operatorname', hidden:true},
+					{ fieldLabel:i18n.WorkGroup_Form._unlocktime_1, id:'_unlocktime_1', name:'unlocktime', hidden:true, xtype:'my97date', format: 'Y-m-d',initNow:false },
+					{ fieldLabel:i18n.WorkGroup_Form._lastlogin_1, id:'_lastlogin_1', name:'lastlogin', hidden:true, xtype:'my97date', format: 'Y-m-d',initNow:false },
+					{ fieldLabel:i18n.WorkGroup_Form._errcount_1, id:'_errcount_1', name:'errcount', hidden:true },
+					{ fieldLabel:i18n.WorkGroup_Form._validtime_1, id:'_validtime_1', name:'validtime', hidden:true },
+					{ fieldLabel:i18n.WorkGroup_Form._maccode_1, id:'_maccode_1', name:'maccode', hidden:true },
+					{ fieldLabel:i18n.WorkGroup_Form._ipaddress_1, id:'_ipaddress_1', name:'ipaddress', hidden:true },
+					{ fieldLabel:i18n.WorkGroup_Form._email_1, id:'_email_1', name:'email', hidden:true },
 					//显示部分
-					{ id:"_userid_1",	fieldLabel:'登录名',	name:'userid', disabled:true,allowBlank:false, width:operator.fieldWidth, maxLength:32},
-					{ fieldLabel:'操作员状态', id:'_status_1', name:'status',
+					{ id:"_userid_1",	fieldLabel:i18n.WorkGroup_Form._userid_1,	name:'userid', disabled:true,allowBlank:false, width:operator.fieldWidth, maxLength:32},
+					{ fieldLabel:i18n.WorkGroup_Form._status_1, id:'_status_1', name:'status',
 					  xtype: 'EosDictEntry_combo', hiddenName: 'status', status:'1', displayField: 'dictname', 
 					  valueField: 'dictid', dicttypeid:'ABF_OPERSTATUS'},
-					{ fieldLabel:'菜单风格', id:'_menutype_1', name:'menutype',
+					{ fieldLabel:i18n.WorkGroup_Form._menutype_1, id:'_menutype_1', name:'menutype',
 					  xtype: 'EosDictEntry_combo', hiddenName: 'menutype', status:'1', displayField: 'dictname', 
 					  valueField: 'dictid', dicttypeid:'ABF_LAYOUTSTYLE'},
-					{ fieldLabel:'生效日期', id:'_startdate_1', name:'startdate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth }
+					{ fieldLabel:i18n.WorkGroup_Form._startdate_1, id:'_startdate_1', name:'startdate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth }
 				]
 			},{
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: operator.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:"_password_1", fieldLabel:'登录密码', name:'password', inputType:'password', allowBlank:false, width:operator.fieldWidth, maxLength:32},
-					{ fieldLabel:'认证模式', id:'_authmode_1', name:'authmode',
+					{ id:"_password_1", fieldLabel:i18n.WorkGroup_Form._password_1, name:'password', inputType:'password', allowBlank:false, width:operator.fieldWidth, maxLength:32},
+					{ fieldLabel:i18n.WorkGroup_Form._authmode_1, id:'_authmode_1', name:'authmode',
 					  xtype: 'EosDictEntry_combo', hiddenName: 'authmode', status:'1', displayField: 'dictname', 
 					  valueField: 'dictid', dicttypeid:'ABF_AUTHMODE'},
-					{ fieldLabel:'密码失效日期', id:'_invaldate_1', name:'invaldate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth},
-					{ fieldLabel:'失效日期', id:'_enddate_1', name:'enddate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth }
+					{ fieldLabel:i18n.WorkGroup_Form._invaldate_1, id:'_invaldate_1', name:'invaldate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth},
+					{ fieldLabel:i18n.WorkGroup_Form._enddate_1, id:'_enddate_1', name:'enddate', xtype:'my97date', format: 'Y-m-d',initNow:false, width:operator.fieldWidth }
 					
 				]
 			}]
@@ -311,13 +311,13 @@ Ext.onReady(function() {
 	});
 	
 	operator.win = new Ext.Window({
-		title: "操作员设置", maximizable: false, width: 550, height: 200, layout: "fit", 
+		title: i18n.WorkGroup_Form.operaSettings, maximizable: false, width: 550, height: 200, layout: "fit", 
 		plain: true, closeAction: "hide", buttonAlign: 'center', border:false,
 		items : [{
 			xtype: 'panel',	border:true,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", 
 			items: [operator.operatorForm],
 			buttons: [{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.WorkGroup_Form.save, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = operator.operatorForm.getForm();
             		//解除"登录名"的disabled状态
             		Ext.getCmp("_userid_1").setDisabled(false);
@@ -340,7 +340,7 @@ Ext.onReady(function() {
 			        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
             	}
 	        },{
-		 	 text: "关闭", iconCls: "closeIcon",handler: function(){ 
+		 	 text: i18n.WorkGroup_Form.close, iconCls: "closeIcon",handler: function(){ 
 		 	 	operator.win.hide(); 
 		 	 }
 		 }]
@@ -368,60 +368,60 @@ Ext.onReady(function() {
 				labelWidth: empForm.labelWidth,	columnWidth:0.5, baseCls: "x-plain", 
 				items:[
 					//隐藏部分
-					{ id:'_empid_3', fieldLabel:'人员ID', name:'empid', disabled:false, hidden:true},
-					{ id:'_operatorid_3', fieldLabel:'操作员ID', name:'operatorid', disabled:false, hidden:true},
-					{ id:'_userid_3', fieldLabel:'操作员登录号', name:'userid', disabled:false, hidden:true},
-					{ id:'_realname_3', fieldLabel:'人员全名', name:'realname', disabled:false, hidden:true},
-					{ id:'_position_3', fieldLabel:'基本岗位', name:'position', disabled:false, hidden:true},
-					{ id:'_cardNum_3', fieldLabel:'员工IC卡号', name:'cardNum', disabled:false, hidden:true},
-					{ id:'_payId_3', fieldLabel:'工资代码', name:'payId', disabled:false, hidden:true},
-					{ id:'_createtime_3', fieldLabel:'创建时间', name:'createtime', disabled:false, hidden:true},
-					{ id:'_lastmodytime_3', fieldLabel:'最后更新时间', name:'lastmodytime', disabled:false, hidden:true},
-					{ id:'_orgid_3', fieldLabel:'主机构编号', name:'orgid', disabled:false, hidden:true},
+					{ id:'_empid_3', fieldLabel:i18n.WorkGroup_Form._empid_3, name:'empid', disabled:false, hidden:true},
+					{ id:'_operatorid_3', fieldLabel:i18n.WorkGroup_Form._operatorid_3, name:'operatorid', disabled:false, hidden:true},
+					{ id:'_userid_3', fieldLabel:i18n.WorkGroup_Form._userid_3, name:'userid', disabled:false, hidden:true},
+					{ id:'_realname_3', fieldLabel:i18n.WorkGroup_Form._realname_3, name:'realname', disabled:false, hidden:true},
+					{ id:'_position_3', fieldLabel:i18n.WorkGroup_Form._position_3, name:'position', disabled:false, hidden:true},
+					{ id:'_cardNum_3', fieldLabel:i18n.WorkGroup_Form._cardNum_3, name:'cardNum', disabled:false, hidden:true},
+					{ id:'_payId_3', fieldLabel:i18n.WorkGroup_Form._payId_3, name:'payId', disabled:false, hidden:true},
+					{ id:'_createtime_3', fieldLabel:i18n.WorkGroup_Form.createtime, name:'createtime', disabled:false, hidden:true},
+					{ id:'_lastmodytime_3', fieldLabel:i18n.WorkGroup_Form._lastmodytime_3, name:'lastmodytime', disabled:false, hidden:true},
+					{ id:'_orgid_3', fieldLabel:i18n.WorkGroup_Form._orgid_3, name:'orgid', disabled:false, hidden:true},
 					//显示部分
-					{ id:'_empcode_3', fieldLabel:'人员代码',	name:'empcode', allowBlank:false, width:empForm.fieldWidth,  maxLength:30, vtype:'alphanum2'},
-					{ id:'_regdate_3', fieldLabel:'注册日期',	name:'regdate', width:empForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_gender_3', fieldLabel:'性别',	name:'gender', width:empForm.fieldWidth, maxLength:20,
+					{ id:'_empcode_3', fieldLabel:i18n.WorkGroup_Form._empcode_3,	name:'empcode', allowBlank:false, width:empForm.fieldWidth,  maxLength:30, vtype:'alphanum2'},
+					{ id:'_regdate_3', fieldLabel:i18n.WorkGroup_Form._regdate_3,	name:'regdate', width:empForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_gender_3', fieldLabel:i18n.WorkGroup_Form._gender_3,	name:'gender', width:empForm.fieldWidth, maxLength:20,
 						xtype: 'EosDictEntry_combo', hiddenName: 'gender', displayField: 'dictname', valueField: 'dictid',status:'1',dicttypeid:'ABF_GENDER'
 					},
-					{ id:'_party_3', fieldLabel:'政治面貌',	name:'party',  width:posForm.fieldWidth, 
+					{ id:'_party_3', fieldLabel:i18n.WorkGroup_Form._party_3,	name:'party',  width:posForm.fieldWidth, 
 						xtype: 'EosDictEntry_combo', hiddenName: 'party', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_PARTYVISAGE'
 					},
-					{ id:'_cardtype_3', fieldLabel:'证件类型',	name:'cardtype',  width:posForm.fieldWidth, 
+					{ id:'_cardtype_3', fieldLabel:i18n.WorkGroup_Form._cardtype_3,	name:'cardtype',  width:posForm.fieldWidth, 
 						xtype: 'EosDictEntry_combo', hiddenName: 'cardtype', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_CARDTYPE'
 					},
-					{ id:'_indate_3', fieldLabel:'入职时间',	name:'indate', width:posForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_otel_3', fieldLabel:'办公室电话',	name:'otel', width:posForm.fieldWidth, vtype:'telphone',maxLength:12},
-					{ id:'_ozipcode_3', fieldLabel:'办公邮编',	name:'ozipcode', width:posForm.fieldWidth, vtype:'postalcode',maxLength:10},
-					{ id:'_faxno_3', fieldLabel:'传真号码',	name:'faxno', width:posForm.fieldWidth, maxLength:14,vtype:'telphone'},
-					{ id:'_htel_3', fieldLabel:'家庭电话',	name:'htel', width:posForm.fieldWidth, vtype:'telphone',maxLength:12},
-					{ id:'_hzipcode_3', fieldLabel:'家庭邮编',	name:'hzipcode', width:posForm.fieldWidth, vtype:'postalcode',maxLength:10},
-					{ id:'_msn_3', fieldLabel:'IM号码',	name:'msn', width:posForm.fieldWidth, maxLength:16,hidden:true},
-					{ id:'_major_3', fieldLabel:'直接主管',	name:'major', width:posForm.fieldWidth, maxLength:20,hidden:true},
-					{ id:'_workexp_3', fieldLabel:'工作描述',	name:'workexp', width:posForm.fieldWidth, xtype:'textarea',maxLength:512}
+					{ id:'_indate_3', fieldLabel:i18n.WorkGroup_Form._indate_3,	name:'indate', width:posForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_otel_3', fieldLabel:i18n.WorkGroup_Form._otel_3,	name:'otel', width:posForm.fieldWidth, vtype:'telphone',maxLength:12},
+					{ id:'_ozipcode_3', fieldLabel:i18n.WorkGroup_Form._ozipcode_3,	name:'ozipcode', width:posForm.fieldWidth, vtype:'postalcode',maxLength:10},
+					{ id:'_faxno_3', fieldLabel:i18n.WorkGroup_Form._faxno_3,	name:'faxno', width:posForm.fieldWidth, maxLength:14,vtype:'telphone'},
+					{ id:'_htel_3', fieldLabel:i18n.WorkGroup_Form._htel_3,	name:'htel', width:posForm.fieldWidth, vtype:'telphone',maxLength:12},
+					{ id:'_hzipcode_3', fieldLabel:i18n.WorkGroup_Form._hzipcode_3,	name:'hzipcode', width:posForm.fieldWidth, vtype:'postalcode',maxLength:10},
+					{ id:'_msn_3', fieldLabel:i18n.WorkGroup_Form._msn_3,	name:'msn', width:posForm.fieldWidth, maxLength:16,hidden:true},
+					{ id:'_major_3', fieldLabel:i18n.WorkGroup_Form._major_3,	name:'major', width:posForm.fieldWidth, maxLength:20,hidden:true},
+					{ id:'_workexp_3', fieldLabel:i18n.WorkGroup_Form._workexp_3,	name:'workexp', width:posForm.fieldWidth, xtype:'textarea',maxLength:512}
 				]
 			},{
 				align:'center',	defaultType:'textfield', border:false, baseCls: "x-plain", layout:"form",
 				labelWidth: empForm.labelWidth,	columnWidth:0.5,
 				items:[
-					{ id:'_empname_3', fieldLabel:'人员姓名',	name:'empname', allowBlank:false, width:empForm.fieldWidth, maxLength:50,vtype:'chinese'},
-					{ id:'_birthdate_3', fieldLabel:'出生日期',	name:'birthdate', width:empForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_empstatus_3', fieldLabel:'人员状态',	name:'empstatus', width:empForm.fieldWidth, 
+					{ id:'_empname_3', fieldLabel:i18n.WorkGroup_Form._empname_3,	name:'empname', allowBlank:false, width:empForm.fieldWidth, maxLength:50,vtype:'chinese'},
+					{ id:'_birthdate_3', fieldLabel:i18n.WorkGroup_Form._birthdate_3,	name:'birthdate', width:empForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_empstatus_3', fieldLabel:i18n.WorkGroup_Form._empstatus_3,	name:'empstatus', width:empForm.fieldWidth, 
 						xtype: 'EosDictEntry_combo', hiddenName: 'empstatus', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_EMPSTATUS'
 					},
-					{ id:'_degree_3', fieldLabel:'职级',	name:'degree', width:posForm.fieldWidth, 
+					{ id:'_degree_3', fieldLabel:i18n.WorkGroup_Form._degree_3,	name:'degree', width:posForm.fieldWidth, 
 						xtype: 'EosDictEntry_combo', hiddenName: 'degree', status:'1', displayField: 'dictname', valueField: 'dictid', dicttypeid:'ABF_EMPZC'
 					},
-					{ id:'_cardno_3', fieldLabel:'证件号码',	name:'cardno', width:posForm.fieldWidth, maxLength:20},
-					{ id:'_outdate_3', fieldLabel:'离职时间',	name:'outdate', width:posForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
-					{ id:'_oaddress_3', fieldLabel:'办公室地址',	name:'oaddress', width:posForm.fieldWidth, maxLength:255},
-					{ id:'_oemail_3', fieldLabel:'办公邮箱',	name:'oemail', width:posForm.fieldWidth, maxLength:128},
-					{ id:'_mobileno_3', fieldLabel:'手机号码',	name:'mobileno',  width:posForm.fieldWidth, vtype:'mobile',maxLength:14},
-					{ id:'_haddress_3', fieldLabel:'家庭地址',	name:'haddress',  width:posForm.fieldWidth, maxLength:128},
-					{ id:'_pemail_3', fieldLabel:'个人邮箱',	name:'pemail', width:posForm.fieldWidth, maxLength:128},
-					{ id:'_specialty_3', fieldLabel:'可授权角色',	name:'specialty', width:posForm.fieldWidth, maxLength:20,hidden:true},
-					{ id:'_orgidlist_3', fieldLabel:'可管理机构',	name:'orgidlist', width:posForm.fieldWidth, maxLength:20,hidden:true},
-					{ id:'_remark_3', fieldLabel:'备注',	name:'remark', width:posForm.fieldWidth, xtype:'textarea',maxLength:200}
+					{ id:'_cardno_3', fieldLabel:i18n.WorkGroup_Form._cardno_3,	name:'cardno', width:posForm.fieldWidth, maxLength:20},
+					{ id:'_outdate_3', fieldLabel:i18n.WorkGroup_Form._outdate_3,	name:'outdate', width:posForm.fieldWidth, xtype:'my97date', format: 'Y-m-d',initNow:false},
+					{ id:'_oaddress_3', fieldLabel:i18n.WorkGroup_Form._oaddress_3,	name:'oaddress', width:posForm.fieldWidth, maxLength:255},
+					{ id:'_oemail_3', fieldLabel:i18n.WorkGroup_Form._oemail_3,	name:'oemail', width:posForm.fieldWidth, maxLength:128},
+					{ id:'_mobileno_3', fieldLabel:i18n.WorkGroup_Form._mobileno_3,	name:'mobileno',  width:posForm.fieldWidth, vtype:'mobile',maxLength:14},
+					{ id:'_haddress_3', fieldLabel:i18n.WorkGroup_Form._haddress_3,	name:'haddress',  width:posForm.fieldWidth, maxLength:128},
+					{ id:'_pemail_3', fieldLabel:i18n.WorkGroup_Form._pemail_3,	name:'pemail', width:posForm.fieldWidth, maxLength:128},
+					{ id:'_specialty_3', fieldLabel:i18n.WorkGroup_Form._specialty_3,	name:'specialty', width:posForm.fieldWidth, maxLength:20,hidden:true},
+					{ id:'_orgidlist_3', fieldLabel:i18n.WorkGroup_Form._orgidlist_3,	name:'orgidlist', width:posForm.fieldWidth, maxLength:20,hidden:true},
+					{ id:'_remark_3', fieldLabel:i18n.WorkGroup_Form._remark_3,	name:'remark', width:posForm.fieldWidth, xtype:'textarea',maxLength:200}
 				]
 			}]
 		}]
@@ -490,20 +490,20 @@ Ext.onReady(function() {
 				       }
 				},
 				failure: function(response, options){
-				       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+				       MyExt.Msg.alert(i18n.WorkGroup_Form.false + response.status + "\n" + response.responseText);
 				}
 			});
 		}
 	}
 	
 	empForm.panel = new Ext.Panel({
-		title: "编辑", layout: "fit", plain:true, 
+		title: i18n.WorkGroup_Form.edit, layout: "fit", plain:true, 
 		closeAction: "hide", modal: true, buttonAlign: "center",
 		items : [{
 			xtype: 'panel',	border:false,  layout:'column',	align:'center',  buttonAlign: "center", baseCls: "x-plain", 
 			items: empForm.cEmpForm,
 			buttons: [{
-	            	id: '_operatorBtn_3', text: "登录设置", iconCls: "cogIcon", hidden:false, scope: this, handler: function(){
+	            	id: '_operatorBtn_3', text: i18n.WorkGroup_Form.loginSettings, iconCls: "cogIcon", hidden:false, scope: this, handler: function(){
 		            	operator.win.show();
 		            	/*
 		            	 * 重置控件
@@ -554,7 +554,7 @@ Ext.onReady(function() {
 								       }
 								},
 								failure: function(response, options){
-								       MyExt.Msg.alert("请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+								       MyExt.Msg.alert(i18n.WorkGroup_Form.false + response.status + "\n" + response.responseText);
 								}
 							});
 	            		} 
@@ -565,7 +565,7 @@ Ext.onReady(function() {
 	            		}
 	            	}
 	            },{
-            	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+            	text: i18n.WorkGroup_Form.save, iconCls: "saveIcon", scope: this, handler: function(){
             		var form = empForm.cEmpForm.getForm();
             		if (!form.isValid()) return;
             		var data = form.getValues();

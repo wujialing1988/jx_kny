@@ -29,23 +29,23 @@ FunctionWidget.PosiList = Ext.extend(Ext.grid.GridPanel, {
 			colModel : new Ext.grid.ColumnModel([
 				new Ext.grid.RowNumberer(), {
 					sortable : true,
-					header : "功能名称",
+					header : i18n.SysFuncionWidget.functionName,
 					title : "双击该行记录选择功能",
 					dataIndex : "funcname"
 				}, {
 					sortable : true,
-					header : "功能调用入口",
-					title : "双击该行记录选择功能",
+					header : i18n.SysFuncionWidget.functionInterf,
+					title : i18n.SysFuncionWidget.D_clickToSel,
 					dataIndex : "funcaction"
 				}, {
 					sortable : true,
-					header : "所属功能组",
-					title : "双击该行记录选择功能",
+					header : i18n.SysFuncionWidget.functionGroup,
+					title :i18n.SysFuncionWidget.D_clickToSel,
 					dataIndex : "funcgroupname"
 				}, {
 					sortable : true,
-					header : "所属应用",
-					title : "双击该行记录选择功能",
+					header : i18n.SysFuncionWidget.TheApplication,
+					title : i18n.SysFuncionWidget.D_clickToSel,
 					dataIndex : "appname"
 				}]),
 			store : FunctionWidget.funcstore,
@@ -104,7 +104,7 @@ FunctionWidget.FuncSelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		FunctionWidget.FuncSelectWin.superclass.constructor.call(this, {
-			title : "选择功能",
+			title :i18n.SysFuncionWidget.choiceFunction,
 			width : 520,
 			height : 305,			
 			plain : true,
@@ -120,14 +120,14 @@ FunctionWidget.FuncSelectWin = Ext.extend(Ext.Window, {
 							// 工具栏
 							tbar : [{
 									xtype:"label",
-									text:"功能名称："
+									text:i18n.SysFuncionWidget.functionName+"："
 								},{	            
 					                xtype:"textfield",								                
 					                name : "funcname",
 							        width: 200,							        
 					                id:"_funcname_1"
 								},{
-									text : "搜索",
+									text :i18n.SysFuncionWidget.search,
 									iconCls : "searchIcon",
 									handler : function(){
 										var funcname = Ext.getCmp("_funcname_1").getValue();
@@ -139,7 +139,7 @@ FunctionWidget.FuncSelectWin = Ext.extend(Ext.Window, {
 									},
 									scope : this
 								},{
-									text : "重置",
+									text : i18n.SysFuncionWidget.reset,
 									iconCls : "resetIcon",
 									handler : function(){
 										this.grid.getStore().load({
