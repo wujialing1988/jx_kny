@@ -14,6 +14,8 @@
 	var empName = '${sessionScope.emp.empname}';
 </script>
 <title>编组需求维护</title>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/PassengerTransport/i18n-lang-MarshallingInfoMaintain.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/PassengerTransport/i18n-lang-MarshallingDemandMaintain.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 
 <script language="javascript" src="<%=ctx%>/jsp/passenger/traindemand/TrainInspectorMultSelect.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/vis/util/DateUtil.js"></script>

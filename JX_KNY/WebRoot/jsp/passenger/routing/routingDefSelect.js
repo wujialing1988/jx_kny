@@ -39,7 +39,7 @@ jx.jxgc.routingDefSelect.createWin = function(){
     if(jx.jxgc.routingDefSelect.grid == null)  jx.jxgc.routingDefSelect.createGrid();
     if(jx.jxgc.routingDefSelect.win == null){
         jx.jxgc.routingDefSelect.win = new Ext.Window({
-            title:'交路选择', closeAction:"hide", width:650, height:400, layout:"fit", resizable:false, modal:true, 
+            title:i18n.MarshallingDemandMaintain.selectRouting, closeAction:"hide", width:650, height:400, layout:"fit", resizable:false, modal:true, 
             items:jx.jxgc.routingDefSelect.grid
         });
     }
@@ -53,7 +53,7 @@ jx.jxgc.routingDefSelect.createGrid = function(){
 	    storeAutoLoad:false,    //设置grid的store为手动加载(不设置false会引起参数排序失效)
 	    searchFormColNum:2, singleSelect: true, 
 	    tbar: [{
-				text : "确定",
+				text : i18n.MarshallingDemandMaintain.con,
 				iconCls : "addIcon",
 				handler : function(){
 					var grid = jx.jxgc.routingDefSelect.grid;
@@ -64,7 +64,7 @@ jx.jxgc.routingDefSelect.createGrid = function(){
 				},
 				scope: this
 			},{
-				text : "取消",
+				text : i18n.MarshallingDemandMaintain.console,
 				iconCls : "closeIcon",
 				handler : function(){
 					 jx.jxgc.routingDefSelect.win.hide();
@@ -72,36 +72,36 @@ jx.jxgc.routingDefSelect.createGrid = function(){
 				scope: this
 			}],
 	    fields: [{
-			header:'idx主键', dataIndex:'idx', hidden:true
+			header:i18n.MarshallingDemandMaintain.idx, dataIndex:'idx', hidden:true
 		},{
-			header:'编号', dataIndex:'routingCode', width: 60
+			header:i18n.MarshallingDemandMaintain.routingCode, dataIndex:'routingCode', width: 60
 		},{
-			header:'出发地', dataIndex:'startingStation', width: 60
+			header:i18n.MarshallingDemandMaintain.startingStation, dataIndex:'startingStation', width: 60
 		},{
-			header:'前往地', dataIndex:'leaveOffStation', width: 60
+			header:i18n.MarshallingDemandMaintain.leaveForStation, dataIndex:'leaveOffStation', width: 60
 		},{
-			header:'历时', dataIndex:'duration', width: 60,
+			header:i18n.MarshallingDemandMaintain.duration, dataIndex:'duration', width: 60,
 			renderer: function(value){
 				if (!Ext.isEmpty(value)) {
 					return formatTimeForHours(value, 'm');
 				}
 			}
 		},{
-			header:'出发时间', dataIndex:'departureTime',width: 60,
+			header:i18n.MarshallingDemandMaintain.departureTime, dataIndex:'departureTime',width: 60,
 			searcher:{disabled: true}
 		},{
-			header:'到达时间', dataIndex:'arrivalTime', width: 60
+			header:i18n.MarshallingDemandMaintain.arrivalTime, dataIndex:'arrivalTime', width: 60
 		},{
-			header:'返程发车时间', dataIndex:'departureBackTime',
+			header:i18n.MarshallingDemandMaintain.departureBackTime, dataIndex:'departureBackTime',
 			searcher:{disabled: true}
 		},{
-			header:'返程到达时间', dataIndex:'arrivalBackTime' 
+			header:i18n.MarshallingDemandMaintain.arrivalBackTime, dataIndex:'arrivalBackTime' 
 			
 		},{
-			header:'行程（KM）', dataIndex:'kilometers', editor:{ maxLength:10,allowBlank: true },
+			header:i18n.MarshallingDemandMaintain.kilometers, dataIndex:'kilometers', editor:{ maxLength:10,allowBlank: true },
 			searcher: {disabled: true}
 		},{
-			header:'备注', dataIndex:'remark',  width: 260 , hidden:true, editor:{ xtype:'textarea', maxLength:1000 },
+			header:i18n.MarshallingDemandMaintain.remark, dataIndex:'remark',  width: 260 , hidden:true, editor:{ xtype:'textarea', maxLength:1000 },
 			searcher:{ disabled:true }
 	    }],
         searchOrder:['trainTypeShortName','trainNo'],

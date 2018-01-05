@@ -49,13 +49,13 @@ Ext.onReady(function(){
 		items:[{
 			defaults: {xtype:"textfield", maxLength:50, allowBlank: false, anchor:"90%"},
 			items:[{
-				xtype:"routingDefSelect",fieldLabel: '交路', id:"routingCode_id",	
+				xtype:"routingDefSelect",fieldLabel: i18n.MarshallingDemandMaintain.routing, id:"routingCode_id",	
 				name: 'routingCode', editable:false, allowBlank: false,
 				returnFn: TrainDemand.routingReturnFn
         	}, {
-				name:"strips", fieldLabel:"上行车次"
+				name:"strips", fieldLabel:i18n.MarshallingDemandMaintain.uplinkTrain
         	}, {
-				fieldLabel: "编组", id:"marshalling_comb", 
+				fieldLabel: i18n.MarshallingDemandMaintain.marshalling, id:"marshalling_comb", 
 				allowBlank:false ,
 				name: "marshallingTrainCountStr",
 				xtype: "Base_combo",
@@ -72,12 +72,12 @@ Ext.onReady(function(){
 	            		var routingIdx=  Ext.getCmp("routingIdx").getValue();          		
 	            		var runningDate=  Ext.getCmp("runningDate_id").getValue();          		
 						if(routingIdx == "" || routingIdx == null){
-							MyExt.Msg.alert("请先选择交路！");
+							MyExt.Msg.alert(i18n.MarshallingDemandMaintain.msg4);
 							return false;
 						}
 						
 						if(runningDate == "" || runningDate == null){
-							MyExt.Msg.alert("请先出车日期！");
+							MyExt.Msg.alert(i18n.MarshallingDemandMaintain.msg5);
 							return false;
 						}
 	            	}	            
@@ -87,7 +87,7 @@ Ext.onReady(function(){
 		}, {
 			defaults: {xtype:"textfield", maxLength:50, allowBlank: false, anchor:"90%"},
 			items:[{
-				fieldLabel: '发车日期', xtype:"my97date", name: 'runningDate',id:'runningDate_id',  width: 80, format: "Y-m-d",
+				fieldLabel: i18n.MarshallingDemandMaintain.runningDate, xtype:"my97date", name: 'runningDate',id:'runningDate_id',  width: 80, format: "Y-m-d",
 	        	my97cfg: {dateFmt:"yyyy-MM-dd"},
 				listeners : { 
 	            	"blur" : function(){
@@ -109,9 +109,9 @@ Ext.onReady(function(){
 	            	}
 				}
 			}, {
-				name:"backStrips", fieldLabel:"下行车次"
+				name:"backStrips", fieldLabel:i18n.MarshallingDemandMaintain.downwardTrain
 			}, {
-				id: 'TrainInspector_MultSelectWin_Id',xtype: 'TrainInspector_MultSelectWin', fieldLabel: '乘务检测员',
+				id: 'TrainInspector_MultSelectWin_Id',xtype: 'TrainInspector_MultSelectWin', fieldLabel: i18n.MarshallingDemandMaintain.trainInspectorName,
 			  	hiddenName: 'trainInspectorName', displayField:'empname', valueField: 'empname',
 			 	returnField :[{widgetId: "empid", propertyName: "empid"}],
 			  	editable: false, width: 50,
@@ -120,11 +120,11 @@ Ext.onReady(function(){
 	            		var routingIdx =  Ext.getCmp("routingIdx").getValue();          		
 	            		var runningDate =  Ext.getCmp("runningDate_id").getValue();          		
 						if(routingIdx == "" || routingIdx == null){
-							MyExt.Msg.alert("请先选择交路！");
+							MyExt.Msg.alert(i18n.MarshallingDemandMaintain.msg4);
 							return false;
 						}
 						if(runningDate == "" || runningDate == null){
-							MyExt.Msg.alert("请先出车日期！");
+							MyExt.Msg.alert(i18n.MarshallingDemandMaintain.msg5);
 							return false;
 						}
 	            	}	            
@@ -134,30 +134,30 @@ Ext.onReady(function(){
 		}, {
 			columnWidth:1,
 			items:[{
-				xtype:"textarea", name:"remark", fieldLabel:"备注", maxLength:500, anchor:"97%", height: 55
+				xtype:"textarea", name:"remark", fieldLabel:i18n.MarshallingDemandMaintain.remark, maxLength:500, anchor:"97%", height: 55
 			}]
 		}, {
 			columnWidth:0.5,defaults: {xtype:"textfield", maxLength:50, allowBlank: false, anchor:"90%"},
 			items:[{
-				fieldLabel: '出发时间', xtype:"my97date", name: 'departureTime',width: 80, format: "H:i",
+				fieldLabel: i18n.MarshallingDemandMaintain.departureTime, xtype:"my97date", name: 'departureTime',width: 80, format: "H:i",
 		        	my97cfg: {dateFmt:"HH:mm"}, initNow: false	, readOnly:true	
 			}, {
-				name:"startingStation", fieldLabel:"出发地", readOnly:true
+				name:"startingStation", fieldLabel:i18n.MarshallingDemandMaintain.startingStation, readOnly:true
 			}, {
-				fieldLabel: '返程发车时间', xtype:"my97date", name: 'departureBackTime', readOnly:true	,  width: 80, format: "H:i",
+				fieldLabel: i18n.MarshallingDemandMaintain.departureBackTime, xtype:"my97date", name: 'departureBackTime', readOnly:true	,  width: 80, format: "H:i",
 		        	my97cfg: {dateFmt:"HH:mm"},initNow: false
     	  	}, {
-				name:"kilometers", xtype: 'numberfield', fieldLabel:"行程（KM）", readOnly:true
+				name:"kilometers", xtype: 'numberfield', fieldLabel:i18n.MarshallingDemandMaintain.kilometers, readOnly:true
 			}]
     	},{
     		columnWidth:0.5,defaults: {xtype:"textfield", maxLength:50, allowBlank: false, anchor:"90%"},
     		items:[{
-				fieldLabel: '到达时间', xtype:"my97date", allowBlank: false, name: 'arrivalTime', width: 80, format: "H:i",
+				fieldLabel: i18n.MarshallingDemandMaintain.arrivalTime, xtype:"my97date", allowBlank: false, name: 'arrivalTime', width: 80, format: "H:i",
 			        	my97cfg: {dateFmt:"HH:mm"}	, readOnly:true	, initNow: false
 			}, {
-				name:"leaveOffStation", fieldLabel:"前往地", readOnly:true
+				name:"leaveOffStation", fieldLabel:i18n.MarshallingDemandMaintain.leaveForStation, readOnly:true
 			}, {
-				fieldLabel: '返程到达时间', xtype:"my97date", name: 'arrivalBackTime', width: 80, format: "H:i", readOnly:true	, 
+				fieldLabel: i18n.MarshallingDemandMaintain.arrivalBackTime, xtype:"my97date", name: 'arrivalBackTime', width: 80, format: "H:i", readOnly:true	, 
 	        	my97cfg: {dateFmt:"HH:mm"}	
 			}]
 		}, {
@@ -165,7 +165,7 @@ Ext.onReady(function(){
 			columnWidth:1,
 			defaultType:'hidden',
 			items:[
-				{ fieldLabel:"idx主键", name:"idx" },
+				{ fieldLabel:i18n.MarshallingDemandMaintain.idx, name:"idx" },
 				{ name: "routingIdx",id:"routingIdx"},
 				{ name: "trainInspectorID", id: "empid"},
 				{ name: "duration"},
@@ -177,17 +177,17 @@ Ext.onReady(function(){
 		}],
 		buttonAlign: 'center',
 		buttons: [{
-			text: '保存', iconCls: 'saveIcon', handler: function() {
+			text: i18n.MarshallingDemandMaintain.save, iconCls: 'saveIcon', handler: function() {
 				TrainDemand.isSaveAndAdd = false;
 				TrainDemand.grid.saveFn();
 			}
 		}, {
-			text: '保存并新增', iconCls: 'addIcon', handler: function() {
+			text: i18n.MarshallingDemandMaintain.saveAndAdd, iconCls: 'addIcon', handler: function() {
 				TrainDemand.isSaveAndAdd = true;
 				TrainDemand.grid.saveFn();
 			}
 		}, {
-			text: '关闭', iconCls: 'closeIcon', handler: function() {
+			text: i18n.MarshallingDemandMaintain.close, iconCls: 'closeIcon', handler: function() {
 				this.findParentByType('window').hide();
 			}
 		}]
@@ -202,43 +202,43 @@ Ext.onReady(function(){
 	    labelWidth: 100,                                     //查询表单中的标签宽度
 	    fieldWidth: 180,
 		fields: [{
-			header:'编组编号', dataIndex:'marshallingCode',hidden:true ,width: 40, searcher: { hidden: false }
+			header:i18n.MarshallingDemandMaintain.marshallingCode, dataIndex:'marshallingCode',hidden:true ,width: 40, searcher: { hidden: false }
 		},{
-			header:'编组', dataIndex:'marshallingTrainCountStr', width: 180 ,editor: {allowBlank:false}
+			header:i18n.MarshallingDemandMaintain.marshalling, dataIndex:'marshallingTrainCountStr', width: 180 ,editor: {allowBlank:false}
 		},{
-			header:'车辆数', dataIndex:'trainCount', width: 40, editor: {xtype:"hidden", allowBlank:false, maxLength:20 },searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.trainCount, dataIndex:'trainCount', width: 40, editor: {xtype:"hidden", allowBlank:false, maxLength:20 },searcher: { hidden: true }
 		},{
-			header:'交路', dataIndex:'routingCode', width: 80, 
+			header:i18n.MarshallingDemandMaintain.routing, dataIndex:'routingCode', width: 80, 
 			searcher: {xtype: 'textfield'}
 		},{
-			header:'发车时间', dataIndex:'runningDate', xtype:'datecolumn', format: "Y-m-d H:i",width: 75
+			header:i18n.MarshallingDemandMaintain.runningDate, dataIndex:'runningDate', xtype:'datecolumn', format: "Y-m-d H:i",width: 75
 		},{
-			header:'车次', dataIndex:'strips', width: 70, 
+			header:i18n.MarshallingDemandMaintain.trainNum, dataIndex:'strips', width: 70, 
 			renderer: function(value, metaData, record, rowIndex, colIndex, store){
 				var backStrips = record.get('backStrips');
 				return value + (Ext.isEmpty(backStrips)? "": "/"+ backStrips);
 			}
 		},{
-			header:'返程车次', dataIndex:'backStrips',hidden:true , width: 40, editor:{ }
+			header:i18n.MarshallingDemandMaintain.backTrain, dataIndex:'backStrips',hidden:true , width: 40, editor:{ }
 		},{
-			header:'地点', dataIndex:'startingStation', width: 70, 
+			header:i18n.MarshallingDemandMaintain.station, dataIndex:'startingStation', width: 70, 
 			renderer: function(value, metaData, record, rowIndex, colIndex, store){
 				var leaveOffStation =  record.get('leaveOffStation');
 				return value + "-"+ leaveOffStation;
 			}
 		},{
-			header:'前往地', dataIndex:'leaveOffStation', hidden:true , width: 40, editor:{  }
+			header:i18n.MarshallingDemandMaintain.leaveForStation, dataIndex:'leaveOffStation', hidden:true , width: 40, editor:{  }
 		},{
-			header:'出发时间', dataIndex:'departureTime', width: 75, 
+			header:i18n.MarshallingDemandMaintain.departureTime, dataIndex:'departureTime', width: 75, 
 			renderer: function(value, metaData, record, rowIndex, colIndex, store){
 				var arrivalTime =  record.get('arrivalTime');
 				return value + "~"+ arrivalTime;
 			},
 			searcher:{disabled: true}
 		},{
-			header:'到达时间', dataIndex:'arrivalTime' , hidden:true , width: 75, editor:{  }
+			header:i18n.MarshallingDemandMaintain.arrivalTime, dataIndex:'arrivalTime' , hidden:true , width: 75, editor:{  }
 		},{
-			header:'历时', dataIndex:'duration', width: 50, editor:{  }, 
+			header:i18n.MarshallingDemandMaintain.duration, dataIndex:'duration', width: 50, editor:{  }, 
 			renderer: function(value){
 				if (!Ext.isEmpty(value)) {
 					return formatTimeForHours(value, 'm');
@@ -246,32 +246,32 @@ Ext.onReady(function(){
 			}
 	
 		},{
-			header:'乘务检查员', dataIndex:'trainInspectorName', width: 80, editor:{  }, 
+			header:i18n.MarshallingDemandMaintain.trainInspectorName, dataIndex:'trainInspectorName', width: 80, editor:{  }, 
 			searcher:{disabled: true}
 		
 		},{
-			header:'返程出发时间', dataIndex:'departureBackTime', width: 75, 
+			header:i18n.MarshallingDemandMaintain.departureBackTime, dataIndex:'departureBackTime', width: 75, 
 			renderer: function(value, metaData, record, rowIndex, colIndex, store){
 				var arrivalBackTime =  record.get('arrivalBackTime');
 				return value + "~"+ arrivalBackTime;
 			}, 
 			searcher:{disabled: true}
 		},{
-			header:'返程到达时间', dataIndex:'arrivalBackTime' ,hidden:true, width: 40, editor:{  }
+			header:i18n.MarshallingDemandMaintain.arrivalBackTime, dataIndex:'arrivalBackTime' ,hidden:true, width: 40, editor:{  }
 		},{
-			header:'走行（KM）', dataIndex:'kilometers',  width: 60,editor:{ maxLength:10,allowBlank: true },
+			header:i18n.MarshallingDemandMaintain.kilo, dataIndex:'kilometers',  width: 60,editor:{ maxLength:10,allowBlank: true },
 			searcher: {disabled: true}
 		},{
-			header:'备注', dataIndex:'remark',  width: 50,hidden:true, editor:{ xtype:'textarea', maxLength:1000 },
+			header:i18n.MarshallingDemandMaintain.remark, dataIndex:'remark',  width: 50,hidden:true, editor:{ xtype:'textarea', maxLength:1000 },
 			searcher:{ disabled:true }
 		},{
-			header:'交路维护主键ID', dataIndex:'routingIdx',hidden:true ,searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.routingIdx, dataIndex:'routingIdx',hidden:true ,searcher: { hidden: true }
 		},{
-			header:'编组维护主键ID', dataIndex:'marshallingIdx',hidden:true ,searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.marshallingIdx, dataIndex:'marshallingIdx',hidden:true ,searcher: { hidden: true }
 		},{
-			header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
 		},{
-			header:'乘务检测员id ', dataIndex:'trainInspectorID', hidden:true,
+			header:i18n.MarshallingDemandMaintain.trainInspectorID, dataIndex:'trainInspectorID', hidden:true,
 			searcher:{disabled: true}
 		}],
 		// 保存成功后的函数处理
@@ -351,10 +351,10 @@ Ext.onReady(function(){
 		items:[{
 			layout: 'border',
 			items: [{
-				 region: 'center', layout: 'fit',  title: '编组需求',  bodyBorder: false, split: true,
+				 region: 'center', layout: 'fit',  title: i18n.MarshallingDemandMaintain.marshallingDemand,  bodyBorder: false, split: true,
 		     	 items:[TrainDemand.grid]
 	    	},{ 		
-		     	 region: 'east', bodyBorder: false,title: '编组车辆查看', width: 400, minSize: 400, maxSize: 800,  collapsible : true,  
+		     	 region: 'east', bodyBorder: false,title: i18n.MarshallingDemandMaintain.checkMarTrain, width: 400, minSize: 400, maxSize: 800,  collapsible : true,  
 	       		 layout: 'fit', items : [MarshallingTrainDemand.grid]
 			}]
 		}] 

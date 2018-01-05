@@ -13,7 +13,7 @@ Ext.onReady(function(){
 	 */
 	function showtip(msg){
 		processTips = new Ext.LoadMask(Ext.getBody(),{
-			msg: msg || "正在处理你的操作，请稍后...",
+			msg: msg || i18n.MarshallingDemandMaintain.msg6,
 			removeMask:true
 		});
 		processTips.show();
@@ -30,7 +30,7 @@ Ext.onReady(function(){
 		//判断是否选择了数据
 		var grid = JczlTrainServiceWin.grid;
 		if(!$yd.isSelectedRecord(grid)) {
-			MyExt.Msg.alert("请选择一条数据！");
+			MyExt.Msg.alert(i18n.MarshallingDemandMaintain.msg7);
 			return;
 		}
 	   var records = grid.getSelectionModel().getSelections();
@@ -63,10 +63,10 @@ Ext.onReady(function(){
 	        },
 	        failure: function(response, options){
 	        	if(processTips) hidetip();
-		        Ext.Msg.alert('提示', "请求失败，服务器状态代码：\n" + response.status + "\n" + response.responseText);
+		        Ext.Msg.alert(i18n.MarshallingDemandMaintain.msg8, i18n.MarshallingDemandMaintain.msg9 + "\n" + response.status + "\n" + response.responseText);
 		    }
 	    };
-	    Ext.Msg.confirm("提示  ", "确认是否添加车辆信息？  ", function(btn){
+	    Ext.Msg.confirm(i18n.MarshallingDemandMaintain.msg8, i18n.MarshallingDemandMaintain.msg10, function(btn){
 	        if(btn != 'yes')    return;
 	        showtip();
 	        Ext.Ajax.request(Ext.apply($yd.cfgAjaxRequest(), cfg));
@@ -83,28 +83,28 @@ Ext.onReady(function(){
 //				JczlTrainServiceWin.addWin.show();
 //			}},
 	    	{
-	    	text : "刷新", iconCls : "refreshIcon",
+	    	text : i18n.MarshallingDemandMaintain.refresh, iconCls : "refreshIcon",
 			handler : function(){
 				MarshallingTrainDemand.grid.store.reload();
 			}}], 
 	    labelWidth: 100,                                     //查询表单中的标签宽度
 	    fieldWidth: 180,
 		fields: [{
-			header:'编组编号', dataIndex:'marshallingCode',width: 40, searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.marshallingCode, dataIndex:'marshallingCode',width: 40, searcher: { hidden: true }
 		},{
-			header:'车种', dataIndex:'vehicleKindName',width: 30
+			header:i18n.MarshallingDemandMaintain.vehicleKindName, dataIndex:'vehicleKindName',width: 30
 		},{
-			header:'车种编码', dataIndex:'vehicleKindCode',hidden:true, editor: {xtype:"hidden",id:"vehicleKindCode"},searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.vehicleKindCode, dataIndex:'vehicleKindCode',hidden:true, editor: {xtype:"hidden",id:"vehicleKindCode"},searcher: { hidden: true }
 		},{
-			header:'车号', dataIndex:'trainNo',width:30
+			header:i18n.MarshallingDemandMaintain.trainNumber, dataIndex:'trainNo',width:30
 		},{
-			header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" },searcher: { hidden: true }
 		},{
-			header:'车型', dataIndex:'trainTypeShortName',width: 40, searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.trainTypeName, dataIndex:'trainTypeShortName',width: 40, searcher: { hidden: true }
 		},{
-			header:'车型idx', dataIndex:'trainTypeIDX',hidden:true, width: 60, searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.trainTypeIdx, dataIndex:'trainTypeIDX',hidden:true, width: 60, searcher: { hidden: true }
 		},{
-			header:'计划idx', dataIndex:'trainDemandIdx',hidden:true, width: 60, searcher: { hidden: true }
+			header:i18n.MarshallingDemandMaintain.planIdx, dataIndex:'trainDemandIdx',hidden:true, width: 60, searcher: { hidden: true }
 		}],
 		toEditFn: Ext.emptyFn,  //覆盖双击编辑事件
 		searchFn: function(searchParam){ 

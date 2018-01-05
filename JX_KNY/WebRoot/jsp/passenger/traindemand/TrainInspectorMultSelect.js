@@ -106,20 +106,20 @@ TrainInspectorMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : true
 			},
-			loadMask: {msg: "正在处理，请稍侯..."},
+			loadMask: {msg: i18n.MarshallingDemandMaintain.msg1},
 			// 偶数行变色
 			stripeRows : true,	
 			selModel : TrainInspectorMultSelect.sm,
 			// 工具栏
 			tbar : [{
 					xtype:"label",
-					text:"人员姓名："
+					text:i18n.MarshallingDemandMaintain.empName
 				},{	            
 	                xtype:"textfield",								                
 	                name : "empName",
 			        width: 80
 				},{
-					text : "搜索",
+					text : i18n.MarshallingDemandMaintain.search,
 					iconCls : "searchIcon",
 					handler : function(){
 						var empname = this.getTopToolbar().get(1).getValue();
@@ -128,7 +128,7 @@ TrainInspectorMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					},
 					scope : this
 				},{
-					text : "重置",
+					text : i18n.MarshallingDemandMaintain.reset,
 					iconCls : "resetIcon",
 					handler : function(){
 						this.store.baseParams.emp = "";
@@ -137,13 +137,13 @@ TrainInspectorMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					},
 					scope : this
 				},{
-					text : "选择",
+					text : i18n.MarshallingDemandMaintain.add,
 					iconCls : "addIcon",
 					handler : function(){
 						var sm = this.parentObj.grid.getSelectionModel();
 			            var data = sm.getSelections();
 			            if (sm.getCount() < 1) {
-			                MyExt.Msg.alert("尚未选择一条记录！");
+			                MyExt.Msg.alert(i18n.MarshallingDemandMaintain.msg2);
 			                return;
 			            }
 		            	var ids = "";
@@ -184,15 +184,15 @@ TrainInspectorMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 				        this.parentObj.hide();
 					},
 					scope : this
-				},{text:'取消',iconCls:'deleteIcon',handler:function(){
+				},{text:i18n.MarshallingDemandMaintain.console,iconCls:'deleteIcon',handler:function(){
 	              	   this.parentObj.hide();
 	              },scope : this}],
 			colModel : new Ext.grid.ColumnModel([
 				TrainInspectorMultSelect.sm,
 				new Ext.grid.RowNumberer(), {
 					sortable : true,
-					header : "名称（当月劳时）",
-					title : "双击该行记录选择人员",
+					header : i18n.MarshallingDemandMaintain.name,
+					title : i18n.MarshallingDemandMaintain.msg3,
 					dataIndex : "empname",
 					renderer: function(value, metaData, record, rowIndex, colIndex, store){
 						var workHours = record.get('workHours');
@@ -200,8 +200,8 @@ TrainInspectorMultSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					}
 				}, {
 					sortable : true,
-					header : "人员代码",
-					title : "双击该行记录选择人员",
+					header : i18n.MarshallingDemandMaintain.empCode,
+					title : i18n.MarshallingDemandMaintain.msg3,
 					dataIndex : "empcode"
 				}, {
 					sortable : true,
@@ -283,7 +283,7 @@ TrainInspectorMultSelect.UserSelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {	
 		TrainInspectorMultSelect.UserSelectWin.superclass.constructor.call(this, {
-			title : "选择人员",
+			title : i18n.MarshallingDemandMaintain.selectEmp,
 			width : 530,
 			height : 305,			
 			plain : true,
@@ -323,10 +323,10 @@ TrainInspectorMultSelect.UserSelect = Ext.extend(Ext.form.TriggerField, {
 	//点击控件触发事件
 	onTriggerClick : function() {
 		if(TrainInspectorMultSelect.routingIdx == "" || TrainInspectorMultSelect.routingIdx == null){
-			MyExt.Msg.alert("请先选择交路！");
+			MyExt.Msg.alert(i18n.MarshallingDemandMaintain.msg4);
 			this.disabled = true;
 		}else if(TrainInspectorMultSelect.runningDate == "" || TrainInspectorMultSelect.runningDate == null){
-			MyExt.Msg.alert("请先出车日期！");
+			MyExt.Msg.alert(i18n.MarshallingDemandMaintain.msg5);
 			this.disabled = true;
 		}else {this.disabled = false;}
 		if(!this.disabled){
