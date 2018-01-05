@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jxCoreFrame"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.9.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fastjson.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fluent-hc-4.5.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-4.5.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-cache-4.5.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-win-4.5.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpcore-4.4.4.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpmime-4.5.2.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-all-1.6.4.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jmf.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jna-4.1.0.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jna-platform-4.1.0.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.0.3-bin.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/sdo-api-v2.1.0.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xstream-1.3.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/jxCoreFrame/WebRoot/WEB-INF/lib/acegisecurity-1.0.7.jar"/>
 	<classpathentry kind="lib" path="/jxCoreFrame/WebRoot/WEB-INF/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="/jxCoreFrame/WebRoot/WEB-INF/lib/aopalliance.jar"/>
@@ -116,8 +100,24 @@
 	<classpathentry kind="lib" path="/jxCoreFrame/WebRoot/WEB-INF/lib/xmlsec-1.3.0.jar"/>
 	<classpathentry kind="lib" path="/jxCoreFrame/WebRoot/WEB-INF/lib/xstream-1.3.1.jar"/>
 	<classpathentry kind="lib" path="/jxCoreFrame/WebRoot/WEB-INF/lib/xwork-2.0.4.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_04"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fastjson.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fluent-hc-4.5.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-cache-4.5.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpclient-win-4.5.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jackson-all-1.6.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jmf.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.0.3-bin.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/sdo-api-v2.1.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-web-4.0.3.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/spring-websocket-4.0.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xstream-1.3.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jxCoreFrame"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

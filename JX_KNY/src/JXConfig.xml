@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 该文件用于配置机车检修系统V2.0的全局属性 -->
 <JXConfig>
-	<synSiteID>A</synSiteID><!-- 用于数据同步，设置每条数据记录的站点标识（哈尔滨检修基地HEBJD） -->
+	<synSiteID>A1</synSiteID><!-- 用于数据同步，设置每条数据记录的站点标识（哈尔滨检修基地HEBJD） -->
 	<overseaOrgcode>A</overseaOrgcode><!-- 用于设置当前系统应用单位（段）的机构代码（哈尔滨检修基地HEBJXJD），1105=重庆西机务段的orgcode -->
 	<orgRootName>上海检修段</orgRootName><!-- 顶级机构名称(Constants类常量引用此值，因神木和基地不一样，所以添加此配置项), (哈尔滨检修基地铁路分公司机务段,中国神华神朔铁路分公司机务段)-->
 	<orgTopRootName>铁路总公司</orgTopRootName><!-- 顶级机构名称(Constants类常量引用此值，因神木和基地不一样，所以添加此配置项), (铁路总公司,中国神华集团)-->
@@ -14,8 +14,8 @@
 	<dname>西安机务段</dname><!-- 本段配属段名称 -->
 	
 	<!-- 所在列检所K_TRAIN_INSPECTION-->
-	<inspectionCode>CDU</inspectionCode><!-- 本段配属段编码 -->
-	<inspectionName>成都列检所</inspectionName><!-- 本段配属段名称 -->
+	<inspectionCode>A1</inspectionCode><!-- 本段配属段编码 -->
+	<inspectionName>内罗毕南整备所</inspectionName><!-- 本段配属段名称 -->
 	
 	<!--<systemType>jx</systemType> 系统类型：整备系统:zb,检修系统：jx或为空-->
 	

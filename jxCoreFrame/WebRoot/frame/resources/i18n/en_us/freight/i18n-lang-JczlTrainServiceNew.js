@@ -10,7 +10,10 @@ i18n.JczlTrainService.registerPersonName = 'registerPerson' ;
 i18n.JczlTrainService.registerTime = 'registerTime' ;
 i18n.JczlTrainService.trainState = 'trainStatus' ;
 i18n.JczlTrainService.remarks = 'remarks' ;
-
+i18n.JczlTrainService.idx = 'idx' ;
+i18n.JczlTrainService.TrainTypeIdx = 'TrainTypeIdx' ;
+i18n.JczlTrainService.makeFactoryIdx = 'makeFactoryIdx' ;
+i18n.JczlTrainService.vehicleType = 'vehicleType' ;
 /**
  * 状态
  */

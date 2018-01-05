@@ -53,7 +53,7 @@ public class TrainVehicleTypeManager extends JXBaseManager<TrainVehicleType, Tra
      * 车型下拉框
      */
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")  
     public Map<String, Object> getBaseComboData(HttpServletRequest req, int start, int limit) throws Exception {
         
         String queryParams = req.getParameter("queryParams");

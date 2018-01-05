@@ -18,13 +18,13 @@ Ext.onReady(function(){
 	    tbar: ['delete'],
 	    storeAutoLoad: false,
 		fields: [{
-			header:'idx主键', dataIndex:'idx', hidden:true
+			header:i18n.QualityInspectionConfig.idx, dataIndex:'idx', hidden:true
 		},{
-			header:'质量检查项主键', dataIndex:'qCItemIDX', hidden:true
+			header:i18n.QualityInspectionConfig.qualityCtrIdx, dataIndex:'qCItemIDX', hidden:true
 		},{
-			header:'检查人员ID', dataIndex:'checkEmpID', hidden:true
+			header:i18n.QualityInspectionConfig.checkEmpID, dataIndex:'checkEmpID', hidden:true
 		},{
-			header:'检查人员名称', dataIndex:'checkEmpName'
+			header:i18n.QualityInspectionConfig.checkEmpName, dataIndex:'checkEmpName'
 		}],
 		afterDeleteFn: function(){
         	// 重新加载【质量检查人员表格】
@@ -53,7 +53,7 @@ Ext.onReady(function(){
 			dataUrl : ctx + "/organization!tree.action"
 		}),
 		root: new Ext.tree.TreeLoader({
-			text : '机构人员',
+			text : i18n.QualityInspectionConfig.orgPerson,
 			disabled : false,
 			id : 'ROOT_0',
 			nodetype : 'org',
@@ -110,7 +110,7 @@ Ext.onReady(function(){
 	
 	/** ************** 定义质量检查机构维护窗口开始 ************** */
 	ZbglItemEmpDefine.win =new Ext.Window({
-		title:"质量检查机构",
+		title:i18n.QualityInspectionConfig.QualityInsOrg,
 		width:560,
 		height:402,
 		layout:"border",
@@ -133,7 +133,7 @@ Ext.onReady(function(){
 		],
 		buttonAlign: 'center',
 		buttons:[{
-			text: '关闭', iconCls: 'closeIcon', handler: function() {
+			text: i18n.QualityInspectionConfig.close, iconCls: 'closeIcon', handler: function() {
 				this.findParentByType('window').hide();
 //				// 隐藏窗口后，重新加载【质量检查人员】表格
 //				qualityControlItemEmpDefine.grid.store.reload();

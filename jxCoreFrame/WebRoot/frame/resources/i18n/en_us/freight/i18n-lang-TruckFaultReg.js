@@ -104,6 +104,7 @@ i18n.TruckFaultReg.trainTypeID = 'trainTypeID' ;
 i18n.TruckFaultReg.setupIdx = 'setupIdx' ;
 i18n.TruckFaultReg.trainNumber1 = 'trainNumber' ;
 /*列检计划列表*/
+i18n.TruckFaultReg.TrainList = 'trainList' ;
 i18n.TruckFaultReg.inspectionPlanList = 'inspectionPlanList' ;
 i18n.TruckFaultReg.quickSearch = 'Enter the train quick search' ;
 i18n.TruckFaultReg.train = 'trainNumber' ;

@@ -14,9 +14,9 @@ JczlTrainService.grid = new Ext.yunda.Grid({
     searchFormColNum:2,
 //    viewConfig: null,    
 	fields: [{
-		header:'idx主键', dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
+		header:i18n.JczlTrainService.idx, dataIndex:'idx', hidden:true, editor: { xtype:'hidden' }
 	},{
-		header:'车型主键', dataIndex:'trainTypeIDX', hidden:true, editor:{
+		header:i18n.JczlTrainService.TrainTypeIdx, dataIndex:'trainTypeIDX', hidden:true, editor:{
 			fieldLabel: i18n.JczlTrainService.trainTypeShortName, id:"trainType_comb", 
 			allowBlank:false ,
 			hiddenName: "trainTypeIDX",
@@ -43,7 +43,7 @@ JczlTrainService.grid = new Ext.yunda.Grid({
 		header:i18n.JczlTrainService.trainNo, dataIndex:'trainNo', editor:{ minLength:4 , maxLength:5 , allowBlank: false},
 		searcher: {xtype: 'textfield'}
 	},{
-		header:'制造厂家主键', dataIndex:'makeFactoryIDX',hidden: true,  editor:{ 
+		header:i18n.JczlTrainService.makeFactoryIdx, dataIndex:'makeFactoryIDX',hidden: true,  editor:{ 
 			 id:"Factory_Select",xtype:'GyjcFactory_SelectWin',fieldLabel: i18n.JczlTrainService.makeFactoryName,
 			 hiddenName:"makeFactoryIDX",editable:false,
 			 queryHql:"From GyjcFactory where fcID='A'", 
@@ -79,7 +79,7 @@ JczlTrainService.grid = new Ext.yunda.Grid({
 		header:i18n.JczlTrainService.remarks, dataIndex:'remarks', editor:{ xtype:'textarea', maxLength:1000 },
 		searcher:{ disabled:true }
 	},{
-		header:'客货类型', dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
+		header:i18n.JczlTrainService.vehicleType, dataIndex:'vehicleType',hidden:true, editor: { xtype:"hidden",value:vehicleType }
 	}],
 	searchFn: function(searchParam){ 
 		JczlTrainService.searchParam = searchParam ;

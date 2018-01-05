@@ -1,1 +1,11 @@
+/META-INF
 /com
+/ehcache.xml
+/ehcache.xsd
+/i18n.properties
+/i18n_en_US.properties
+/i18n_zh_CN.properties
+/log4j.properties
+/struts.properties
+/struts.xml
+/uddi-address.xml

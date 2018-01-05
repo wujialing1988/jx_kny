@@ -104,7 +104,8 @@ i18n.TruckFaultReg.trainIspectionID = '车辆列检实例ID' ;
 i18n.TruckFaultReg.trainTypeID = '车辆车型ID' ;
 i18n.TruckFaultReg.setupIdx = '整备单IDX' ;
 i18n.TruckFaultReg.trainNumber1 = '车辆车号' ;
-/*列检计划列表*/
+/*列检计划列表/车次列表*/
+i18n.TruckFaultReg.TrainList = '车次列表' ;
 i18n.TruckFaultReg.inspectionPlanList = '列检计划列表' ;
 i18n.TruckFaultReg.quickSearch = '输入车次快速检索' ;
 i18n.TruckFaultReg.train = '车次' ;

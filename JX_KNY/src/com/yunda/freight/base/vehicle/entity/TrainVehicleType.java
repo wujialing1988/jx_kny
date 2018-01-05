@@ -27,7 +27,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "J_JCGY_VEHICLE_TYPE")
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE)
-public class TrainVehicleType implements java.io.Serializable {
+public class TrainVehicleType implements java.io.Serializable {  
     
     /* 使用默认序列版本ID */
     private static final long serialVersionUID = 1L;
