@@ -20,7 +20,6 @@ import com.yunda.frame.util.DateUtil;
 import com.yunda.frame.util.EntityUtil;
 import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.util.sqlmap.SqlMapUtil;
-import com.yunda.freight.base.classMaintain.entity.ClassMaintain;
 import com.yunda.freight.base.vehicle.entity.TrainVehicleType;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlan;
 import com.yunda.freight.zb.plan.entity.ZbglRdpPlanRecord;
@@ -168,7 +167,6 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
            return "没有要启动的计划！" ; 
         }
         plan.setRdpPlanStatus(ZbglRdpPlan.STATUS_HANDLING);
-        plan.setRealStartTime(new Date()); // 实际开始时间
         this.saveOrUpdate(plan);
         if(plan.getVehicleType().equals(TrainVehicleType.TYPE_FREIGHT)){
             // 批量启动车辆计划（货车）
@@ -265,7 +263,6 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
         	 plan.setRealEndTime(DateUtil.parse(realEndTime, "yyyy-MM-dd HH:mm"));
          }
          plan.setRdpPlanStatus(ZbglRdpPlan.STATUS_HANDLED); // 状态设置为启动
-         plan.setRealEndTime(new Date());
          this.saveOrUpdate(plan);
          // 改车辆状态
          List<ZbglRdpPlanRecord> records = zbglRdpPlanRecordManager.getZbglRdpPlanRecordComListByPlan(id);
@@ -347,8 +344,12 @@ public class ZbglRdpPlanManager extends JXBaseManager<ZbglRdpPlan, ZbglRdpPlan> 
         }
         result.put("safeDays", safeDays);
         // 2、累计修车台数/当前年份计划台数/当前年份实际修车台数
-        String sql = SqlMapUtil.getSql("zb-tp:findTrainStatistics").replaceAll("#year#", year);
-        result.put("trainStatisticsList", this.queryListMap(sql));
+        String sql = SqlMapUtil.getSql("zb-tp:findTrainStatisticsKC").replaceAll("#year#", year);
+        result.put("trainStatisticsListKC", this.queryListMap(sql));
+        
+        String sqlHC = SqlMapUtil.getSql("zb-tp:findTrainStatisticsHC").replaceAll("#year#", year);
+        result.put("trainStatisticsListHC", this.queryListMap(sqlHC));
+        
         
         // 3、当日动态：查询正在库检的车辆和正在检修的车辆信息
         Map<String, Object> jrdt = new HashMap<String, Object>();

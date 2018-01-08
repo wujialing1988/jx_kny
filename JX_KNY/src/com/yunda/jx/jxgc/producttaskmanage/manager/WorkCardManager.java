@@ -33,6 +33,7 @@ import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.frame.yhgl.entity.OmEmployee;
 import com.yunda.frame.yhgl.manager.OmEmployeeManager;
+import com.yunda.freight.zb.detain.entity.DetainGztp;
 import com.yunda.jx.jxgc.common.JxgcConstants;
 import com.yunda.jx.jxgc.producttaskmanage.entity.DetectResult;
 import com.yunda.jx.jxgc.producttaskmanage.entity.WorkCard;
@@ -55,6 +56,7 @@ import com.yunda.jx.jxgc.workplanmanage.manager.WorkCardQueryManager;
 import com.yunda.jx.util.MixedUtils;
 import com.yunda.jx.webservice.stationTerminal.base.entity.DataItemBean;
 import com.yunda.jx.webservice.stationTerminal.base.entity.WorkTaskBean;
+import com.yunda.jxpz.coderule.manager.CodeRuleConfigManager;
 import com.yunda.jxpz.utils.SystemConfigUtil;
 import com.yunda.util.BeanUtils;
 
@@ -118,6 +120,10 @@ public class WorkCardManager extends JXBaseManager<WorkCard, WorkCard> {
     /** Worker业务类,作业人员 */
     @Resource
     private WorkerManager workerManager;
+    
+    /** 自定义编码 */
+    @Resource
+    private CodeRuleConfigManager codeRuleConfigManager ;
     
     private static final String WAITINGFORGET = "待领取";
     
@@ -525,6 +531,36 @@ public class WorkCardManager extends JXBaseManager<WorkCard, WorkCard> {
     public Dispatcher4WorkCardManager getDispatcher(){        
         return this.dispatcher4WorkCardManager;
     }   
+    
+    /**
+     * <li>说明：新增编辑自定义工单
+     * <li>创建人：程锐
+     * <li>创建日期：2015-4-28
+     * <li>修改人：
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param rdpIDX 作业计划id
+     * @param nodeCaseIDX 流程节点id
+     * @param gztps 扣车故障列表
+     * @throws Exception
+     */
+    public void saveDefineWorkByDetain(String rdpIDX , String nodeCaseIDX,List<DetainGztp> gztps) throws Exception{
+    	WorkCard[] workCards = new WorkCard[gztps.size()];
+    	int i = 0 ;
+    	for (DetainGztp gztp : gztps) {
+    		String workCardCode = codeRuleConfigManager.makeConfigRule("xcode");
+    		WorkCard card = new WorkCard();
+    		card.setRdpIDX(rdpIDX);
+    		card.setNodeCaseIDX(nodeCaseIDX);
+    		card.setWorkCardCode(workCardCode);
+    		card.setWorkCardName(gztp.getGztpName());
+    		card.setWorkScope(gztp.getGztpDesc());
+    		card.setWorkSeqClass("99");
+    		workCards[i] = card ;
+    		i++;
+		}
+    	editDefineWork(workCards, null);
+    }
     
     /**
      * <li>说明：新增编辑自定义工单

@@ -308,19 +308,40 @@ public class TrainEnforcePlanDetailAction extends JXBaseAction<TrainEnforcePlanD
     }
     
     /**
-     * <li>说明：月计划兑现情况查看
+     * <li>说明：月计划兑现情况查看（客车）
      * <li>创建人：伍佳灵
      * <li>创建日期：2017-11-24
      * <li>修改人： 
      * <li>修改日期：
      * <li>修改内容：
      */
-    public void findMonthRateStatistics() throws Exception {
+    public void findMonthRateStatisticsKC() throws Exception {
         Map<String, Object> map = new HashMap<String,Object>();
         try {
             HttpServletRequest req = getRequest();
             String year = req.getParameter("year");
-            map.put("root",this. manager.findMonthRateStatistics(year));
+            map.put("root",this. manager.findMonthRateStatisticsKC(year));
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }                 
+    }
+    
+    /**
+     * <li>说明：月计划兑现情况查看（货车）
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-24
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public void findMonthRateStatisticsHC() throws Exception {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            HttpServletRequest req = getRequest();
+            String year = req.getParameter("year");
+            map.put("root",this. manager.findMonthRateStatisticsHC(year));
         } catch (Exception e) {
             ExceptionUtil.process(e, logger, map);
         } finally {

@@ -22,11 +22,11 @@ select
   hc.train_type as trainType,
   hc.train_no as trainNo,
   hc.before_fx_date as beforeFxDate,
-  case when fx.max_running_km is not null then to_char((hc.before_fx_date + fx.max_running_km),'yyyy-MM') else '' end nextFxDate,
+  case when fx.max_running_km is not null then to_char((nvl(hc.before_fx_date,info.leave_date) + fx.max_running_km),'yyyy-MM') else '' end nextFxDate,
   hc.before_dx_date as beforeDxDate,
-  case when dx.max_running_km is not null then to_char((hc.before_dx_date + dx.max_running_km),'yyyy-MM') else '' end nextDxDate,
+  case when dx.max_running_km is not null then to_char((nvl(hc.before_dx_date,info.leave_date) + dx.max_running_km),'yyyy-MM') else '' end nextDxDate,
   hc.before_cx_date as beforeCxDate,
-  case when cx.max_running_km is not null then to_char((hc.before_cx_date + cx.max_running_km),'yyyy-MM') else '' end nextCxDate,
+  case when cx.max_running_km is not null then to_char((nvl(hc.before_cx_date,info.leave_date) + cx.max_running_km),'yyyy-MM') else '' end nextCxDate,
   to_char(info.leave_date,'yyyy-MM-dd') as leaveDate
  from K_REPAIR_WARNING_HC hc
 inner join JCZL_TRAIN info on info.train_type_idx = hc.train_type_idx and info.train_no = hc.train_no
@@ -250,6 +250,18 @@ select info.idx as "idx",
   ) cx on cx.train_type_idx = info.train_type_idx
   where 1=1 and info.record_status = 0 and info.t_vehicle_type = '10'  
 	]]>
-	</sql>					
+	</sql>
+	
+	<!-- 查询货车基本及修程信息 -->
+	<sql id="findDeskPriviligeList">
+	<![CDATA[
+		select t.dictid as "dictid",
+       t.dictname as "dictname",
+       p.is_show as "isShow"
+ from EOS_DICT_ENTRY t 
+left join K_DESK_PRIVILIGE p on t.dictid = p.dict_code and p.emp_id = '#EMP_ID#'
+where t.dicttypeid = 'SYS_DESKTOP_PRIVILEGE' order by t.sortno
+	]]>
+	</sql>								
 	
 </SqlMap>

@@ -97,11 +97,11 @@ public class ZbglRdpPlan implements java.io.Serializable {
     @Column(name = "TRACK_NAME")
     private String trackName;
     
-    /* 接入方向编码 选列检所 */
+    /* 发出接入方向编码 选列检所 */
     @Column(name = "COME_DIRECTION_NO")
     private String comeDirectionNo;
     
-    /* 接入方向名称 */
+    /* 发出接入方向名称 */
     @Column(name = "COME_DIRECTION_NAME")
     private String comeDirectionName;
     
@@ -168,6 +168,15 @@ public class ZbglRdpPlan implements java.io.Serializable {
     /* 作业性质 到达作业、始发作业、中转作业、通过作业 */
     @Column(name = "WORK_NATURE")
     private String workNature;
+    
+    /* 值班员ID */
+    @Column(name = "DUTY_EMPID")
+    private String dutyEmpID;
+    
+    /* 值班员名称 */
+    @Column(name = "DUTY_EMPNAME")
+    private String dutyEmpName;
+    
     
     /* 备注 */
     @Column(name = "REMARK")
@@ -485,5 +494,23 @@ public class ZbglRdpPlan implements java.io.Serializable {
     public void setTrainDemandIdx(String trainDemandIdx) {
         this.trainDemandIdx = trainDemandIdx;
     }
+
+	public String getDutyEmpID() {
+		return dutyEmpID;
+	}
+
+	public void setDutyEmpID(String dutyEmpID) {
+		this.dutyEmpID = dutyEmpID;
+	}
+
+	public String getDutyEmpName() {
+		return dutyEmpName;
+	}
+
+	public void setDutyEmpName(String dutyEmpName) {
+		this.dutyEmpName = dutyEmpName;
+	}
+    
+    
     
 }

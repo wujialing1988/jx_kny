@@ -205,6 +205,9 @@ public class JobProcessNode implements java.io.Serializable {
     @Column(name="END_DAY")
     private Integer endDay;
     
+	/* 是否属于临修节点 */
+	@Column(name="IS_LXNODE")
+	private Integer isLxNode;
     
     /* 流程显示样式 */
     @Column(name="SHOW_FLAG")    
@@ -1292,6 +1295,16 @@ public class JobProcessNode implements java.io.Serializable {
     public void setShowFlag(String showFlag) {
         this.showFlag = showFlag;
     }
+
+
+	public Integer getIsLxNode() {
+		return isLxNode;
+	}
+
+
+	public void setIsLxNode(Integer isLxNode) {
+		this.isLxNode = isLxNode;
+	}
 
 
   

@@ -53,9 +53,9 @@ public class RepairWarningHCManager extends JXBaseManager<RepairWarningHC, Repai
     		hc.setTrainTypeIdx(jczlTrain.getTrainTypeIDX());
     		hc.setTrainType(jczlTrain.getTrainTypeShortName());
     		hc.setTrainNo(jczlTrain.getTrainNo());
-    		hc.setBeforeFxDate(jczlTrain.getLeaveDate());
-    		hc.setBeforeDxDate(jczlTrain.getLeaveDate());
-    		hc.setBeforeCxDate(jczlTrain.getLeaveDate());
+//    		hc.setBeforeFxDate(jczlTrain.getLeaveDate());
+//    		hc.setBeforeDxDate(jczlTrain.getLeaveDate());
+//    		hc.setBeforeCxDate(jczlTrain.getLeaveDate());
     		hc.setUpdateTime(new Date());
     		hcs.add(hc);
 		}
@@ -87,9 +87,9 @@ public class RepairWarningHCManager extends JXBaseManager<RepairWarningHC, Repai
         	sql += " t.trainType like '%"+queryInput+"%' or t.trainNo like '%"+queryInput+"%'" ;
         	sql += ")" ;
         }
-        // 辅修年月
+        // 厂修年月
         if(!StringUtil.isNullOrBlank(planDayFx)){
-        	sql += " and t.nextFxDate = '"+ planDayFx.substring(0, 7) + "'";
+        	sql += " and t.nextCxDate = '"+ planDayFx.substring(0, 7) + "'";
         }
         // 段修年月
         if(!StringUtil.isNullOrBlank(planDayDx)){

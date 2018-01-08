@@ -24,7 +24,8 @@ var tree =
             {id:'乘务检测人员维护', text:'乘务检测人员维护', leaf:true, funcaction:'/jsp/passenger/base/traininspector/TrainInspector.jsp'},
             {id:'车辆系统分类维护',text:'车辆系统分类维护',leaf:true,funcaction:'/jsp/jcbm/jxctfl/JcxtflBuildWh.jsp?vehicleType=10'},
        		{id:'车辆构型',text:'车辆构型',leaf:true,funcaction:'/jsp/jcbm/TrainGxgl.jsp'},
-       		{id:'故障库维护',text:'故障库维护',leaf:true,funcaction:'/jsp/jx/base/jcgy/EquipFault.jsp'}
+       		{id:'故障库维护',text:'故障库维护',leaf:true,funcaction:'/jsp/jx/base/jcgy/EquipFault.jsp'},
+       		{id:'报表维护',text:'报表维护',leaf:true,funcaction:'/pages/view/report/info/reportViewInfo.jsp'}
         ]
     },{
         id:'货车运用', text:'货车运用', leaf:false, children:[
@@ -42,7 +43,8 @@ var tree =
               	{id:'故障登记查询_货车运用', text:'故障登记查询_货车运用', leaf:true, funcaction:'/jsp/freight/zb/gztp/GztpQuery.jsp?subSysCode=00&vehicleType=10'},
               	{id:'质量检验配置_货车运用', text:'质量检验配置_货车运用', leaf:true, funcaction:'/jsp/freight/zb/qualitycontrol/qualitycontrol.jsp?subSysCode=00&vehicleType=10'},
               	{id:'货车巡检信息录入', text:'货车巡检信息录入', leaf:true, funcaction:'/jsp/freight/zb/inspectrecord/TrainInspectRecord.jsp?vehicleType=10'},
-              	{id:'货车巡检信息查询', text:'货车巡检信息查询', leaf:true, funcaction:'/jsp/freight/zb/inspectrecord/query/TrainInspectRecord.jsp?vehicleType=10'}
+              	{id:'货车巡检信息查询', text:'货车巡检信息查询', leaf:true, funcaction:'/jsp/freight/zb/inspectrecord/query/TrainInspectRecord.jsp?vehicleType=10'},
+              	{id:'货车统计报表', text:'货车统计报表', leaf:true, funcaction:'/pages/view/report/reportView.jsp?reportType=10'}
         ]
     },{
         id:'客车运用', text:'客车运用', leaf:false, children:[
@@ -66,6 +68,7 @@ var tree =
             {id:'客车巡检信息查询', text:'客车巡检信息查询', leaf:true, funcaction:'/jsp/freight/zb/inspectrecord/query/TrainInspectRecord.jsp?vehicleType=20'},
             {id:'客车编组查询', text:'客车编组查询', leaf:true, funcaction:'/pages/view/kcyy/bzxx/kcyyBzInfo.jsp'},
             {id:'客车故障登记统计打印', text:'客车故障登记统计打印', leaf:true, funcaction:'/jsp/report/kc/GztpAnasysKC.jsp'},
+            {id:'客车统计报表', text:'客车统计报表', leaf:true, funcaction:'/pages/view/report/reportView.jsp?reportType=20'}
             
         ]
     }, {

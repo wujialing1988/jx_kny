@@ -641,15 +641,28 @@ public class TrainEnforcePlanDetailManager extends JXBaseManager<TrainEnforcePla
     }
     
     /**
-     * <li>说明：月计划兑现情况查看
+     * <li>说明：月计划兑现情况查看（客车）
      * <li>创建人：伍佳灵
      * <li>创建日期：2017-11-24
      * <li>修改人： 
      * <li>修改日期：
      * <li>修改内容：
      */
-    public List<Map<String, Object>> findMonthRateStatistics(String year){
-        String sql = SqlMapUtil.getSql("zb-tp:findMonthRateStatistics").replaceAll("#year#", year);
+    public List<Map<String, Object>> findMonthRateStatisticsKC(String year){
+        String sql = SqlMapUtil.getSql("zb-tp:findMonthRateStatisticsKC").replaceAll("#year#", year);
+        return this.queryListMap(sql);
+    }  
+    
+    /**
+     * <li>说明：月计划兑现情况查看（货车）
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-24
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<Map<String, Object>> findMonthRateStatisticsHC(String year){
+        String sql = SqlMapUtil.getSql("zb-tp:findMonthRateStatisticsHC").replaceAll("#year#", year);
         return this.queryListMap(sql);
     }  
     

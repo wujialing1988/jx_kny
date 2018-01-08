@@ -21,7 +21,9 @@ import com.yunda.frame.util.ExceptionUtil;
 import com.yunda.frame.util.JSONUtil;
 import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.yhgl.entity.OmEmployee;
+import com.yunda.freight.zb.detain.entity.DetainGztp;
 import com.yunda.freight.zb.detain.entity.DetainTrain;
+import com.yunda.freight.zb.detain.manager.DetainGztpManager;
 import com.yunda.freight.zb.detain.manager.DetainTrainManager;
 import com.yunda.freight.zb.detain.webservice.IDetainTrainService;
 import com.yunda.jx.pjjx.util.JSONTools;
@@ -53,6 +55,12 @@ public class DetainTrainServiceImpl implements IDetainTrainService {
      */
     @Resource
     private DetainTrainManager detainTrainManager ;
+    
+    /**
+     * 扣车故障提票服务类
+     */
+    @Resource
+    private DetainGztpManager detainGztpManager ; 
     
     /**
      * <li>说明：申请扣车
@@ -92,7 +100,12 @@ public class DetainTrainServiceImpl implements IDetainTrainService {
             if(StringUtil.isNullOrBlank(entity.getTrainTypeIdx())|| StringUtil.isNullOrBlank(entity.getTrainNo())){
                 return JSONObject.toJSONString(OperateReturnMessage.newFailsInstance("请填写车型车号！"));
             }
-            detainTrainManager.applyDetainTrain(entity);
+            DetainTrain detail = detainTrainManager.applyDetainTrain(entity);
+            String detainGztps = jo.getString("detainGztps");
+            DetainGztp[] gztpArray = JSONUtil.read(StringUtil.nvlTrim(detainGztps, "[]"), DetainGztp[].class);
+            if(gztpArray != null && gztpArray.length > 0){
+                detainGztpManager.saveDetainGztps(gztpArray, detail.getIdx());
+            }
             return WsConstants.OPERATE_SUCCESS;
         } catch (Exception e) {
             if(e instanceof com.yunda.common.BusinessException){
@@ -241,6 +254,50 @@ public class DetainTrainServiceImpl implements IDetainTrainService {
                 return JSONObject.toJSONString(OperateReturnMessage.newFailsInstance(MSG_RESULT_IS_EMPTY));
             }
             return JSONTools.toJSONList(page.getTotal(), list);
+        }catch (Exception e) {
+            ExceptionUtil.process(e, logger);
+            return WsConstants.OPERATE_FALSE;
+        }
+    }
+    
+    
+    /**
+     * <li>说明：根据扣车主键查询其下的故障情况
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-4-20
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param jsonObject {
+            entityJson: {
+                detainIdx:"8a8284f24ab80704014ab891375a0002"
+            },
+            operatorId: "7"          
+       }
+     * @return
+     * @throws IOException
+     */
+    public String findDetainGztp(String jsonObject) throws IOException {
+        try {
+
+            JSONObject jo = JSONObject.parseObject(jsonObject);
+            
+            // 获取查询条件实体对象
+            Long operatorId = jo.getLong(Constants.OPERATOR_ID);
+            if (null == operatorId) {
+                return JSONObject.toJSONString(OperateReturnMessage.newFailsInstance(MSG_ERROR_ARGS_NULL_OPERATOR_ID));
+            }
+            // 设置系统用户信息
+            SystemContextUtil.setSystemInfoByOperatorId(operatorId);
+
+            // 获取查询条件实体对象
+            String entityJson = jo.getString(Constants.ENTITY_JSON);
+            DetainGztp entity = JSONUtil.read(entityJson, DetainGztp.class);
+            List<DetainGztp> list = detainGztpManager.findList(entity);
+            if (null == list || list.size() <= 0) {
+                return JSONObject.toJSONString(OperateReturnMessage.newFailsInstance(MSG_RESULT_IS_EMPTY));
+            }
+            return JSONTools.toJSONList(list.size(), list);
         }catch (Exception e) {
             ExceptionUtil.process(e, logger);
             return WsConstants.OPERATE_FALSE;

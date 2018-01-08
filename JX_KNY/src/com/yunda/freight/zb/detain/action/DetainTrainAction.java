@@ -75,8 +75,8 @@ public class DetainTrainAction extends JXBaseAction<DetainTrain, DetainTrain, De
         Map<String, Object> map = new HashMap<String,Object>();
         try {
             DetainTrain entity = (DetainTrain)JSONUtil.read(getRequest(), DetainTrain.class);
-            this.manager.applyDetainTrain(entity);
             map.put("success", true);
+            map.put("entity", this.manager.applyDetainTrain(entity));
         } catch (Exception e) {
             ExceptionUtil.process(e, logger, map);
         } finally {

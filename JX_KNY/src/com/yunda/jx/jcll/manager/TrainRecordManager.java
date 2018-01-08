@@ -178,7 +178,7 @@ public class TrainRecordManager extends JXBaseManager<TrainRecord, TrainRecord> 
             map = new LinkedHashMap();
             map.put("id", plan.getIdx());          //检修计划ID
             String displanName = plan.getPlanBeginTime() != null ? DateUtil.date2String(DateUtil.yyyy_MM_dd, plan.getPlanBeginTime()) : "" ;			   //节点显示名称
-            displanName += " " + plan.getRepairClassName() + " " + plan.getRepairtimeName();
+            displanName += " " + plan.getRepairClassName() + " ";
 			map.put("text", "<span style=\"color:#3A5A82;\" title=\"" + displanName + "\">" + displanName + "</span>"); // menulabel 菜单显示名称
 			map.put("leaf", true);
 			List<Map> jxchildrenMaps = getJXChildMaps(plan.getIdx());

@@ -79,7 +79,7 @@ public class ClassOrganizationAction extends JXBaseAction<ClassOrganization, Cla
             String classOrgIdx = getRequest().getParameter("classOrgIdx");
             // 班组
             String orgIdx = getRequest().getParameter("orgIdx");
-            List<ClassOrganizationUserVo> models = this.manager.findOrganizationUsers(classOrgIdx,orgIdx);
+            List<Map<String, Object>> models = this.manager.findOrganizationUsers(classOrgIdx,orgIdx);
             map.put("root", models);
         } catch (Exception e) {
             ExceptionUtil.process(e, logger , map);

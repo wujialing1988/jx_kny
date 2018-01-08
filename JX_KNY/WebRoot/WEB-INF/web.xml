@@ -269,6 +269,8 @@
 				com.yunda.jx.base.workInstructor.action,
 				com.yunda.freight.zb.inspectrecord.action,
 				com.yunda.zb.schedule.action,
+				com.yunda.freight.base.report.action,
+				com.yunda.freight.base.deskprivilige.action,
 				
 				<!-- 肯尼亚设备 -->
 				com.yunda.sb.newbuyequipment.action,

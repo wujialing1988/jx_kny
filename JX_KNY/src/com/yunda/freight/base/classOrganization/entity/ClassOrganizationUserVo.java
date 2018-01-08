@@ -1,5 +1,7 @@
 package com.yunda.freight.base.classOrganization.entity;
 
+import java.util.Comparator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -193,5 +195,7 @@ public class ClassOrganizationUserVo implements java.io.Serializable {
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
 	}
+
+
     
 }

@@ -477,8 +477,8 @@ public class TrainWorkPlanEditNewManager extends JXBaseManager<TrainWorkPlan, Tr
          */
         public Page<TrainWorkPlan> queryTrainWorkPlan(SearchEntity<TrainWorkPlan> searchEntity) {
             TrainWorkPlan entity = searchEntity.getEntity();
-            StringBuilder sb = new StringBuilder("From TrainWorkPlan Where recordStatus = 0 And workPlanStatus In('");  
-            sb.append(TrainWorkPlan.STATUS_NEW).append("', '").append(TrainWorkPlan.STATUS_HANDLING).append("')");
+            StringBuilder sb = new StringBuilder("From TrainWorkPlan Where fromStatus = 0 and recordStatus = 0 And workPlanStatus In('");  
+            sb.append(TrainWorkPlan.STATUS_NEW).append("', '").append(TrainWorkPlan.STATUS_HANDLED).append("', '").append(TrainWorkPlan.STATUS_HANDLING).append("')");
 
             // 根据“车型”“车号”“修程”“修次”模糊匹配查询
             String trainNo = StringUtil.nvl(entity.getTrainNo(), "").trim();

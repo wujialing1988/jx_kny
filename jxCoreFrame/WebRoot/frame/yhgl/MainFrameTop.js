@@ -143,7 +143,7 @@ Ext.onReady(function(){
 		 enableTabScroll : true,
 		 items: [{
 			id:'personalDesk',
-			title: '个人桌面',
+			title: '首页',
 			xtype: "panel",
 			layout: "fit",	
 			closable : false,

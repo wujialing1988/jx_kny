@@ -21,7 +21,7 @@
 		class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="repairClassWarningTask" />
 		<!-- cron表达式 每隔2分钟 -->
-		<property name="cronExpression" value="0 0/2 * * * ?" />
+		<property name="cronExpression" value="0 0/5 * * * ?" />
 	</bean>	
 	<!-- 同步客车修程报警信息 end -->		
 

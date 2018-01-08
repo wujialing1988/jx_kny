@@ -277,15 +277,21 @@ from JCZL_TRAIN t
            r.work_person_name as "workPersonName",
            r.seq_num as "seqNum",
            r.train_type_idx as "trainTypeIdx",
+           r.train_type_code as "trainTypeCode" ,
            r.train_no as "trainNo",
            r.complete_person_name as "completePersonName",
            to_char(r.rdp_end_time,'yyyy-MM-dd HH24:mi') as "rdpEndTime",
            r.rdp_record_status as "rdpRecordStatus",
-           r.start_person_name as "startPersonName"
-		 from ZB_ZBGL_PLAN_RECORD r
+           r.start_person_name as "startPersonName",
+           gz.gzdhCount as "gzdhCount"
+     	 from ZB_ZBGL_PLAN_RECORD r
+	    left join (
+	         select t.rdp_record_plan_idx ,count(1) as gzdhCount from K_GZTP t 
+	         where t.record_status = 0 and t.t_vehicle_type = '10' and t.rdp_record_plan_idx is not null group by t.rdp_record_plan_idx
+	    ) gz on gz.rdp_record_plan_idx = r.idx
 		left join ZB_ZBGL_PLAN_WORKER w on r.idx = w.rdp_record_idx
 		where r.rdp_plan_idx = '#RDP_IDX#' 
-		order by w.queue_no , r.seq_num 
+		order by w.queue_no , r.seq_num
 	]]>
 	</sql>	
 	
@@ -346,6 +352,25 @@ order by ou.queue_code
 		 where r.record_status = 0 
 		 and w.queue_no = '#QUEUE_NO#'
 	]]>
-	</sql>			
+	</sql>	
+	
+	
+		<!-- 查询队列对应的已有的数据 -->
+	<sql id="findOrganizationUsers">
+	<![CDATA[
+  select e.empid as "idx",
+           e.empid as "workPersonIdx",
+           e.empname as "workPersonName",
+           u.class_org_idx as "classOrgIdx",
+           u.org_idx as "orgIdx",
+           u.queue_code as "queueCode",
+           u.queue_name as "queueName",
+           u.idx as "orgUserIdx",
+           u.position_no as "positionNo",
+           u.position_name as "positionName"  from om_employee e
+    left join K_CLASS_ORGANIZATION_USER u on u.work_person_idx = e.empid and u.class_org_idx = '#classOrgIdx#'
+    where e.orgid = '#orgIdx#' order by u.queue_code , u.position_no
+	]]>
+	</sql>				
 	
 </SqlMap>

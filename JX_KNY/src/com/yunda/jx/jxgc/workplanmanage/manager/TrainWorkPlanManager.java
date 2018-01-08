@@ -24,7 +24,9 @@ import com.yunda.frame.util.StringUtil;
 import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.frame.yhgl.entity.AcOperator;
 import com.yunda.frame.yhgl.entity.OmEmployee;
+import com.yunda.freight.zb.detain.entity.DetainGztp;
 import com.yunda.freight.zb.detain.entity.DetainTrain;
+import com.yunda.freight.zb.detain.manager.DetainGztpManager;
 import com.yunda.freight.zb.detain.manager.DetainTrainManager;
 import com.yunda.jx.jczl.attachmanage.entity.JczlTrain;
 import com.yunda.jx.jczl.attachmanage.entity.TrainStatusChange;
@@ -32,6 +34,7 @@ import com.yunda.jx.jczl.attachmanage.manager.TrainStatusChangeManager;
 import com.yunda.jx.jxgc.common.JxgcConstants;
 import com.yunda.jx.jxgc.producttaskmanage.entity.WorkCard;
 import com.yunda.jx.jxgc.producttaskmanage.entity.WorkTask;
+import com.yunda.jx.jxgc.producttaskmanage.manager.WorkCardManager;
 import com.yunda.jx.jxgc.producttaskmanage.qualitychek.manager.QCResultManager;
 import com.yunda.jx.jxgc.tpmanage.entity.FaultTicket;
 import com.yunda.jx.jxgc.tpmanage.manager.FaultTicketManager;
@@ -80,6 +83,11 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
     @Resource
     private JobProcessNodeManager jobProcessNodeManager;
     
+    /** 业务节点查询业务类 */
+    @Resource
+    private JobProcessNodeQueryManager jobProcessNodeQueryManager;
+    
+    
     /** 机车检修计划-流水线排程业务类 */
     @Resource
     private RepairLineGroupNewManager repairLineGroupNewManager;    
@@ -120,6 +128,12 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
     private DetainTrainManager detainTrainManager;
     
     /**
+     * 车辆扣车故障登记
+     */
+    @Resource
+    private DetainGztpManager detainGztpManager;
+    
+    /**
      * 货车修程提醒
      */
     @Resource
@@ -130,6 +144,14 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
      */
     @Resource
     private RepairWarningKCManager repairWarningKCManager ;
+    
+    /**
+     * 检修作业工单
+     */
+    @Resource
+    private WorkCardManager workCardManager ;
+    
+    
     
     private static final String STATUS = "#status#";
     
@@ -314,22 +336,14 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
             workPlan.setTrainAccessAccountIDX(trainAccessAccountIn.getIdx());
         }
         
-        //保存之前判断是否传入的车型车号在机车维护中存在，如果不存在，新增
-//        if (!trainAccessAccountManager.isExistInJczlTrain(workPlan.getTrainTypeIDX(), workPlan.getTrainNo())) {
-//            TrainAccessAccount trainAccessAccount = new TrainAccessAccount();
-//            trainAccessAccount.setTrainNo(workPlan.getTrainNo());
-//            trainAccessAccount.setTrainTypeIDX(workPlan.getTrainTypeIDX());
-//            trainAccessAccount.setTrainTypeShortName(workPlan.getTrainTypeShortName());
-//            trainAccessAccount.setDID(workPlan.getDID());
-//            trainAccessAccountManager.saveJczlTrain(trainAccessAccount);
-//        }
-        
         AcOperator ac = SystemContext.getAcOperator();        
         String proc = "pkg_jxgc_train_workplan.sp_create_train_workplan";
         String[] param = {workPlan.getIdx(), workPlan.getSiteID(), ac.getOperatorid().toString()};
         daoUtils.executeProc(proc, param);
         //根据配件清单类型生成下车、上车、不下车配件记录 
         insertPartsList(workPlan);
+        // 保存扣车带过来的故障信息
+        saveDefineWorkByDetain(workPlan);
         repairLineGroupNewManager.updateForBatchDispatch(workPlan.getIdx(), workPlan.getProcessIDX());//根据流水线对作业卡默认派工
     }
     
@@ -652,6 +666,29 @@ public class TrainWorkPlanManager extends JXBaseManager<TrainWorkPlan, TrainWork
 									        .replace(rdpIdxCH, trainWorkPlan.getIdx());
 		daoUtils.executeSql(installPartsSql);
     }
+    
+    /**
+     * <li>说明：保存扣车带过来的故障信息
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2018-01-05
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param trainWorkPlan 机车作业计划实体
+     * @throws Exception 
+     */
+    private void saveDefineWorkByDetain(TrainWorkPlan trainWorkPlan) throws Exception {
+    	// 扣车登记的故障
+    	List<DetainGztp>  gztps = detainGztpManager.findDetainGztp(trainWorkPlan.getDetainIdx());
+    	Map<String, Object> params = new HashMap<String, Object>();
+    	params.put("workPlanIDX", trainWorkPlan.getIdx());
+    	params.put("isLxNode", "1");
+    	JobProcessNode node = jobProcessNodeQueryManager.getNode(params);
+    	if(node != null && gztps != null){
+    		workCardManager.saveDefineWorkByDetain(trainWorkPlan.getIdx(), node.getIdx(), gztps);
+    	}
+    }
+    
 
     /**
      * <li>说明：机车检修安全生产日报查询

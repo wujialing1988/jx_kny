@@ -142,6 +142,7 @@ DetainTrainSelect.showWorkPlanWin = function(data) {
     form.findField("trainTypeIDX").setDisplayValue(data.get("trainTypeIdx"), data.get("trainTypeCode"));
     form.findField("trainNo").setDisplayValue(data.get("trainNo"), data.get("trainNo"));
     form.findField("trainTypeShortName").setValue(data.get("trainTypeCode"));
+    form.findField("detainIdx").setValue(data.get("idx"));
     jx.jxgc.JobProcessDefSelect.trainTypeIDX = data.get("trainTypeIdx");
     TrainWorkPlanForm.disableColumns(['trainTypeIDX','trainNo']);
 };

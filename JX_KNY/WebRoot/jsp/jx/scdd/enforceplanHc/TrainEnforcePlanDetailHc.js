@@ -74,6 +74,8 @@ TrainEnforcePlanDetailHc.grid = new Ext.yunda.Grid({
 		if(Ext.isEmpty(data.planIdx)){
 			data.planIdx = TrainEnforcePlanDetailHc.planIdx ;
 		}
+		delete data.zxcounts ;
+		delete data.xjcounts ;
 		return true; 
 	},
 	searchFn: function(searchParam){ 

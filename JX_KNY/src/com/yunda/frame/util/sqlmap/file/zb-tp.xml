@@ -109,23 +109,38 @@
 	]]>
 	</sql>
 	
-	<!-- 故障提票分类统计 -->
-	<sql id="findGzFlStatistics">
+	<!-- 故障提票分类统计货车 -->
+	<sql id="findGzFlStatisticsHC">
 	<![CDATA[
-		select 
-			  gztp.fault_type_key as "typeKey", 
-			  gztp.fault_type_value as "typeValue", 
-			  gztp.counts as "counts" from (
-			select t.fault_type_key , t.fault_type_value ,e.sortno, count(1) counts from K_GZTP t 
-			inner join EOS_DICT_ENTRY e on e.dicttypeid = 'FAULT_TYPE' and e.dictid = t.fault_type_key
-			where t.record_status = 0 and t.fault_type_key is not null and t.fault_type_value is not null
-			group by t.fault_type_key , t.fault_type_value , e.sortno
-			) gztp order by gztp.sortno
+	    select 
+	        gztp.fault_type_key as "typeKey", 
+	        gztp.fault_type_value as "typeValue", 
+	        gztp.counts as "counts" from (
+	      select t.fault_type_key , t.fault_type_value ,e.sortno, count(1) counts from K_GZTP t 
+	      inner join EOS_DICT_ENTRY e on e.dicttypeid = 'FAULT_TYPE' and e.dictid = t.fault_type_key
+	      where t.record_status = 0 and t.fault_type_key is not null and t.fault_type_value is not null and t.t_vehicle_type = '10'
+	      group by t.fault_type_key , t.fault_type_value , e.sortno
+	      ) gztp order by gztp.sortno
 	]]>
 	</sql>
 	
-	<!-- 故障提票分类统计 -->
-	<sql id="findMonthRateStatistics">
+	<!-- 故障提票分类统计客车 -->
+	<sql id="findGzFlStatisticsKC">
+	<![CDATA[
+	    select 
+	        gztp.fault_type_key as "typeKey", 
+	        gztp.fault_type_value as "typeValue", 
+	        gztp.counts as "counts" from (
+	      select t.fault_type_key , t.fault_type_value ,e.sortno, count(1) counts from K_GZTP t 
+	      inner join EOS_DICT_ENTRY e on e.dicttypeid = 'FAULT_TYPE' and e.dictid = t.fault_type_key
+	      where t.record_status = 0 and t.fault_type_key is not null and t.fault_type_value is not null and t.t_vehicle_type = '20'
+	      group by t.fault_type_key , t.fault_type_value , e.sortno
+	      ) gztp order by gztp.sortno
+	]]>
+	</sql>	
+	
+	<!-- 客车月计划兑现统计 -->
+	<sql id="findMonthRateStatisticsKC">
 	<![CDATA[
 		select 
 		  m.mon as "mon",
@@ -140,24 +155,49 @@
 		) p on m.mon = p.mon
 		left join (
 		     select to_char(t.plan_begin_time,'MM') as mon , count(1) as counts from JXGC_Train_Work_Plan t 
-		     where t.record_status = 0 and to_char(t.plan_begin_time,'yyyy') = '#year#' and t.Work_Plan_Status <> 'TERMINATED'
+		     where t.record_status = 0 and to_char(t.plan_begin_time,'yyyy') = '#year#' and t.Work_Plan_Status <> 'TERMINATED' and t.t_vehicle_type = '20'
 		     group by to_char(t.plan_begin_time,'MM')
 		) r on m.mon = r.mon
 		order by m.mon
 	]]>
 	</sql>
 	
-		<!-- 查询累计修车/当年修车/当年计划 -->
-	<sql id="findTrainStatistics">
+	<!-- 货车月计划兑现统计 -->
+	<sql id="findMonthRateStatisticsHC">
+	<![CDATA[
+    select 
+      m.mon as "mon",
+      nvl(p.counts,0) as "planCounts",
+      nvl(r.counts,0) as "realCounts" from (
+    select lpad(level,2,0) as mon from dual
+    connect by level<13
+    ) m left join (
+         select lpad(p.plan_morth,2,0) as mon,sum(d.plan_count) as counts from SCDD_TRAIN_ENFORCE_DETAIL_HC d 
+      inner join SCDD_TRAIN_ENFORCE_PLAN_HC p on d.plan_idx = p.idx
+      where d.record_status = 0 and p.record_status = 0 and p.plan_year = '#year#'
+      group by p.plan_morth
+    ) p on m.mon = p.mon
+    left join (
+         select to_char(t.plan_begin_time,'MM') as mon , count(1) as counts from JXGC_Train_Work_Plan t 
+         where t.record_status = 0 and to_char(t.plan_begin_time,'yyyy') = '#year#' and t.Work_Plan_Status <> 'TERMINATED' and t.t_vehicle_type = '10'
+         group by to_char(t.plan_begin_time,'MM')
+    ) r on m.mon = r.mon
+    order by m.mon
+	]]>
+	</sql>
+	
+	
+		<!-- 查询累计修车/当年修车/当年计划 （客车） -->
+	<sql id="findTrainStatisticsKC">
 	<![CDATA[
 		(
 		select count(1) as "counts" from JXGC_Train_Work_Plan p 
-		where p.record_status = 0 and p.work_plan_status = 'COMPLETE' 
+		where p.record_status = 0 and p.work_plan_status = 'COMPLETE' and p.t_vehicle_type = '20'  
 		)
 		union all
 		(
 		select count(1) as "counts" from JXGC_Train_Work_Plan p 
-		where p.record_status = 0 and p.work_plan_status = 'COMPLETE' 
+		where p.record_status = 0 and p.work_plan_status = 'COMPLETE' and p.t_vehicle_type = '20' 
 		and to_char(p.plan_begin_time,'yyyy') = #year#
 		)
 		union all 
@@ -168,5 +208,26 @@
 	]]>
 	</sql>
 	
+			<!-- 查询累计修车/当年修车/当年计划 （货车） -->
+	<sql id="findTrainStatisticsHC">
+	<![CDATA[
+		   (
+    select count(1) as "counts" from JXGC_Train_Work_Plan p 
+    where p.record_status = 0 and p.work_plan_status = 'COMPLETE' and p.t_vehicle_type = '10' 
+    )
+    union all
+    (
+    select count(1) as "counts" from JXGC_Train_Work_Plan p 
+		where p.record_status = 0 and p.work_plan_status = 'COMPLETE' and p.t_vehicle_type = '10'
+		and to_char(p.plan_begin_time,'yyyy') = #year#
+		)
+		union all 
+		(
+		    select sum(d.plan_count) as "counts" from SCDD_TRAIN_ENFORCE_DETAIL_HC d 
+           inner join SCDD_TRAIN_ENFORCE_PLAN_HC p on d.plan_idx = p.idx
+           where d.record_status = 0 and p.plan_year = #year#
+		)
+	]]>
+	</sql>
 	
 </SqlMap>

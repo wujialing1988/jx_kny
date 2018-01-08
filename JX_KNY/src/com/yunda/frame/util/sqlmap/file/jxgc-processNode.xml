@@ -616,7 +616,7 @@
        select node_case_idx, count(1) as dd from JXGC_Work_Card  where record_status = 0  group by node_case_idx
      ) t2 on t2.node_case_idx = n.idx
 		where n.record_status = 0	
-		and n.Is_Leaf = 1 order by n.Plan_Begin_Time,n.Seq_No
+		and n.Is_Leaf = 1 and p.record_status = 0 and p.work_plan_status in ('ONGOING','COMPLETE') order by n.Plan_Begin_Time,n.Seq_No
 	</sql>
 	<!-- 得到此作业计划下有提票卡控的节点列表 -->
 	<sql id='getConfigTicketNode'>

@@ -63,18 +63,37 @@ public class GztpAction extends JXBaseAction<Gztp, Gztp, GztpManager> {
     }
     
     /**
-     * <li>说明：故障提票分类统计
+     * <li>说明：货车故障提票分类统计
      * <li>创建人：伍佳灵
      * <li>创建日期：2017-11-24
      * <li>修改人： 
      * <li>修改日期：
      * <li>修改内容：
      */ 
-    public void findGzFlStatistics() throws Exception {
+    public void findGzFlStatisticsHC() throws Exception {
         Map<String, Object> map = new HashMap<String,Object>();
         try {
-            HttpServletRequest req = getRequest();
-            map.put("root",this. manager.findGzFlStatistics());
+            map.put("root",this. manager.findGzFlStatisticsHC());
+        } catch (Exception e) {
+            ExceptionUtil.process(e, logger, map);
+        } finally {
+            JSONUtil.write(this.getResponse(), map);
+        }                 
+    }
+    
+    
+    /**
+     * <li>说明：客车故障提票分类统计
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-24
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */ 
+    public void findGzFlStatisticsKC() throws Exception {
+        Map<String, Object> map = new HashMap<String,Object>();
+        try {
+            map.put("root",this. manager.findGzFlStatisticsKC());
         } catch (Exception e) {
             ExceptionUtil.process(e, logger, map);
         } finally {

@@ -6,14 +6,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.yunda.base.filter.LoginPurviewCheckFilter"%>
 <%@ page import="com.yunda.frame.yhgl.entity.AcFunction"%>
-
+<%@include file="/pages/jspf/frame.jspf" %>
+<%@include file="/pages/jspf/ext.jspf" %> 
 
 <%
 	//应用程序根目录
-	String ctx = request.getContextPath();
 	String superUsers = (String)session.getAttribute("superUsers");
 	
-	String browserLang = request.getLocale().toString().toLowerCase();
 	
 	/******根据请求参数中的appid（默认为JCJX），获取appid指定的子系统名称****/
 	String appId = (String)session.getAttribute("appId");//目标子系统id
@@ -46,39 +45,26 @@
 	<title><%=appname %></title>
 	<link href="<%=ctx%>/frame/yhgl/css/top.css" rel="stylesheet" type="text/css" />
 	<link href="<%=ctx%>/frame/yhgl/css/main-page.css" rel="stylesheet" type="text/css" />
-	<link href="<%=ctx%>/frame/resources/ext-3.4.0/resources/css/ext-all.css" rel="stylesheet" type="text/css">
-	<link href="<%=ctx%>/frame/resources/css/iconExt.jsp" rel="stylesheet" type="text/css">
 	<script language="javascript">
-		var ctx = "<%=ctx%>";
 		var superUsers = "<%=superUsers%>";
 		var _tempAppId = "<%=appId%>";
 		var systemType = "<%=systemType%>";
 		
 		var FUNC_TYPE_REPORT = '<%= AcFunction.FUNC_TYPE_REPORT %>';		// 应用功能类型 - 报表功能
 		
-		var browserLang = '<%=browserLang %>' ;
 		
 	</script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/jquery/jquery.js"></script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ext-base.js"></script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ext-all.js"></script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-<%=browserLang %>.js"></script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/i18n/i18n-lang-<%=browserLang %>.js"></script>
 	<script type="text/javascript" language="javascript" src="<%=ctx%>/frame/yhgl/testtree1.js"></script>
 	<script type="text/javascript" language="javascript" src="<%=ctx%>/frame/yhgl/testtree.js"></script>
 	<script type="text/javascript" language="javascript" src="<%=ctx%>/frame/yhgl/NewPassWord.js"></script>
-	
-	<script language="javascript" src="<%=ctx%>/frame/resources/js/MyJson.js"></script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-yunda.js"></script>
 	<script type="text/javascript" language="javascript" src="<%=ctx%>/frame/yhgl/AcPersonalDeskLayout.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/cmps/editgrid.js"></script>
 	
 	<script type="text/javascript" language="javascript" src="<%=ctx%>/frame/yhgl/js/login/top.js"></script>
 	<script type="text/javascript" language="javascript" src="<%=ctx%>/frame/yhgl/js/login/main.js"></script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/MyExt.js"></script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-yunda.js"></script>
 	<script type="text/javascript" src="<%=ctx%>/frame/baseapp/message/OnlineMessage.js"></script>
 	<script language="javascript" src="<%=ctx%>/frame/yhgl/MainFrameTop.js"></script>
+	<script language="javascript" src="<%=ctx%>/frame/yhgl/DeskPrivilige.js"></script>
 	<script language="javascript">
 		Ext.onReady(function() {
 			Ext.namespace("login");
@@ -156,16 +142,16 @@
 							title="点击退出当前用户"
 							onClick="Ext.Msg.confirm('消息' ,'确认【注销】当前用户:【${sessionScope.users.operatorname}】？' ,function(btn){if(btn=='yes'){document.location.replace('${pageContext.request.contextPath}/login!relogin.action');}});"></div>
 						<div class="sysTitleBarSplit"></div>
-						<!-- 设置主页 
+						<!-- 设置主页 -->
 						<div id="acPersonalDeskLayout" class="acPersonalDeskLayout"
 							onMouseOut="btnShow('acPersonalDeskLayout','acPersonalDeskLayout')"
 							onMouseOver="btnShow('acPersonalDeskLayout','acPersonalDeskLayout_mov');"
 							title="点击修改您当前的设置主页"
-							onClick="AcPersonalDeskLayout.showWin()"></div>
+							onClick="DeskPrivilige.showWin()"></div>
 							
-						<!-- 隐藏/显示标题栏 
+						<!-- 隐藏/显示标题栏 -->
 						<div class="sysTitleBarSplit"></div>
-						-->
+						
 						<div id="sysTitleBarHiddenHeader" class="sysTitleBarHiddenHeader"
 							onMouseOut="btnShow('sysTitleBarHiddenHeader','sysTitleBarHiddenHeader')"
 							onMouseOver="btnShow('sysTitleBarHiddenHeader','sysTitleBarHiddenHeader_mov');"

@@ -146,6 +146,11 @@ public class TrainWorkPlan implements java.io.Serializable {
     @Column(name = "Delegate_D_Name")
     private String delegateDName;
     
+    /* 扣车实体id */
+    @Column(name = "DETAIN_IDX")
+    private String detainIdx;
+    
+    
     /* 表示此条记录的状态：0为表示未删除；1表示删除 */
     @Column(name = "Record_Status")
     private Integer recordStatus;
@@ -902,6 +907,18 @@ public class TrainWorkPlan implements java.io.Serializable {
     public void setToPersonName(String toPersonName) {
         this.toPersonName = toPersonName;
     }
+
+
+
+	public String getDetainIdx() {
+		return detainIdx;
+	}
+
+
+
+	public void setDetainIdx(String detainIdx) {
+		this.detainIdx = detainIdx;
+	}
     
     
     

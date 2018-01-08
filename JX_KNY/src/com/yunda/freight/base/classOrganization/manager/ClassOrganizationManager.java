@@ -1,6 +1,7 @@
 package com.yunda.freight.base.classOrganization.manager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +18,12 @@ import com.yunda.frame.common.JXBaseManager;
 import com.yunda.frame.common.Page;
 import com.yunda.frame.util.JSONUtil;
 import com.yunda.frame.util.StringUtil;
+import com.yunda.frame.util.sqlmap.SqlMapUtil;
 import com.yunda.frame.yhgl.entity.OmEmployee;
 import com.yunda.freight.base.classOrganization.entity.ClassOrganization;
 import com.yunda.freight.base.classOrganization.entity.ClassOrganizationUser;
 import com.yunda.freight.base.classOrganization.entity.ClassOrganizationUserVo;
+import com.yunda.freight.base.classOrganization.entity.ComparatorUser;
 import com.yunda.jx.component.manager.OmEmployeeSelectManager;
 
 
@@ -89,6 +92,7 @@ public class ClassOrganizationManager extends JXBaseManager<ClassOrganization, C
         return page.extjsStore();
     }
 
+    
     /**
      * <li>说明：方法实现功能说明
      * <li>创建人：伍佳灵
@@ -100,34 +104,15 @@ public class ClassOrganizationManager extends JXBaseManager<ClassOrganization, C
      * @param orgIdx 班组ID
      * @return
      */
-    public List<ClassOrganizationUserVo> findOrganizationUsers(String classOrgIdx,String orgIdx) {
-        List<ClassOrganizationUserVo> list = new ArrayList<ClassOrganizationUserVo>();
-        if(StringUtil.isNullOrBlank(classOrgIdx) || StringUtil.isNullOrBlank(orgIdx)){
-            return list ;
-        }
-        List omEmployees = (List<OmEmployee>)omEmployeeSelectManager.findTeamEmpList(Long.parseLong(orgIdx));
-        if(omEmployees != null && omEmployees.size() > 0){
-            Map<String,ClassOrganizationUser> userMap = this.findClassOrganizationUserMap(classOrgIdx, orgIdx);
-            for (int i = 0; i < omEmployees.size(); i++) {
-                Object[] employee = (Object[])omEmployees.get(i);
-                ClassOrganizationUserVo vo = new ClassOrganizationUserVo(employee[0] + "" , employee[0] + "" ,employee[2] + "");
-                vo.setClassOrgIdx(classOrgIdx);
-                vo.setOrgIdx(orgIdx);
-                if(userMap != null){
-                    ClassOrganizationUser user = userMap.get(employee[0] + "");
-                    if(user != null){
-                        vo.setQueueCode(user.getQueueCode());
-                        vo.setQueueName(user.getQueueName());
-                        vo.setOrgUserIdx(user.getIdx());
-                        vo.setPositionNo(user.getPositionNo());
-                        vo.setPositionName(user.getPositionName());
-                    }
-                }
-                list.add(vo);
-            }
-        }
-        return list;
+    public List<Map<String, Object>> findOrganizationUsers(String classOrgIdx,String orgIdx) {
+    	String sql = SqlMapUtil.getSql("kny-base:findOrganizationUsers")
+    			.replaceAll("#classOrgIdx#", classOrgIdx)
+    			.replaceAll("#orgIdx#", orgIdx);
+    	
+    	return this.queryListMap(sql);
     }
+    
+    
     
     /**
      * <li>说明：查询已经分配的队列

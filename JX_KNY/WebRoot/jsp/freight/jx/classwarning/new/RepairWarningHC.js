@@ -63,7 +63,7 @@ RepairWarningHC.grid = new Ext.yunda.Grid({
 	    			}, 1000);					
 	    		}
 			}	
-		},'-','下次辅修：',{
+		},'-','下次厂修：',{
 			id : "planDayFx",width:90, xtype: 'my97date',format:'Y-m', my97cfg: {dateFmt:'yyyy-MM'}, initNow: false
 		},'-','下次段修：',{
 			id : "planDayDx",width:90, xtype: 'my97date',format:'Y-m', my97cfg: {dateFmt:'yyyy-MM'}, initNow: false
@@ -103,7 +103,15 @@ RepairWarningHC.grid = new Ext.yunda.Grid({
 			return value;
 		}
 	},{
-		header:'下次辅修时间', dataIndex:'nextFxDate',width: 120,editor: {},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+		header:'上次厂修时间', dataIndex:'beforeCxDate',width: 120,editor: {},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+			return value;
+		}
+	},{
+		header:'下次厂修时间', dataIndex:'nextCxDate',width: 120,editor: {},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+			return value;
+		}
+	},{
+		header:'上次段修时间', dataIndex:'beforeCxDate',width: 120,editor: {},renderer: function(value, metaData, record, rowIndex, colIndex, store) {
 			return value;
 		}
 	},{

@@ -87,7 +87,8 @@ TrainWorkPlanEditForm.form = new Ext.form.FormPanel({
 		        }]
 			},{ name: "idx", xtype:"hidden"},
 			{ id: "psNAME", name: "dNAME", fieldLabel: "dNAME", xtype:"hidden"},
-			{ id: "wxname", name: "delegateDName", xtype:"hidden"}]
+			{ id: "wxname", name: "delegateDName", xtype:"hidden"},
+			{ id: "detainIdx", name: "detainIdx", xtype:"hidden"}]
 	}]
 });
 TrainWorkPlanEditForm.reloadParent = function() {

@@ -178,11 +178,11 @@ TrainWorkPlanForm.processReturnFn = function(grid, rowIndex, e) {
 				listeners : {   
 	            	"select" : function() {   
 	            		//重新加载修次数据
-	                	var rt_comb = Ext.getCmp("rt_comb");
-	                	rt_comb.clearValue();
-	                 	rt_comb.reset();
-	                    rt_comb.queryParams = {"rcIDX":this.getValue()};
-	                    rt_comb.cascadeStore();
+//	                	var rt_comb = Ext.getCmp("rt_comb");
+//	                	rt_comb.clearValue();
+//	                 	rt_comb.reset();
+//	                    rt_comb.queryParams = {"rcIDX":this.getValue()};
+//	                    rt_comb.cascadeStore();
 	                    jx.jxgc.JobProcessDefSelect.rcIDX = this.getValue();
 	                    TrainWorkPlanForm.rcIDX = this.getValue();	                    
 	                    // 默认设置作业流程
@@ -196,10 +196,6 @@ TrainWorkPlanForm.processReturnFn = function(grid, rowIndex, e) {
 						}
 	            	}	            
 	            }
-			},{				
-				name: "planBeginTime", fieldLabel: "开始时间", anchor: "95%", xtype:"my97date",format: "Y-m-d H:i",
-	        	my97cfg: {dateFmt:"yyyy-MM-dd HH:mm"}, allowBlank:false
-	        	
 			},{
 				xtype:"JobProcessDefSelect",fieldLabel: '作业流程',
 				name: 'processName', editable:false, allowBlank: false,
@@ -235,7 +231,7 @@ TrainWorkPlanForm.processReturnFn = function(grid, rowIndex, e) {
 						
 					}
 				}
-			},{
+			}/*,{
 				id:"rt_comb",
 				xtype: "Base_combo",
 				fieldLabel: "修次",
@@ -257,6 +253,10 @@ TrainWorkPlanForm.processReturnFn = function(grid, rowIndex, e) {
 						}
 	            	}
 				}
+			}*/,{				
+				name: "planBeginTime", fieldLabel: "开始时间", anchor: "95%", xtype:"my97date",format: "Y-m-d H:i",
+	        	my97cfg: {dateFmt:"yyyy-MM-dd HH:mm"}, allowBlank:false
+	        	
 			},{
 				  xtype: 'Base_combo',hiddenName: 'workCalendarIDX', fieldLabel: '日历',
 				  entity:'com.yunda.baseapp.workcalendar.entity.WorkCalendarInfo', allowBlank: false,
@@ -274,6 +274,7 @@ TrainWorkPlanForm.processReturnFn = function(grid, rowIndex, e) {
 	    { id:'repairtimeName_Id', name: "repairtimeName", xtype:"hidden"},
 	    { name: "processIDX", xtype:"hidden"},
 	    { name: "ratedWorkDay", xtype:"hidden"},
+	    { name: "detainIdx", xtype:"hidden"},
 	    { name: "enforcePlanDetailIDX", xtype:"hidden"},
 	    { id: "wxname", name: "delegateDName", xtype:"hidden"},
 	    { id: "vehicleType", name: "vehicleType", xtype:"hidden",value:vehicleType}

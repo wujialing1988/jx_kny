@@ -120,37 +120,34 @@ public class DetainTrainManager extends JXBaseManager<DetainTrain, DetainTrain> 
      * @throws IllegalAccessException 
      * @throws NoSuchFieldException 
      */    
-    public void applyDetainTrain(DetainTrain entity) throws NoSuchFieldException, IllegalAccessException, InvocationTargetException {
+    public DetainTrain applyDetainTrain(DetainTrain entity) throws NoSuchFieldException, IllegalAccessException, InvocationTargetException {
         TrainVehicleType vehicleType = trainVehicleTypeManager.getModelById(entity.getTrainTypeIdx());
         if(vehicleType == null){
             throw new BusinessException("该车型不存在！");
         }
-        String msg = trainStatusChangeManager.verificationOperation(entity.getTrainTypeIdx(), entity.getTrainNo(), new Integer[]{JczlTrain.TRAIN_STATE_REPAIR,JczlTrain.TRAIN_STATE_DETAIN}, "扣车申请");
+        DetainTrain train = this.getDetainTrainByTypeAndNo(entity.getTrainTypeIdx(), entity.getTrainNo());
+        if(train != null && !train.getIdx().equals(entity.getIdx())){
+            throw new BusinessException("该车辆已经扣车！");
+        }
+        String msg = trainStatusChangeManager.verificationOperation(entity.getTrainTypeIdx(), entity.getTrainNo(), new Integer[]{JczlTrain.TRAIN_STATE_REPAIR}, "扣车申请");
         if(!StringUtil.isNullOrBlank(msg)){
             throw new BusinessException(msg);
         }
-        DetainTrain train = this.getDetainTrainByTypeAndNo(entity.getTrainTypeIdx(), entity.getTrainNo());
-        if(train != null){
-            throw new BusinessException("该车辆已发出扣车申请！");
-        }
         // 如果是拒绝后再申请 ， 拒绝的数据不能基于以前的数据重新生成
-        DetainTrain entitySave = null;
-//        if(!StringUtil.isNullOrBlank(entity.getIdx())){
-//            entitySave = this.getModelById(entity.getIdx());
-//        }
-        if(entitySave == null){
-            entitySave = new DetainTrain();
+        if(train == null){
+        	train = new DetainTrain();
         }
-        buildVoToEntity(entity, vehicleType, entitySave);  // 构建数据
-        this.saveOrUpdate(entitySave);
+        buildVoToEntity(entity, vehicleType, train);  // 构建数据
+        this.saveOrUpdate(train);
         // 改状态为【扣车】
-        if(entitySave.getDetainStatus().equals(DetainTrain.TRAIN_STATE_NEW)){
+        if(train.getDetainStatus().equals(DetainTrain.TRAIN_STATE_NEW)){
         	JczlTrain trainInfo = jczlTrainManager.getJczlTrainByTypeAndNo(entity.getTrainTypeIdx(), entity.getTrainNo());
         	if(trainInfo != null){
         		// 车辆状态改变
-        		trainStatusChangeManager.saveChangeRecords(entitySave.getTrainTypeIdx(), entitySave.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, entitySave.getIdx(), TrainStatusChange.START_DETAIN);
+        		trainStatusChangeManager.saveChangeRecords(train.getTrainTypeIdx(), train.getTrainNo(), JczlTrain.TRAIN_STATE_DETAIN, train.getIdx(), TrainStatusChange.START_DETAIN);
         	}
         }
+        return train ;
     }
 
     /**

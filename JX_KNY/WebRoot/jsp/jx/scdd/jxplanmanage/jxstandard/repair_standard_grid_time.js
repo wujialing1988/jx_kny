@@ -21,7 +21,7 @@ Ext.onReady(function(){
 			fields:['xcID','xcName'],
 			hiddenName: "repairClass", 
 			width: 100,
-			returnField: [{widgetId:"xc_id",propertyName:"xcName"}],
+			returnField: [{widgetId:"xc_time_id",propertyName:"xcName"}],
 			displayField: "xcName",
 			valueField: "xcID",
 			pageSize: 20, minListWidth: 200,
@@ -47,11 +47,11 @@ Ext.onReady(function(){
 		},{
 			header: "修程", dataIndex: "repairClass", hidden:true, editor: {
 				xtype: "Base_combo",
-				id: "cb_xc_id",
+				id: "cb_xc_time_id",
 				entity:'com.yunda.jx.base.jcgy.entity.XC',
 				fields:['xcID','xcName'],
 				hiddenName: "repairClass", 
-				returnField: [{widgetId:"xc_id",propertyName:"xcName"}],
+				returnField: [{widgetId:"xc_time_id",propertyName:"xcName"}],
 				displayField: "xcName",
 				valueField: "xcID",
 				allowBlank:false,
@@ -60,7 +60,7 @@ Ext.onReady(function(){
 				editable:false
 			}
 		},{
-			header: "修程", dataIndex: "repairClassName", editor: {xtype: "hidden", id:"xc_id"}
+			header: "修程", dataIndex: "repairClassName", editor: {xtype: "hidden", id:"xc_time_id"}
 		},{
 			header: "对比修程", dataIndex: "repairClassCompare", hidden:true, editor: {
 				xtype: "Base_combo",
@@ -104,8 +104,8 @@ Ext.onReady(function(){
 	    	this.saveForm.find("name", "trainTypeIdx")[0].setValue(RepairStandardTime.trainTypeIdx);
 	    },
 	    afterShowEditWin: function(r){
-	    	Ext.getCmp("cb_xc_id").setDisplayValue(r.get("repairClass"), r.get("repairClassName"));
-	    	Ext.getCmp("cb_xc_compare_id").setDisplayValue(r.get("repairClassCompare"), r.get("repairOrderCompareName"));
+	    	Ext.getCmp("cb_xc_time_id").setDisplayValue(r.get("repairClass"), r.get("repairClassName"));
+	    	Ext.getCmp("cb_xc_compare_id").setDisplayValue(r.get("repairClassCompare"), r.get("repairClassCompareName"));
 	    }
 	});
 	grid.store.on("beforeload", function(){
@@ -127,7 +127,7 @@ Ext.onReady(function(){
 	});
 	
 	function initXc(){
-		var cmp = Ext.getCmp("cb_xc_id");
+		var cmp = Ext.getCmp("cb_xc_time_id");
 		var Compare = Ext.getCmp("cb_xc_compare_id");
 		var searchCmp = Ext.getCmp("cb_xc_search_time_id");
 		searchCmp.queryParams.vehicleType = vehicleType;

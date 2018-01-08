@@ -83,4 +83,22 @@ public interface IDetainTrainService extends IService {
      */
     public String findDetainTrain(String jsonObject) throws IOException;
     
+    /**
+     * <li>说明：根据扣车主键查询其下的故障情况
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-4-20
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     * @param jsonObject {
+            entityJson: {
+                detainIdx:"8a8284f24ab80704014ab891375a0002"
+            },
+            operatorId: "7"          
+       }
+     * @return
+     * @throws IOException
+     */
+    public String findDetainGztp(String jsonObject) throws IOException ;
+    
 }

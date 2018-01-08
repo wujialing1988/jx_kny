@@ -199,8 +199,9 @@ Ext.onReady(function(){
 			                { boxLabel: '自动',inputValue: PLANMODE_AUTO, name: 'planMode'
 			                }  
 			            ]
-					            
-					}]
+				},{
+					fieldLabel: '是否临修', name: 'isLxNode', inputValue:1, allowBlank:true, xtype:"checkbox", id:"checkbox_isLxNode", boxLabel:"是&nbsp;&nbsp;&nbsp;&nbsp;", checked:false 
+			    }]
 		}, {
 			columnWidth:1,
 			items:[{
@@ -300,6 +301,8 @@ Ext.onReady(function(){
 			header:'前置节点(名称)', dataIndex:'preNodeName', width:70, hidden:true,  editor:{ disabled: true }
 		},{
 			header:'前置节点(序号)', dataIndex:'preNodeSeqNo', width:125, hidden:false,  editor:{ disabled: true }
+		},{
+			header:'是否临修节点', dataIndex:'isLxNode', width:125, hidden:true,  editor:{ disabled: true }
 		}],
 		
 		// 删除成功后的函数处理
@@ -348,6 +351,12 @@ Ext.onReady(function(){
 				// 设置 额定工期_分
 				if (ratedPeriod_m > 0)
 					Ext.getCmp("ratedPeriod_M").setValue(ratedPeriod_m);
+	    	}
+	    	
+	    	if(record.data.isLxNode == 1){
+	    		Ext.getCmp('checkbox_isLxNode').setValue(true);
+	    	}else{
+	    		Ext.getCmp('checkbox_isLxNode').setValue(false);
 	    	}
 	    	
 	    	/** Modified by hetao at 2015-08-21，取消如果是父节点，“额定工期”字段不能编辑的限制 */

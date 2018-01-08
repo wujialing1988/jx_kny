@@ -68,13 +68,13 @@ app.controller('kcyyBzInfoCtrl', function($http,$scope,$filter,$interval,$timeou
 	}
 	
 	/**
-	 * 定时刷新 5s
+	 * 定时刷新 30s
 	 */
 	$scope.timer = $interval( function(){
 		$scope.findMarshallingList();
 		$scope.findNotMarshallingList();
 		$scope.findJxMarshallingList();
-	 }, 5000);
+	 }, 30000);
 	
 });
 

@@ -81,6 +81,7 @@ public class JobProcessNodeDefManager extends AbstractOrderManager<JobProcessNod
         if (null != entity && !entity.getIdx().equals(t.getIdx())) {
             return new String[]{"节点编码【" + t.getNodeCode() + "】已经存在，不能重复添加！"};
         }
+        // 验证临修任务唯一性
         return super.validateUpdate(t);
     }
     

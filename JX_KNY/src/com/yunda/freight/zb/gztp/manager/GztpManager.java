@@ -311,15 +311,28 @@ public class GztpManager extends JXBaseManager<Gztp, Gztp> {
     }
     
     /**
-     * <li>说明：故障提票分类统计
+     * <li>说明：货车故障提票分类统计
      * <li>创建人：伍佳灵
      * <li>创建日期：2017-11-24
      * <li>修改人： 
      * <li>修改日期：
      * <li>修改内容：
      */
-    public List<Map<String, Object>> findGzFlStatistics(){
-        String sql = SqlMapUtil.getSql("zb-tp:findGzFlStatistics");
+    public List<Map<String, Object>> findGzFlStatisticsHC(){
+        String sql = SqlMapUtil.getSql("zb-tp:findGzFlStatisticsHC");
+        return this.queryListMap(sql);
+    }  
+    
+    /**
+     * <li>说明：客车故障提票分类统计
+     * <li>创建人：伍佳灵
+     * <li>创建日期：2017-11-24
+     * <li>修改人： 
+     * <li>修改日期：
+     * <li>修改内容：
+     */
+    public List<Map<String, Object>> findGzFlStatisticsKC(){
+        String sql = SqlMapUtil.getSql("zb-tp:findGzFlStatisticsKC");
         return this.queryListMap(sql);
     }  
     

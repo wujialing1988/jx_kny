@@ -139,6 +139,10 @@ public class JobProcessNodeDef implements java.io.Serializable{
     @Column(name="SHOW_FLAG")    
     private String showFlag; 
     
+	/* 是否属于临修节点 */
+	@Column(name="IS_LXNODE")
+	private Integer isLxNode;
+    
     
     public String getShowFlag() {
         return showFlag;
@@ -422,5 +426,14 @@ public class JobProcessNodeDef implements java.io.Serializable{
     public void setStartDay(Integer startDay) {
         this.startDay = startDay;
     }
+
+	public Integer getIsLxNode() {
+		return isLxNode;
+	}
+
+	public void setIsLxNode(Integer isLxNode) {
+		this.isLxNode = isLxNode;
+	}
+    
     
 }
