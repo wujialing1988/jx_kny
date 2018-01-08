@@ -59,7 +59,8 @@
 		    /** 设备动态-新购3 */
 			var DYNAMIC_NEW_BUY = '<%= EquipmentPrimaryInfo.DYNAMIC_NEW_BUY %>';
 		</script>
-		
+		<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
+		<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 	    <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
 	    <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/employee/OmEmployeeMultSelect.js"></script>
 	    <script type="text/javascript" src="<%=ctx %>/jsp/sb/base/js/staticCombo.js"></script>
