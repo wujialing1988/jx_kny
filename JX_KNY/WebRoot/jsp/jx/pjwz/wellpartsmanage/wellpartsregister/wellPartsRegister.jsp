@@ -23,6 +23,8 @@
 	var ACCEPT_DEPT_TYPE_WH = <%=WellPartsRegister.ACCEPT_DEPT_TYPE_WH%>;
 	var SOURCE_NEW = '<%=WellPartsRegister.SOURCE_NEW%>';
 </script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/pjwz/partbase/component/PartsExtendNoSelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsTypeWidgetSelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 

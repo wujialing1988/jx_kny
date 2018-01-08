@@ -22,6 +22,7 @@
 	<%-- 图片虚拟路径 --%>
 	var imgpathx = imgpath + '/delete.gif';
 </script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsExtendNoWin.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/pjjx/partsrdp/PartsRdpChooseWP.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>

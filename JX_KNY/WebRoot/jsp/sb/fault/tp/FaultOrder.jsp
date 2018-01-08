@@ -31,6 +31,7 @@
 		now.setMonth(now.getMonth() - 1);
 		var lastMonth = now.format('Y-m-d');
 		</script>
+		<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 		<script type="text/javascript" src="<%= ctx %>/jsp/sb/base/js/SimpleEntityCombo.js"></script>
 	    <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
 	    <script type="text/javascript" src="<%=ctx %>/jsp/sb/base/js/ImageView.js"></script>

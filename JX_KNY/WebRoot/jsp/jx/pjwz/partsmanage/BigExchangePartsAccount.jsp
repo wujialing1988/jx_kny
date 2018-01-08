@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>大型互换配件周转记录</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/jquery/jquery.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsTypeWidgetSelect.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/pjwz/partsmanage/BigExchangePartsAccount.js"></script>

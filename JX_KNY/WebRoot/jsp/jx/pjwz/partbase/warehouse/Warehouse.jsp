@@ -17,6 +17,7 @@ var STATUS_YES = '<%=WarehouseLocation.STATUS_YES%>';//已满
  var orgCode = '${sessionScope.org.orgcode}';
  //alert(orgId+','+orgName);
 </script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/js/component/OmOrganizationCustom.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/pjwz/partbase/warehouse/StoreKeeper.js"></script>

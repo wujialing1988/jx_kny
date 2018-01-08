@@ -13,6 +13,7 @@
 	var STATUS_DSP = '<%= ScheduleProposeAndApprove.STATUS_DSP%>';
 	var STATUS_YSP = '<%= ScheduleProposeAndApprove.STATUS_YSP%>';
 </script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
 <script language="javascript" src="ScheduleProposeAndApprove.js"></script>
 </head>

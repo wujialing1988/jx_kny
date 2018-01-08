@@ -18,6 +18,7 @@
 	var TYPE_JCTH = '<%=MatInWHNew.TYPE_JCTH%>'; //机车退回
 	var TYPE_QTYY = '<%=MatInWHNew.TYPE_QTYY%>'; //其他原因
 </script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/OmEmpBaseCombo.js"></script> 
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/repairbase/TrainNoCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>

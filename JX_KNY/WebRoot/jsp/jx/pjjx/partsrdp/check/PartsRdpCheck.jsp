@@ -41,6 +41,8 @@
 	var systemOrgid = "${sessionScope.org.orgid}";						// 当前登录用户所在班组ID
 	var systemOrgname = "${sessionScope.org.orgname}"; 					// 当前登录用户所在班组名称 
 </script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/BaseMultyComboTree.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/pjjx/partsrdp/rdpprocess/PartsRdpTree.js"></script>

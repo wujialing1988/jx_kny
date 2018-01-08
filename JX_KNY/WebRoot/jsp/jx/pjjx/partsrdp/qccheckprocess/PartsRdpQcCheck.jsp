@@ -25,6 +25,7 @@ try{
 	.moveTopIcon{background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/move_top.png) !important;}
 	.moveBottomIcon{background-image:url(<%=request.getContextPath()%>/frame/resources/images/toolbar/move_bottom.png) !important;}
 </style>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsExtendNoWin.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/repairbase/TrainTypeCombo.js"></script> 

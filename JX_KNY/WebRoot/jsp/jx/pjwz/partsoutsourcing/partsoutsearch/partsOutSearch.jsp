@@ -11,6 +11,7 @@
        var parts_out="<%=PartsOutsourcing.PARTS_STATUS_WW%>";
        var parts_back="<%=PartsOutsourcing.PARTS_STATUS_YFH%>";
     </script>
+    <script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsExtendNoWin.js"></script>
     <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
     <script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partsoutsourcing/partsoutsourceregister/PartsOutSourcingFactoryCombo.js"></script>
