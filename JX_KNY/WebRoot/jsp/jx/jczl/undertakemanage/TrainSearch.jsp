@@ -18,6 +18,7 @@
 	var assetStateScrap = <%=com.yunda.jx.jczl.attachmanage.entity.JczlTrain.TRAIN_ASSET_STATE_SCRAP %>;
 	var orgRoot = '<%=com.yunda.frame.common.Constants.ORG_ROOT_NAME%>';
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/GyjcFactorySelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/repairbase/TrainTypeCombo.js"></script> 
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/repairbase/TrainNoCombo.js"></script>

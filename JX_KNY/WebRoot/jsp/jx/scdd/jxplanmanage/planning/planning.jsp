@@ -4,6 +4,7 @@
   <head>
     <title>检修计划编制</title>
     <%@include file="/frame/jspf/header.jspf" %>
+    <script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
     <script type="text/javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/cmps/fastform.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/jx/js/component/repairbase/TrainTypeCombo.js"></script>

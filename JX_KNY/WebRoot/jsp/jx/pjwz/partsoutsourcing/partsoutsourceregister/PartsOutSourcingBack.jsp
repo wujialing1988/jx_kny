@@ -14,6 +14,7 @@
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>委外配件回段</title>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 
     <script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partsoutsourcing/partsoutsourceregister/PartsOutSourcingFactoryCombo.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/pjwz/partsoutsourcing/partsoutsourceregister/PartsOutSourcingBack.js"></script>

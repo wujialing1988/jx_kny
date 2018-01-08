@@ -50,6 +50,7 @@
 	var image_path = '<%=ctx+BuildUpType.IMAGE_PATH%>';//图标路径
 	var rootParentIdx = '<%=BuildUpType.PARENT_IDX%>';//车组成根节点位置ID
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/ProfessionalType.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/jxgc/buildupmanage/FixBuildUpType.js"></script>

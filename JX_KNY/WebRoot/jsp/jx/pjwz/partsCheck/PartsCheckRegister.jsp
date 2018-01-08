@@ -24,6 +24,7 @@
 	var BILLTYPE_OUTSOURCING = "<%=PartsWHRegister.BILLTYPE_OUTSOURCING%>" ;				// 单据类型----委外修
 	var MANAGE_DEPT_TYPE_ORG = '<%=PartsAccount.MANAGE_DEPT_TYPE_ORG%>';  //责任部门类型--机构
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsExtendNoWin.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/pjwz/partbase/component/PartsExtendNoSelect.js"></script>

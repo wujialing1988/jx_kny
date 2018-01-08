@@ -12,6 +12,7 @@
 <script type="text/javascript">
 	var orgRoot = '<%=com.yunda.frame.common.Constants.ORG_ROOT_NAME%>'; // 委修段下拉树
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/BaseComboTree.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/DeportSelect2.js"></script>

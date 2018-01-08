@@ -21,6 +21,7 @@
 	
 	var siteID ='<%=JXConfig.getInstance().getSynSiteID()%>';
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/repairbase/TrainTypeCombo.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/jxgc/workplanmanage/workplanview/QualityControlResult.js"></script> <!-- 质量检查JS --> 

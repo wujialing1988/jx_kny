@@ -14,6 +14,7 @@
 </script>
 <title>柴油发电机组型号维护</title>
 <script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/i18n-lang-TrainVehicleTypeGenerator.js"></script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 
 <script language="javascript" src="<%=ctx %>/jsp/freight/base/vehicle/generator/TrainVehicleType.js"></script>
 </head>

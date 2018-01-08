@@ -39,6 +39,7 @@
 	//点击节点id
 	var nodeId = "ROOT_0";
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/ProfessionalType.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/jxgc/buildupmanage/BuildUpTypeTree.js"></script>

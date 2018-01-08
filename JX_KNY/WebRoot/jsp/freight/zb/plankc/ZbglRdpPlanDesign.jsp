@@ -127,6 +127,7 @@
 	var siteID =  '<%= EntityUtil.findSysSiteId(null) %>';
 
 </script>
+<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-TrainInspectionPlan.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/PassengerTransport/i18n-lang-PassengerInspectionPlan.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/jquery/jquery.js"></script>

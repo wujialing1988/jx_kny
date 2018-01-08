@@ -22,6 +22,7 @@
 		var orgName = '${sessionScope.org.orgname}';//当前登录人所属单位
 		var signType = "<%=DisposeOpinion.SIGN_TYPE_FAULT_TECVERTIFY%>";
 	</script>	
+	<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/jx/js/component/jxgc/DisposeOpinionCombo.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/jx/base/lcgd/DisposeOpinionView.js"></script>
