@@ -16,18 +16,18 @@ Ext.onReady(function() {
 	newPwd.anchor = '85%';
 	newPwd.fieldWidth = 160;
 	
-	newPwd.Mask = new Ext.LoadMask(Ext.getBody(), {msg:"正在处理，请稍侯..."});
+	newPwd.Mask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.NewPassWord.wait});
 	//表单
 	newPwd.form = new Ext.form.FormPanel({
 		defaultType:'textfield', layout:"form",
 		labelWidth: newPwd.labelWidth,	columnWidth:1, style:"padding:10px" ,  baseCls: "x-plain",
 		items:[
-			{ id:'operatorid',   fieldLabel:'操作员ID',   	name:'operatorid', 		hidden:true}, //主键
-			{ id:'operatorname', fieldLabel:'操作员名称', 	name:'operatorname', 	hidden:false, 	width:160,	disabled:true},
-			{ id:'userid',       fieldLabel:'登录帐号',   	name:'userid', 			hidden:false, 	width:160,	disabled:true},
-			{ id:'password',     fieldLabel:'原始密码',  	name:'password', 		hidden:false, 	width:160,  allowBlank:false},
-			{ id:'newpwd1',      fieldLabel:'新密码',		name:'newpwd1', 		hidden:false, 	width:160,  allowBlank:false},			
-			{ id:'newpwd2',      fieldLabel:'确认新密码',	name:'newpwd2', 		hidden:false, 	width:160,  allowBlank:false}					
+			{ id:'operatorid',   fieldLabel:i18n.NewPassWord.operatorid,   	name:'operatorid', 		hidden:true}, //主键
+			{ id:'operatorname', fieldLabel:i18n.NewPassWord.operatorname, 	name:'operatorname', 	hidden:false, 	width:160,	disabled:true},
+			{ id:'userid',       fieldLabel:i18n.NewPassWord.userid,   	name:'userid', 			hidden:false, 	width:160,	disabled:true},
+			{ id:'password',     fieldLabel:i18n.NewPassWord.password,  	name:'password', 		hidden:false, 	width:160,  allowBlank:false},
+			{ id:'newpwd1',      fieldLabel:i18n.NewPassWord.newpwd1,		name:'newpwd1', 		hidden:false, 	width:160,  allowBlank:false},			
+			{ id:'newpwd2',      fieldLabel:i18n.NewPassWord.newpwd2,	name:'newpwd2', 		hidden:false, 	width:160,  allowBlank:false}					
 		]
 	});
 	
@@ -53,13 +53,13 @@ Ext.onReady(function() {
 		buttonAlign: "center",  baseCls: "x-plain",//baseCls: "x-plain", //anchor : '20% 25%', 
 		items: [newPwd.form],
 		buttons: [{
-           	text: "保存", iconCls: "saveIcon", scope: this, handler: function(){
+           	text: i18n.NewPassWord.savePreferences, iconCls: "saveIcon", scope: this, handler: function(){
            		var newPWD = '';
            		var form = newPwd.form.getForm();
            		if (!form.isValid()) return;
            		var data = form.getValues();
            		if(data.newpwd1 != data.newpwd2){
-           			alertFail('两次输入不符！');
+           			alertFail(i18n.NewPassWord.inconsistentPW);
            			return;
            		} else {
            			newPWD = data.newpwd1;
@@ -92,11 +92,11 @@ Ext.onReady(function() {
 	});
 	
 	newPwd.win = new Ext.Window({
-		title: "密码设置", maximizable: false, width: 300, height: 300, layout: "fit", closable:false, items : [newPwd.panel]
+		title: i18n.NewPassWord.passWSetting, maximizable: false, width: 300, height: 300, layout: "fit", closable:false, items : [newPwd.panel]
 	});
 	
 	//页面自适应布局
-	var viewport = new Ext.Viewport({ layout:'fit', items:[new Ext.Panel({title: "密码设置", layout: "fit"})]});
+	var viewport = new Ext.Viewport({ layout:'fit', items:[new Ext.Panel({title: i18n.NewPassWord.passWSetting, layout: "fit"})]});
 	newPwd.win.show();
 });
 </script>
