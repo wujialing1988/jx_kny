@@ -1,29 +1,22 @@
 /**
  * 货车运用故障登记
  */
-
-/*选择物料*/
-i18n.TruckFaultReg = {} ;
-i18n.TruckFaultReg.Msg1 = 'In the process of processing, please wait...' ;
-i18n.TruckFaultReg.Msg2 = 'There is no choice of record!' ;
-i18n.TruckFaultReg.Msg3 = 'In the existing list, please do not repeat the addition!' ;
-i18n.TruckFaultReg.materialCode = 'materialCode' ;
-i18n.TruckFaultReg.materialDescription = 'Description' ;
-i18n.TruckFaultReg.count = 'count' ;
-i18n.TruckFaultReg.unit = 'unit' ;
-i18n.TruckFaultReg.price = 'price' ;
-i18n.TruckFaultReg.operate = 'operate' ;
-i18n.TruckFaultReg.altDelete = 'delete' ;
-i18n.TruckFaultReg.faultRegisterID = 'faultRegisterID' ;
-i18n.TruckFaultReg.addMaterial = 'addMaterial' ;
-/*添加物料窗口*/
-i18n.TruckFaultReg.MeasureUnit = 'unit' ;
-i18n.TruckFaultReg.expectUnitPrice = 'price' ;
-i18n.TruckFaultReg.search = 'search' ;
-i18n.TruckFaultReg.reset = 'reset' ;
-i18n.TruckFaultReg.add = 'add' ;
-i18n.TruckFaultReg.close = 'close' ;
+/*物料消耗*/
+i18n.MatTypeUseList = {} ;
+i18n.MatTypeUseList.Msg1 = 'In the process of processing, please wait...' ;
+i18n.MatTypeUseList.Msg2 = 'There is no choice of record!' ;
+i18n.MatTypeUseList.materialCode = 'materialCode' ;
+i18n.MatTypeUseList.Msg3 = 'In the existing list, please do not repeat the addition!' ;
+i18n.MatTypeUseList.materialDescription = 'materialDescription' ;
+i18n.MatTypeUseList.count = 'count' ;
+i18n.MatTypeUseList.unit = 'unit' ;
+i18n.MatTypeUseList.price = 'price' ;
+i18n.MatTypeUseList.operate = 'operate' ;
+i18n.MatTypeUseList.altDelete = 'delete' ;
+i18n.MatTypeUseList.faultRegisterID = 'faultRegisterID' ;
+i18n.MatTypeUseList.addMaterial = 'addMaterial' ;
 /*故障登记维护*/
+i18n.TruckFaultReg = {} ;
 i18n.TruckFaultReg.faultReMaintain = 'fault registration and maintenance' ;
 i18n.TruckFaultReg.faultInformation = 'faultInformation' ;
 i18n.TruckFaultReg.registerType = 'registerType' ;

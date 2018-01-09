@@ -27,7 +27,6 @@
 		var teamOrgName = '${sessionScope.org.orgname}'; <%-- 当前登录人员班组名称 --%>
 		var teamOrgSeq = '${sessionScope.org.orgseq}'; <%-- 当前登录人员班组序列 --%>
 	</script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 	<script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmOrganizationCustom.js"></script>
 	<script language="javascript" src="<%=ctx %>/jsp/jx/jxgc/component/TrainTypeTreeSelect.js"></script>
 	<script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsTypeWidgetSelect.js"></script>

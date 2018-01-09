@@ -16,3 +16,14 @@ i18n.OmEmployeeSelect.selectEmp = 'select the employee' ;
 /*通用选择列表*/
 i18n.BaseCombo = {} ;
 i18n.BaseCombo.choose = 'please choose...' ;
+/*物料选择*/
+i18n.MatInforList = {} ;
+i18n.MatInforList.materialCode = 'materialCode' ;
+i18n.MatInforList.materialDescription = 'materialDescription' ;
+i18n.MatInforList.MeasureUnit = 'MeasureUnit' ;
+i18n.MatInforList.expectUnitPrice = 'expectUnitPrice' ;
+i18n.MatInforList.addMaterial = 'addMaterial' ;
+i18n.MatInforList.search = 'search' ;
+i18n.MatInforList.reset = 'reset' ;
+i18n.MatInforList.add = 'add' ;
+i18n.MatInforList.close = 'close' ;

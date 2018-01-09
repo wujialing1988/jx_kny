@@ -17,7 +17,6 @@
 		var PARTS_STATUS_LH="<%=PartsAccount.PARTS_STATUS_LH%>";//良好
 		var orgRoot = '<%=com.yunda.frame.common.Constants.ORG_ROOT_NAME%>';
 	</script>
-	<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 	<script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsExtendNoWin.js"></script>
 	<script language="javascript" src="<%=ctx%>/jsp/jx/js/component/BaseComboTree.js"></script>
 	<script language="javascript" src="<%=ctx%>/jsp/jx/pjwz/partbase/component/PartsTypeWidgetSelect.js"></script>

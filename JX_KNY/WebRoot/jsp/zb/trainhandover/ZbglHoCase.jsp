@@ -11,7 +11,6 @@
 <script type="text/javascript">
 	var operatorid = '${sessionScope.users.operatorid}';
 </script>
-<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%= ctx %>/jsp/jx/js/component/BaseComboTree.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/repairbase/TrainTypeCombo.js"></script>

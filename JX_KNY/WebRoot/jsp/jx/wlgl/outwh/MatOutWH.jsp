@@ -18,7 +18,6 @@
 	var TYPE_QTYY = '<%=MatOutWH.TYPE_QTYY%>'; //其他原因出库
 	var TYPE_YK = '<%=MatOutWH.TYPE_YK%>'; //移库出库
 </script>
-<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>'
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/OmEmpBaseCombo.js"></script> 
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/repairbase/TrainNoCombo.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>

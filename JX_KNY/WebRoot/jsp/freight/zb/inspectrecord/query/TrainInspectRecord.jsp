@@ -13,7 +13,6 @@
 	var empName = '${sessionScope.emp.empname}';
 </script>
 <title>巡检信息查询</title>
-<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-TruckFaultReg.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-InspectionInfoInput.js"></script>
 <script type="text/javascript" src="<%= ctx %>/jsp/sb/base/js/SingleFieldCombo.js"></script>

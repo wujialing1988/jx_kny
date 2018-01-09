@@ -2,29 +2,22 @@
  * 货车运用故障登记
 
  */
-
-/*选择物料*/
-i18n.TruckFaultReg = {} ;
-i18n.TruckFaultReg.Msg1 = '正在处理，请等待......' ;
-i18n.TruckFaultReg.Msg2 = '尚未选择一条记录！' ;
-i18n.TruckFaultReg.Msg3 = '已存在列表中，请不要重复添加！' ;
-i18n.TruckFaultReg.materialCode = '物料编码' ;
-i18n.TruckFaultReg.materialDescription = '物料描述' ;
-i18n.TruckFaultReg.count = '数量' ;
-i18n.TruckFaultReg.unit = '单位' ;
-i18n.TruckFaultReg.price = '单价' ;
-i18n.TruckFaultReg.operate = '操作' ;
-i18n.TruckFaultReg.altDelete = '删除' ;
-i18n.TruckFaultReg.faultRegisterID = '故障登记ID' ;
-i18n.TruckFaultReg.addMaterial = '选择物料' ;
-/*添加物料窗口*/
-i18n.TruckFaultReg.MeasureUnit = '计量单位' ;
-i18n.TruckFaultReg.expectUnitPrice = '计划单价' ;
-i18n.TruckFaultReg.search = '查询' ;
-i18n.TruckFaultReg.reset = '重置' ;
-i18n.TruckFaultReg.add = '添加' ;
-i18n.TruckFaultReg.close = '关闭' ;
+/*物料消耗*/
+i18n.MatTypeUseList = {} ;
+i18n.MatTypeUseList.Msg1 = '正在处理，请等待......' ;
+i18n.MatTypeUseList.Msg2 = '尚未选择一条记录！' ;
+i18n.MatTypeUseList.materialCode = '物料编码' ;
+i18n.MatTypeUseList.Msg3 = '已存在列表中，请不要重复添加！' ;
+i18n.MatTypeUseList.materialDescription = '物料描述' ;
+i18n.MatTypeUseList.count = '数量' ;
+i18n.MatTypeUseList.unit = '单位' ;
+i18n.MatTypeUseList.price = '单价' ;
+i18n.MatTypeUseList.operate = '操作' ;
+i18n.MatTypeUseList.altDelete = '删除' ;
+i18n.MatTypeUseList.faultRegisterID = '故障登记ID' ;
+i18n.MatTypeUseList.addMaterial = '选择物料' ;
 /*故障登记维护*/
+i18n.TruckFaultReg = {} ;
 i18n.TruckFaultReg.faultReMaintain = '故障登记维护' ;
 i18n.TruckFaultReg.faultInformation = '故障信息' ;
 i18n.TruckFaultReg.registerType = '登记类型' ;

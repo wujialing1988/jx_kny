@@ -50,7 +50,6 @@
     var REPAIRCLASS_lX = '<%=ZbConstants.REPAIRCLASS_LX%>';
 	
 </script>
-<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script type="text/javascript" src="<%=ctx %>/frame/resources/jquery/jquery.js"></script>
 <script language="javascript" src="<%= ctx %>/jsp/jx/js/component/BaseComboTree.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>

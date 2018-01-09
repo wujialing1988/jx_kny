@@ -18,7 +18,6 @@ try{
 	var orgName = '<%= SystemContext.getOmOrganization().getOrgname() %>'
 	var orgId = '<%= SystemContext.getOmOrganization().getOrgid() %>'
 </script>
-<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/freight/i18n-lang-ClassTransfer.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/jxgc/component/TrainTypeTreeSelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/repairbase/TrainTypeCombo.js"></script> 

@@ -6,7 +6,7 @@ Ext.onReady(function(){
 	
 	/** **************** 定义全局变量开始 **************** */
 	MatTypeUseList.gztpIdx = "";
-	MatTypeUseList.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.TruckFaultReg.Msg1});
+	MatTypeUseList.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.MatTypeUseList.Msg1});
 	/** **************** 定义全局变量结束 **************** */
 	
 	/** **************** 定义全局函数开始 **************** */
@@ -14,7 +14,7 @@ Ext.onReady(function(){
 	MatTypeUseList.deleteFn = function() {
         var data = MatTypeUseList.grid.selModel.getSelections();
         if(data.length == 0 ){
-        	MyExt.Msg.alert(i18n.TruckFaultReg.Msg2);
+        	MyExt.Msg.alert(i18n.MatTypeUseList.Msg2);
             return;
         }		
 		MatTypeUseList.grid.store.remove(data[0]);
@@ -23,7 +23,7 @@ Ext.onReady(function(){
 	MatInforList.submit = function(){
 		var sm = MatInforList.grid.getSelectionModel();
 		if (sm.getCount() <= 0) {
-			MyExt.Msg.alert(i18n.TruckFaultReg.Msg2);
+			MyExt.Msg.alert(i18n.MatTypeUseList.Msg2);
 			return;
 		}
 		// 已选择的待添加的物料信息
@@ -35,7 +35,7 @@ Ext.onReady(function(){
 				var record = MatTypeUseList.grid.store.getAt(i);
 				for (var j = 0; j < selectedRecrods.length; j++) {
 					if (record.get('matCode') == selectedRecrods[j].get('matCode')) {
-						MyExt.Msg.alert(i18n.TruckFaultReg.materialCode+ "<font color='red'>【" + record.get('matCode') + "】</font>" + i18n.TruckFaultReg.Msg3);
+						MyExt.Msg.alert(i18n.MatTypeUseList.materialCode+ "<font color='red'>【" + record.get('matCode') + "】</font>" + i18n.MatTypeUseList.Msg3);
    	          			return ;
 					}
 				}
@@ -69,7 +69,7 @@ Ext.onReady(function(){
 	});
 	
 	// 操作掩码
-    MatTypeUseList.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.TruckFaultReg.Msg1});
+    MatTypeUseList.loadMask = new Ext.LoadMask(Ext.getBody(), {msg:i18n.MatTypeUseList.Msg1});
 	// 行选择模式
     MatTypeUseList.sm = new Ext.grid.CheckboxSelectionModel({singleSelect:false});
     //材料规格型号，分页工具
@@ -82,11 +82,11 @@ Ext.onReady(function(){
 		colModel:new Ext.grid.ColumnModel([ new Ext.grid.RowNumberer(),{
 			sortable:false, dataIndex:'idx', hidden:true, header:'idx'
 		},{
-			header:i18n.TruckFaultReg.materialCode, dataIndex:'matCode', width: 200, editor: { readOnly: true }
+			header:i18n.MatTypeUseList.materialCode, dataIndex:'matCode', width: 200, editor: { readOnly: true }
 		},{
-			header:i18n.TruckFaultReg.materialDescription, dataIndex:'matDesc', width: 200, editor: { readOnly: true }
+			header:i18n.MatTypeUseList.materialDescription, dataIndex:'matDesc', width: 200, editor: { readOnly: true }
 		},{
-			sortable:false, dataIndex:'matCount', header:i18n.TruckFaultReg.count, 
+			sortable:false, dataIndex:'matCount', header:i18n.MatTypeUseList.count, 
 					renderer: function(v,m){
      	   	   	 		m.css = 'x-grid-col';
      	   	   	 		return v;
@@ -97,18 +97,18 @@ Ext.onReady(function(){
 		        		allowBlank: false
 					}
 		},{
-			header:i18n.TruckFaultReg.unit, dataIndex:'unit', width: 100, editor: { readOnly: true }
+			header:i18n.MatTypeUseList.unit, dataIndex:'unit', width: 100, editor: { readOnly: true }
 		},{
-			header:i18n.TruckFaultReg.price, dataIndex:'price', width: 100,hidden:true
+			header:i18n.MatTypeUseList.price, dataIndex:'price', width: 100,hidden:true
 		},{
-			header:i18n.TruckFaultReg.operate, dataIndex:'idx', align:'center', width: 60, renderer: function(value, metaData, record, rowIndex, colIndex, store){
-				return "<img src='" + deleteIcon + "' alt=i18n.TruckFaultReg.altDelete style='cursor:pointer' onclick='MatTypeUseList.deleteFn();'/>";
+			header:i18n.MatTypeUseList.operate, dataIndex:'idx', align:'center', width: 60, renderer: function(value, metaData, record, rowIndex, colIndex, store){
+				return "<img src='" + deleteIcon + "' alt=i18n.MatTypeUseList.altDelete style='cursor:pointer' onclick='MatTypeUseList.deleteFn();'/>";
 			}
 		},{
-			header:i18n.TruckFaultReg.faultRegisterID, dataIndex:'gztpIdx', hidden:true, editor: { readOnly: true }
+			header:i18n.MatTypeUseList.faultRegisterID, dataIndex:'gztpIdx', hidden:true, editor: { readOnly: true }
 		}]),
 		tbar:[{
-	    	text:i18n.TruckFaultReg.addMaterial, iconCls: 'addIcon', handler:function(){
+	    	text:i18n.MatTypeUseList.addMaterial, iconCls: 'addIcon', handler:function(){
 	    		MatInforList.batchWin.show();
 	    	}
 	    }],
