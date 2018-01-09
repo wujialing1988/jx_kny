@@ -13,3 +13,6 @@ i18n.OmEmployeeSelect.doubleClick = '双击该行记录选择人员' ;
 i18n.OmEmployeeSelect.empCode = '人员代码' ;
 i18n.OmEmployeeSelect.orgName = '所属班组' ;
 i18n.OmEmployeeSelect.selectEmp = '选择人员' ;
+/*通用选择列表*/
+i18n.BaseCombo = {} ;
+i18n.BaseCombo.choose = '请选择...' ;

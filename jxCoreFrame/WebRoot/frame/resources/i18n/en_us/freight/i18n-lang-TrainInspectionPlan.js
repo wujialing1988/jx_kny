@@ -97,3 +97,17 @@ i18n.TrainInspectionPlan.trainNumber = 'trainNumber' ;
 i18n.TrainInspectionPlan.confirmor = 'confirmor' ;
 i18n.TrainInspectionPlan.confirmTime = 'confirmTime' ;
 i18n.TrainInspectionPlan.trainStatus = 'trainStatus' ;
+/*工位人员选择*/
+i18n.WorkStationEmpSelect = {};
+i18n.WorkStationEmpSelect.selectEmp = 'selected personnel' ;
+i18n.WorkStationEmpSelect.EmpId = 'EmpId' ;
+i18n.WorkStationEmpSelect.EmpCode = 'EmpCode' ;
+i18n.WorkStationEmpSelect.EmpName = 'EmpName' ;
+i18n.WorkStationEmpSelect.operation = 'operation' ;
+i18n.WorkStationEmpSelect.dele = 'delete' ;
+i18n.WorkStationEmpSelect.unselectEmp = 'unselected personnel' ;
+i18n.WorkStationEmpSelect.search = 'search' ;
+i18n.WorkStationEmpSelect.add = 'add' ;
+i18n.WorkStationEmpSelect.selectOperator = 'select the operator' ;
+i18n.WorkStationEmpSelect.save = 'save' ;
+i18n.WorkStationEmpSelect.close = 'close' ;

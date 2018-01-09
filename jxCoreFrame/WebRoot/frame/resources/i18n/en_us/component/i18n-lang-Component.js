@@ -13,3 +13,6 @@ i18n.OmEmployeeSelect.empCode = 'empCode' ;
 i18n.OmEmployeeSelect.orgName = 'orgName' ;
 i18n.OmEmployeeSelect.doubleClick = 'double click on the row to select the employee' ;
 i18n.OmEmployeeSelect.selectEmp = 'select the employee' ;
+/*通用选择列表*/
+i18n.BaseCombo = {} ;
+i18n.BaseCombo.choose = 'please choose...' ;

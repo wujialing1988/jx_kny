@@ -96,3 +96,17 @@ i18n.TrainInspectionPlan.trainNumber = '车辆车号' ;
 i18n.TrainInspectionPlan.confirmor = '确认人' ;
 i18n.TrainInspectionPlan.confirmTime = '确认时间' ;
 i18n.TrainInspectionPlan.trainStatus = '车辆状态' ;
+/*工位人员选择*/
+i18n.WorkStationEmpSelect = {};
+i18n.WorkStationEmpSelect.selectEmp = '已选择人员' ;
+i18n.WorkStationEmpSelect.EmpId = '人员id' ;
+i18n.WorkStationEmpSelect.EmpCode = '人员代码' ;
+i18n.WorkStationEmpSelect.EmpName = '人员名称' ;
+i18n.WorkStationEmpSelect.operation = '操作' ;
+i18n.WorkStationEmpSelect.dele = '删除作业人员' ;
+i18n.WorkStationEmpSelect.unselectEmp = '未选择人员' ;
+i18n.WorkStationEmpSelect.search = '查询' ;
+i18n.WorkStationEmpSelect.add = '添加作业人员' ;
+i18n.WorkStationEmpSelect.selectOperator = '作业人员选择' ;
+i18n.WorkStationEmpSelect.save = '确定' ;
+i18n.WorkStationEmpSelect.close = '关闭' ;

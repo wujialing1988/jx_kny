@@ -41,18 +41,18 @@ Ext.onReady(function(){
 	//已选择人员Grid
 	WorkStationEmp.grid = new Ext.yunda.Grid({
 	    loadURL: ctx + '/omEmployeeSelect!findListForZbPlanRecordEmpSelect.action',                 //装载列表数据的请求URL    
-	    tbar:['<span style="font-weight:normal">已选择人员</span>'], page:false,
+	    tbar:['<span style="font-weight:normal">' + i18n.WorkStationEmpSelect.selectEmp + '</span>'], page:false,
 	    singleSelect:true,hideRowNumberer:true, storeAutoLoad:false,
 		fields: [{
-			header:'人员id', dataIndex:'empid', hidden:true, editor: { xtype:'hidden' }
+			header:i18n.WorkStationEmpSelect.EmpId, dataIndex:'empid', hidden:true, editor: { xtype:'hidden' }
 		},{
-			header:'人员代码', dataIndex:'empcode', editor:{  maxLength:2 }
+			header:i18n.WorkStationEmpSelect.EmpCode, dataIndex:'empcode', editor:{  maxLength:2 }
 		},{
-			header:'人员名称', dataIndex:'empname', editor:{ xtype:'numberfield', maxLength:18 }
+			header:i18n.WorkStationEmpSelect.EmpName, dataIndex:'empname', editor:{ xtype:'numberfield', maxLength:18 }
 		},{
-			header:'操作', dataIndex:'empid', editor:{ xtype:"hidden" },
+			header:i18n.WorkStationEmpSelect.operation, dataIndex:'empid', editor:{ xtype:"hidden" },
 			renderer:function(v,x,r){
-				return "<img src='"+imgpath+"/delete.png' alt='删除作业人员' onclick='del(" + v + ")' style='cursor:pointer'/>";
+				return "<img src='"+imgpath+"/delete.png' alt=i18n.WorkStationEmpSelect.dele onclick='del(" + v + ")' style='cursor:pointer'/>";
 			}
 		}]
 	});
@@ -81,26 +81,26 @@ Ext.onReady(function(){
 	//未选择人员Grid
 	WorkStationEmp.NoDispatchGrid = new Ext.yunda.Grid({
 	    loadURL: ctx + '/omEmployeeSelect!findListForZbPlanRecordEmpSelect.action',                 //装载列表数据的请求URL    
-	    tbar:['<span style="font-weight:normal">未选择人员</span>','-',
-	    	  '人员代码   ',{xtype:'textfield',id:'emp_code',width:70},
-	    	  '人员名称   ',{xtype:'textfield',id:'emp_name',width:70},
+	    tbar:['<span style="font-weight:normal">' + i18n.WorkStationEmpSelect.unselectEmp + '</span>','-',
+	          i18n.WorkStationEmpSelect.EmpCode,{xtype:'textfield',id:'emp_code',width:70},
+	          i18n.WorkStationEmpSelect.EmpName,{xtype:'textfield',id:'emp_name',width:70},
 	    	 {
-		        text:"查询", iconCls:"searchIcon", handler: function(){
+		        text:i18n.WorkStationEmpSelect.search, iconCls:"searchIcon", handler: function(){
 		        	WorkStationEmp.filterBy();
 		       	}
 	    }],
 	    page:false,
 	    singleSelect:true,hideRowNumberer:true, storeAutoLoad:false,
 		fields: [{
-			header:'人员id', dataIndex:'empid', hidden:true, editor: { xtype:'hidden' }	
+			header:i18n.WorkStationEmpSelect.EmpId, dataIndex:'empid', hidden:true, editor: { xtype:'hidden' }	
 		},{
-			header:'人员代码', dataIndex:'empcode', editor:{  maxLength:2 }
+			header:i18n.WorkStationEmpSelect.EmpCode, dataIndex:'empcode', editor:{  maxLength:2 }
 		},{		
-			header:'人员名称', dataIndex:'empname', editor:{ xtype:'numberfield', maxLength:18 }
+			header:i18n.WorkStationEmpSelect.EmpName, dataIndex:'empname', editor:{ xtype:'numberfield', maxLength:18 }
 		},{
-			header:'操作', dataIndex:'empid', editor:{ xtype:"hidden" },
+			header:i18n.WorkStationEmpSelect.operation, dataIndex:'empid', editor:{ xtype:"hidden" },
 			renderer:function(v,x,r){
-				return "<img src='"+imgpath+"/add.png' alt='添加作业人员' onclick='add(" + v + ")' style='cursor:pointer'/>";
+				return "<img src='"+imgpath+"/add.png' alt=i18n.WorkStationEmpSelect.add onclick='add(" + v + ")' style='cursor:pointer'/>";
 			}
 		}]
 	});	
@@ -117,7 +117,7 @@ Ext.onReady(function(){
 	
 	//定义选择窗口
 	WorkStationEmp.selectWin = new Ext.Window({
-		title:"作业人员选择", width:800, height:400, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
+		title:i18n.WorkStationEmpSelect.selectOperator, width:800, height:400, plain:true, closeAction:"hide", buttonAlign:'center', layout:'fit',
     	maximizable:false, items:[{
 		    region : 'center', layout : 'fit', bodyBorder: false, items : {
 		    	xtype: "panel", layout: "border",
@@ -129,11 +129,11 @@ Ext.onReady(function(){
 			}
     	}],modal:true,
     	buttons: [{
-			text : "确定",iconCls : "saveIcon", handler: function(){
+			text : i18n.WorkStationEmpSelect.save,iconCls : "saveIcon", handler: function(){
 				WorkStationEmp.submit(); 
 			}
 		},{
-	        text: "关闭", iconCls: "closeIcon", scope: this, handler: function(){ WorkStationEmp.selectWin.hide(); }
+	        text: i18n.WorkStationEmpSelect.close, iconCls: "closeIcon", scope: this, handler: function(){ WorkStationEmp.selectWin.hide(); }
 		}]
 	});
 	
