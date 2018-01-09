@@ -19,16 +19,3 @@ i18n.ClassTransfer.alertRemaindMes = '请求失败，服务器状态码：' ;
 i18n.ClassTransfer.transferInfo = '交接信息' ;
 i18n.ClassTransfer.transferClass = '交接班次' ;
 i18n.ClassTransfer.transferItem = '交接项' ;
-
-/**
-*人员列表
-*/
-i18n.ClassTransfer.msg = '正在处理，请稍后...' ;
-i18n.ClassTransfer.empName = '人员姓名:' ;
-i18n.ClassTransfer.search = '搜索' ;
-i18n.ClassTransfer.reset = '重置' ;
-i18n.ClassTransfer.name = '名称' ;
-i18n.ClassTransfer.empCode = '人员代码' ;
-i18n.ClassTransfer.orgName = '所属班组' ;
-i18n.ClassTransfer.doubleClick = '双击该行记录选择人员' ;
-i18n.ClassTransfer.selectEmp = '选择人员' ;

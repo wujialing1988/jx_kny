@@ -96,13 +96,13 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 			viewConfig : {
 				forceFit : true
 			},
-			loadMask: {msg: i18n.ClassTransfer.msg},
+			loadMask: {msg: i18n.OmEmployeeSelect.msg},
 			// 偶数行变色
 			stripeRows : true,	
 			// 工具栏
 			tbar : [{
 					xtype:"label",
-					text:i18n.ClassTransfer.empName
+					text:i18n.OmEmployeeSelect.empName
 				},{	            
 	                xtype:"textfield",								                
 	                name : "empName",
@@ -119,7 +119,7 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 			        	}
 			        }
 				},'->',{
-					text : i18n.ClassTransfer.search,
+					text : i18n.OmEmployeeSelect.search,
 					iconCls : "searchIcon",
 					handler : function(){
 						var empname = this.getTopToolbar().get(1).getValue();
@@ -129,7 +129,7 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					},
 					scope : this
 				},{
-					text : i18n.ClassTransfer.reset,
+					text : i18n.OmEmployeeSelect.reset,
 					iconCls : "resetIcon",
 					handler : function(){
 						this.store.baseParams.emp = "";
@@ -146,14 +146,14 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 			colModel : new Ext.grid.ColumnModel([
 				new Ext.grid.RowNumberer(), {
 					sortable : true,
-					header : i18n.ClassTransfer.name,
-					title : i18n.ClassTransfer.doubleClick,
+					header : i18n.OmEmployeeSelect.name,
+					title : i18n.OmEmployeeSelect.doubleClick,
 					dataIndex : "empname",
 					width:50
 				}, {
 					sortable : true,
-					header : i18n.ClassTransfer.empCode,
-					title : i18n.ClassTransfer.doubleClick,
+					header : i18n.OmEmployeeSelect.empCode,
+					title : i18n.OmEmployeeSelect.doubleClick,
 					dataIndex : "empcode",
 					width:60
 				}, {
@@ -168,9 +168,9 @@ omEmployeeSelect.UserList = Ext.extend(Ext.grid.GridPanel, {
 					hidden : true
 				}, {
 					sortable : true,
-					header : i18n.ClassTransfer.orgName,
+					header : i18n.OmEmployeeSelect.orgName,
 					dataIndex : "orgname",
-					title : i18n.ClassTransfer.doubleClick,
+					title : i18n.OmEmployeeSelect.doubleClick,
 					width:100
 				}, {
 					sortable : true,
@@ -239,7 +239,7 @@ omEmployeeSelect.UserSelectWin = Ext.extend(Ext.Window, {
     },
 	constructor : function() {		
 		omEmployeeSelect.UserSelectWin.superclass.constructor.call(this, {
-			title : i18n.ClassTransfer.selectEmp,
+			title : i18n.OmEmployeeSelect.selectEmp,
 			width : 535,
 			height : 325,			
 			plain : true,

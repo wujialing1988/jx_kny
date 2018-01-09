@@ -22,15 +22,3 @@ i18n.ClassTransfer.alertRemaindMes = 'The request failed, the server state code 
 i18n.ClassTransfer.transferInfo = 'transfer of information' ;
 i18n.ClassTransfer.transferClass = 'transferClass' ;
 i18n.ClassTransfer.transferItem = 'transferItem' ;
-/**
-*人员列表
-*/
-i18n.ClassTransfer.msg = 'Processing,please later...' ;
-i18n.ClassTransfer.empName = 'empName:' ;
-i18n.ClassTransfer.search = 'search' ;
-i18n.ClassTransfer.reset = 'reset' ;
-i18n.ClassTransfer.name = 'name' ;
-i18n.ClassTransfer.empCode = 'empCode' ;
-i18n.ClassTransfer.orgName = 'orgName' ;
-i18n.ClassTransfer.doubleClick = 'double click on the row to select the employee' ;
-i18n.ClassTransfer.selectEmp = 'select the employee' ;

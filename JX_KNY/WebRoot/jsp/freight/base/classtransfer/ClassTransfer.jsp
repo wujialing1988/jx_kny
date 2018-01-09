@@ -73,7 +73,6 @@
 	
 </script>
 <title>班次交接</title>
-
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmEmployeeSelect.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/freight/base/classtransfer/ClassTransfer.js"></script>
