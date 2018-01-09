@@ -121,6 +121,7 @@ a:HOVER { color:green; font-weight:bold; }
 <script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ext-all-debug.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-<%=browserLang %>.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/i18n/i18n-lang-<%=browserLang %>.js"></script>
+<script language="javascript" src="<%=ctx%>/frame/resources/i18n/<%=browserLang %>/component/i18n-lang-Component.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/MyExt.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/js/MyJson.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/Ext-yunda.js"></script>
