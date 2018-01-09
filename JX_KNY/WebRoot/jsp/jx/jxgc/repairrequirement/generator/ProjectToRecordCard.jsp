@@ -37,7 +37,6 @@
   	var STATUS_USE = '<%=Constants.STATUS_USE %>';//业务状态为启用
   	var STATUS_INVALID = '<%=Constants.STATUS_INVALID %>'; //业务状态为报废
 </script>
-<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/jxgc/repairrequirement/ProjectToRecordCard.js"></script><!-- 机车检修项目 -->
 </head>

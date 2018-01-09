@@ -7,7 +7,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>机车检测项</title>
 		<link rel="stylesheet" type="text/css" href="../style.css"/>
-		<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 		<script type="text/javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 		<script type="text/javascript" src="../fastform.js"></script>
 		<script type="text/javascript" src="train_searcher.js"></script>

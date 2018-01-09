@@ -46,7 +46,6 @@
 			var isNotBlank_yes = "<%=com.yunda.jx.jxgc.repairrequirement.entity.DetectItem.ISNOTBLANK_YES %>";//是否必填 0必填
 			var isNotBlank_no = "<%=com.yunda.jx.jxgc.repairrequirement.entity.DetectItem.ISNOTBLANK_NO %>";//是否必填 1非必填
 		</script>
-		<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 		<script type="text/javascript" src="<%=ctx %>/jsp/jx/js/component/InsertCharField.js"></script>
 		<script type="text/javascript" src="<%=ctx %>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 		<script type="text/javascript" src="<%=ctx %>/jsp/jx/js/component/repairbase/BuildUpTypeTree.js"></script>

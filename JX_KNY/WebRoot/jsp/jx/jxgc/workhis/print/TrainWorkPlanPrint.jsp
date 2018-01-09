@@ -128,7 +128,6 @@
 	var trainTypeAndNo = '';		
     var repairClassAndTime = '';	
 </script>
-<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script type="text/javascript" src="<%=ctx %>/frame/resources/jquery/jquery.js"></script>
 <script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ux/layouts/RowLayout.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/DeportSelect2.js"></script>

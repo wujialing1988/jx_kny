@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>机车外用料查询</title>
+
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script> 
 <script language="javascript" src="<%=ctx %>/jsp/jx/wlgl/outstock/MatOutWHNoTrainQueryDetail.js"></script>
 <script language="javascript" src="<%=ctx %>/jsp/jx/wlgl/outstock/MatOutWHNoTrainQuery.js"></script>

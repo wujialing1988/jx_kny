@@ -20,7 +20,6 @@
 		sourceIdx = '8a8284ba4124761b0141258f26b9007c';
 		var signType = '';
 	</script>
-	<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/jx/js/component/jxgc/DisposeOpinionCombo.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 	<script type="text/javascript" src="<%=ctx %>/jsp/jx/base/lcgd/DisposeOpinion.js"></script>

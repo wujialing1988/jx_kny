@@ -57,8 +57,6 @@
 	var vehicleType="<%=(null==request.getParameter("vehicleType"))?"":request.getParameter("vehicleType")%>";	
 	
 </script>
-<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
-<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <!-- 作业工单质量检查项维护 -->
 <script language="javascript" src="<%=ctx%>/frame/resources/ext-3.4.0/ux/layout/TableFormLayout.js"></script>

@@ -32,7 +32,6 @@ var siteID = <%=JSONUtil.write(JczbWorkPlaceOrganizationManager.getSiteIDByCurrE
 var orgName = <%=JSONUtil.write(JczbWorkPlaceOrganizationManager.getOrgIdByCurrEmpByUID("name"))%>
 var orgID = <%=JSONUtil.write(JczbWorkPlaceOrganizationManager.getOrgIdByCurrEmpByUID("id"))%>
 </script>
-<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%=ctx%>/jsp/jx/js/component/OmOrganizationCustom.js"></script><%-- 组织机构选择控件 --%>
 <script language="javascript" src="<%=ctx %>/frame/baseapp/message/MsgCfgFunction.js"></script>
 <script language="javascript" src="<%=ctx %>/frame/baseapp/message/MsgCfgReceiveZB.js"></script>

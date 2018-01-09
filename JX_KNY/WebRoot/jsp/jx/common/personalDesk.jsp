@@ -9,7 +9,6 @@
 
 <link href="<%= ctx %>/jsp/jx/jxgc/workplanmanage/vis_common.css" rel="stylesheet" type="text/css">
 
-<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 <script language="javascript" src="<%= ctx %>/jsp/jx/js/component/pjwz/BaseCombo.js"></script>
 <script language="javascript" src="<%= ctx %>/jsp/jx/common/personalDesk.js"></script>
 </head>

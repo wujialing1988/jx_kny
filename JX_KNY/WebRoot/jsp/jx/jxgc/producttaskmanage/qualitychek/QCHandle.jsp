@@ -15,7 +15,6 @@
 			var vehicleType="<%=(null==request.getParameter("vehicleType"))?"":request.getParameter("vehicleType")%>"; // 10 货车 20 客车   
 			
 		</script>
-		<script language="javascript" src="<%=ctx %>/frame/resources/i18n/<%=browserLang %>/bases/i18n-lang-TestComponen.js"></script>
 		<script type="text/javascript" src="<%=ctx %>/frame/resources/jquery/jquery.js"></script> 
 		<script type="text/javascript" src="<%=ctx %>/jsp/jx/jxgc/producttaskmanage/qualitychek/qc_include.js.jsp"></script>
 		<script type="text/javascript" src="<%=ctx%>/jsp/jx/jxgc/gongdanwh/TrainGDWorker.js"></script> <!-- 机作人员记录JS -->
