@@ -47,7 +47,7 @@ i18n.OmEmployeeSelect.name = '名称';
 i18n.OmEmployeeSelect.choicePeople = '双击该行记录选择人员';
 i18n.OmEmployeeSelect.peopleCoding = '人员代码';
 i18n.OmEmployeeSelect.ownTeam = '所属班组';
-i18n.OmEmployeeSelect.choicePeople1 = '选择人员';*/
+i18n.OmEmployeeSelect.choicePeople1 = '选择人员';
 
 i18n.ProfessionalType = {};
 i18n.ProfessionalType.professType = '专业类型';
@@ -200,7 +200,7 @@ i18n.PartsExtendNoSelect.close = '关闭';
 i18n.PartsExtendNoSelect.save = '保存';
 
 i18n.OmEmpBaseCombo = {};
-i18n.OmEmpBaseCombo.choice = '请选择...';
+i18n.OmEmpBaseCombo.choice = '请选择...';*/
 
 
 

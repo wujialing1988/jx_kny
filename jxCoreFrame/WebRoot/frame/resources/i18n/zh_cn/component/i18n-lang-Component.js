@@ -124,12 +124,19 @@ i18n.PartsTypeAndQuotaSelect.theChoice = '配件规格型号选择';
 i18n.OmOrganizationCustom = {};
 i18n.OmOrganizationCustom.belong = '所属部门';
 
+/*机构树*/
+i18n.OmOrganizationTreeWin = {};
+i18n.OmOrganizationTreeWin.institutionalChoice = '机构选择';
+i18n.OmOrganizationTreeWin.confirm = '确定';
+i18n.OmOrganizationTreeWin.text = '请覆盖，OmOrganizationTreeWin.submit 方法完成自己操作业务！';
 /*组织机构弹出多选树*/
 i18n.OmOrganizationWin = {};
 i18n.OmOrganizationWin.institutionalChoice = '机构选择';
 i18n.OmOrganizationWin.confirm = '确定';
 i18n.OmOrganizationWin.noChoiceRecording = '尚未选择任何记录';
 
+i18n.Organization_Tree = {};
+i18n.Organization_Tree.InstitutionalStaff = '机构人员';
 /*所属段*/
 i18n.DeportSelect = {};
 i18n.DeportSelect.belong = '所属段';

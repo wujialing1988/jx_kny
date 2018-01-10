@@ -115,11 +115,19 @@ i18n.PartsTypeAndQuotaSelect.theChoice = 'choiceSpeciModel';
 /*所属部门选择下拉树*/
 i18n.OmOrganizationCustom = {};
 i18n.OmOrganizationCustom.belong = 'TheirDepartment';
+/*机构树*/
+i18n.OmOrganizationTreeWin = {};
+i18n.OmOrganizationTreeWin.institutionalChoice = 'institutionalChoice';
+i18n.OmOrganizationTreeWin.confirm = 'confirm';
+i18n.OmOrganizationTreeWin.text = 'please cover，OmOrganizationTreeWin.submit function to finsh action!';
 /*组织机构弹出多选树*/
 i18n.OmOrganizationWin = {};
 i18n.OmOrganizationWin.institutionalChoice = 'institutionalChoice';
 i18n.OmOrganizationWin.confirm = 'confirm';
 i18n.OmOrganizationWin.noChoiceRecording = 'noChoiceRecording';
+
+i18n.Organization_Tree = {};
+i18n.Organization_Tree.InstitutionalStaff = 'InstitutionalStaff';
 /*所属段*/
 i18n.DeportSelect = {};
 i18n.DeportSelect.belong = 'BelongSegment';

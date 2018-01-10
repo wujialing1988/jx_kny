@@ -47,7 +47,7 @@ i18n.OmEmployeeSelect.name = 'name';
 i18n.OmEmployeeSelect.choicePeople = 'click to choice the employee';
 i18n.OmEmployeeSelect.peopleCoding = 'employeeCoding';
 i18n.OmEmployeeSelect.ownTeam = 'OwnTeam';
-i18n.OmEmployeeSelect.choicePeople1 = 'choice the employee';*/
+i18n.OmEmployeeSelect.choicePeople1 = 'choice the employee';
 
 i18n.ProfessionalType = {};
 i18n.ProfessionalType.professType = 'professType';
@@ -200,4 +200,4 @@ i18n.PartsExtendNoSelect.close = 'Close';
 i18n.PartsExtendNoSelect.save = 'Save';
 
 i18n.OmEmpBaseCombo = {};
-i18n.OmEmpBaseCombo.choice = 'choice...';
+i18n.OmEmpBaseCombo.choice = 'choice...';*/

@@ -249,8 +249,8 @@ i18n.Organization_Tab.AgencyStaff = '机构下属人员';
 i18n.Organization_Tab.postStaff = '岗位下属人员';
 i18n.Organization_Tab.empInfor = '人员信息';
 
-i18n.Organization_Tree = {};
-i18n.Organization_Tree.InstitutionalStaff = '机构人员';
+/*i18n.Organization_Tree = {};
+i18n.Organization_Tree.InstitutionalStaff = '机构人员';*/
 
 i18n.Organization = {};
 i18n.Organization.unit = '部';

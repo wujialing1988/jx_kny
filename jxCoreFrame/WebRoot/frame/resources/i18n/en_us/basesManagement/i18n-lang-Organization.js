@@ -249,8 +249,8 @@ i18n.Organization_Tab.AgencyStaff = 'AgencyStaff';
 i18n.Organization_Tab.postStaff = 'postStaff';
 i18n.Organization_Tab.empInfor = 'empInfor';
 
-i18n.Organization_Tree = {};
-i18n.Organization_Tree.InstitutionalStaff = 'InstitutionalStaff';
+/*i18n.Organization_Tree = {};
+i18n.Organization_Tree.InstitutionalStaff = 'InstitutionalStaff';*/
 
 i18n.Organization = {};
 i18n.Organization.unit = 'unit';
