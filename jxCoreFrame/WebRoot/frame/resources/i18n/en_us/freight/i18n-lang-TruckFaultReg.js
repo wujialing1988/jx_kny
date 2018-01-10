@@ -38,6 +38,7 @@ i18n.TruckFaultReg.handleResult = 'handleResult' ;
 i18n.TruckFaultReg.handleMethod = 'handleMethod' ;
 i18n.TruckFaultReg.handleSite = 'handleSite' ;
 i18n.TruckFaultReg.save = 'save' ;
+i18n.TruckFaultReg.reset = 'reset' ;
 i18n.TruckFaultReg.Msg5 = 'please select the failure phenomenon！' ;
 i18n.TruckFaultReg.Msg6 = 'prompt' ;
 i18n.TruckFaultReg.Msg7 = 'will produce detain record,continue?' ;

@@ -39,6 +39,7 @@ i18n.TruckFaultReg.handleResult = '处理结果' ;
 i18n.TruckFaultReg.handleMethod = '处理方式' ;
 i18n.TruckFaultReg.handleSite = '处理地点' ;
 i18n.TruckFaultReg.save = '保存' ;
+i18n.TruckFaultReg.reset = '重置' ;
 i18n.TruckFaultReg.Msg5 = '请选择故障现象！' ;
 i18n.TruckFaultReg.Msg6 = '提示' ;
 i18n.TruckFaultReg.Msg7 = '将生成扣车记录，是否继续？' ;
