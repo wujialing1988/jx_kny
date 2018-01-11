@@ -9,7 +9,7 @@ Ext.onReady(function(){
 	    singleSelect: true, saveFormColNum:1,
 	    labelWidth: 125,                                     //查询表单中的标签宽度
 	    fieldWidth: 200,
-	    tbar:['报表分类:','-',{
+	    tbar:[i18n.reportViewInfo.Report_classification,'-',{
 			id:'reportTypeName_search_combo',
 			xtype: 'EosDictEntry_combo',
 			dicttypeid:'REPORT_TYPE',
@@ -22,7 +22,7 @@ Ext.onReady(function(){
 				}
 			}
 		},{
-			text: "重置",
+			text: i18n.reportViewInfo.reset,
 			iconCls: "resetIcon",
 			handler: function(){
 				Ext.getCmp("reportTypeName_search_combo").clearValue();
@@ -30,13 +30,13 @@ Ext.onReady(function(){
 			}
 		}, "add", "delete", "refresh"],
 		fields: [{
-			header:'主键ID', dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
+			header:i18n.reportViewInfo.idx, dataIndex:'idx',hidden:true ,editor: { xtype:"hidden" }
 		},{
-			header:'显示名称', dataIndex:'displayName',editor:{ allowBlank:false ,maxLength:50  }
+			header:i18n.reportViewInfo.displayName, dataIndex:'displayName',editor:{ allowBlank:false ,maxLength:50  }
 		},{
-			header:'报表路径', dataIndex:'reportUrl', editor:{allowBlank:false , maxLength:50  }
+			header:i18n.reportViewInfo.reportUrl, dataIndex:'reportUrl', editor:{allowBlank:false , maxLength:50  }
 		},{
-			header:'排序', dataIndex:'seqNo', editor:{
+			header:i18n.reportViewInfo.seqNo, dataIndex:'seqNo', editor:{
 				xtype:'numberfield',
 		        allowDecimals:false,
 		        allowNegative:false,
@@ -44,7 +44,7 @@ Ext.onReady(function(){
 		        maxValue:99,
 		        allowBlank:false }
 		},{
-			header:'报表分类', dataIndex:'reportTypeName',editor:{
+			header:i18n.reportViewInfo.Report_classification, dataIndex:'reportTypeName',editor:{
 					id:'reportTypeName_combo',
 					xtype: 'EosDictEntry_combo',
 					hiddenName: 'reportTypeName',
@@ -55,9 +55,9 @@ Ext.onReady(function(){
 					returnField: [{widgetId:"reportType",propertyName:"dictid"}]
 		        }, searcher: {anchor:'98%'}
 		},{
-			header:'报表分类编码', dataIndex:'reportType', hidden:true, editor:{ xtype:'hidden',id:'reportType' }
+			header:i18n.reportViewInfo.Report_classifiCode, dataIndex:'reportType', hidden:true, editor:{ xtype:'hidden',id:'reportType' }
 		},{
-	   		header:'备注', dataIndex:'remark',editor: { maxLength:20,xtype:'textarea' }
+	   		header:i18n.reportViewInfo.remark, dataIndex:'remark',editor: { maxLength:20,xtype:'textarea' }
 		}],
 		searchFn: function(searchParam){ 
 			TrainType.searchParam = searchParam ;
